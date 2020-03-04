@@ -1,0 +1,7 @@
+{
+  "name": "pagami",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
