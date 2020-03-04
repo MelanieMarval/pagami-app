@@ -4,7 +4,7 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #f6ad55;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -12,7 +12,7 @@
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: #4285f4;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -44,12 +44,12 @@
   --ion-color-warning-tint: #ffca22;
 
   /** danger **/
-  --ion-color-danger: #eb445a;
-  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger: #E53E3E;
+  --ion-color-danger-rgb: 113, 128, 150;
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #cf3c4f;
-  --ion-color-danger-tint: #ed576b;
+  --ion-color-danger-shade: #be3939;
+  --ion-color-danger-tint: #ee4040;
 
   /** dark **/
   --ion-color-dark: #222428;
@@ -74,6 +74,84 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  // Default Theme Colors
+  --ion-background-color: #1a202c;
+  --ion-background-color-rgb: 26,32,44;
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255,255,255;
+
+  --ion-color-step-50: #f2f2f2;
+  --ion-color-step-100: #e6e6e6;
+  --ion-color-step-150: #d9d9d9;
+  --ion-color-step-200: #cccccc;
+  --ion-color-step-250: #bfbfbf;
+  --ion-color-step-300: #b3b3b3;
+  --ion-color-step-350: #a6a6a6;
+  --ion-color-step-400: #999999;
+  --ion-color-step-450: #8c8c8c;
+  --ion-color-step-500: #808080;
+  --ion-color-step-550: #737373;
+  --ion-color-step-600: #666666;
+  --ion-color-step-650: #595959;
+  --ion-color-step-700: #4d4d4d;
+  --ion-color-step-750: #404040;
+  --ion-color-step-800: #333333;
+  --ion-color-step-850: #262626;
+  --ion-color-step-900: #191919;
+  --ion-color-step-950: #0d0d0d;
+
+
+  /* melanie */
+  --ion-color-pagami: #f6ad55;
+  --ion-color-pagami-rgb: 246,173,85;
+  --ion-color-pagami-contrast: #ffffff;
+  --ion-color-pagami-contrast-rgb: 255, 255, 255;
+  --ion-color-pagami-shade: #FBD38D;
+  --ion-color-pagami-tint: #c78153;
+  .ion-color-pagami {
+    --ion-color-base: var(--ion-color-pagami);
+    --ion-color-base-rgb: var(--ion-color-pagami-rgb);
+    --ion-color-contrast: var(--ion-color-pagami-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-pagami-contrast-rgb);
+    --ion-color-shade: var(--ion-color-pagami-shade);
+    --ion-color-tint: var(--ion-color-pagami-tint);
+  }
+
+  --ion-color-pagami-accent: #4A5568;
+  --ion-color-pagami-accent-rgb: 74,85,104;
+  --ion-color-pagami-accent-contrast: #ffffff;
+  --ion-color-pagami-accent-contrast-rgb: 255, 255, 255;
+  --ion-color-pagami-accent-shade: #3d485a;
+  --ion-color-pagami-accent-tint: #515c6f;
+  .ion-color-pagami-accent {
+    --ion-color-base: var(--ion-color-pagami-accent);
+    --ion-color-base-rgb: var(--ion-color-pagami-accent-rgb);
+    --ion-color-contrast: var(--ion-color-pagami-accent-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-pagami-contrast-accent-rgb);
+    --ion-color-shade: var(--ion-color-pagami-accent-shade);
+    --ion-color-tint: var(--ion-color-pagami-accent-tint);
+  }
+
+  --ion-color-pagami-text-2nd: #718096;
+  --ion-color-pagami-text-2nd-rgb: 113, 128, 150;
+
+  --ion-color-pagami-background-2nd: #2D3748;
+  --ion-color-pagami-background-2nd-rgb: 45,55,72;
+  --ion-color-pagami-background-2nd-contrast: #ffffff;
+  --ion-color-pagami-background-2nd-contrast-rgb: 255, 255, 255;
+  --ion-color-pagami-background-2nd-shade: #192333;
+  --ion-color-pagami-background-2nd-tint: #343f50;
+  .ion-color-pagami-background-2nd {
+    --ion-color-base: var(--ion-color-pagami-background-2nd);
+    --ion-color-base-rgb: var(--ion-color-pagami-background-2nd-rgb);
+    --ion-color-contrast: var(--ion-color-pagami-background-2nd-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-pagami-background-2nd-contrast-rgb);
+    --ion-color-shade: var(--ion-color-pagami-background-2nd-shade);
+    --ion-color-tint: var(--ion-color-pagami-background-2nd-tint);
+  }
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -227,3 +305,4 @@
     --color: white;
   }
 }
+

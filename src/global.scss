@@ -24,3 +24,75 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+app-close-to-me.ion-page {
+  color: transparent;
+}
+
+.swiper-pagination-bullet-active{
+  --bullet-background-active: #f6ad55;
+}
+.avatar-border{
+  border: 1px solid #FFFFFF;
+}
+ion-checkbox{
+  --border-radius: 2px;
+  width: 18px;
+  height: 18px;
+}
+.alert-wrapper{
+  max-width: 90% !important;
+}
+
+/* ***TOOLBAR IN DIFFERENT PAGES (wallet/activity, terms, etc) *** */
+ion-toolbar{
+  //height: 56px;
+  --background: var(--ion-color-pagami-background-2nd);
+  --border-width: 0 !important;
+
+  .toolbar-icon{
+    color: #ffffff;
+    font-size: 27px;
+  }
+  ion-title.md{
+    text-align: center;
+  }
+  ion-title.md.without-right {
+    margin-right: 56px;
+  }
+}
+/* END toolbar */
+
+/* ***SEARCH BAR IN CLOSE TO ME *** */
+ion-icon.searchbar-search-icon {
+  display:none;
+  width:0;
+  height:0;
+}
+ion-searchbar > div > input{
+  padding: 0 5px !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  box-shadow: unset !important;
+}
+/* END searchbar*/
+
+/* ***BUTTON IN TUTORIAL AND TERMS*** */
+.footer-button{
+  padding: 20px;
+
+  .button-large{
+    height: 56px;
+    font-size: 14px;
+    font-weight: normal;
+    --border-radius: 5px;
+  }
+  .button-small{
+    height: 36px;
+    font-size: 14px;
+    font-weight: normal;
+    --border-radius: 5px;
+  }
+}
+/* END button */
