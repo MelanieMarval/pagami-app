@@ -26,24 +26,6 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-app-close-to-me.ion-page {
-  color: transparent;
-}
-
-.swiper-pagination-bullet-active{
-  --bullet-background-active: #f6ad55;
-}
-.avatar-border{
-  border: 1px solid #FFFFFF;
-}
-ion-checkbox{
-  --border-radius: 2px;
-  width: 18px;
-  height: 18px;
-}
-.alert-wrapper{
-  max-width: 90% !important;
-}
 
 /* ***TOOLBAR IN DIFFERENT PAGES (wallet/activity, terms, etc) *** */
 ion-toolbar{
@@ -58,11 +40,35 @@ ion-toolbar{
   ion-title.md{
     text-align: center;
   }
+
+  ion-title.ios{
+    padding: 0;
+  }
+
   ion-title.md.without-right {
     margin-right: 56px;
   }
 }
+
+.toolbar-avatar{
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
+}
+.position-avatar{
+  position: absolute;
+  z-index: 10;
+  right: 15px;
+}
+.md + .position-avatar{
+  top: 13px;
+}
+.ios + .position-avatar{
+  top: 7px;
+}
 /* END toolbar */
+/*  ***********************  */
+
 
 /* ***SEARCH BAR IN CLOSE TO ME *** */
 ion-icon.searchbar-search-icon {
@@ -75,24 +81,84 @@ ion-searchbar > div > input{
   font-weight: 500 !important;
   background: transparent !important;
   box-shadow: unset !important;
+
+  font-size: 12px !important;
 }
 /* END searchbar*/
+/*  ***********************  */
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button{
-  padding: 20px;
-
-  .button-large{
-    height: 56px;
-    font-size: 14px;
-    font-weight: normal;
-    --border-radius: 5px;
-  }
-  .button-small{
-    height: 36px;
-    font-size: 14px;
-    font-weight: normal;
-    --border-radius: 5px;
-  }
+  padding: 17px;
+  background: var(--ion-background-color);
+}
+.button-large{
+  height: 56px;
+  font-size: 14px;
+  font-weight: normal;
+  --border-radius: 5px;
+  text-transform: unset;
+}
+.button-small{
+  height: 36px;
+  font-size: 14px;
+  font-weight: normal;
+  --border-radius: 5px;
+  text-transform: unset;
 }
 /* END button */
+/*  ***********************  */
+
+/* ***CONTAINER OF INPUT AND INPUTS*** */
+.inputs-container{
+  margin: 15px 20px;
+
+  ion-item{
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 17px;
+    border-bottom: 2px solid;
+
+    ion-icon{
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
+}
+ion-checkbox{
+  --border-radius: 2px;
+  width: 18px;
+  height: 18px;
+}
+/* END inputs */
+/*  ***********************  */
+
+/* ***ALERTS IN PROFILE *** */
+.sc-ion-alert-ios-h{
+  --background: var(--ion-color-pagami-background-2nd) !important;
+}
+.alert-wrapper{
+  max-width: 90% !important;
+}
+/* END aletrs */
+/*  ***********************  */
+
+
+
+/* ****EXTRAS***** */
+app-close-to-me.ion-page {
+  color: transparent;
+}
+.swiper-pagination-bullet-active{
+  --bullet-background-active: #f6ad55;
+}
+.avatar-border{
+  border: 1px solid #FFFFFF;
+}
+
+
+.background-map{
+  --background: url("assets/img/background-map.jpg") repeat center center fixed;
+  //background-size: cover;
+}
+

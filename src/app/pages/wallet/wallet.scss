@@ -1,18 +1,23 @@
 
+.list-md{
+  margin: 10px;
+}
 .item-activity{
-  padding-right: 10px;
   color: #A0AEC0 !important;
   font-size: 12px;
 
-}
-.item-detail-icon{
-  opacity: 1 !important;
+  ion-icon{
+    width: 20px;
+  }
+  ion-icon.ios{
+    margin: 0;
+  }
+
 }
 
 ion-card {
   background: #2D3748;
   border-radius: 3px;
-  margin: 15px;
 
   ion-card-header{
     padding: 10px 10px 5px;

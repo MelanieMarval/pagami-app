@@ -21,7 +21,9 @@ h3{
 }
 
 
-.profile--section-2{
+
+.inputs-container{
+
   margin: 15px 20px;
 
   ion-item{
@@ -30,7 +32,10 @@ h3{
     border-bottom: 2px solid;
 
     ion-icon{
-      margin-top: 16px;
+
+      margin-top: auto;
+      margin-bottom: auto;
+
     }
   }
 
@@ -44,6 +49,7 @@ h3{
     margin: 16px 0;
     ion-label {
       color: var(--ion-color-pagami-text-2nd);
+      font-size: 14px;
     }
   }
 

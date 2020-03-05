@@ -25,7 +25,9 @@
             <h3>456 Empresas registradas</h3>
         </ion-item-group>
 
-        <ion-item-group class="profile--section-2">
+
+        <ion-item-group class="inputs-container">
+
             <ion-item lines="none" color="pagami-background-2nd">
                 <ion-label position="floating">Telefono</ion-label>
                 <ion-input type="text"></ion-input>
@@ -51,8 +53,9 @@
 
     </ion-list>
 
+    <div class="footer-button">
+        <ion-button class="button-large" expand="block" color="danger" (click)="deleteAccountConfirm()">Eliminar Cuenta</ion-button>
+    </div>
 </ion-content>
 
-<ion-footer class="footer-button">
-    <ion-button class="button-large" expand="block" color="danger" (click)="deleteAccountConfirm()">Eliminar Cuenta</ion-button>
-</ion-footer>
+
