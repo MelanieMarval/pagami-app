@@ -11,8 +11,8 @@ import {TutorialPageRoutingModule} from './tutorial-routing.module';
         IonicModule,
         TutorialPageRoutingModule
     ],
-    declarations: [],
-    entryComponents: [],
+    declarations: [TutorialPage],
+    entryComponents: [TutorialPage],
 })
 
 export class TutorialModule {

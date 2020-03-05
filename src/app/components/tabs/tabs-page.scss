@@ -1,7 +1,15 @@
-.tabbar {
-  justify-content: center;
+ion-tab-bar{
+  height: 56px;
+  border: 0 !important;
+  --background: #2d3748;
+
+  ion-tab-button{
+    --color: #a0aec0;
+    --color-selected: #fff;
+  }
+  ion-icon{
+    width: 24px;
+    height: 24px;
+  }
 }
 
-.tab-button {
-  max-width: 200px;
-}
