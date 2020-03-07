@@ -1,0 +1,19 @@
+.checkbox-container {
+  border-bottom: unset;
+  border-radius: unset;
+  margin-bottom: unset;
+  ion-label{
+      font-size: 15px !important;
+  }
+}
+.item-group-flex{
+  display: flex;
+  flex-wrap: wrap;
+
+  .ion-label--title{
+    width: 100%;
+    color: #718096;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+}

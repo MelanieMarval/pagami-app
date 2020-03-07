@@ -20,7 +20,6 @@ ion-col.md {
 
 
 .header-image{
-  height: 300px;
   //background: url("src/assets/img/avatar-business.jpg") no-repeat center, linear-gradient(to bottom, rgba(0,0,0,0.31) 0%,rgba(0,0,0,0.31) 1%,rgba(0,0,0,0) 27%,rgba(0,0,0,0) 46%,rgba(0,0,0,0) 66%,rgba(0,0,0,0.51) 100%) ;
   //background-image: url("src/assets/img/avatar-business.jpg");
   //background-repeat: no-repeat;
@@ -30,14 +29,7 @@ ion-col.md {
   //ion-toolbar{
   //  --background: transparent;
   //}
-  ion-img{
-    position: absolute;
-    top: 0;
-    height: 100%;
-    object-fit: cover;
-    //opacity: .8;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.4) 1%,rgba(0,0,0,1) 27%,rgba(0,0,0,1) 46%,rgba(0,0,0,1) 53%,rgba(0,0,0,0.2) 100%);
-  }
+
   &--info{
     position: absolute;
     bottom: 0;
@@ -86,9 +78,6 @@ ion-col.md {
     }
 
   }
-}
-ion-fab{
-  top: 130px;
 }
 
 .link-buttons-container{

@@ -7,7 +7,13 @@ import {Component} from '@angular/core';
 })
 export class DetailsBusinessPage {
 
+    showWhatsapp = false;
+
     constructor() {
+    }
+
+    saveBusiness() {
+        console.log('Quiero guardar esta empresa');
     }
 
 }

@@ -69,6 +69,24 @@ ion-toolbar{
 /* END toolbar */
 /*  ***********************  */
 
+/* ***HEADER WITH IMAGE*** */
+.header-image {
+  height: 300px;
+
+  ion-img {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    object-fit: cover;
+    //opacity: .8;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 1%, rgba(0, 0, 0, 1) 27%, rgba(0, 0, 0, 1) 46%, rgba(0, 0, 0, 1) 53%, rgba(0, 0, 0, 0.2) 100%);
+  }
+}
+.header-image + ion-fab{
+  top: 120px;
+}
+/* END header */
+/* ************************* */
 
 /* ***SEARCH BAR IN CLOSE TO ME *** */
 ion-icon.searchbar-search-icon {
@@ -117,6 +135,7 @@ ion-searchbar > div > input{
     border-radius: 5px 5px 0 0;
     margin-bottom: 17px;
     border-bottom: 2px solid;
+    transition: ease .4s;
 
     ion-icon{
       margin-top: auto;
@@ -124,12 +143,21 @@ ion-searchbar > div > input{
     }
   }
 
+}
+.checkbox-container {
+  margin-bottom: 10px;
 
+  ion-label{
+    font-family: var(--ion-font-family);
+    font-size: 12px !important;
+    color: #FFFFFF;
+  }
 }
 ion-checkbox{
   --border-radius: 2px;
   width: 18px;
   height: 18px;
+  margin-right: 10px;
 }
 /* END inputs */
 /*  ***********************  */
