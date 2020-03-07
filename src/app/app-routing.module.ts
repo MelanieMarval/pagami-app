@@ -1,5 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {TabsPage} from './pages/tabs/tabs-page';
+import {DetailsBusinessPage} from './pages/details-business/details-business';
 
 const routes: Routes = [
     {
@@ -16,13 +18,22 @@ const routes: Routes = [
         loadChildren: () => import('./pages/terms/terms.module').then(m => m.TermsModule),
     },
     {
-        path: 'profile',
-        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
-    },
-    {
         path: 'app',
-        loadChildren: () => import('./components/tabs/tabs-page.module').then(m => m.TabsModule)
-    },
+        children: [
+            {
+                path: 'tabs',
+                loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
+            },
+            {
+                path: 'details-business',
+                component: DetailsBusinessPage
+            },
+            {
+                path: 'profile',
+                loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+            },
+        ]
+    }
 ];
 
 @NgModule({

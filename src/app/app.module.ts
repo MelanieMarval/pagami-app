@@ -10,9 +10,10 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {DetailsBusinessPage} from './pages/details-business/details-business';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, DetailsBusinessPage],
     entryComponents: [],
     imports: [
         BrowserModule,

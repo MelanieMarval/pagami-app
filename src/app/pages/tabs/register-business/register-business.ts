@@ -19,7 +19,7 @@ export class RegisterBusinessPage {
 
     const toast = await this.toastController.create({
       color: 'pagami-background-2nd',
-      duration: 3000,
+      duration: 2000,
       message: 'Ubicación guardada exitosamente',
       position: 'top',
     });
