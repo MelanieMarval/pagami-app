@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-my-business',
-  templateUrl: 'my-business.html',
-  styleUrls: ['my-business.scss']
+    selector: 'app-my-business',
+    templateUrl: 'my-business.html',
+    styleUrls: ['my-business.scss']
 })
 export class MyBusinessPage {
 
-  constructor() {}
+    isRegister = true;
+
+    constructor() {
+    }
 
 }

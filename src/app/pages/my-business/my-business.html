@@ -1,12 +1,118 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Mi Empresa
-    </ion-title>
-  </ion-toolbar>
+
+<!-- IF NOT REGISTER -->
+<ion-header *ngIf="!isRegister">
+    <ion-toolbar>
+        <ion-title>
+            Mi Empresa
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<a routerLink="/profile" class="position-avatar" *ngIf="!isRegister">
+    <ion-avatar class="toolbar-avatar" slot="end">
+        <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
+    </ion-avatar>
+</a>
+
+<ion-content *ngIf="!isRegister" scroll-y="false">
+    <div class="no-register">
+        <ion-img src="assets/img/my-business-no-register.png"></ion-img>
+        <ion-text>
+            ¡Oh no! <br>
+            Aún no has reclamado tu empresa
+        </ion-text>
+    </div>
+</ion-content>
+
+<ion-footer class="footer-button" *ngIf="!isRegister">
+    <ion-button class="button-large" expand="block" color="pagami" routerLink="#">
+        Buscar mi empresa
+    </ion-button>
+</ion-footer>
+<!-- END NOT REGISTER -->
+
+
+<!-- IF REGISTER -->
+<ion-header *ngIf="isRegister" class="header-image">
+
+    <ion-img src="assets/img/avatar-business.jpg" alt="Background Image"></ion-img>
+
+    <div class="header-image--info">
+        <ion-item lines="none" class="info-category">
+            <ion-icon slot="start" name="home"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>ALMACENES</ion-label>
+        </ion-item>
+
+        <div class="info-title">
+            <ion-text color="light">
+                Tienda D1
+                <ion-icon name="shield-checkmark" color="success"></ion-icon>
+            </ion-text>
+            <ion-fab horizontal="end" vertical="center" slot="fixed">
+                <ion-fab-button color="pagami" size="small">
+                    <ion-icon name="pencil"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </div>
+
+        <ion-item lines="none" class="info-rating">
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            &nbsp;
+            <ion-label>0 comentarios</ion-label>
+        </ion-item>
+    </div>
+
 </ion-header>
 
-<ion-content>
+<ion-fab horizontal="center" vertical="start" slot="fixed">
+    <ion-fab-button color="pagami">
+        <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
+<a routerLink="/profile" class="position-avatar" *ngIf="isRegister">
+    <ion-avatar class="toolbar-avatar" slot="end">
+        <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
+    </ion-avatar>
+</a>
 
+<ion-content *ngIf="isRegister">
+    <ion-list>
+        <ion-item-group class="inputs-container">
+            <ion-item lines="none" color="pagami-background-2nd">
+                <ion-label position="floating">WhatsApp</ion-label>
+                <ion-input type="text"></ion-input>
+                <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item lines="none" color="pagami-background-2nd">
+                <ion-label position="floating">Telefono</ion-label>
+                <ion-input type="text"></ion-input>
+                <ion-icon name="call" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item lines="none"  color="pagami-background-2nd">
+                <ion-label position="floating">Pagina Web</ion-label>
+                <ion-input type="text"></ion-input>
+                <ion-icon name="link" slot="start"></ion-icon>
+            </ion-item>
+        </ion-item-group>
+
+        <ion-item-group class="link-buttons-container">
+            <ion-item button routerLink="#" lines="none" color="pagami-background-2nd">
+                <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                <ion-label>Mis Productos</ion-label>
+            </ion-item>
+            <ion-item button routerLink="#" lines="none" color="pagami-background-2nd">
+                <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                <ion-label>Mis Servicios</ion-label>
+            </ion-item>
+            <ion-item button routerLink="#" lines="none" color="pagami-background-2nd">
+                <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                <ion-label>Pedidos</ion-label>
+            </ion-item>
+        </ion-item-group>
+    </ion-list>
 
 </ion-content>
