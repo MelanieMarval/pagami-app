@@ -44,10 +44,12 @@ ion-toolbar{
   ion-title.md{
     text-align: center;
   }
+
   ion-title.ios{
     padding: 0;
   }
 }
+
 .toolbar-avatar{
   width: 32px;
   height: 32px;
@@ -66,6 +68,7 @@ ion-toolbar{
 }
 /* END toolbar */
 /*  ***********************  */
+
 
 /* ***SEARCH BAR IN CLOSE TO ME *** */
 ion-icon.searchbar-search-icon {
@@ -120,6 +123,7 @@ ion-searchbar > div > input{
       margin-bottom: auto;
     }
   }
+
 
 }
 ion-checkbox{
