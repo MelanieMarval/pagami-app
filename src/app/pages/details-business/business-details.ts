@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'app-details-business',
-    templateUrl: 'details-business.html',
-    styleUrls: ['details-business.scss']
+    selector: 'app-business-details',
+    templateUrl: 'business-details.html',
+    styleUrls: ['business-details.scss']
 })
-export class DetailsBusinessPage {
+export class BusinessDetailsPage {
 
     showWhatsapp = false;
 

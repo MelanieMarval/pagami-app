@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/details-business"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Agrega un icono</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="3" *ngFor="let dummy of ' '.repeat(33).split(''), let x = index">
+                <div class="background-icon" [ngClass]="{'selected-icon': selectedIcon === x}" (click)="selectedIcon = x">
+                    <ion-img src="assets/icon/icon-test.png" class="size-icon-default"></ion-img>
+                    <ion-icon src="assets/icon/check-circle-solid.svg" class="selected-icon__check"></ion-icon>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>
+<ion-footer class="footer-button background-transparent" slot="fixed">
+    <ion-button class="button-large" routerLink="/app/business-details/select-icon" expand="block" color="pagami" type="submit">
+        Terminar registro
+    </ion-button>
+</ion-footer>

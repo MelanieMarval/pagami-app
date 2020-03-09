@@ -1,0 +1,29 @@
+.add-image{
+  height: 340px;
+  margin: 20px;
+  &-background{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    background: var(--ion-color-pagami-surface);
+    ion-img{
+      height: 100%;
+      width: 100%;
+      opacity: .5;
+      object-fit: cover;
+    }
+  }
+}
+
+.input-file{
+  opacity: 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+  cursor: pointer;
+  position:absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}

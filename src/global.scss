@@ -27,14 +27,9 @@
 
 
 /* ***TOOLBAR IN DIFFERENT PAGES (wallet/activity, terms, etc) *** */
-.toolbar-simple{
-  ion-title.md {
-    margin-right: 48px;
-  }
-}
 ion-toolbar{
   //height: 56px;
-  --background: var(--ion-color-pagami-background-2nd);
+  --background: var(--ion-color-pagami-surface);
   --border-width: 0 !important;
 
   .toolbar-icon{
@@ -47,6 +42,20 @@ ion-toolbar{
 
   ion-title.ios{
     padding: 0;
+  }
+}
+.toolbar-simple{
+  ion-title.md {
+    margin-right: 48px;
+  }
+}
+.toolbar-dual{
+  .right-button{
+    margin-right: 14px;
+    ion-icon{
+      width: 24px;
+      height: 24px;
+    }
   }
 }
 
@@ -66,6 +75,7 @@ ion-toolbar{
 .ios + .position-avatar{
   top: 7px;
 }
+
 /* END toolbar */
 /*  ***********************  */
 
@@ -90,9 +100,9 @@ ion-toolbar{
 
 /* ***SEARCH BAR IN CLOSE TO ME *** */
 ion-icon.searchbar-search-icon {
-  display:none;
-  width:0;
-  height:0;
+  //display:none;
+  //width:0;
+  //height:0;
 }
 ion-searchbar > div > input{
   padding: 0 5px !important;
@@ -100,6 +110,31 @@ ion-searchbar > div > input{
   background: transparent !important;
   box-shadow: unset !important;
   font-size: 12px !important;
+}
+.header-search {
+  ion-searchbar {
+    background: #FFFFFF;
+    border-radius: 5px;
+    color: var(--ion-color-pagami-text-2nd);
+    div {
+      input {
+        font-size: 16px !important;
+        margin-left: 23px;
+      }
+      ion-icon{
+        color: var(--ion-color-pagami-text-2nd) !important;
+        left: 0 !important;
+      }
+      ion-icon.md{
+        top: 5px !important;
+      }
+    }
+  }
+}
+.without-search-icon{
+  ion-icon.searchbar-search-icon {
+    display: none !important;
+  }
 }
 /* END searchbar*/
 /*  ***********************  */
@@ -159,19 +194,46 @@ ion-checkbox{
   height: 18px;
   margin-right: 10px;
 }
+
+.link-buttons-container{
+  margin: 25px 20px;
+
+  ion-item{
+    border-radius: 5px;
+    margin-bottom: 12px;
+  }
+  ion-item.ios > ion-icon{
+    display: none;
+  }
+}
 /* END inputs */
 /*  ***********************  */
 
 /* ***ALERTS IN PROFILE *** */
 .sc-ion-alert-ios-h{
-  --background: var(--ion-color-pagami-background-2nd) !important;
+  --background: var(--ion-color-pagami-surface) !important;
 }
 .alert-wrapper{
   max-width: 90% !important;
 }
-/* END aletrs */
+/* END alerts */
 /*  ***********************  */
 
+/* ***PRODUCTS CONTAINER AND ITEMS (STANDARD DESIGN)*** */
+.products{
+  margin: 20px;
+  .product{
+    --border-radius: 3px;
+    margin-bottom: 20px;
+
+    &-image{ height: 100%; width: 60px; }
+    &-name{ margin-left: 20px; }
+    &-stock{color: var(--ion-color-pagami-text-2nd)}
+    &-price, &-quantity, &-stock{ font-size: 12px; }
+  }
+}
+/* END products */
+/*  ***********************  */
 
 
 /* ****EXTRAS***** */
@@ -184,7 +246,21 @@ app-close-to-me.ion-page {
 .avatar-border{
   border: 1px solid #FFFFFF;
 }
-
+.avatar-square{
+  --border-radius: 0;
+  margin: 0;
+}
+.size-icon-default{
+  width: 24px;
+  height: 24px;
+}
+.fab-corner-lr{
+  bottom: 20px;
+  right: 20px;
+}
+.background-transparent{
+  background: transparent !important;
+}
 
 .background-map{
   --background: url("assets/img/background-map.jpg") repeat center center fixed;

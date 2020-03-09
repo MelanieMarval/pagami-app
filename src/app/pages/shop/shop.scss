@@ -1,0 +1,55 @@
+ion-col.md {
+  display: flex;
+}
+
+.header-image{
+
+  &--info{
+    position: absolute;
+    bottom: 0;
+
+    ion-item{
+      --background: transparent;
+      height: 40px;
+      ion-icon{
+        margin-right: 4px;
+        color: #FFF
+      }
+    }
+    .info-category{
+      font-size: 13px;
+      text-transform: uppercase;
+      ion-icon{
+        width: 15px;
+      }
+    }
+    ion-text{
+      font-size: 20px;
+      margin-left: 15px;
+    }
+    .info-title{
+      position: relative;
+
+      ion-fab{
+        right: 15px;
+        top: 18px;
+        ion-fab-button{
+          width: 24px;
+          height: 24px;
+
+          ion-icon{
+            width: 14px;
+          }
+        }
+      }
+    }
+
+    .info-rating{
+      font-size: 12px;
+      ion-icon{
+        width: 10px;
+      }
+    }
+
+  }
+}

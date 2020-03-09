@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/shop/products"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Resumen de la Orden</ion-title>
+        <ion-buttons slot="end" class="right-button">
+            <ion-button (click)="confirmDeleteProduct()">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-header class="header-search">
+        <ion-searchbar placeholder="Buscar productos"></ion-searchbar>
+    </ion-header>
+
+    <ion-list inset="false" lines="none" class="products">
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+            <ion-avatar class="avatar-square product-image">
+                <ion-img src="assets/img/avatar-product.jpg"></ion-img>
+            </ion-avatar>
+            <ion-label class="product-name">
+                <ion-row class="ion-justify-content-between">
+                    <ion-col size="9">
+                        Leche south cost 1 Ltr
+                    </ion-col>
+                    <ion-col size="1">
+                        <span class="product-quantity">x2</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-justify-content-between">
+                    <ion-col size="6">
+                        <span class="product-stock">Agotado</span>
+                    </ion-col>
+                    <ion-col size="5" class="ion-text-right">
+                        <span class="product-price">COP $24.000</span>
+                    </ion-col>
+                </ion-row>
+            </ion-label>
+        </ion-item>
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+            <ion-avatar class="avatar-square product-image">
+                <img src="assets/img/avatar-product-2.jpg">
+            </ion-avatar>
+            <ion-label class="product-name">
+                <ion-row class="ion-justify-content-between">
+                    <ion-col size="9">
+                        Arroz Mary Esmeralda
+                    </ion-col>
+                    <ion-col size="1">
+                        <span class="product-quantity">x3</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-justify-content-between">
+                    <ion-col size="6">
+                        <span class="product-stock">Solo 1 disponible</span>
+                    </ion-col>
+                    <ion-col size="5" class="ion-text-right">
+                        <span class="product-price">COP $17.000</span>
+                    </ion-col>
+                </ion-row>
+            </ion-label>
+        </ion-item>
+
+    </ion-list>
+
+</ion-content>
+
+<ion-footer>
+    <ion-grid class="ion-padding">
+        <ion-row>
+            <ion-col size="5">
+                <ion-button class="button-small" expand="block" (click)="makeOrder()">Realizar pedido</ion-button>
+            </ion-col>
+            <ion-col size="7" class="ion-text-right ion-align-self-center">
+                <ion-text color="light">Total COP $136.000</ion-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

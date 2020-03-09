@@ -137,19 +137,19 @@
   --ion-color-pagami-text-2nd: #718096;
   --ion-color-pagami-text-2nd-rgb: 113, 128, 150;
 
-  --ion-color-pagami-background-2nd: #2D3748;
-  --ion-color-pagami-background-2nd-rgb: 45,55,72;
-  --ion-color-pagami-background-2nd-contrast: #ffffff;
-  --ion-color-pagami-background-2nd-contrast-rgb: 255, 255, 255;
-  --ion-color-pagami-background-2nd-shade: #192333;
-  --ion-color-pagami-background-2nd-tint: #343f50;
-  .ion-color-pagami-background-2nd {
-    --ion-color-base: var(--ion-color-pagami-background-2nd);
-    --ion-color-base-rgb: var(--ion-color-pagami-background-2nd-rgb);
-    --ion-color-contrast: var(--ion-color-pagami-background-2nd-contrast);
-    --ion-color-contrast-rgb: var(--ion-color-pagami-background-2nd-contrast-rgb);
-    --ion-color-shade: var(--ion-color-pagami-background-2nd-shade);
-    --ion-color-tint: var(--ion-color-pagami-background-2nd-tint);
+  --ion-color-pagami-surface: #2D3748;
+  --ion-color-pagami-surface-rgb: 45,55,72;
+  --ion-color-pagami-surface-contrast: #ffffff;
+  --ion-color-pagami-surface-contrast-rgb: 255, 255, 255;
+  --ion-color-pagami-surface-shade: #192333;
+  --ion-color-pagami-surface-tint: #343f50;
+  .ion-color-pagami-surface {
+    --ion-color-base: var(--ion-color-pagami-surface);
+    --ion-color-base-rgb: var(--ion-color-pagami-surface-rgb);
+    --ion-color-contrast: var(--ion-color-pagami-surface-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-pagami-surface-contrast-rgb);
+    --ion-color-shade: var(--ion-color-pagami-surface-shade);
+    --ion-color-tint: var(--ion-color-pagami-surface-tint);
   }
 
 }

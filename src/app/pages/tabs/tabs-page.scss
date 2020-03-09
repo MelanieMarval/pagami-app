@@ -6,6 +6,9 @@ ion-tab-bar{
   ion-tab-button{
     --color: #a0aec0;
     --color-selected: #fff;
+    ion-label{
+      font-family: 'Quicksand', 'Roboto', sans-serif;
+    }
   }
   ion-icon{
     width: 24px;

@@ -1,0 +1,25 @@
+.background-icon {
+  background: var(--ion-color-pagami-surface);
+  height: 78px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+.selected-icon__check{
+  display: none;
+}
+.selected-icon{
+  background: #7D49E0;
+  border: 1px solid #FFFFFF;
+  & > &__check{
+    position: absolute;
+    display: block !important;
+    top: 10px;
+    right: 10px;
+    width: 14px;
+  }
+}
+

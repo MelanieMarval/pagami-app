@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {TabsPage} from './pages/tabs/tabs-page';
-import {DetailsBusinessPage} from './pages/details-business/details-business';
+import {BusinessDetailsPage} from './pages/details-business/business-details';
+import {SelectIconPage} from './pages/details-business/select-icon/select-icon';
 
 const routes: Routes = [
     {
@@ -21,12 +21,26 @@ const routes: Routes = [
         path: 'app',
         children: [
             {
+                path: '',
+                loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
+            },
+            {
                 path: 'tabs',
                 loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
             },
             {
-                path: 'details-business',
-                component: DetailsBusinessPage
+                path: 'my-products',
+                loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule)
+            },
+            {
+                path: 'shop',
+                loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopModule)
+            },
+            {
+                path: 'business-details', component: BusinessDetailsPage
+            },
+            {
+                path: 'business-details/select-icon', component: SelectIconPage
             },
             {
                 path: 'profile',

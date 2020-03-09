@@ -10,10 +10,11 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {DetailsBusinessPage} from './pages/details-business/details-business';
+import {BusinessDetailsPage} from './pages/details-business/business-details';
+import {SelectIconPage} from './pages/details-business/select-icon/select-icon';
 
 @NgModule({
-    declarations: [AppComponent, DetailsBusinessPage],
+    declarations: [AppComponent, BusinessDetailsPage, SelectIconPage],
     entryComponents: [],
     imports: [
         BrowserModule,

@@ -11,6 +11,10 @@ const routes: Routes = [
         component: TabsPage,
         children: [
             {
+                path: '',
+                component: CloseToMePage
+            },
+            {
                 path: 'close-to-me',
                 component: CloseToMePage
             },
@@ -33,11 +37,6 @@ const routes: Routes = [
             },
         ]
     },
-    {
-        path: '',
-        redirectTo: '/app/tabs/close-to-me',
-        pathMatch: 'full'
-    }
 ];
 
 @NgModule({
