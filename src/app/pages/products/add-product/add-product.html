@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar class="toolbar-dual">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/my-products"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Agrega Producto</ion-title>
+        <ion-buttons slot="end" class="right-button">
+            <ion-button (click)="confirmDeleteProduct()">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+
+    <div class="add-image add-image-margin">
+        <div class="add-image-background">
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
+            <ion-fab vertical="center" horizontal="center">
+                <ion-fab-button color="pagami">
+                    <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </div>
+    </div>
+
+<!--    <div *ngIf="fileUploadProgress">-->
+<!--        Upload progress: {{ fileUploadProgress }}-->
+<!--    </div>-->
+
+    <ion-item-group class="inputs-container">
+        <ion-item lines="none" color="pagami-surface">
+            <ion-label position="floating">Nombre del producto</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none"  color="pagami-surface">
+            <ion-label position="floating">Precio del producto</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none"  color="pagami-surface">
+            <ion-label position="floating">Cantidad disponible</ion-label>
+            <ion-input type="number"></ion-input>
+        </ion-item>
+    </ion-item-group>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-corner-lr">
+        <ion-fab-button color="pagami" (click)="onSubmit()">
+            <ion-icon name="save"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

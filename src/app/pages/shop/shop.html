@@ -1,0 +1,69 @@
+
+<ion-header class="header-image">
+    <ion-toolbar class="background-transparent">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/tabs/close-to-me"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <ion-img src="assets/img/avatar-business.jpg" alt="Background Image"></ion-img>
+
+    <div class="header-image--info">
+        <ion-item lines="none" class="info-category">
+            <ion-icon slot="start" name="home"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>ALMACENES</ion-label>
+        </ion-item>
+
+        <div class="info-title">
+            <ion-text color="light">
+                Tienda D1
+                <ion-icon name="shield-checkmark" color="success"></ion-icon>
+            </ion-text>
+        </div>
+
+        <ion-item lines="none" class="info-rating">
+            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            &nbsp;
+            <ion-label>24 comentarios</ion-label>
+        </ion-item>
+    </div>
+
+</ion-header>
+
+<ion-content>
+
+    <ion-item-group class="inputs-container">
+        <ion-item lines="none" color="pagami-surface">
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input readonly value="+57 310 4804289"></ion-input>
+            <ion-icon name="call" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item lines="none" color="pagami-surface" >
+            <ion-label position="floating">WhatsApp</ion-label>
+            <ion-input readonly value="+57 310 4804289"></ion-input>
+            <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item lines="none" color="pagami-surface">
+            <ion-label position="floating">Pagina Web</ion-label>
+            <ion-input readonly value="tiendasd1.com.co"></ion-input>
+            <ion-icon name="link" slot="start"></ion-icon>
+        </ion-item>
+    </ion-item-group>
+
+    <ion-item-group class="link-buttons-container">
+        <ion-item button routerLink="/app/shop/products" lines="none" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Productos</ion-label>
+        </ion-item>
+        <ion-item button routerLink="/app/shop/services" lines="none" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Servicios</ion-label>
+        </ion-item>
+    </ion-item-group>
+
+</ion-content>

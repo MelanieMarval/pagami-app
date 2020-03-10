@@ -2,33 +2,7 @@ ion-col.md {
   display: flex;
 }
 
-.no-register{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  ion-text{
-    margin-top: 36px;
-    font-size: 20px;
-    font-weight: bolder;
-    line-height: 27px;
-    text-align: center;
-  }
-}
-
-
 .header-image{
-  //background: url("src/assets/img/avatar-business.jpg") no-repeat center, linear-gradient(to bottom, rgba(0,0,0,0.31) 0%,rgba(0,0,0,0.31) 1%,rgba(0,0,0,0) 27%,rgba(0,0,0,0) 46%,rgba(0,0,0,0) 66%,rgba(0,0,0,0.51) 100%) ;
-  //background-image: url("src/assets/img/avatar-business.jpg");
-  //background-repeat: no-repeat;
-  //background-size: cover;
-  //background-position: center;
-
-  //ion-toolbar{
-  //  --background: transparent;
-  //}
 
   &--info{
     position: absolute;
@@ -79,5 +53,3 @@ ion-col.md {
 
   }
 }
-
-

@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar class="toolbar-dual">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/shop"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Tiendas D1 - Productos</ion-title>
+        <ion-buttons slot="end" class="right-button">
+            <ion-button  routerLink="/app/shop/order-summary">
+                <ion-icon name="cart"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-header class="header-search">
+        <ion-searchbar placeholder="Buscar productos"></ion-searchbar>
+    </ion-header>
+
+    <ion-list inset="false" lines="none" class="products">
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(15).split(''), let x = index">
+            <ion-avatar class="avatar-square product-image">
+                <ion-img src="assets/img/avatar-product.jpg"></ion-img>
+            </ion-avatar>
+            <ion-label class="product-name">
+                Leche south cost 1 Ltr <br>
+                <span class="product-price">COP $24.000</span>
+            </ion-label>
+        </ion-item>
+
+    </ion-list>
+
+</ion-content>

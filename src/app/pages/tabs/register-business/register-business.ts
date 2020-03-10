@@ -16,9 +16,8 @@ export class RegisterBusinessPage {
 
   async saveLocation() {
 
-
     const toast = await this.toastController.create({
-      color: 'pagami-background-2nd',
+      color: 'pagami-surface',
       duration: 2000,
       message: 'Ubicación guardada exitosamente',
       position: 'top',
