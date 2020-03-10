@@ -21,7 +21,7 @@ import {DetailsBusinessPage} from './pages/details-business/details-business';
         HttpClientModule,
         FormsModule,
         IonicModule.forRoot(),
-        AppRoutingModule
+        AppRoutingModule,
     ],
     providers: [
         StatusBar,

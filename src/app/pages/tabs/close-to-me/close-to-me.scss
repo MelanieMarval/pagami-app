@@ -4,6 +4,7 @@ ion-header{
   margin: 3%;
   border-radius: 3px;
   background: #FFF;
+  position: absolute;
   //box-shadow: 1px 1px 5px 3px #707070;
   box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;;
 }
@@ -32,5 +33,21 @@ ion-searchbar {
 }
 ion-searchbar > div > input{
   padding: 0 !important;
+}
+
+.map-canvas {
+  position: absolute;
+
+  height: 100%;
+  width: 100%;
+
+  background-color: transparent;
+
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+.show-map {
+  opacity: 1;
 }
 

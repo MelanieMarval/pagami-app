@@ -9,6 +9,7 @@ import {WalletModule} from './wallet/wallet.module';
 import {CloseToMePage} from './close-to-me/close-to-me';
 import {MyBusinessPage} from './my-business/my-business';
 import {RegisterBusinessPage} from './register-business/register-business';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 @NgModule({
     imports: [
@@ -22,6 +23,9 @@ import {RegisterBusinessPage} from './register-business/register-business';
         CloseToMePage,
         MyBusinessPage,
         RegisterBusinessPage
+    ],
+    providers: [
+        Geolocation
     ]
 })
 export class TabsModule {
