@@ -1,5 +1,4 @@
 ion-tab-bar{
-  height: 56px;
   border: 0 !important;
   --background: #2d3748;
 
@@ -10,9 +9,10 @@ ion-tab-bar{
       font-family: 'Quicksand', 'Roboto', sans-serif;
     }
   }
-  ion-icon{
-    width: 24px;
-    height: 24px;
+}
+@media (max-width: 390px) {
+  .d-none-tab {
+    display: none;
   }
 }
 

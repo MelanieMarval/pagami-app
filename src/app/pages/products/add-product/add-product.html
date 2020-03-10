@@ -17,7 +17,7 @@
 <ion-content>
 
 
-    <div class="add-image">
+    <div class="add-image add-image-margin">
         <div class="add-image-background">
             <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>

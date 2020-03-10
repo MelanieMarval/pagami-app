@@ -1,15 +1,47 @@
 import {Component} from '@angular/core';
+import {InputFilePage} from '../../InputFilePage';
+import {ToastController} from '@ionic/angular';
 
 @Component({
     selector: 'app-my-business',
     templateUrl: 'my-business.html',
     styleUrls: ['my-business.scss']
 })
-export class MyBusinessPage {
+export class MyBusinessPage  extends InputFilePage{
 
     isRegister = true;
+    isEditing = false;
 
-    constructor() {
+    constructor(
+        public toastController: ToastController,
+    ) {
+        super();
+    }
+
+    editBusiness() {
+        this.isEditing = true;
+        this.previewUrl = 'assets/img/avatar-business.jpg';
+    }
+
+    cancelEditbusiness() {
+        this.isEditing = false;
+    }
+
+    async saveBusiness() {
+        const toast = await this.toastController.create({
+            color: 'pagami-surface',
+            duration: 2000,
+            message: 'Cambios guardados exitosamente',
+            position: 'top',
+        });
+
+        await toast.present();
+        this.isEditing = false;
+    }
+
+    fileProgress(fileInput: any) {
+        this.fileData = fileInput.target.files[0] as File;
+        this.preview();
     }
 
 }

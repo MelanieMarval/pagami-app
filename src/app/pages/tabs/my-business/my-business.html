@@ -32,87 +32,118 @@
 
 
 <!-- IF REGISTER -->
-<ion-header *ngIf="isRegister" class="header-image">
 
-    <ion-img src="assets/img/avatar-business.jpg" alt="Background Image"></ion-img>
+<ion-content *ngIf="isRegister">
 
-    <div class="header-image--info">
-        <ion-item lines="none" class="info-category">
-            <ion-icon slot="start" name="home"></ion-icon>
-            &nbsp;&nbsp;
-            <ion-label>ALMACENES</ion-label>
-        </ion-item>
+    <ion-header class="header-image" *ngIf="!isEditing">
+        <ion-img src="assets/img/avatar-business.jpg" alt="Background Image"></ion-img>
 
-        <div class="info-title">
-            <ion-text color="light">
-                Tienda D1
-                <ion-icon name="shield-checkmark" color="success"></ion-icon>
-            </ion-text>
-            <ion-fab horizontal="end" vertical="center" slot="fixed">
-                <ion-fab-button color="pagami" size="small">
-                    <ion-icon name="pencil"></ion-icon>
+        <div class="header-image--info">
+            <ion-item lines="none" class="info-category">
+                <ion-icon slot="start" name="home"></ion-icon>
+                &nbsp;&nbsp;
+                <ion-label>ALMACENES</ion-label>
+            </ion-item>
+
+            <div class="info-title">
+                <ion-text color="light">
+                    Tienda D1
+                    <ion-icon name="shield-checkmark" color="success"></ion-icon>
+                </ion-text>
+                <ion-fab horizontal="end" vertical="center" slot="fixed">
+                    <ion-fab-button color="pagami" size="small" (click)="editBusiness()">
+                        <ion-icon name="pencil"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </div>
+
+            <ion-item lines="none" class="info-rating">
+                <ion-icon slot="start" name="star-outline"></ion-icon>
+                <ion-icon slot="start" name="star-outline"></ion-icon>
+                <ion-icon slot="start" name="star-outline"></ion-icon>
+                <ion-icon slot="start" name="star-outline"></ion-icon>
+                <ion-icon slot="start" name="star-outline"></ion-icon>
+                &nbsp;
+                <ion-label>0 comentarios</ion-label>
+            </ion-item>
+        </div>
+    </ion-header>
+
+    <div class="add-image" *ngIf="isEditing">
+        <div class="add-image-background">
+            <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-fab vertical="center" horizontal="center">
+                <ion-fab-button color="pagami">
+                    <ion-icon name="camera"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
         </div>
-
-        <ion-item lines="none" class="info-rating">
-            <ion-icon slot="start" name="star-outline"></ion-icon>
-            <ion-icon slot="start" name="star-outline"></ion-icon>
-            <ion-icon slot="start" name="star-outline"></ion-icon>
-            <ion-icon slot="start" name="star-outline"></ion-icon>
-            <ion-icon slot="start" name="star-outline"></ion-icon>
-            &nbsp;
-            <ion-label>0 comentarios</ion-label>
-        </ion-item>
     </div>
 
-</ion-header>
+    <a routerLink="/app/profile" class="position-avatar" *ngIf="!isEditing">
+        <ion-avatar class="toolbar-avatar" slot="end">
+            <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
+        </ion-avatar>
+    </a>
 
-<ion-fab horizontal="center" vertical="start"*ngIf="isRegister">
-    <ion-fab-button color="pagami">
-        <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
-</ion-fab>
-<a routerLink="/app/profile" class="position-avatar" *ngIf="isRegister">
-    <ion-avatar class="toolbar-avatar" slot="end">
-        <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
-    </ion-avatar>
-</a>
 
-<ion-content *ngIf="isRegister">
-    <ion-list>
-        <ion-item-group class="inputs-container">
-            <ion-item lines="none" color="pagami-surface">
+        <ion-list class="inputs-container">
+            <ion-item color="pagami-surface" *ngIf="isEditing">
+                <ion-label position="floating">Ubicacion</ion-label>
+                <ion-input type="text" required value="Calle 30 & Autopista Sur, Itagüi, Antioquia"></ion-input>
+                <ion-icon name="location" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface" *ngIf="isEditing">
+                <ion-label position="floating">Nombre de la empresa</ion-label>
+                <ion-input type="text" required value="Tiendas D1"></ion-input>
+                <ion-icon name="business" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
                 <ion-label position="floating">WhatsApp</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [readonly]="!isEditing" value="+57 310 4804289"></ion-input>
                 <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
             </ion-item>
-            <ion-item lines="none" color="pagami-surface">
+            <ion-item color="pagami-surface">
                 <ion-label position="floating">Telefono</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="tel" [readonly]="!isEditing" value="+57 310 4804289"></ion-input>
                 <ion-icon name="call" slot="start"></ion-icon>
             </ion-item>
-            <ion-item lines="none"  color="pagami-surface">
+            <ion-item  color="pagami-surface">
                 <ion-label position="floating">Pagina Web</ion-label>
-                <ion-input type="url"></ion-input>
+                <ion-input type="url" [readonly]="!isEditing" value="adidas.com.co"></ion-input>
                 <ion-icon name="link" slot="start"></ion-icon>
             </ion-item>
-        </ion-item-group>
+        </ion-list>
 
-        <ion-item-group class="link-buttons-container">
-            <ion-item button routerLink="/app/my-products" lines="none" color="pagami-surface">
+        <div class="footer-button" *ngIf="isEditing">
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button class="button-small" expand="block" color="pagami-surface" (click)="cancelEditbusiness()">
+                        Cancelar
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button class="button-small" expand="block" color="pagami" (click)="saveBusiness()">
+                        Continuar
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <ion-list class="link-buttons-container" lines="none" *ngIf="!isEditing">
+            <ion-item button routerLink="/app/my-products" color="pagami-surface">
                 <ion-icon name="arrow-forward" slot="end"></ion-icon>
                 <ion-label>Mis Productos</ion-label>
             </ion-item>
-            <ion-item button routerLink="#" lines="none" color="pagami-surface">
+            <ion-item button routerLink="/app/my-products" color="pagami-surface">
                 <ion-icon name="arrow-forward" slot="end"></ion-icon>
                 <ion-label>Mis Servicios</ion-label>
             </ion-item>
-            <ion-item button routerLink="#" lines="none" color="pagami-surface">
+            <ion-item button routerLink="/app/my-products" color="pagami-surface">
                 <ion-icon name="arrow-forward" slot="end"></ion-icon>
                 <ion-label>Pedidos</ion-label>
             </ion-item>
-        </ion-item-group>
-    </ion-list>
+        </ion-list>
 
 </ion-content>
