@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs-page';
-import {CloseToMePage} from './close-to-me/close-to-me';
 import {MyBusinessPage} from './my-business/my-business';
 import {RegisterBusinessPage} from './register-business/register-business';
 
@@ -11,12 +10,8 @@ const routes: Routes = [
         component: TabsPage,
         children: [
             {
-                path: '',
-                component: CloseToMePage
-            },
-            {
                 path: 'close-to-me',
-                component: CloseToMePage
+                loadChildren: () => import('./close-to-me/close-to-me.module').then(m => m.CloseToMeModule)
             },
             {
                 path: 'my-business',
@@ -28,12 +23,7 @@ const routes: Routes = [
             },
             {
                 path: 'wallet',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
-                    }
-                ]
+                loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
             },
         ]
     },

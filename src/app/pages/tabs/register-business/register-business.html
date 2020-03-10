@@ -1,5 +1,5 @@
 
-<ion-content class="background-map">
+<ion-content>
 
     <ion-header *ngIf="beforeSaveLocation">
         <ion-grid>
@@ -13,6 +13,8 @@
             </ion-row>
         </ion-grid>
     </ion-header>
+
+    <div #mapCanvas class="map-canvas" style="height: 100%; width:100%"></div>
 
     <div class="footer-button">
         <ion-button class="button-large" expand="block" (click)="saveLocation()" color="pagami" *ngIf="beforeSaveLocation">

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
-import {InputFilePage} from '../../InputFilePage';
+import {InputFilePage} from '../../parent/InputFilePage';
 
 @Component({
     selector: 'app-add-product',

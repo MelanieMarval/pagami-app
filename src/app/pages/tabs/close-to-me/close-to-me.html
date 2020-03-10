@@ -1,9 +1,10 @@
+
 <ion-content>
     <ion-header>
         <ion-grid>
             <ion-row>
                 <ion-col size="1">
-                    <ion-icon name="cart"></ion-icon>
+                    <ion-icon class="card-i" name="cart"></ion-icon>
                 </ion-col>
                 <ion-col size="9">
                     <ion-searchbar placeholder="Busca tiendas o servicios"></ion-searchbar>
@@ -18,31 +19,13 @@
             </ion-row>
         </ion-grid>
     </ion-header>
-    <div #mapCanvas class="map-canvas" style="height: 100%;width:100%"></div>
+
+    <div #mapCanvas class="map-canvas" style="height: 100%; width:100%"></div>
+
+    <ion-fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button color="{{ fabAttached ? 'map':'light'}}" (click)="attachedPosition()">
+            <ion-icon name="locate"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
-
-
-<!--<ion-content class="background-map">-->
-
-<!--    <ion-header>-->
-<!--        <ion-grid>-->
-<!--            <ion-row>-->
-<!--                <ion-col size="1">-->
-<!--                    <ion-icon name="cart"></ion-icon>-->
-<!--                </ion-col>-->
-<!--                <ion-col size="9">-->
-<!--                    <ion-searchbar placeholder="Busca tiendas o servicios"></ion-searchbar>-->
-<!--                </ion-col>-->
-<!--                <ion-col size="2">-->
-<!--                    <a routerLink="/app/profile">-->
-<!--                        <ion-avatar class="toolbar-avatar">-->
-<!--                            <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>-->
-<!--                        </ion-avatar>-->
-<!--                    </a>-->
-<!--                </ion-col>-->
-<!--            </ion-row>-->
-<!--        </ion-grid>-->
-<!--    </ion-header>-->
-
-<!--</ion-content>-->
 

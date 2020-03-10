@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {InputFilePage} from '../InputFilePage';
+import {InputFilePage} from '../parent/InputFilePage';
 
 @Component({
     selector: 'app-business-details',

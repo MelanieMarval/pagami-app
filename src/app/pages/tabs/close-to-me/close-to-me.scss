@@ -20,17 +20,19 @@ ion-row{
   }
 }
 
-ion-icon{
+ion-icon.card-i {
   width: 24px;
   height: 24px;
   color: #718096;
   padding-left: 10px;
 }
+
 ion-searchbar {
   height: 30px;
   font-size: 16px;
   color: #718096;
 }
+
 ion-searchbar > div > input{
   padding: 0 !important;
 }

@@ -3,8 +3,7 @@ export class InputFilePage {
     protected fileData: any;
     protected previewUrl: string | ArrayBuffer;
 
-    constructor( ) {
-    }
+    constructor( ) { }
 
     preview() {
         // Show preview

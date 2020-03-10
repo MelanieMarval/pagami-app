@@ -6,7 +6,6 @@ import {TabsPage} from './tabs-page';
 import {TabsPageRoutingModule} from './tabs-page-routing.module';
 
 import {WalletModule} from './wallet/wallet.module';
-import {CloseToMePage} from './close-to-me/close-to-me';
 import {MyBusinessPage} from './my-business/my-business';
 import {RegisterBusinessPage} from './register-business/register-business';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
@@ -20,7 +19,6 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
     ],
     declarations: [
         TabsPage,
-        CloseToMePage,
         MyBusinessPage,
         RegisterBusinessPage
     ],

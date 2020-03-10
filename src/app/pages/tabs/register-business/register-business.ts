@@ -1,30 +1,42 @@
-import { Component } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {ToastController} from '@ionic/angular';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {DOCUMENT} from '@angular/common';
+import {MapPage} from '../../parent/MapPage';
 
 @Component({
-  selector: 'app-register-business',
-  templateUrl: 'register-business.html',
-  styleUrls: ['register-business.scss']
+    selector: 'app-register-business',
+    templateUrl: 'register-business.html',
+    styleUrls: ['register-business.scss']
 })
-export class RegisterBusinessPage {
+export class RegisterBusinessPage extends MapPage implements AfterViewInit {
 
-  beforeSaveLocation = true;
+    @ViewChild('mapCanvas', {static: true}) mapElement: ElementRef;
 
-  constructor(
-      public toastController: ToastController,
-  ) {}
+    beforeSaveLocation = true;
 
-  async saveLocation() {
+    constructor(
+        public toastController: ToastController,
+        geolocation: Geolocation,
+        @Inject(DOCUMENT) doc: Document) {
+        super(geolocation, doc);
+    }
 
-    const toast = await this.toastController.create({
-      color: 'pagami-surface',
-      duration: 2000,
-      message: 'Ubicación guardada exitosamente',
-      position: 'top',
-    });
+    async ngAfterViewInit() {
+      this.loadMap(true);
+    }
 
-    await toast.present();
-    this.beforeSaveLocation = false;
-  }
+    async saveLocation() {
+
+        const toast = await this.toastController.create({
+            color: 'pagami-surface',
+            duration: 2000,
+            message: 'Ubicación guardada exitosamente',
+            position: 'top',
+        });
+
+        await toast.present();
+        this.beforeSaveLocation = false;
+    }
 
 }

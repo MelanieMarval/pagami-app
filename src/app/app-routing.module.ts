@@ -22,7 +22,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
+                redirectTo: 'tabs',
+                pathMatch: 'full'
             },
             {
                 path: 'tabs',
