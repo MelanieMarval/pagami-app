@@ -32,7 +32,7 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
             color: 'pagami-surface',
             duration: 2000,
             message: 'Ubicación guardada exitosamente',
-            position: 'top',
+            position: 'middle',
         });
 
         await toast.present();
