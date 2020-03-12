@@ -28,11 +28,11 @@
 
 <ion-footer class="footer-button">
     <ion-item lines="none" class="checkbox-container">
-        <ion-checkbox color="pagami" slot="start"></ion-checkbox>
+        <ion-checkbox color="pagami" slot="start" [(ngModel)]="termsAccepted"></ion-checkbox>
         &nbsp; &nbsp;
         <ion-label>Estoy de acuerdo con los términos y condiciones</ion-label>
     </ion-item>
-    <ion-button class="button-large" expand="block" routerLink="/app/tabs/close-to-me">
+    <ion-button class="button-large" expand="block" routerLink="/app/tabs/close-to-me" [disabled]="!termsAccepted">
         Continuar
     </ion-button>
 </ion-footer>

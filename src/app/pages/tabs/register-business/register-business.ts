@@ -31,12 +31,18 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         const toast = await this.toastController.create({
             color: 'pagami-surface',
             duration: 2000,
+            cssClass: 'toast-bottom-custom',
             message: 'Ubicación guardada exitosamente',
-            position: 'middle',
+            position: 'bottom',
         });
 
         await toast.present();
         this.beforeSaveLocation = false;
+    }
+
+    onCurrentPositionChanged(position: any) {
+        this.setupMarkerCurrentPosition(position);
+        this.changeMapCenter(position);
     }
 
 }

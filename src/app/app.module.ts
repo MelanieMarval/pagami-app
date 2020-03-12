@@ -12,9 +12,10 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BusinessDetailsPage} from './pages/details-business/business-details';
 import {SelectIconPage} from './pages/details-business/select-icon/select-icon';
+import {OrdersPage} from './pages/orders/orders';
 
 @NgModule({
-    declarations: [AppComponent, BusinessDetailsPage, SelectIconPage],
+    declarations: [AppComponent, OrdersPage, BusinessDetailsPage, SelectIconPage],
     entryComponents: [],
     imports: [
         BrowserModule,

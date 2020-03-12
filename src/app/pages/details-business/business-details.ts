@@ -16,7 +16,6 @@ export class BusinessDetailsPage extends InputFilePage{
         super();
     }
 
-    
     saveBusiness() {
         console.log('Quiero guardar esta empresa');
     }
