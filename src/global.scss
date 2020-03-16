@@ -310,6 +310,16 @@ ion-checkbox{
 /*  ***********************  */
 
 
+ion-bottom-drawer {
+  background: transparent !important;
+  --background: transparent !important;
+
+  ion-content {
+    --background: transparent;
+    background: transparent;
+  }
+}
+
 /* ****EXTRAS***** */
 .swiper-pagination-bullet-active{
   --bullet-background-active: #f6ad55;
@@ -333,7 +343,12 @@ ion-checkbox{
   --background: transparent !important;
   background: transparent !important;
 }
-
+.with-overflow-y{
+  overflow-y: scroll !important;
+}
+.d-none{
+  display: none !important;
+}
 .btn-no-style{
   --box-shadow: unset;
   --background: transparent;
