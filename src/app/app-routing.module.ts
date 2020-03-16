@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BusinessDetailsPage} from './pages/details-business/business-details';
 import {SelectIconPage} from './pages/details-business/select-icon/select-icon';
+import {OrdersPage} from './pages/orders/orders';
 
 const routes: Routes = [
     {
@@ -28,6 +29,9 @@ const routes: Routes = [
             {
                 path: 'tabs',
                 loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
+            },
+            {
+                path: 'order', component: OrdersPage
             },
             {
                 path: 'my-products',

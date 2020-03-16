@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class TermsPage {
 
+    termsAccepted = false;
+
     constructor() {}
 
 }
