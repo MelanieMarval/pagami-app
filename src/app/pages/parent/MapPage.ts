@@ -2,6 +2,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {AfterViewInit, ElementRef, Inject, ViewChild} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
 // @ts-ignore
+import GoogleMaps = google.maps;
+// @ts-ignore
 import LatLng = google.maps.LatLng;
 // @ts-ignore
 import Map = google.maps.Map;
@@ -10,7 +12,9 @@ import Marker = google.maps.Marker;
 // @ts-ignore
 import MapOptions = google.maps.MapOptions;
 // @ts-ignore
-import MapOptions = google.maps.MapOptions;
+import Circle = google.maps.Circle;
+// @ts-ignore
+import Icon = google.maps.Icon;
 
 export class MapPage {
 
@@ -18,8 +22,10 @@ export class MapPage {
 
     map: Map;
     currentPositionMarker: Marker;
+    currentPositionCircle: Circle;
     // @ts-ignore
-    googleMaps: google.maps;
+    googleMaps: GoogleMaps;
+    accuracy: number;
 
     constructor(
         private geolocation: Geolocation,
@@ -60,6 +66,7 @@ export class MapPage {
                 lat: data.coords.latitude,
                 lng: data.coords.longitude
             };
+            this.accuracy = data.coords.accuracy;
             this.onCurrentPositionChanged(position);
         }).catch((error) => {
             console.log('Error getting location', error);
@@ -69,6 +76,7 @@ export class MapPage {
     enableCurrentPosition() {
         const watch = this.geolocation.watchPosition();
         watch.subscribe((data) => {
+            console.log(data);
             const position: LatLng = {
                 lat: data.coords.latitude,
                 lng: data.coords.longitude
@@ -89,10 +97,21 @@ export class MapPage {
             this.currentPositionMarker = new this.googleMaps.Marker({
                 position,
                 map,
-                icon: 'assets/icon/current_position.png'
+                icon: 'assets/icon/current_position.png',
+            });
+            this.currentPositionCircle = new this.googleMaps.Circle({
+                center: position,
+                radius: this.accuracy, // in meters
+                strokeColor : '#F6AD55',
+                strokeWeight: 0.5,
+                fillColor : '#FBD38D',
+                fillOpacity: 0.2,
+                map
             });
         } else {
             this.currentPositionMarker.setPosition(position);
+            this.currentPositionCircle.setRadius(this.accuracy);
+            this.currentPositionCircle.setCenter(position);
         }
     }
 
@@ -106,7 +125,7 @@ export class MapPage {
             mapTypeControl: false,
             zoomControl: false,
             streetViewControl: false,
-            fullscreenControl: false,
+            fullscreenControl: false
         };
     }
 }
