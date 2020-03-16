@@ -13,6 +13,8 @@ import Marker = google.maps.Marker;
 import MapOptions = google.maps.MapOptions;
 // @ts-ignore
 import Circle = google.maps.Circle;
+// @ts-ignore
+import Icon = google.maps.Icon;
 
 export class MapPage {
 
@@ -20,8 +22,10 @@ export class MapPage {
 
     map: Map;
     currentPositionMarker: Marker;
+    currentPositionCircle: Circle;
     // @ts-ignore
     googleMaps: GoogleMaps;
+    accuracy: number;
 
     constructor(
         private geolocation: Geolocation,
@@ -62,6 +66,7 @@ export class MapPage {
                 lat: data.coords.latitude,
                 lng: data.coords.longitude
             };
+            this.accuracy = data.coords.accuracy;
             this.onCurrentPositionChanged(position);
         }).catch((error) => {
             console.log('Error getting location', error);
@@ -71,6 +76,7 @@ export class MapPage {
     enableCurrentPosition() {
         const watch = this.geolocation.watchPosition();
         watch.subscribe((data) => {
+            console.log(data);
             const position: LatLng = {
                 lat: data.coords.latitude,
                 lng: data.coords.longitude
@@ -92,22 +98,21 @@ export class MapPage {
                 position,
                 map,
                 icon: 'assets/icon/current_position.png',
-                anchorPoint: new this.googleMaps.Point(100, 100)
+            });
+            this.currentPositionCircle = new this.googleMaps.Circle({
+                center: position,
+                radius: this.accuracy, // in meters
+                strokeColor : '#F6AD55',
+                strokeWeight: 0.5,
+                fillColor : '#FBD38D',
+                fillOpacity: 0.2,
+                map
             });
         } else {
             this.currentPositionMarker.setPosition(position);
+            this.currentPositionCircle.setRadius(this.accuracy);
+            this.currentPositionCircle.setCenter(position);
         }
-        // TODO, test
-        const circle: Circle = new this.googleMaps.Circle({
-            center: position,
-            radius: 50, // in meters
-            strokeColor : '#F6AD55',
-            strokeWeight: 0.5,
-            fillColor : '#FBD38D',
-            fillOpacity: 0.2,
-            map
-        });
-
     }
 
     getDefaultOptions(): MapOptions {
@@ -120,7 +125,7 @@ export class MapPage {
             mapTypeControl: false,
             zoomControl: false,
             streetViewControl: false,
-            fullscreenControl: false,
+            fullscreenControl: false
         };
     }
 }
