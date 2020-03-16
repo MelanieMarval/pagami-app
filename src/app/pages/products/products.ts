@@ -36,7 +36,8 @@ export class ProductsPage {
                         console.log('Confirm Ok');
                     }
                 }
-            ]
+            ],
+            cssClass: 'ion-color-pagami-surface'
         });
 
         await alert.present();

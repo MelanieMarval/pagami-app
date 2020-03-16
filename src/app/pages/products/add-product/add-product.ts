@@ -65,7 +65,8 @@ export class AddProductPage extends InputFilePage {
                         console.log('Confirm Okay');
                     }
                 }
-            ]
+            ],
+            cssClass: 'ion-color-pagami-surface'
         });
 
         await alert.present();

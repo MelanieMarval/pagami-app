@@ -29,7 +29,8 @@ export class ProfilePage {
                         console.log('Confirm Okay');
                     }
                 }
-            ]
+            ],
+            cssClass: 'ion-color-pagami-surface'
         });
 
         await alert.present();
