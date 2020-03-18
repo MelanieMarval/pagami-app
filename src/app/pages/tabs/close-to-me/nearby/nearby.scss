@@ -80,8 +80,35 @@
   background: #444;
   color: #0d0d0d;
 }
-.background-global{
+
+.background-global {
   --background: var(--ion-background-color);
   background: var(--ion-background-color);
   transition: ease 1s;
 }
+
+
+
+
+
+div[scrollx=true], div[scrolly=true] {
+  position: relative;
+  overflow: hidden;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+div[scrollx=true] {
+  overflow-x: auto;
+}
+
+div[scrolly=true] {
+  overflow-y: auto;
+}
+
+.footer-button {
+  padding-bottom: 0;
+}
+
