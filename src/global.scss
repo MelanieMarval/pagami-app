@@ -67,13 +67,13 @@ ion-toolbar{
 .position-avatar{
   position: absolute;
   z-index: 10;
-  right: 15px;
+  right: 26px;
 }
 .md + .position-avatar{
-  top: 13px;
+  top: 19px;
 }
 .ios + .position-avatar{
-  top: 7px;
+  top: 18px;
 }
 
 /* END toolbar */
@@ -131,15 +131,19 @@ ion-searchbar > div > input{
   }
 }
 .header-search-map{
-  width: 94%;
-  height: 48px;
-  margin: 3%;
-  border-radius: 3px;
-  background: #FFF;
   position: absolute;
-  //box-shadow: 1px 1px 5px 3px #707070;
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  width: 96%;
+  //height: 48px;
+  margin: 2%;
+  border-radius: 7px;
+  border: 1px solid #d8d8d8;
+  background: #FFF;
+  box-shadow: 0 0 12px #d6d6d6;
+  //box-shadow: rgba(240, 240, 240, 0.1) 0 2px 2px 0, rgba(240, 240, 240, 0.1) 0 3px 1px -2px, rgba(240, 240, 240, 0.1) 0 1px 5px 0;
   transition: ease .4s;
+  &:after{
+    background: unset;
+  }
   ion-row{
     height: 40px;
     ion-col{
@@ -171,6 +175,13 @@ ion-searchbar > div > input{
 .footer-button{
   padding: 17px;
   background: var(--ion-background-color);
+}
+.footer-button--div{
+  position: absolute;
+  background: transparent;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 .button-large, .button-small{
   height: 56px;
@@ -299,6 +310,16 @@ ion-checkbox{
 /*  ***********************  */
 
 
+ion-bottom-drawer {
+  background: transparent !important;
+  --background: transparent !important;
+
+  ion-content {
+    --background: transparent;
+    background: transparent;
+  }
+}
+
 /* ****EXTRAS***** */
 .swiper-pagination-bullet-active{
   --bullet-background-active: #f6ad55;
@@ -322,7 +343,12 @@ ion-checkbox{
   --background: transparent !important;
   background: transparent !important;
 }
-
+.with-overflow-y{
+  overflow-y: scroll !important;
+}
+.d-none{
+  display: none !important;
+}
 .btn-no-style{
   --box-shadow: unset;
   --background: transparent;
