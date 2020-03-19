@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { DrawerState } from 'ion-bottom-drawer';
+import { Component, OnInit } from '@angular/core';
+import { DrawerState } from '../../../modules/ion-bottom-drawer/drawer-state';
 
 @Component({
     selector: 'app-nearby',
@@ -31,6 +31,7 @@ export class NearbyPage implements OnInit {
         console.log('enable dash scroll');
         this.disableDrag = false;
     }
+
     disableDashScroll() {
         console.log('disable dash scroll');
         this.disableDrag = false;

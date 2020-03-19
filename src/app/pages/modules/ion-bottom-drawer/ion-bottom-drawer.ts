@@ -20,7 +20,7 @@ import { DrawerState } from './drawer-state';
     styleUrls: ['./ion-bottom-drawer.scss']
 })
 export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
-    
+
     @Input() dockedHeight = 50;
 
     @Input() shouldBounce = true;
