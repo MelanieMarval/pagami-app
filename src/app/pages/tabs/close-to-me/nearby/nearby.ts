@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerState } from 'ion-bottom-drawer';
+import { DrawerState } from '../../../modules/ion-bottom-drawer/drawer-state';
 
 @Component({
     selector: 'app-nearby',
@@ -11,15 +11,13 @@ export class NearbyPage implements OnInit {
 
     selectedCategory = 0;
     heightScreen: number;
-    heightDrawer: any;
 
     shouldBounce = true;
     disableDrag = false;
     distanceTop = 58;
-    dockedHeight = 564;
+    dockedHeight = 550;
     minimumHeight = 118;
     drawerState = DrawerState.Bottom;
-    states = DrawerState;
 
     constructor() {
     }
@@ -29,4 +27,13 @@ export class NearbyPage implements OnInit {
         this.heightScreen = this.heightScreen - 58;
     }
 
+    enableDashScroll() {
+        console.log('enable dash scroll');
+        this.disableDrag = false;
+    }
+
+    disableDashScroll() {
+        console.log('disable dash scroll');
+        this.disableDrag = false;
+    }
 }
