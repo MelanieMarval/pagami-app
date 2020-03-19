@@ -27,13 +27,14 @@ export class NearbyPage implements OnInit {
         this.heightScreen = this.heightScreen - 58;
     }
 
-    enableDashScroll() {
-        console.log('enable dash scroll');
+    enableDashScroll($event) {
+        // console.log($event);
+        // console.log('enable dash scroll');
         this.disableDrag = false;
     }
 
     disableDashScroll() {
-        console.log('disable dash scroll');
+        // console.log('disable dash scroll');
         this.disableDrag = false;
     }
 }

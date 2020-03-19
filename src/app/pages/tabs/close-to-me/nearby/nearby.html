@@ -29,7 +29,7 @@
                    [dockedHeight]="dockedHeight" [shouldBounce]="shouldBounce" [distanceTop]="distanceTop"
                    class="nearby-drawer">
     <div class="drawer-content nearby-expanded" style="height: 100%">
-        <div class="drawerActuator" (touchstart)="enableDashScroll()" (touchend)="disableDashScroll()">
+        <div class="drawerActuator" (touchstart)="enableDashScroll($event)" (touchend)="disableDashScroll()">
             <ion-grid>
                 <ion-row class="scrollable-draw">
                     <div class="scrollable-draw-children" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>

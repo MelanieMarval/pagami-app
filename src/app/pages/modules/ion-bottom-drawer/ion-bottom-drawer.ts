@@ -40,6 +40,8 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     private _startPositionTop: number;
     private readonly _BOUNCE_DELTA = 30;
 
+    private contentPosition = 0;
+
     constructor(
         private _element: ElementRef,
         private _renderer: Renderer2,
@@ -56,10 +58,18 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         const hammer = new Hammer(this._element.nativeElement);
         hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
         hammer.on('pan panstart panend', (ev: any) => {
+            if (ev.direction === Hammer.DIRECTION_DOWN) {
+                console.log('hacia abajo');
+            } else if (ev.direction === Hammer.DIRECTION_UP) {
+                console.log('hacia arriba');
+            }
+            if (this.contentPosition !== 0) {
+                return;
+            }
             if (this.disableDrag) {
                 return;
             }
-
+            console.log(ev);
             switch (ev.type) {
                 case 'panstart':
                     this._handlePanStart();
@@ -166,5 +176,10 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         this._domCtrl.write(() => {
             this._renderer.setStyle(this._element.nativeElement, 'transform', 'translateY(' + value + ')');
         });
+    }
+
+    onScrollContent($event: CustomEvent) {
+        this.contentPosition = $event.detail.scrollTop;
+        console.log(this.contentPosition);
     }
 }
