@@ -1,15 +1,16 @@
 import {
-    Component,
-    Input,
-    ElementRef,
-    Renderer2,
-    Output,
-    EventEmitter,
     AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
     OnChanges,
-    SimpleChanges
+    Output,
+    Renderer2,
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
-import { Platform, DomController } from '@ionic/angular';
+import { DomController, IonContent, Platform } from '@ionic/angular';
 import * as Hammer from 'hammerjs';
 
 import { DrawerState } from './drawer-state';
@@ -20,6 +21,8 @@ import { DrawerState } from './drawer-state';
     styleUrls: ['./ion-bottom-drawer.scss']
 })
 export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
+
+    @ViewChild('ionContent', { static: false}) private ionContent: IonContent;
 
     @Input() dockedHeight = 50;
 
@@ -36,6 +39,8 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     @Input() minimumHeight = 0;
 
     @Output() stateChange: EventEmitter<DrawerState> = new EventEmitter<DrawerState>();
+
+    @Output() scrollContent: EventEmitter<number> = new EventEmitter<number>();
 
     private _startPositionTop: number;
     private readonly _BOUNCE_DELTA = 30;
@@ -59,17 +64,18 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
         hammer.on('pan panstart panend', (ev: any) => {
             if (ev.direction === Hammer.DIRECTION_DOWN) {
-                console.log('hacia abajo');
+                // nothing
             } else if (ev.direction === Hammer.DIRECTION_UP) {
-                console.log('hacia arriba');
+                if (this.state === DrawerState.Top && this.contentPosition === 0) {
+                    this.ionContent.scrollToPoint(undefined, 145, 300);
+                }
             }
-            if (this.contentPosition !== 0) {
+            if (this.contentPosition > 1 || (this.contentPosition === 1 && ev.direction === Hammer.DIRECTION_UP)) {
                 return;
             }
             if (this.disableDrag) {
                 return;
             }
-            console.log(ev);
             switch (ev.type) {
                 case 'panstart':
                     this._handlePanStart();
@@ -167,6 +173,10 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 }
                 if (newTop > this._platform.height() - this.minimumHeight) {
                     this._setTranslateY((this._platform.height() - this.minimumHeight) + 'px');
+                    if (this.state === DrawerState.Bottom && ev.additionalEvent === 'pandown') {
+                        this.minimumHeight = 0;
+                        this._setTranslateY(newTop + 'px');
+                    }
                 }
             }
         }
@@ -179,7 +189,11 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     }
 
     onScrollContent($event: CustomEvent) {
-        this.contentPosition = $event.detail.scrollTop;
-        console.log(this.contentPosition);
+        this.setupContentTopPosition($event.detail.scrollTop);
+    }
+
+    setupContentTopPosition(position: number) {
+        this.contentPosition = position;
+        this.scrollContent.emit(this.contentPosition);
     }
 }

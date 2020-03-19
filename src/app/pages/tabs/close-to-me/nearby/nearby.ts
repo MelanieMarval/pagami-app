@@ -18,6 +18,7 @@ export class NearbyPage implements OnInit {
     dockedHeight = 550;
     minimumHeight = 118;
     drawerState = DrawerState.Bottom;
+    contentPosition = 0;
 
     constructor() {
     }
@@ -25,16 +26,5 @@ export class NearbyPage implements OnInit {
     ngOnInit() {
         this.heightScreen = window.innerHeight;
         this.heightScreen = this.heightScreen - 58;
-    }
-
-    enableDashScroll($event) {
-        // console.log($event);
-        // console.log('enable dash scroll');
-        this.disableDrag = false;
-    }
-
-    disableDashScroll() {
-        // console.log('disable dash scroll');
-        this.disableDrag = false;
     }
 }

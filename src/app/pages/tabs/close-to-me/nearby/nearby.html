@@ -27,9 +27,10 @@
 
 <ion-bottom-drawer [disableDrag]="disableDrag" [(state)]="drawerState" [minimumHeight]="minimumHeight"
                    [dockedHeight]="dockedHeight" [shouldBounce]="shouldBounce" [distanceTop]="distanceTop"
+                   (scrollContent)="contentPosition = $event"
                    class="nearby-drawer">
-    <div class="drawer-content nearby-expanded" style="height: 100%">
-        <div class="drawerActuator" (touchstart)="enableDashScroll($event)" (touchend)="disableDashScroll()">
+    <div class="drawer-content nearby-expanded">
+        <div [ngClass]="{'with-overflow-y': drawerState === 2 && contentPosition > 0}">
             <ion-grid>
                 <ion-row class="scrollable-draw">
                     <div class="scrollable-draw-children" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
@@ -58,8 +59,6 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-        </div>
-        <div [ngClass]="{'with-overflow-y': drawerState === 2}">
             <ion-grid>
                 <ion-row *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
                     <ion-card button color="pagami-surface" class="card" routerLink="/app/shop">
