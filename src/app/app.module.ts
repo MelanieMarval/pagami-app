@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { BusinessDetailsPage } from './pages/details-business/business-details';
 import { SelectIconPage } from './pages/details-business/select-icon/select-icon';
 import { OrdersPage } from './pages/orders/orders';
+import { AppService } from './services/app.service';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage, BusinessDetailsPage, SelectIconPage],
@@ -29,6 +30,7 @@ import { OrdersPage } from './pages/orders/orders';
     providers: [
         StatusBar,
         SplashScreen,
+        AppService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

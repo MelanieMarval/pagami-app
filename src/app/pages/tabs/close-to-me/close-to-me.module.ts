@@ -7,7 +7,7 @@ import { CloseToMeRoutingModule } from './close-to-me-routing.module';
 // Components
 import { CloseToMePage } from './close-to-me';
 import { NearbyPage } from './nearby/nearby';
-import { IonBottomDrawerModule } from '../../modules/ion-bottom-drawer/ion-bottom-drawer.module';
+import { IonBottomDrawerModule } from '../../../modules/ion-bottom-drawer/ion-bottom-drawer.module';
 
 @NgModule({
     imports: [

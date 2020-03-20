@@ -8,16 +8,13 @@
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
-
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import '~@ionic/angular/css/display.css';
-
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
@@ -25,55 +22,59 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
 /* ***TOOLBAR IN DIFFERENT PAGES (wallet/activity, terms, etc) *** */
-ion-toolbar{
-  //height: 56px;
-  --background: var(--ion-color-pagami-surface);
-  --border-width: 0 !important;
+ion-toolbar {
+    //height: 56px;
+    --background: var(--ion-color-pagami-surface);
+    --border-width: 0 !important;
 
-  .toolbar-icon{
-    color: #ffffff;
-    font-size: 27px;
-  }
-  ion-title.md{
-    text-align: center;
-  }
-
-  ion-title.ios{
-    padding: 0;
-  }
-}
-.toolbar-simple{
-  ion-title.md {
-    margin-right: 48px;
-  }
-}
-.toolbar-dual{
-  .right-button{
-    margin-right: 14px;
-    ion-icon{
-      width: 24px;
-      height: 24px;
+    .toolbar-icon {
+        color: #ffffff;
+        font-size: 27px;
     }
-  }
+    ion-title.md {
+        text-align: center;
+    }
+
+    ion-title.ios {
+        padding: 0;
+    }
 }
 
-.toolbar-avatar{
-  width: 32px;
-  height: 32px;
-  margin-left: 10px;
+.toolbar-simple {
+    ion-title.md {
+        margin-right: 48px;
+    }
 }
-.position-avatar{
-  position: absolute;
-  z-index: 10;
-  right: 26px;
+
+.toolbar-dual {
+    .right-button {
+        margin-right: 14px;
+        ion-icon {
+            width: 24px;
+            height: 24px;
+        }
+    }
 }
-.md + .position-avatar{
-  top: 19px;
+
+.toolbar-avatar {
+    width: 32px;
+    height: 32px;
+    margin-left: 10px;
 }
-.ios + .position-avatar{
-  top: 18px;
+
+.position-avatar {
+    position: absolute;
+    z-index: 10;
+    right: 26px;
+}
+
+.md + .position-avatar {
+    top: 19px;
+}
+
+.ios + .position-avatar {
+    top: 18px;
 }
 
 /* END toolbar */
@@ -81,282 +82,318 @@ ion-toolbar{
 
 /* ***HEADER WITH IMAGE*** */
 .header-image {
-  height: 300px;
+    height: 300px;
 
-  ion-img {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    object-fit: cover;
-    //opacity: .8;
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 1%, rgba(0, 0, 0, 1) 27%, rgba(0, 0, 0, 1) 46%, rgba(0, 0, 0, 1) 53%, rgba(0, 0, 0, 0.2) 100%);
-  }
+    ion-img {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        object-fit: cover;
+        //opacity: .8;
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 1%, rgba(0, 0, 0, 1) 27%, rgba(0, 0, 0, 1) 46%, rgba(0, 0, 0, 1) 53%, rgba(0, 0, 0, 0.2) 100%);
+    }
 }
-.header-image + ion-fab{
-  top: 120px;
+
+.header-image + ion-fab {
+    top: 120px;
 }
+
 /* END header */
 /* ************************* */
 
 /* ***SEARCH BAR IN CLOSE TO ME, PRODUCTS, SERVICES, ETC *** */
-ion-searchbar > div > input{
-  padding: 0 5px !important;
-  font-weight: 500 !important;
-  background: transparent !important;
-  box-shadow: unset !important;
-  font-size: 16px !important;
+ion-searchbar > div > input {
+    padding: 0 5px !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+    box-shadow: unset !important;
+    font-size: 16px !important;
 }
+
 .top-searchbar {
-  ion-searchbar {
-    background: #FFFFFF;
-    border-radius: 5px;
-    color: var(--ion-color-pagami-text-2nd);
-    div {
-      input {
-        margin-left: 23px;
-      }
-      ion-icon{
-        color: var(--ion-color-pagami-text-2nd) !important;
-        left: 0 !important;
-      }
-      ion-icon.md{
-        top: 5px !important;
-      }
+    ion-searchbar {
+        background: #FFFFFF;
+        border-radius: 5px;
+        color: var(--ion-color-pagami-text-2nd);
+        div {
+            input {
+                margin-left: 23px;
+            }
+            ion-icon {
+                color: var(--ion-color-pagami-text-2nd) !important;
+                left: 0 !important;
+            }
+            ion-icon.md {
+                top: 5px !important;
+            }
+        }
     }
-  }
 }
-.without-search-icon{
-  ion-icon.searchbar-search-icon {
-    display: none !important;
-  }
-}
-.header-search-map{
-  position: absolute;
-  width: 96%;
-  //height: 48px;
-  margin: 2%;
-  border-radius: 7px;
-  border: 1px solid #d8d8d8;
-  background: #FFF;
-  box-shadow: 0 0 12px #d6d6d6;
-  //box-shadow: rgba(240, 240, 240, 0.1) 0 2px 2px 0, rgba(240, 240, 240, 0.1) 0 3px 1px -2px, rgba(240, 240, 240, 0.1) 0 1px 5px 0;
-  transition: ease .4s;
-  &:after{
-    background: unset;
-  }
-  ion-row{
-    height: 40px;
-    ion-col{
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      ion-icon {
-        color: #718096;
-        padding-left: 10px;
-      }
+
+.without-search-icon {
+    ion-icon.searchbar-search-icon {
+        display: none !important;
     }
-  }
-  &--surface{
-    background: var(--ion-color-pagami-surface);
-    ion-searchbar > div > input{
-      font-size: 12px !important;
+}
+
+.header-search-map {
+    position: absolute;
+    width: 96%;
+    //height: 48px;
+    margin: 2%;
+    border-radius: 7px;
+    border: 1px solid #d8d8d8;
+    background: #FFF;
+    box-shadow: 0 0 12px #d6d6d6;
+    //box-shadow: rgba(240, 240, 240, 0.1) 0 2px 2px 0, rgba(240, 240, 240, 0.1) 0 3px 1px -2px, rgba(240, 240, 240, 0.1) 0 1px 5px 0;
+    transition: ease .4s;
+    &:after {
+        background: unset;
     }
-  }
+    ion-row {
+        height: 40px;
+        ion-col {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            ion-icon {
+                color: #718096;
+                padding-left: 10px;
+            }
+        }
+    }
+    &--surface {
+        background: var(--ion-color-pagami-surface);
+        ion-searchbar > div > input {
+            font-size: 12px !important;
+        }
+    }
 }
-.searchbar-disabled{
-  opacity: 1 !important;
+
+.searchbar-disabled {
+    opacity: 1 !important;
 }
+
 /* END searchbar*/
 /*  ***********************  */
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
-.footer-button{
-  padding: 17px;
-  background: var(--ion-background-color);
+.footer-button {
+    padding: 17px;
+    background: var(--ion-background-color);
 }
-.footer-button--div{
-  position: absolute;
-  background: transparent;
-  right: 0;
-  left: 0;
-  bottom: 0;
+
+.footer-button--div {
+    position: absolute;
+    background: transparent;
+    right: 0;
+    left: 0;
+    bottom: 0;
 }
-.button-large, .button-small{
-  height: 56px;
-  width: 100%;
-  font-size: 14px;
-  font-weight: normal;
-  border-radius: 5px;
-  text-transform: unset;
-  transition: ease .4s;
+
+.button-large, .button-small {
+    height: 56px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: normal;
+    border-radius: 5px;
+    text-transform: unset;
+    transition: ease .4s;
 }
-.button-small{
-  height: 36px;
+
+.button-small {
+    height: 36px;
 }
+
 /* END button */
 /*  ***********************  */
 
 /* ***CONTAINER OF INPUT AND INPUTS*** */
-.inputs-container{
-  margin: 15px 20px 0;
+.inputs-container {
+    margin: 15px 20px 0;
 
-  ion-item{
-    border-radius: 5px 5px 0 0;
-    margin-bottom: 17px;
-    //border-bottom: 2px solid;
-    transition: ease .4s;
-    ion-label.ios{
-      transform: translate3d(0, 13px, 0px);
-    }
+    ion-item {
+        border-radius: 5px 5px 0 0;
+        margin-bottom: 17px;
+        //border-bottom: 2px solid;
+        transition: ease .4s;
+        ion-label.ios {
+            transform: translate3d(0, 13px, 0px);
+        }
 
-    ion-icon{
-      margin-top: auto;
-      margin-bottom: auto;
+        ion-icon {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     }
-  }
 
 }
+
 .checkbox-container {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 
-  ion-label{
-    font-family: var(--ion-font-family);
-    font-size: 12px !important;
-    color: #FFFFFF;
-  }
-}
-ion-checkbox{
-  --border-radius: 2px;
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
-}
-
-.link-buttons-container{
-  margin: 25px 20px;
-
-  ion-item{
-    border-radius: 5px;
-    margin-bottom: 12px;
-  }
-  ion-item.ios > ion-icon{
-    display: none;
-  }
-}
-.add-image{
-  height: 340px;
-
-  &-background{
-    position: relative;
-    height: 100%;
-    width: 100%;
-    background: var(--ion-color-pagami-surface);
-    ion-img{
-      height: 100%;
-      width: 100%;
-      opacity: .5;
-      object-fit: cover;
+    ion-label {
+        font-family: var(--ion-font-family);
+        font-size: 12px !important;
+        color: #FFFFFF;
     }
-    .input-file,
-    .input-file > input{
-      opacity: 0;
-      filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-      cursor: pointer;
-      position:absolute;
-      bottom: 0;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: 1000;
-    }
-  }
 }
-.add-image-margin{
-  margin: 20px;
-  .add-image-background{
-    border-radius: 5px;
-  }
+
+ion-checkbox {
+    --border-radius: 2px;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.link-buttons-container {
+    margin: 25px 20px;
+
+    ion-item {
+        border-radius: 5px;
+        margin-bottom: 12px;
+    }
+    ion-item.ios > ion-icon {
+        display: none;
+    }
+}
+
+.add-image {
+    height: 340px;
+
+    &-background {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background: var(--ion-color-pagami-surface);
+        ion-img {
+            height: 100%;
+            width: 100%;
+            opacity: .5;
+            object-fit: cover;
+        }
+        .input-file,
+        .input-file > input {
+            opacity: 0;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            cursor: pointer;
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1000;
+        }
+    }
+}
+
+.add-image-margin {
+    margin: 20px;
+    .add-image-background {
+        border-radius: 5px;
+    }
 }
 
 /* END inputs */
 /*  ***********************  */
 
 /* ***ALERTS IN PROFILE *** */
-.sc-ion-alert-ios-h{
-  --background: var(--ion-color-pagami-surface) !important;
+.sc-ion-alert-ios-h {
+    --background: var(--ion-color-pagami-surface) !important;
 }
-.alert-wrapper{
-  max-width: 90% !important;
+
+.alert-wrapper {
+    max-width: 90% !important;
 }
+
 /* END alerts */
 /*  ***********************  */
 
 /* ***PRODUCTS CONTAINER AND ITEMS (STANDARD DESIGN)*** */
-.products{
-  margin: 20px;
-  .product{
-    --border-radius: 3px;
-    margin-bottom: 20px;
+.products {
+    margin: 20px;
+    .product {
+        --border-radius: 3px;
+        margin-bottom: 20px;
 
-    &-image{ height: 100%; width: 60px; }
-    &-name{ margin-left: 20px; }
-    &-stock{color: var(--ion-color-pagami-text-2nd)}
-    &-price, &-quantity, &-stock{ font-size: 12px; }
-  }
+        &-image {
+            height: 100%;
+            width: 60px;
+        }
+        &-name {
+            margin-left: 20px;
+        }
+        &-stock {
+            color: var(--ion-color-pagami-text-2nd)
+        }
+        &-price, &-quantity, &-stock {
+            font-size: 12px;
+        }
+    }
 }
+
 /* END products */
 /*  ***********************  */
 
-
 ion-bottom-drawer {
-  background: transparent !important;
-  --background: transparent !important;
+    background: transparent !important;
+    --background: transparent !important;
 
-  ion-content {
-    --background: transparent;
-    background: transparent;
-  }
+    ion-content {
+        --background: transparent;
+        background: transparent;
+    }
 }
 
 /* ****EXTRAS***** */
-.swiper-pagination-bullet-active{
-  --bullet-background-active: #f6ad55;
+.swiper-pagination-bullet-active {
+    --bullet-background-active: #f6ad55;
 }
-.border-white-1px{
-  border: 1px solid #FFFFFF;
+
+.border-white-1px {
+    border: 1px solid #FFFFFF;
 }
-.avatar-square{
-  --border-radius: 0;
-  margin: 0;
+
+.avatar-square {
+    --border-radius: 0;
+    margin: 0;
 }
-.size-icon-default{
-  width: 24px;
-  height: 24px;
+
+.size-icon-default {
+    width: 24px;
+    height: 24px;
 }
-.fab-corner-lr{
-  bottom: 16px;
-  right: 16px;
+
+.fab-corner-lr {
+    bottom: 16px;
+    right: 16px;
 }
-.background-transparent{
-  --background: transparent !important;
-  background: transparent !important;
+
+.background-transparent {
+    --background: transparent !important;
+    background: transparent !important;
 }
-.with-overflow-y{
-  overflow-y: scroll !important;
+
+.with-overflow-y {
+    overflow-y: scroll !important;
 }
-.d-none{
-  display: none !important;
+
+.d-none {
+    display: none !important;
 }
-.btn-no-style{
-  --box-shadow: unset;
-  --background: transparent;
+
+.btn-no-style {
+    --box-shadow: unset;
+    --background: transparent;
 }
+
 .toast-bottom-custom {
-  width: 95%;
-  transform: translateY(-145px) translateX(3%);
+    width: 95%;
+    transform: translateY(-145px) translateX(3%);
 }
+
 .toast-bottom-custom-2 {
-  transform: translateY(-75px);
+    transform: translateY(-75px);
 }

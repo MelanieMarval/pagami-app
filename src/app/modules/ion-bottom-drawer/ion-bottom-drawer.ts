@@ -38,9 +38,13 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     @Input() minimumHeight = 0;
 
+    @Input() bottomHeightChange: EventEmitter<number>;
+
     @Output() stateChange: EventEmitter<DrawerState> = new EventEmitter<DrawerState>();
 
     @Output() scrollContent: EventEmitter<number> = new EventEmitter<number>();
+
+    @Output() hideBottomSheet: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private _startPositionTop: number;
     private readonly _BOUNCE_DELTA = 30;
@@ -67,7 +71,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 // nothing
             } else if (ev.direction === Hammer.DIRECTION_UP) {
                 if (this.state === DrawerState.Top && this.contentPosition === 0) {
-                    this.ionContent.scrollToPoint(undefined, 145, 300);
+                    this.ionContent.scrollToPoint(undefined, 145, 200);
                 }
             }
             if (this.contentPosition > 1 || (this.contentPosition === 1 && ev.direction === Hammer.DIRECTION_UP)) {
@@ -86,6 +90,9 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 default:
                     this._handlePan(ev);
             }
+        });
+        this.bottomHeightChange.subscribe(height => {
+            this.changeBottomHeight(height);
         });
     }
 
@@ -176,6 +183,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                     if (this.state === DrawerState.Bottom && ev.additionalEvent === 'pandown') {
                         this.minimumHeight = 0;
                         this._setTranslateY(newTop + 'px');
+                        this.hideBottomSheet.emit(true);
                     }
                 }
             }
@@ -195,5 +203,13 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     setupContentTopPosition(position: number) {
         this.contentPosition = position;
         this.scrollContent.emit(this.contentPosition);
+    }
+
+    changeBottomHeight(height) {
+        this.ionContent.scrollToPoint(undefined, 0, 300);
+        this.minimumHeight = height;
+        this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
+        this.state = DrawerState.Bottom;
+        this.stateChange.emit(this.state);
     }
 }
