@@ -1,8 +1,17 @@
 {
-  "appId": "io.ionic.pagami",
-  "appName": "Pagami",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "cordova": {}
+    "appId": "io.ionic.pagami",
+    "appName": "Pagami",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "www",
+    "cordova": {},
+    "plugins": {
+        "GoogleAuth": {
+            "scopes": [
+                "profile",
+                "email"
+            ],
+            "serverClientId": "901661269353-n7n4nor724ruta2enamnphmagsje79ru.apps.googleusercontent.com"
+        }
+    }
 }
