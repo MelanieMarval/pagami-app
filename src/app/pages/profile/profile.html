@@ -81,7 +81,7 @@
     </ion-list>
 
     <div class="footer-button footer-button--div" >
-        <ion-button class="button-large" expand="block" color="danger" (click)="deleteAccountConfirm()" *ngIf="!isEditing">Eliminar Cuenta</ion-button>
+        <ion-button class="button-large" expand="block" color="danger" (click)="googleSignIn()" *ngIf="!isEditing">Eliminar Cuenta</ion-button>
         <ion-row *ngIf="isEditing">
             <ion-col size="6">
                 <ion-button class="button-small" expand="block" color="pagami-surface" (click)="editProfile()">

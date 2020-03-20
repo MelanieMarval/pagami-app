@@ -15,6 +15,10 @@ import { BusinessDetailsPage } from './pages/details-business/business-details';
 import { SelectIconPage } from './pages/details-business/select-icon/select-icon';
 import { OrdersPage } from './pages/orders/orders';
 import { AppService } from './services/app.service';
+import { firebaseConfig } from '../environments/environment';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage, BusinessDetailsPage, SelectIconPage],
@@ -26,6 +30,9 @@ import { AppService } from './services/app.service';
         FormsModule,
         IonicModule.forRoot(),
         AppRoutingModule,
+        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
     ],
     providers: [
         StatusBar,

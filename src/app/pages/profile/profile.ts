@@ -3,10 +3,15 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AlertController, ToastController } from '@ionic/angular';
 import { InputFilePage } from '../parent/InputFilePage';
 import { getGoogleMaps } from '../parent/MapPage';
+import { Plugins } from '@capacitor/core';
+import '@codetrix-studio/capacitor-google-auth';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 
 // @ts-ignore
 import places = google.maps.places;
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
     selector: 'app-profile',
@@ -24,6 +29,8 @@ export class ProfilePage extends InputFilePage {
 
     constructor(public alertController: AlertController,
                 public toastController: ToastController,
+                private angularFireAuth: AngularFireAuth,
+                private authService: AuthService,
                 public zone: NgZone
     ) {
         super();
@@ -106,5 +113,20 @@ export class ProfilePage extends InputFilePage {
         });
 
         await alert.present();
+    }
+
+    async googleSignIn() {
+        const googleUser = await Plugins.GoogleAuth.signIn();
+        const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+        const fireCredential = await this.angularFireAuth.auth.signInWithCredential(credential);
+        const token = await fireCredential.user.getIdToken(false);
+        this.authService.singIn(token).then(
+            success => {
+                alert(success.name);
+                console.log(success);
+            }, reason => {
+                console.log('-> reason', reason);
+            }
+        );
     }
 }
