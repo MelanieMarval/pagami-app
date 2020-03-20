@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilePage } from './profile';
 import { CoreModule } from '../../core/core.module';
+import { EmptyPage } from './empty/empty';
 
 @NgModule({
     imports: [
@@ -14,7 +15,7 @@ import { CoreModule } from '../../core/core.module';
         CoreModule,
         RouterModule.forChild([{path: '', component: ProfilePage}])
     ],
-    declarations: [ProfilePage]
+    declarations: [ProfilePage, EmptyPage]
 })
 export class ProfileModule {
 }
