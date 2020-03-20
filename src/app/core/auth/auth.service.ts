@@ -9,7 +9,7 @@ import { MainService } from '../main/main.service';
 })
 export class AuthService {
 
-    private AUTH_URL = `${environment.API_URL}/auth`;
+    private URL = `${environment.API_URL}/auth`;
     private httpClient: HttpClient;
 
     constructor(private mainService: MainService) {
@@ -18,7 +18,7 @@ export class AuthService {
 
     singIn(token: string) {
         const method = 'sign-in';
-        const request = this.httpClient.post(`${this.AUTH_URL}/${method}`, { token },
+        const request = this.httpClient.post(`${this.URL}/${method}`, { token },
             {
                 headers: this.mainService.getHeaders()
             });
