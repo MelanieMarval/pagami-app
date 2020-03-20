@@ -1,15 +1,16 @@
 import {
-    Component,
-    Input,
-    ElementRef,
-    Renderer2,
-    Output,
-    EventEmitter,
     AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
     OnChanges,
-    SimpleChanges
+    Output,
+    Renderer2,
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
-import { Platform, DomController } from '@ionic/angular';
+import { DomController, IonContent, Platform } from '@ionic/angular';
 import * as Hammer from 'hammerjs';
 
 import { DrawerState } from './drawer-state';
@@ -20,6 +21,8 @@ import { DrawerState } from './drawer-state';
     styleUrls: ['./ion-bottom-drawer.scss']
 })
 export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
+
+    @ViewChild('ionContent', { static: false}) private ionContent: IonContent;
 
     @Input() dockedHeight = 50;
 
@@ -35,10 +38,18 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     @Input() minimumHeight = 0;
 
+    @Input() bottomHeightChange: EventEmitter<number>;
+
     @Output() stateChange: EventEmitter<DrawerState> = new EventEmitter<DrawerState>();
+
+    @Output() scrollContent: EventEmitter<number> = new EventEmitter<number>();
+
+    @Output() hideBottomSheet: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private _startPositionTop: number;
     private readonly _BOUNCE_DELTA = 30;
+
+    private contentPosition = 0;
 
     constructor(
         private _element: ElementRef,
@@ -56,10 +67,19 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         const hammer = new Hammer(this._element.nativeElement);
         hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
         hammer.on('pan panstart panend', (ev: any) => {
+            if (ev.direction === Hammer.DIRECTION_DOWN) {
+                // nothing
+            } else if (ev.direction === Hammer.DIRECTION_UP) {
+                if (this.state === DrawerState.Top && this.contentPosition === 0) {
+                    this.ionContent.scrollToPoint(undefined, 145, 200);
+                }
+            }
+            if (this.contentPosition > 1 || (this.contentPosition === 1 && ev.direction === Hammer.DIRECTION_UP)) {
+                return;
+            }
             if (this.disableDrag) {
                 return;
             }
-
             switch (ev.type) {
                 case 'panstart':
                     this._handlePanStart();
@@ -70,6 +90,9 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 default:
                     this._handlePan(ev);
             }
+        });
+        this.bottomHeightChange.subscribe(height => {
+            this.changeBottomHeight(height);
         });
     }
 
@@ -157,6 +180,11 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 }
                 if (newTop > this._platform.height() - this.minimumHeight) {
                     this._setTranslateY((this._platform.height() - this.minimumHeight) + 'px');
+                    if (this.state === DrawerState.Bottom && ev.additionalEvent === 'pandown') {
+                        this.minimumHeight = 0;
+                        this._setTranslateY(newTop + 'px');
+                        this.hideBottomSheet.emit(true);
+                    }
                 }
             }
         }
@@ -166,5 +194,22 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         this._domCtrl.write(() => {
             this._renderer.setStyle(this._element.nativeElement, 'transform', 'translateY(' + value + ')');
         });
+    }
+
+    onScrollContent($event: CustomEvent) {
+        this.setupContentTopPosition($event.detail.scrollTop);
+    }
+
+    setupContentTopPosition(position: number) {
+        this.contentPosition = position;
+        this.scrollContent.emit(this.contentPosition);
+    }
+
+    changeBottomHeight(height) {
+        this.ionContent.scrollToPoint(undefined, 0, 300);
+        this.minimumHeight = height;
+        this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
+        this.state = DrawerState.Bottom;
+        this.stateChange.emit(this.state);
     }
 }

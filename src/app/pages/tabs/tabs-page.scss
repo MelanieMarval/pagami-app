@@ -1,18 +1,19 @@
-ion-tab-bar{
-  border: 0 !important;
-  --background: #2d3748;
+ion-tab-bar {
+    border: 0 !important;
+    --background: #2d3748;
 
-  ion-tab-button{
-    --color: #a0aec0;
-    --color-selected: #fff;
-    ion-label{
-      font-family: 'Quicksand', 'Roboto', sans-serif;
+    ion-tab-button {
+        --color: #a0aec0;
+        --color-selected: #fff;
+        ion-label {
+            font-family: 'Quicksand', 'Roboto', sans-serif;
+        }
     }
-  }
 }
+
 @media (max-width: 390px) {
-  .d-none-tab {
-    display: none;
-  }
+    .d-none-tab {
+        display: none;
+    }
 }
 
