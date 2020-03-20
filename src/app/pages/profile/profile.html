@@ -1,4 +1,7 @@
-<ion-header>
+<app-profile-empty *ngIf="!isLogged"></app-profile-empty>
+
+
+<ion-header *ngIf="isLogged">
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/tabs/close-to-me"></ion-back-button>
@@ -12,23 +15,10 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-    <div class="add-image" *ngIf="isEditing">
-        <div class="add-image-background">
-            <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
-            <ion-fab vertical="center" horizontal="center">
-                <ion-fab-button color="pagami">
-                    <ion-icon name="camera"></ion-icon>
-                </ion-fab-button>
-            </ion-fab>
-        </div>
-    </div>
+<ion-content *ngIf="isLogged && !isEditing">
 
     <ion-list>
-
-        <ion-item-group class="profile--section-1" *ngIf="!isEditing">
+        <ion-item-group class="profile--section-1">
             <ion-avatar class="border-white-1px">
                 <img src="assets/img/avatar-profile.jpg">
             </ion-avatar>
@@ -37,37 +27,20 @@
             <h3>456 Empresas registradas</h3>
         </ion-item-group>
 
-        <ion-input [(ngModel)]="autocomplete.input" (ionInput)="updateSearchResults()" placeholder="Search for a place"></ion-input>
-        <ion-list [hidden]="autocompleteItems.length == 0">
-            <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
-                {{ item.description }}
-            </ion-item>
-        </ion-list>
-
         <ion-list lines="none" class="inputs-container">
-            <ion-item color="pagami-surface" *ngIf="isEditing">
-                <ion-label position="floating">Nombre</ion-label>
-                <ion-input type="text" value="Alice"></ion-input>
-                <ion-icon name="person" slot="start"></ion-icon>
-            </ion-item>
-            <ion-item color="pagami-surface" *ngIf="isEditing">
-                <ion-label position="floating">Apellido</ion-label>
-                <ion-input type="text" value="Clark"></ion-input>
-                <ion-icon name="people" slot="start"></ion-icon>
-            </ion-item>
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Telefono</ion-label>
-                <ion-input type="tel" [readonly]="!isEditing" value="0412-4589520"></ion-input>
+                <ion-input type="tel" value="0412-4589520"></ion-input>
                 <ion-icon name="call" slot="start"></ion-icon>
             </ion-item>
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Ubicacion</ion-label>
-                <ion-input type="text" [readonly]="!isEditing" value="Valencia, Carabobo, Venezuela"></ion-input>
+                <ion-input type="text" [(ngModel)]="textSearched"></ion-input>
                 <ion-icon name="location" slot="start"></ion-icon>
             </ion-item>
         </ion-list>
 
-        <ion-item-group class="profile--section-3" *ngIf="!isEditing">
+        <ion-item-group class="profile--section-3">
             <ion-item lines="none">
                 <ion-label>Activar notificaciones</ion-label>
                 <ion-toggle slot="end" name="notifications" color="pagami" checked></ion-toggle>
@@ -81,8 +54,54 @@
     </ion-list>
 
     <div class="footer-button footer-button--div" >
-        <ion-button class="button-large" expand="block" color="danger" (click)="googleSignIn()" *ngIf="!isEditing">Eliminar Cuenta</ion-button>
-        <ion-row *ngIf="isEditing">
+        <ion-button class="button-large" expand="block" color="danger" (click)="googleSignIn()">Eliminar Cuenta</ion-button>
+    </div>
+</ion-content>
+
+
+<ion-content #ionContentEdit *ngIf="isLogged && isEditing">
+    <div class="add-image">
+        <div class="add-image-background">
+            <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-fab vertical="center" horizontal="center">
+                <ion-fab-button color="pagami">
+                    <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </div>
+    </div>
+
+    <ion-list lines="none" class="inputs-container">
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input type="text" value="Alice"></ion-input>
+            <ion-icon name="person" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Apellido</ion-label>
+            <ion-input type="text" value="Clark"></ion-input>
+            <ion-icon name="people" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input type="tel" value="0412-4589520"></ion-input>
+            <ion-icon name="call" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item #itemLocation color="pagami-surface">
+            <ion-label position="floating">Ubicacion</ion-label>
+            <ion-input type="text" [(ngModel)]="textSearched" (ionChange)="searchPlace()"></ion-input>
+            <ion-icon name="location" slot="start"></ion-icon>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="places.length > 0" class="w-100 results-search" lines="none">
+        <ion-item *ngFor="let place of places; let i = index" (click)="setPlace(place.description)" color="pagami-surface" [ngClass]="i === 4 ? 'border-radius-bottom' : ''">
+            <ion-label>{{place.description}}</ion-label>
+        </ion-item>
+    </ion-list>
+
+    <div class="footer-button" >
+        <ion-row>
             <ion-col size="6">
                 <ion-button class="button-small" expand="block" color="pagami-surface" (click)="editProfile()">
                     Cancelar
