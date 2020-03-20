@@ -17,7 +17,6 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     fabAttached = true;
 
-    selectedCategory = 0;
     bottomDrawer = {
         shouldBounce: true,
         disableDrag: false,
