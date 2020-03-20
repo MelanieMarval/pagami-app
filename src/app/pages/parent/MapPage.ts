@@ -14,6 +14,8 @@ import MapOptions = google.maps.MapOptions;
 // @ts-ignore
 import Circle = google.maps.Circle;
 // @ts-ignore
+import places = google.maps.places;
+// @ts-ignore
 import Icon = google.maps.Icon;
 
 export class MapPage {
@@ -63,7 +65,9 @@ export class MapPage {
     getCurrentPosition() {
         this.geolocation.getCurrentPosition().then((data) => {
             const position: LatLng = {
+            // @ts-ignore
                 lat: data.coords.latitude,
+            // @ts-ignore
                 lng: data.coords.longitude
             };
             this.accuracy = data.coords.accuracy;
@@ -78,7 +82,9 @@ export class MapPage {
         watch.subscribe((data) => {
             console.log(data);
             const position: LatLng = {
+                // @ts-ignore
                 lat: data.coords.latitude,
+                // @ts-ignore
                 lng: data.coords.longitude
             };
             this.onCurrentPositionChanged(position);
@@ -130,7 +136,7 @@ export class MapPage {
     }
 }
 
-function getGoogleMaps(apiKey: string): Promise<any> {
+export function getGoogleMaps(apiKey: string): Promise<any> {
     const win = window as any;
     const googleModule = win.google;
     if (googleModule && googleModule.maps) {

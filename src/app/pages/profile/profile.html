@@ -14,32 +14,60 @@
 
 <ion-content>
 
+    <div class="add-image" *ngIf="isEditing">
+        <div class="add-image-background">
+            <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-fab vertical="center" horizontal="center">
+                <ion-fab-button color="pagami">
+                    <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </div>
+    </div>
+
     <ion-list>
 
-        <ion-item-group class="profile--section-1">
+        <ion-item-group class="profile--section-1" *ngIf="!isEditing">
             <ion-avatar class="border-white-1px">
                 <img src="assets/img/avatar-profile.jpg">
             </ion-avatar>
-            <h2>Alice Clarke </h2>
+            <h2>Alice Clarke <ion-icon src="assets/icon/edit-pencil.svg" (click)="editProfile()" class="icon-edit"></ion-icon></h2>
             <ion-text class="text-join">Se unió el 23 de mayo 2019</ion-text>
             <h3>456 Empresas registradas</h3>
         </ion-item-group>
 
+        <ion-input [(ngModel)]="autocomplete.input" (ionInput)="updateSearchResults()" placeholder="Search for a place"></ion-input>
+        <ion-list [hidden]="autocompleteItems.length == 0">
+            <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
+                {{ item.description }}
+            </ion-item>
+        </ion-list>
 
-        <ion-item-group class="inputs-container">
-            <ion-item lines="none" color="pagami-surface">
+        <ion-list lines="none" class="inputs-container">
+            <ion-item color="pagami-surface" *ngIf="isEditing">
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" value="Alice"></ion-input>
+                <ion-icon name="person" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface" *ngIf="isEditing">
+                <ion-label position="floating">Apellido</ion-label>
+                <ion-input type="text" value="Clark"></ion-input>
+                <ion-icon name="people" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
                 <ion-label position="floating">Telefono</ion-label>
-                <ion-input type="tel"></ion-input>
+                <ion-input type="tel" [readonly]="!isEditing" value="0412-4589520"></ion-input>
                 <ion-icon name="call" slot="start"></ion-icon>
             </ion-item>
-            <ion-item lines="none"  color="pagami-surface">
+            <ion-item color="pagami-surface">
                 <ion-label position="floating">Ubicacion</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="text" [readonly]="!isEditing" value="Valencia, Carabobo, Venezuela"></ion-input>
                 <ion-icon name="location" slot="start"></ion-icon>
             </ion-item>
-        </ion-item-group>
+        </ion-list>
 
-        <ion-item-group class="profile--section-3">
+        <ion-item-group class="profile--section-3" *ngIf="!isEditing">
             <ion-item lines="none">
                 <ion-label>Activar notificaciones</ion-label>
                 <ion-toggle slot="end" name="notifications" color="pagami" checked></ion-toggle>
@@ -52,8 +80,21 @@
 
     </ion-list>
 
-    <div class="footer-button footer-button--div">
-        <ion-button class="button-large" expand="block" color="danger" (click)="deleteAccountConfirm()">Eliminar Cuenta</ion-button>
+    <div class="footer-button footer-button--div" >
+        <ion-button class="button-large" expand="block" color="danger" (click)="deleteAccountConfirm()" *ngIf="!isEditing">Eliminar Cuenta</ion-button>
+        <ion-row *ngIf="isEditing">
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami-surface" (click)="editProfile()">
+                    Cancelar
+                </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami" (click)="saveProfile()">
+                    Guardar
+                </ion-button>
+            </ion-col>
+        </ion-row>
     </div>
+
 </ion-content>
 

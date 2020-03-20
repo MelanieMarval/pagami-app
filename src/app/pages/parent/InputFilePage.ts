@@ -21,4 +21,9 @@ export class InputFilePage {
         };
 
     }
+
+    fileProgress(fileInput: any) {
+        this.fileData = fileInput.target.files[0] as File;
+        this.preview();
+    }
 }

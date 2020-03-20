@@ -1,9 +1,10 @@
-import {IonicModule} from '@ionic/angular';
-import {RouterModule} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {ProfilePage} from './profile';
+import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ProfilePage } from './profile';
+import { AutocompleteComponent } from '../modules/google-places/google-places.component';
 
 @NgModule({
     imports: [
@@ -12,7 +13,7 @@ import {ProfilePage} from './profile';
         FormsModule,
         RouterModule.forChild([{path: '', component: ProfilePage}])
     ],
-    declarations: [ProfilePage]
+    declarations: [ProfilePage, AutocompleteComponent]
 })
 export class ProfileModule {
 }

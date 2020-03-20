@@ -21,7 +21,7 @@ export class SelectIconPage {
             color: 'pagami-surface',
             duration: 2500,
             message: 'Empresa registrada con exito',
-            cssClass: 'toast-bottom-custom-2',
+            cssClass: 'toast-bottom-custom-without-tabs',
             position: 'bottom',
         });
 

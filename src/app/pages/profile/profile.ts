@@ -1,14 +1,86 @@
-import { Component } from '@angular/core';
-import {AlertController} from '@ionic/angular';
+import { Component, NgZone } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AlertController, ToastController } from '@ionic/angular';
+import { InputFilePage } from '../parent/InputFilePage';
+import { getGoogleMaps } from '../parent/MapPage';
+
+
+// @ts-ignore
+import places = google.maps.places;
 
 @Component({
     selector: 'app-profile',
     templateUrl: 'profile.html',
     styleUrls: ['profile.scss']
 })
-export class ProfilePage {
+export class ProfilePage extends InputFilePage {
 
-    constructor( public alertController: AlertController ) {}
+    isEditing = false;
+    googleMaps;
+    autocomplete = { input: '' };
+    autocompleteItems = [];
+    location: any;
+    placeid: any;
+
+    constructor(public alertController: AlertController,
+                public toastController: ToastController,
+                public zone: NgZone
+    ) {
+        super();
+    }
+
+
+    async updateSearchResults() {
+        // tslint:disable-next-line:triple-equals
+        if (this.autocomplete.input == '') {
+            this.autocompleteItems = [];
+            return;
+        }
+        // places.PlacesService.getDetai({ input: this.autocomplete.input },
+        //     (predictions, status) => {
+        //         this.autocompleteItems = [];
+        //         this.zone.run(() => {
+        //             console.log(predictions);
+        //             predictions.forEach((prediction) => {
+        //                 this.autocompleteItems.push(prediction);
+        //             });
+        //         });
+        //     });
+    }
+    selectSearchResult(item) {
+        console.log(item);
+        this.location = item;
+        this.placeid = this.location.place_id;
+        console.log('placeid' + this.placeid);
+    }
+
+    editProfile() {
+        if (this.isEditing) {
+            this.isEditing = false;
+
+        } else {
+            this.isEditing = true;
+            this.previewUrl = 'assets/img/avatar-profile.jpg';
+            console.log('Vas a editar tu perfil');
+        }
+    }
+
+    getAddress(place) {
+        console.log(place);
+    }
+
+    async saveProfile() {
+        const toast = await this.toastController.create({
+            color: 'pagami-surface',
+            duration: 2000,
+            cssClass: 'toast-bottom-custom-without-tabs',
+            message: 'Cambios guardados exitosamente',
+            position: 'bottom',
+        });
+
+        this.isEditing = false;
+        await toast.present();
+    }
 
     async deleteAccountConfirm() {
         const alert = await this.alertController.create({

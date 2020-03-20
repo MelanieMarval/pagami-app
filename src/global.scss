@@ -205,8 +205,12 @@ ion-searchbar > div > input{
   ion-item{
     border-radius: 5px 5px 0 0;
     margin-bottom: 17px;
-    //border-bottom: 2px solid;
+    border-bottom: 2px solid;
+    --highlight-background: var(--ion-color-pagami-surface);
     transition: ease .4s;
+    &.item-has-focus{
+      border-bottom: 2px solid var(--ion-color-pagami);
+    }
     ion-label.ios{
       transform: translate3d(0, 13px, 0px);
     }
@@ -357,6 +361,7 @@ ion-bottom-drawer {
   width: 95%;
   transform: translateY(-145px) translateX(3%);
 }
-.toast-bottom-custom-2 {
-  transform: translateY(-75px);
+.toast-bottom-custom-without-tabs {
+  width: 95%;
+  transform: translateY(-90px) translateX(3%);
 }
