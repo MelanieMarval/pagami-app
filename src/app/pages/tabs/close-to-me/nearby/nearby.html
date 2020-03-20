@@ -1,86 +1,50 @@
-<ion-header class="header-search-map">
-    <ion-grid>
-        <ion-row>
-            <ion-col size="1">
-                <ion-button class="btn-no-style" routerLink="/app/shop/order-summary">
-                    <ion-icon class="size-icon-default" name="cart"></ion-icon>
-                </ion-button>
-            </ion-col>
-            <ion-col size="9">
-                <ion-searchbar placeholder="Busca tiendas o servicios" color="light"
-                               class="without-search-icon"></ion-searchbar>
-            </ion-col>
-            <ion-col size="2">
-                <a routerLink="/app/profile">
-                    <ion-avatar class="toolbar-avatar">
-                        <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
-                    </ion-avatar>
-                </a>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-header>
-
-<ion-content padding class="background-white" [ngClass]="drawerState == 2 ? 'background-global' : ''">
-
-</ion-content>
-
-<ion-bottom-drawer [disableDrag]="disableDrag" [(state)]="drawerState" [minimumHeight]="minimumHeight"
-                   [dockedHeight]="dockedHeight" [shouldBounce]="shouldBounce" [distanceTop]="distanceTop"
-                   (scrollContent)="contentPosition = $event"
-                   class="nearby-drawer">
-    <div class="drawer-content nearby-expanded">
-        <div [ngClass]="{'with-overflow-y': drawerState === 2 && contentPosition > 0}">
-            <ion-grid>
-                <ion-row class="scrollable-draw">
-                    <div class="scrollable-draw-children" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
-                </ion-row>
-                <ion-title class="ion-text-center nearby-title">
-                    Destacados en tu área
-                </ion-title>
-                <ion-row class="footer-button">
-                    <ion-col class="6">
-                        <ion-button class="button-large btn-category" expand="block"
-                                    color="{{selectedCategory === 0 ? 'pagami' : 'pagami-surface'}}"
-                                    [ngClass]="{'selected-category': selectedCategory === 0}"
-                                    (click)="selectedCategory = 0">
-                            Tiendas
-                            <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
-                        </ion-button>
-                    </ion-col>
-                    <ion-col class="6">
-                        <ion-button class="button-large btn-category" expand="block"
-                                    color="{{selectedCategory === 1 ? 'pagami' : 'pagami-surface'}}"
-                                    [ngClass]="{'selected-category': selectedCategory === 1}"
-                                    (click)="selectedCategory = 1">
-                            Servicios
-                            <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
-                        </ion-button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-            <ion-grid>
-                <ion-row *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
-                    <ion-card button color="pagami-surface" class="card" routerLink="/app/shop">
-                        <div class="card-img-contain">
-                            <ion-img src="assets/img/avatar-business.jpg" class="card-img"></ion-img>
-                        </div>
-                        <ion-card-header>
-                            <ion-card-subtitle class="card-subtitle">
-                                <ion-icon name="home" class="size-icon-mini"></ion-icon>&nbsp;
-                                <ion-label>ALMACENES</ion-label>
-                            </ion-card-subtitle>
-                            <ion-card-title class="nearby-title">
-                                Exito
-                                <ion-icon name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
-                            </ion-card-title>
-                            <ion-card-subtitle class="card-subtitle">
-                                Abierto · A 7 metros de ti
-                            </ion-card-subtitle>
-                        </ion-card-header>
-                    </ion-card>
-                </ion-row>
-            </ion-grid>
-        </div>
-    </div>
-</ion-bottom-drawer>
+<ion-grid>
+    <ion-row class="scrollable-draw">
+        <div class="scrollable-draw-children" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
+    </ion-row>
+    <ion-title class="ion-text-center nearby-title">
+        Destacados en tu área
+    </ion-title>
+    <ion-row class="footer-button">
+        <ion-col class="6">
+            <ion-button class="button-large btn-category" expand="block"
+                        color="{{selectedCategory === 0 ? 'pagami' : 'pagami-surface'}}"
+                        [ngClass]="{'selected-category': selectedCategory === 0}"
+                        (click)="selectedCategory = 0">
+                Tiendas
+                <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
+            </ion-button>
+        </ion-col>
+        <ion-col class="6">
+            <ion-button class="button-large btn-category" expand="block"
+                        color="{{selectedCategory === 1 ? 'pagami' : 'pagami-surface'}}"
+                        [ngClass]="{'selected-category': selectedCategory === 1}"
+                        (click)="selectedCategory = 1">
+                Servicios
+                <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<ion-grid>
+    <ion-row *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <ion-card button color="pagami-surface" class="card" routerLink="/app/shop">
+            <div class="card-img-contain">
+                <ion-img src="assets/img/avatar-business.jpg" class="card-img"></ion-img>
+            </div>
+            <ion-card-header>
+                <ion-card-subtitle class="card-subtitle">
+                    <ion-icon name="home" class="size-icon-mini"></ion-icon>&nbsp;
+                    <ion-label>ALMACENES</ion-label>
+                </ion-card-subtitle>
+                <ion-card-title class="nearby-title">
+                    Exito
+                    <ion-icon name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
+                </ion-card-title>
+                <ion-card-subtitle class="card-subtitle">
+                    Abierto · A 7 metros de ti
+                </ion-card-subtitle>
+            </ion-card-header>
+        </ion-card>
+    </ion-row>
+</ion-grid>

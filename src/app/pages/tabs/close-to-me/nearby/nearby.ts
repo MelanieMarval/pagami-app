@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { DrawerState } from '../../../../modules/ion-bottom-drawer/drawer-state';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-nearby',
@@ -9,16 +8,8 @@ import { DrawerState } from '../../../../modules/ion-bottom-drawer/drawer-state'
 
 export class NearbyPage implements OnInit {
 
+    @Input() drawerState = 0;
     selectedCategory = 0;
-    bottomDrawer = {
-        shouldBounce: true,
-        disableDrag: false,
-        distanceTop: 58,
-        dockedHeight: 550,
-        minimumHeight: 118,
-        drawerState: DrawerState.Bottom,
-        contentPosition: 0
-    };
 
     constructor() {
     }
