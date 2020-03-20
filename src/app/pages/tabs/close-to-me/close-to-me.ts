@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MapPage } from '../../parent/MapPage';
+import { getGoogleMaps, MapPage } from '../../parent/MapPage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DOCUMENT } from '@angular/common';
 import { DrawerState } from '../../../modules/ion-bottom-drawer/drawer-state';
@@ -13,21 +13,24 @@ import { IonContent, IonFab, IonFabButton } from '@ionic/angular';
 })
 export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
-    @ViewChild('fab', { static: false, read: ElementRef }) private ionFab: ElementRef;
-
     fabAttached = true;
-
     bottomDrawer = {
         shouldBounce: true,
         disableDrag: false,
         distanceTop: 58,
-        dockedHeight: 550,
+        dockedHeight: 520,
         minimumHeight: 118,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false
     };
     bottomHeightChange: EventEmitter<number> = new EventEmitter<number>();
+
+    textSearched = '';
+    autocompleteService: any;
+    places: any = [];
+
+    @ViewChild('fab', {static: false, read: ElementRef}) private ionFab: ElementRef;
 
     constructor(
         private renderer: Renderer2,
@@ -50,6 +53,10 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     async ngAfterViewInit() {
         this.loadMap(true);
+        this.googleMaps = await getGoogleMaps(
+            'AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s'
+        );
+        this.autocompleteService = new this.googleMaps.places.AutocompleteService();
         this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
     }
 
@@ -78,4 +85,34 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
             this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '0px' + ')');
         }
     }
+
+    searchPlace() {
+        if (this.textSearched.length > 0) {
+            console.log('entre');
+            const config = {
+                types: ['geocode'],
+                input: this.textSearched
+            };
+            this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+                console.log('-> predictions', predictions);
+                if (status === this.googleMaps.places.PlacesServiceStatus.OK && predictions) {
+                    this.places = [];
+                    predictions.forEach((prediction) => {
+                        this.places.push(prediction);
+                    });
+                }
+            });
+        } else {
+            this.places = [];
+        }
+        console.log(this.places);
+    }
+
+    async setPlace(place) {
+        console.log('-> place', place);
+        this.textSearched = await place;
+        this.places = [];
+    }
+
+
 }

@@ -71,7 +71,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 // nothing
             } else if (ev.direction === Hammer.DIRECTION_UP) {
                 if (this.state === DrawerState.Top && this.contentPosition === 0) {
-                    this.ionContent.scrollToPoint(undefined, 145, 200);
+                    this.ionContent.scrollToPoint(undefined, 135, 200);
                 }
             }
             if (this.contentPosition > 1 || (this.contentPosition === 1 && ev.direction === Hammer.DIRECTION_UP)) {

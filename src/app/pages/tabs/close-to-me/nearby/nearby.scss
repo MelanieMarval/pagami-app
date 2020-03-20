@@ -40,9 +40,8 @@
 }
 
 .card {
-
     &-img-contain {
-        height: 220px;
+        height: 210px;
         position: relative;
 
         .card-img {
@@ -52,16 +51,22 @@
         }
     }
 
+    &-header{
+        padding: 10px 16px;
+    }
     &-subtitle {
         font-size: 14px;
         color: #718096 !important;
         margin: 3px;
     }
-
 }
 
 .footer-button {
-    padding-bottom: 0;
+    padding: 12px 7px 0;
+
+    ion-button{
+        margin: 0;
+    }
 }
 
 
