@@ -12,7 +12,6 @@ import { GeolocationService } from '../../core/geolocation/geolocation.service';
 })
 export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit {
 
-    isLogged = false;
     isEditing = false;
     googleMaps: any;
     autocompleteService: any;

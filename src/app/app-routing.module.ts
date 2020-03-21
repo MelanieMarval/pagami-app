@@ -19,6 +19,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/terms/terms.module').then(m => m.TermsModule),
     },
     {
+        path: 'user-register',
+        loadChildren: () => import('./pages/user-register/user-register.module').then(m => m.UserRegisterModule),
+    },
+    {
         path: 'app',
         children: [
             {
@@ -50,6 +54,11 @@ const routes: Routes = [
             {
                 path: 'profile',
                 loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+            },
+            {
+                path: '**',
+                redirectTo: 'tabs',
+                pathMatch: 'full'
             },
         ]
     }

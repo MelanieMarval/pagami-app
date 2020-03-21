@@ -93,7 +93,6 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
          */
         this.geolocationService.locationChanged.subscribe(
             (coors: Coordinates) => {
-                console.log(coors);
                 this.onCurrentPositionChanged(coors);
             });
     }

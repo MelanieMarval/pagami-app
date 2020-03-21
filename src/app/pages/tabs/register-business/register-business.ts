@@ -59,7 +59,6 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
          */
         this.geolocationService.locationChanged.subscribe(
             (coors: Coordinates) => {
-                console.log(coors);
                 this.onCurrentPositionChanged(coors);
             });
     }

@@ -1,7 +1,4 @@
-<app-profile-empty *ngIf="!isLogged"></app-profile-empty>
-
-
-<ion-header *ngIf="isLogged">
+<ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/tabs/close-to-me"></ion-back-button>
@@ -15,7 +12,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="isLogged && !isEditing">
+<ion-content *ngIf="!isEditing">
 
     <ion-list>
         <ion-item-group class="profile--section-1">
@@ -59,7 +56,7 @@
 </ion-content>
 
 
-<ion-content #ionContentEdit *ngIf="isLogged && isEditing">
+<ion-content #ionContentEdit *ngIf="isEditing">
     <div class="add-image">
         <div class="add-image-background">
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>

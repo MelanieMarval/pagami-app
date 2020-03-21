@@ -9,7 +9,7 @@ import {TutorialPageRoutingModule} from './tutorial-routing.module';
     imports: [
         CommonModule,
         IonicModule,
-        TutorialPageRoutingModule
+        TutorialPageRoutingModule,
     ],
     declarations: [TutorialPage],
     entryComponents: [TutorialPage],
