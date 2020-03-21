@@ -19,6 +19,7 @@ import { firebaseConfig } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage, BusinessDetailsPage, SelectIconPage],
@@ -33,6 +34,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
+        IonicStorageModule.forRoot()
     ],
     providers: [
         StatusBar,

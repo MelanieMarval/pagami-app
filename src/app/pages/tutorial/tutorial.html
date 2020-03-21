@@ -1,5 +1,6 @@
+
 <ion-content fullscreen class="ion-padding" scroll-y="false">
-    <ion-slides pager="true">
+    <ion-slides #slides pager="true" (ionSlideDidChange)="slideDidChange();">
         <ion-slide>
             <img src="assets/img/tutorial/slide-img-1.png" class="slide-image"/>
             <h2 class="slide-title">
@@ -30,8 +31,9 @@
 </ion-content>
 
 <ion-footer class="footer-button">
-    <ion-button class="button-large" expand="block" color="secondary" routerLink="/terms">
-        <ion-icon name="logo-google"></ion-icon>
-        &nbsp; Registrate con Google
+    <ion-button [disabled]="currentIndex !== 2 || loading" class="button-large" expand="block" color="secondary" (click)="googleSignIn()">
+        <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
+        <ion-icon *ngIf="!loading" name="logo-google"></ion-icon>
+        <span *ngIf="!loading">&nbsp; Registrate con Google</span>
     </ion-button>
 </ion-footer>

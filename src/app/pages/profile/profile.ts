@@ -1,10 +1,5 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { AlertController, IonContent, IonItem, ToastController } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
-import '@codetrix-studio/capacitor-google-auth';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from '../../core/auth/auth.service';
-import { auth } from 'firebase/app';
+import { AlertController, IonContent, ToastController } from '@ionic/angular';
 
 import { InputFilePage } from '../parent/InputFilePage';
 import { getGoogleMaps } from '../parent/MapPage';
@@ -27,11 +22,8 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
     @ViewChild('ionContentEdit', {static: false}) private ionContentEdit: IonContent;
     @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
-
     constructor(public alertController: AlertController,
                 public toastController: ToastController,
-                private angularFireAuth: AngularFireAuth,
-                private authService: AuthService,
                 public zone: NgZone
     ) {
         super();
@@ -127,20 +119,5 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
         });
 
         await alert.present();
-    }
-
-    async googleSignIn() {
-        const googleUser = await Plugins.GoogleAuth.signIn();
-        const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
-        const fireCredential = await this.angularFireAuth.auth.signInWithCredential(credential);
-        const token = await fireCredential.user.getIdToken(false);
-        this.authService.singIn(token).then(
-            success => {
-                alert(success.name);
-                console.log(success);
-            }, reason => {
-                console.log('-> reason', reason);
-            }
-        );
     }
 }
