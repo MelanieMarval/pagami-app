@@ -404,3 +404,7 @@ ion-bottom-drawer {
   width: 95%;
   transform: translateY(-90px) translateX(3%);
 }
+
+a[rel='noopener'] div img, .gmnoprint {
+    opacity: 0;
+}

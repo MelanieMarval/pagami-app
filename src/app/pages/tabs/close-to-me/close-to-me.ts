@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { getGoogleMaps, MapPage } from '../../parent/MapPage';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { MapPage } from '../../parent/MapPage';
 import { DOCUMENT } from '@angular/common';
 import { DrawerState } from '../../../modules/ion-bottom-drawer/drawer-state';
 import { AppService } from '../../../services/app.service';
-import { IonContent, IonFab, IonFabButton } from '@ionic/angular';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 
 @Component({
     selector: 'app-close-to-me',
@@ -31,9 +30,9 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
     constructor(
         private renderer: Renderer2,
         private appService: AppService,
-        geolocation: Geolocation,
+        private geolocationService: GeolocationService,
         @Inject(DOCUMENT) doc: Document) {
-        super(geolocation, doc);
+        super(doc);
     }
 
     ngOnInit() {
@@ -47,15 +46,10 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         });
     }
 
-    async ngAfterViewInit() {
-        this.loadMap(true);
-        this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
-    }
-
-    onCurrentPositionChanged(position: any) {
+    onCurrentPositionChanged(coors: Coordinates) {
         if (this.fabAttached) {
-            this.setupMarkerCurrentPosition(position);
-            this.changeMapCenter(position);
+            this.setupMarkerCurrentPosition(coors);
+            this.changeMapCenter(coors);
         }
     }
 
@@ -66,8 +60,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
     attachedPosition() {
         this.fabAttached = true;
         if (this.currentPositionMarker) {
-            const position = this.currentPositionMarker.getPosition();
-            this.changeMapCenter(position);
+            this.changeMapCenter(this.geolocationService.getCurrentLocation());
         }
     }
 
@@ -78,4 +71,30 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         }
     }
 
+    async ngAfterViewInit() {
+        /**
+         * moving floating button to initial position
+         */
+        this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        /**
+         * Enable watch location if status is disabled
+         */
+        this.geolocationService.enableLocation();
+        /**
+         * load map and wait
+         */
+        await this.loadMap();
+        /**
+         * set center and marker position
+         */
+        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
+        /**
+         * subscribing to current location changes
+         */
+        this.geolocationService.locationChanged.subscribe(
+            (coors: Coordinates) => {
+                console.log(coors);
+                this.onCurrentPositionChanged(coors);
+            });
+    }
 }

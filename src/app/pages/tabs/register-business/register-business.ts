@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {ToastController} from '@ionic/angular';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {DOCUMENT} from '@angular/common';
-import {MapPage} from '../../parent/MapPage';
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import { DOCUMENT } from '@angular/common';
+import { MapPage } from '../../parent/MapPage';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 
 @Component({
     selector: 'app-register-business',
@@ -17,13 +17,9 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
 
     constructor(
         public toastController: ToastController,
-        geolocation: Geolocation,
+        private geolocationService: GeolocationService,
         @Inject(DOCUMENT) doc: Document) {
-        super(geolocation, doc);
-    }
-
-    async ngAfterViewInit() {
-      this.loadMap(true);
+        super(doc);
     }
 
     async saveLocation() {
@@ -45,4 +41,26 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         this.changeMapCenter(position);
     }
 
+    async ngAfterViewInit() {
+        /**
+         * Enable watch location if status is disabled
+         */
+        this.geolocationService.enableLocation();
+        /**
+         * load map and wait
+         */
+        await this.loadMap(true);
+        /**
+         * set center and marker position
+         */
+        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
+        /**
+         * subscribing to current location changes
+         */
+        this.geolocationService.locationChanged.subscribe(
+            (coors: Coordinates) => {
+                console.log(coors);
+                this.onCurrentPositionChanged(coors);
+            });
+    }
 }
