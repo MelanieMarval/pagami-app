@@ -13,6 +13,7 @@ import Marker = google.maps.Marker;
 import MapOptions = google.maps.MapOptions;
 // @ts-ignore
 import Circle = google.maps.Circle;
+import { GeolocationService } from '../../core/geolocation/geolocation.service';
 
 export class MapPage {
 
@@ -25,13 +26,11 @@ export class MapPage {
     googleMaps: GoogleMaps;
     accuracy: number;
 
-    constructor(@Inject(DOCUMENT) private doc: Document
+    constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService
     ) {  }
 
     async loadMap(locked: boolean = false) {
-        this.googleMaps = await getGoogleMaps(
-            'AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s'
-        );
+        this.googleMaps = await this.geolocationService.getGoogleMaps();
         const mapEle = this.mapElement.nativeElement;
         this.map = new this.googleMaps.Map(mapEle, locked ? this.getDefaultOptionsLocked() : this.getDefaultOptions());
 
@@ -131,28 +130,4 @@ export class MapPage {
             draggable: false
         };
     }
-}
-
-export function getGoogleMaps(apiKey: string): Promise<any> {
-    const win = window as any;
-    const googleModule = win.google;
-    if (googleModule && googleModule.maps) {
-        return Promise.resolve(googleModule.maps);
-    }
-
-    return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.31`;
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
-        script.onload = () => {
-            const googleModule2 = win.google;
-            if (googleModule2 && googleModule2.maps) {
-                resolve(googleModule2.maps);
-            } else {
-                reject('google maps not available');
-            }
-        };
-    });
 }

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from 
 import { AlertController, IonContent, ToastController } from '@ionic/angular';
 
 import { InputFilePage } from '../parent/InputFilePage';
-import { getGoogleMaps } from '../parent/MapPage';
+import { GeolocationService } from '../../core/geolocation/geolocation.service';
 
 
 @Component({
@@ -24,6 +24,7 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
 
     constructor(public alertController: AlertController,
                 public toastController: ToastController,
+                private geolocationService: GeolocationService,
                 public zone: NgZone
     ) {
         super();
@@ -34,9 +35,7 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
     }
 
     async ngAfterViewInit() {
-        this.googleMaps = await getGoogleMaps(
-            'AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s'
-        );
+        this.googleMaps = await this.geolocationService.getGoogleMaps();
         this.autocompleteService = new this.googleMaps.places.AutocompleteService();
     }
 

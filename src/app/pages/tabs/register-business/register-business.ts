@@ -17,9 +17,9 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
 
     constructor(
         public toastController: ToastController,
-        private geolocationService: GeolocationService,
-        @Inject(DOCUMENT) doc: Document) {
-        super(doc);
+        @Inject(DOCUMENT) doc: Document,
+        protected geolocationService: GeolocationService) {
+        super(doc, geolocationService);
     }
 
     async saveLocation() {

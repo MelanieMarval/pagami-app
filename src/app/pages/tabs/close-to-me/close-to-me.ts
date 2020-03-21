@@ -30,9 +30,9 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
     constructor(
         private renderer: Renderer2,
         private appService: AppService,
-        private geolocationService: GeolocationService,
-        @Inject(DOCUMENT) doc: Document) {
-        super(doc);
+        @Inject(DOCUMENT) doc: Document,
+        protected geolocationService: GeolocationService) {
+        super(doc, geolocationService);
     }
 
     ngOnInit() {
