@@ -22,7 +22,6 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
     @ViewChild('ionContentEdit', {static: false}) private ionContentEdit: IonContent;
     @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
-
     constructor(public alertController: AlertController,
                 public toastController: ToastController,
                 public zone: NgZone

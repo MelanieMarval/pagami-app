@@ -50,7 +50,7 @@ export class TutorialPage {
                         this.onLoginSuccess(success.response, token);
                     } else {
                         if (success.code === RESPONSE.CODE.NOT_REGISTERED) {
-                            this.onUserNotRegistered(token);
+                            this.onUserNotRegistered(googleUser, token);
                         } else {
                             this.onUnknownError();
                         }
@@ -69,7 +69,15 @@ export class TutorialPage {
         this.route.navigate(['/app/tabs/close-to-me']);
     }
 
-    async onUserNotRegistered(token: string) {
+    async onUserNotRegistered(googleUser, token: string) {
+        const userToRegister = {
+            name: googleUser.givenName,
+            lastname: googleUser.familyName,
+            email: googleUser.email,
+            photoUrl: googleUser.imageUrl,
+            terms: false
+        };
+        await this.storageService.setUserUnregistered(userToRegister);
         await this.storageService.setToken(token);
         this.loading = false;
         this.route.navigate(['/terms']);
