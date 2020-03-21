@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {TabsPage} from './tabs-page';
-import {MyBusinessPage} from './my-business/my-business';
-import {RegisterBusinessPage} from './register-business/register-business';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { TabsPage } from './tabs-page';
+import { MyBusinessPage } from './my-business/my-business';
+import { RegisterBusinessPage } from './register-business/register-business';
 
 const routes: Routes = [
     {
@@ -25,8 +25,13 @@ const routes: Routes = [
                 path: 'wallet',
                 loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
             },
-        ]
+        ],
     },
+    {
+        path: '**',
+        redirectTo: 'close-to-me',
+        pathMatch: 'full'
+    }
 ];
 
 @NgModule({

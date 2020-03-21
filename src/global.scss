@@ -404,3 +404,17 @@ ion-bottom-drawer {
   width: 95%;
   transform: translateY(-90px) translateX(3%);
 }
+
+
+.modal-fade{
+    opacity: 0;
+    animation-name: fade-in-out;
+    animation-duration: 5s;
+
+    @keyframes fade-in-out {
+        0%   { opacity: 0;}
+        10%  { opacity: 1;}
+        75%  { opacity: 1;}
+        100% { opacity: 0;}
+    }
+}

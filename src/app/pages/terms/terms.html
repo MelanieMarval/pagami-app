@@ -32,7 +32,7 @@
         &nbsp; &nbsp;
         <ion-label>Estoy de acuerdo con los términos y condiciones</ion-label>
     </ion-item>
-    <ion-button class="button-large" expand="block" routerLink="/app/tabs/close-to-me" [disabled]="!termsAccepted">
+    <ion-button class="button-large" expand="block" (click)="continueRegister()" [disabled]="!termsAccepted">
         Continuar
     </ion-button>
 </ion-footer>

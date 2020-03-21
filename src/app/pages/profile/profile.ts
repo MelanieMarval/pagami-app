@@ -12,7 +12,6 @@ import { getGoogleMaps } from '../parent/MapPage';
 })
 export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit {
 
-    isLogged = false;
     isEditing = false;
     googleMaps: any;
     autocompleteService: any;
