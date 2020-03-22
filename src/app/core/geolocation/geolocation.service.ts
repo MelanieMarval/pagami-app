@@ -3,6 +3,16 @@ import { Coordinates, Geolocation } from '@ionic-native/geolocation/ngx';
 // @ts-ignore
 import GoogleMaps = google.maps;
 
+const defaultCoors: Coordinates = {
+    altitude: 0,
+    altitudeAccuracy: 0,
+    heading: 0,
+    speed: 0,
+    accuracy: 30,
+    latitude: 10.4880104,
+    longitude: -66.8791885
+};
+
 @Injectable({
     providedIn: 'root'
 })
@@ -16,20 +26,24 @@ export class GeolocationService {
 
     public locationChanged: EventEmitter<Coordinates> = new EventEmitter<Coordinates>();
 
-    constructor(private geolocation: Geolocation) {
-        this.coords = {
-            altitude: 0,
-            altitudeAccuracy: 0,
-            heading: 0,
-            speed: 0,
-            accuracy: 30,
-            latitude: 10.4880104,
-            longitude: -66.8791885
-        };
-    }
+    constructor(private geolocation: Geolocation) { }
 
     getCurrentLocation(): Coordinates {
-        return this.coords;
+        if (this.coords) {
+            return this.coords;
+        } else {
+            this.getCurrentPosition();
+            return defaultCoors;
+        }
+    }
+
+    private getCurrentPosition() {
+        this.geolocation.getCurrentPosition().then((data) => {
+            if (data && data.coords) {
+                this.coords = data.coords;
+                this.locationChanged.emit(this.coords);
+            }
+        });
     }
 
     enableLocation() {
@@ -46,12 +60,16 @@ export class GeolocationService {
 
     async getGoogleMaps(): Promise<GoogleMaps> {
         return new Promise(async resolve => {
-            if (!this.googleMaps) {
-                this.googleMaps = await this.initGoogleMaps(
-                    'AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s'
-                );
+            try {
+                if (!this.googleMaps) {
+                    this.googleMaps = await this.initGoogleMaps(
+                        'AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s'
+                    );
+                }
+                resolve(this.googleMaps);
+            } catch (e) {
+                resolve(undefined);
             }
-            resolve(this.googleMaps);
         });
     }
 
@@ -63,7 +81,7 @@ export class GeolocationService {
         }
 
         return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
+            const script: any = document.createElement('script');
             script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.31`;
             script.async = true;
             script.defer = true;
@@ -73,7 +91,7 @@ export class GeolocationService {
                 if (googleModule2 && googleModule2.maps) {
                     resolve(googleModule2.maps);
                 } else {
-                    reject('google maps not available');
+                    reject('google-auth maps not available');
                 }
             };
         });

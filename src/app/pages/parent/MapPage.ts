@@ -1,44 +1,49 @@
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ElementRef, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+// // @ts-ignore
+// import GoogleMaps = google.maps;
+// // @ts-ignore
+// import LatLngLiteral = google.maps.LatLngLiteral;
+// // @ts-ignore
+// import Map = google.maps.Map;
+// // @ts-ignore
+// import Marker = google.maps.Marker;
+// // @ts-ignore
+// import MapOptions = google.maps.MapOptions;
 // @ts-ignore
-import GoogleMaps = google.maps;
-// @ts-ignore
-import LatLng = google.maps.LatLng;
-// @ts-ignore
-import Map = google.maps.Map;
-// @ts-ignore
-import Marker = google.maps.Marker;
-// @ts-ignore
-import MapOptions = google.maps.MapOptions;
-// @ts-ignore
-import Circle = google.maps.Circle;
+// import Circle = google.maps.Circle;
+// // @ts-ignore
+// import LatLng = google.maps.LatLng;
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 
 export class MapPage {
 
     @ViewChild('mapCanvas', { static: true }) mapElement: ElementRef;
 
-    map: Map;
-    currentPositionMarker: Marker;
-    currentPositionCircle: Circle;
+    map: any;
+    currentPositionMarker: any;
+    currentPositionCircle: any;
     // @ts-ignore
-    googleMaps: GoogleMaps;
+    googleMaps: any;
     accuracy: number;
 
     constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService
     ) {  }
 
     async loadMap(locked: boolean = false) {
-        this.googleMaps = await this.geolocationService.getGoogleMaps();
-        const mapEle = this.mapElement.nativeElement;
-        this.map = new this.googleMaps.Map(mapEle, locked ? this.getDefaultOptionsLocked() : this.getDefaultOptions());
+        try {
+            this.googleMaps = await this.geolocationService.getGoogleMaps();
+            const mapEle = this.mapElement.nativeElement;
+            this.map = new this.googleMaps.Map(mapEle, locked ? this.getDefaultOptionsLocked() : this.getDefaultOptions());
 
-        this.googleMaps.event.addListenerOnce(this.map, 'idle', () => {
-            mapEle.classList.add('show-map');
-            this.onMapReady();
-            this.mapMoveSubscribe();
-        });
+            this.googleMaps.event.addListenerOnce(this.map, 'idle', () => {
+                mapEle.classList.add('show-map');
+                this.onMapReady();
+                this.mapMoveSubscribe();
+            });
+        } catch (err) {
+            // return a error
+        }
     }
 
     private mapMoveSubscribe() {
@@ -52,7 +57,7 @@ export class MapPage {
     onMapReady() { }
 
     changeMapCenter(coords: Coordinates) {
-        const position: LatLng = {
+        const position: any = {
             lat: coords.latitude,
             lng: coords.longitude
         };
@@ -60,19 +65,19 @@ export class MapPage {
     }
 
     setupMarkerCurrentPosition(coords: Coordinates) {
-        const position: LatLng = {
+        const position: any = {
             lat: coords.latitude,
             lng: coords.longitude
         };
         const map = this.map;
         if (this.currentPositionMarker === undefined) {
-            const icon: GoogleMaps.Symbol = {
+            const icon: any = {
                 strokeColor : '#FFFFFF',
                 strokeWeight: 2,
                 fillColor : '#F6AD55',
                 fillOpacity: 1,
                 scale: 6,
-                path: GoogleMaps.SymbolPath.CIRCLE
+                path: 0
             };
             this.currentPositionMarker = new this.googleMaps.Marker({
                 position,
@@ -100,7 +105,7 @@ export class MapPage {
         }
     }
 
-    getDefaultOptions(): MapOptions {
+    getDefaultOptions(): any {
         return {
             center: {
                 lat: 10.4880104,
@@ -114,15 +119,15 @@ export class MapPage {
         };
     }
 
-    getDefaultOptionsLocked(): MapOptions {
+    getDefaultOptionsLocked(): any {
         return {
             center: {
                 lat: 10.4880104,
                 lng: -66.8791885
             },
-            zoom: 21,
-            minZoom: 21,
-            maxZoom: 21,
+            zoom: 18,
+            minZoom: 18,
+            maxZoom: 18,
             mapTypeControl: false,
             zoomControl: false,
             streetViewControl: false,

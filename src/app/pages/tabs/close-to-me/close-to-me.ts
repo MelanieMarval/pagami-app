@@ -57,7 +57,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         this.fabAttached = false;
     }
 
-    attachedPosition() {
+    async attachedPosition() {
         this.fabAttached = true;
         if (this.currentPositionMarker) {
             this.changeMapCenter(this.geolocationService.getCurrentLocation());
@@ -77,17 +77,9 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
          */
         this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
         /**
-         * Enable watch location if status is disabled
-         */
-        this.geolocationService.enableLocation();
-        /**
          * load map and wait
          */
         await this.loadMap();
-        /**
-         * set center and marker position
-         */
-        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
         /**
          * subscribing to current location changes
          */
@@ -95,5 +87,13 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
             (coors: Coordinates) => {
                 this.onCurrentPositionChanged(coors);
             });
+        /**
+         * Enable watch location if status is disabled
+         */
+        this.geolocationService.enableLocation();
+        /**
+         * set center and marker position
+         */
+        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
     }
 }

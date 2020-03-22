@@ -1,16 +1,16 @@
 import { Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { catchError, mergeMap, timeout } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { StorageService } from '../storage/storage.service';
+import { GoogleAuthService } from '../google-auth/google-auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class MainService {
+export class ApiService {
 
-    constructor(public httpClient: HttpClient, private storageService: StorageService) {}
+    constructor(
+        public httpClient: HttpClient,
+        private googleAuthService: GoogleAuthService) {}
 
     /**
      * Request to firebase functions
@@ -50,7 +50,7 @@ export class MainService {
 
     async getOptionsHeadersTokenized(): Promise<any> {
         return new Promise(async resolve => {
-            const token = await this.storageService.getToken();
+            const token = await this.googleAuthService.getToken();
             let header = new HttpHeaders();
             header = header.append('content-type', 'application/json; charset=utf-8');
             header = header.append('authorization', token);

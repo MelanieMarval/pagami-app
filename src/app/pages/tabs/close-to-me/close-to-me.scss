@@ -8,23 +8,11 @@ ion-searchbar > div > input {
     padding: 0 !important;
 }
 
-.map-canvas {
-    position: absolute;
-
-    height: 100%;
-    width: 100%;
-
-    background-color: transparent;
-
-    opacity: 0;
-    transition: opacity 150ms ease-in;
-}
-
 .show-map {
     opacity: 1;
 }
 
-.header-search-map {
+.header-search-map.unset {
     border: unset;
     box-shadow: unset;
 }

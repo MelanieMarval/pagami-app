@@ -3,6 +3,8 @@ import { AlertController, IonContent, ToastController } from '@ionic/angular';
 
 import { InputFilePage } from '../parent/InputFilePage';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
+import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,8 +23,11 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
     @ViewChild('ionContentEdit', {static: false}) private ionContentEdit: IonContent;
     @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
-    constructor(public alertController: AlertController,
-                public toastController: ToastController,
+    constructor(
+                private router: Router,
+                private googleAuthService: GoogleAuthService,
+                private alertController: AlertController,
+                private toastController: ToastController,
                 private geolocationService: GeolocationService,
                 public zone: NgZone
     ) {
@@ -117,5 +122,36 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
         });
 
         await alert.present();
+    }
+
+    async closeSessionConfirm() {
+        const alert = await this.alertController.create({
+            header: 'Cerrar Sesión',
+            message: '¿Seguro que desea cerrar su sesión?',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    cssClass: 'alert-cancel',
+                    handler: () => {
+                        // close
+                    }
+                }, {
+                    text: 'Si, Cerrar',
+                    cssClass: 'alert-confirm',
+                    handler: () => {
+                        this.closeSession();
+                    }
+                }
+            ],
+            cssClass: 'ion-color-pagami-surface'
+        });
+
+        await alert.present();
+    }
+
+    async closeSession() {
+        await this.googleAuthService.singOut();
+        this.router.navigateByUrl('/tutorial');
     }
 }

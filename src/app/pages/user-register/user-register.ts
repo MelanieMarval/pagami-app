@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../core/storage/storage.service';
 import { IonContent, ToastController } from '@ionic/angular';
-import { User } from '../../core/users/user';
+import { User } from '../../core/api/users/user';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 
 @Component({

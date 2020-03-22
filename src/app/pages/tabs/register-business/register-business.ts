@@ -36,24 +36,16 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         this.beforeSaveLocation = false;
     }
 
-    onCurrentPositionChanged(position: any) {
-        this.setupMarkerCurrentPosition(position);
-        this.changeMapCenter(position);
+    onCurrentPositionChanged(coors: Coordinates) {
+        this.setupMarkerCurrentPosition(coors);
+        this.changeMapCenter(coors);
     }
 
     async ngAfterViewInit() {
         /**
-         * Enable watch location if status is disabled
-         */
-        this.geolocationService.enableLocation();
-        /**
          * load map and wait
          */
         await this.loadMap(true);
-        /**
-         * set center and marker position
-         */
-        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
         /**
          * subscribing to current location changes
          */
@@ -61,5 +53,13 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
             (coors: Coordinates) => {
                 this.onCurrentPositionChanged(coors);
             });
+        /**
+         * Enable watch location if status is disabled
+         */
+        this.geolocationService.enableLocation();
+        /**
+         * set center and marker position
+         */
+        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
     }
 }
