@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { DOCUMENT } from '@angular/common';
 import { MapPage } from '../../parent/MapPage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
+import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 
 @Component({
     selector: 'app-register-business',
@@ -36,7 +37,7 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         this.beforeSaveLocation = false;
     }
 
-    onCurrentPositionChanged(coors: Coordinates) {
+    onCurrentPositionChanged(coors: PagamiGeo) {
         this.setupMarkerCurrentPosition(coors);
         this.changeMapCenter(coors);
     }
@@ -50,7 +51,7 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
          * subscribing to current location changes
          */
         this.geolocationService.locationChanged.subscribe(
-            (coors: Coordinates) => {
+            (coors: PagamiGeo) => {
                 this.onCurrentPositionChanged(coors);
             });
         /**
@@ -60,6 +61,6 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         /**
          * set center and marker position
          */
-        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
+        this.onCurrentPositionChanged(await this.geolocationService.getCurrentLocation());
     }
 }

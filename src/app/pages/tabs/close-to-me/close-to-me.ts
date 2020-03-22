@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import { DrawerState } from '../../../modules/ion-bottom-drawer/drawer-state';
 import { AppService } from '../../../services/app.service';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
+import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 
 @Component({
     selector: 'app-close-to-me',
@@ -46,7 +47,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         });
     }
 
-    onCurrentPositionChanged(coors: Coordinates) {
+    onCurrentPositionChanged(coors: PagamiGeo) {
         if (this.fabAttached) {
             this.setupMarkerCurrentPosition(coors);
             this.changeMapCenter(coors);
@@ -60,7 +61,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
     async attachedPosition() {
         this.fabAttached = true;
         if (this.currentPositionMarker) {
-            this.changeMapCenter(this.geolocationService.getCurrentLocation());
+            this.changeMapCenter(await this.geolocationService.getCurrentLocation());
         }
     }
 
@@ -84,7 +85,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
          * subscribing to current location changes
          */
         this.geolocationService.locationChanged.subscribe(
-            (coors: Coordinates) => {
+            (coors: PagamiGeo) => {
                 this.onCurrentPositionChanged(coors);
             });
         /**
@@ -94,6 +95,6 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         /**
          * set center and marker position
          */
-        this.onCurrentPositionChanged(this.geolocationService.getCurrentLocation());
+        this.onCurrentPositionChanged(await this.geolocationService.getCurrentLocation());
     }
 }

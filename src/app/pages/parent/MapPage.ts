@@ -1,5 +1,7 @@
 import { ElementRef, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { GeolocationService } from '../../core/geolocation/geolocation.service';
+import { PagamiGeo } from '../../core/geolocation/pagami.geo';
 // // @ts-ignore
 // import GoogleMaps = google.maps;
 // // @ts-ignore
@@ -14,7 +16,6 @@ import { DOCUMENT } from '@angular/common';
 // import Circle = google.maps.Circle;
 // // @ts-ignore
 // import LatLng = google.maps.LatLng;
-import { GeolocationService } from '../../core/geolocation/geolocation.service';
 
 export class MapPage {
 
@@ -56,7 +57,7 @@ export class MapPage {
 
     onMapReady() { }
 
-    changeMapCenter(coords: Coordinates) {
+    changeMapCenter(coords: PagamiGeo) {
         const position: any = {
             lat: coords.latitude,
             lng: coords.longitude
@@ -64,7 +65,7 @@ export class MapPage {
         this.map.setCenter(position);
     }
 
-    setupMarkerCurrentPosition(coords: Coordinates) {
+    setupMarkerCurrentPosition(coords: PagamiGeo) {
         const position: any = {
             lat: coords.latitude,
             lng: coords.longitude

@@ -3,8 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import '@codetrix-studio/capacitor-google-auth';
 import { Plugins } from '@capacitor/core';
 import { auth } from 'firebase/app';
-import '@codetrix-studio/capacitor-google-auth';
 import { StorageService } from '../storage/storage.service';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,9 @@ export class GoogleAuthService {
 
     private googleAuth = Plugins.GoogleAuth;
 
-    constructor(private angularFireAuth: AngularFireAuth, private storageService: StorageService) { }
+    constructor(private angularFireAuth: AngularFireAuth,
+                private storageService: StorageService,
+                public toastController: ToastController) { }
 
     async singIn(): Promise<any> {
         const googleUser = await this.googleAuth.signIn();
@@ -25,7 +27,6 @@ export class GoogleAuthService {
 
     async saveGoogleUser(googleUser: any) {
         await this.storageService.setGoogleUser({
-            authenticationIdToken: googleUser.authentication.idToken,
             name: googleUser.givenName,
             lastname: googleUser.familyName,
             email: googleUser.email,
@@ -50,15 +51,68 @@ export class GoogleAuthService {
                     const sessionToken = await firebaseUser.getIdToken();
                     resolve(sessionToken);
                 } else {
-                    const googleUser = await this.storageService.getGoogleUser();
-                    const credential = auth.GoogleAuthProvider.credential(googleUser.authenticationIdToken);
-                    const fireCredential = await this.angularFireAuth.auth.signInWithCredential(credential);
-                    const sessionToken = await fireCredential.user.getIdToken();
-                    resolve(sessionToken);
+                    resolve(await this.refreshSession());
                 }
             } catch (err) {
-                resolve('');
+                await this.wait();
+                const token: any = await this.callRefreshSessionAgain();
+                resolve(token);
             }
+        });
+    }
+
+    private async refreshSession() {
+        const response = await this.googleAuth.refresh();
+        const credential = auth.GoogleAuthProvider.credential(response.idToken);
+        const fireCredential = await this.angularFireAuth.auth.signInWithCredential(credential);
+        const sessionToken = await fireCredential.user.getIdToken();
+        return sessionToken;
+    }
+
+
+    private async callRefreshSessionAgain() {
+        try {
+            const token = await this.refreshSession();
+            return token;
+        } catch (err) {
+            const token = await this.toastTokenError();
+            return token;
+        }
+    }
+
+    async toastTokenError() {
+        return new Promise(async resolve => {
+            const toast = await this.toastController.create({
+                color: 'pagami-surface',
+                cssClass: 'toast-bottom-custom',
+                message: 'Error al intentar conectarse con Google',
+                position: 'bottom',
+                buttons: [
+                    {
+                        text: 'REINTENTAR',
+                        role: 'cancel',
+                        handler: () => {
+                            this.callRefreshSessionAgain()
+                                .then(token => {
+                                    resolve(token);
+                                });
+                        }
+                    }
+                ]
+            });
+
+            await toast.present();
+        });
+    }
+
+    /**
+     * Wait 5 seconds for call
+     */
+    private async wait() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, 5000);
         });
     }
 }

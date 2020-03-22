@@ -19,7 +19,8 @@ import { CoreModule } from '../../../core/core.module';
         IonBottomDrawerModule,
         CoreModule
     ],
-    declarations: [CloseToMePage, NearbyPage]
+    declarations: [CloseToMePage, NearbyPage],
+    providers: []
 })
 export class CloseToMeModule {
 }

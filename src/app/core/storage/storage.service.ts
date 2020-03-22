@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { User } from '../api/users/user';
+import { PagamiGeo } from '../geolocation/pagami.geo';
 
 const IS_LOGGED = 'is_logged';
 const SESSION_TOKEN = 'session_token';
 const PAGAMI_USER = 'pagami_user';
 const GOOGLE_USER = 'google_user';
 const USER_UNREGISTERED = 'user_unregistered';
+const LAST_COORS = 'last_pagami_coors';
 
 @Injectable({
     providedIn: 'root'
@@ -79,6 +81,20 @@ export class StorageService {
     getGoogleUser(): Promise<any> {
         return new Promise(resolve => {
             this.storage.get(GOOGLE_USER)
+                .then(
+                    data => resolve(data),
+                    () => resolve(undefined)
+                );
+        });
+    }
+
+    setCurrentCoors(coors: PagamiGeo): Promise<any> {
+        return this.storage.set(LAST_COORS, coors);
+    }
+
+    getLastCurrentCoors(): Promise<PagamiGeo> {
+        return new Promise(resolve => {
+            this.storage.get(LAST_COORS)
                 .then(
                     data => resolve(data),
                     () => resolve(undefined)

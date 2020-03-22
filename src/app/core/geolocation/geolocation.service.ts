@@ -1,13 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Coordinates, Geolocation } from '@ionic-native/geolocation/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 // @ts-ignore
 import GoogleMaps = google.maps;
+import { StorageService } from '../storage/storage.service';
+import { mapToGeoPoint, PagamiGeo } from './pagami.geo';
 
-const defaultCoors: Coordinates = {
-    altitude: 0,
-    altitudeAccuracy: 0,
-    heading: 0,
-    speed: 0,
+const defaultCoors: PagamiGeo = {
     accuracy: 30,
     latitude: 10.4880104,
     longitude: -66.8791885
@@ -20,30 +18,36 @@ export class GeolocationService {
 
     private watch: any;
 
-    private coords: Coordinates;
+    private coords: PagamiGeo;
     // @ts-ignore
     private googleMaps: GoogleMaps = undefined;
 
-    public locationChanged: EventEmitter<Coordinates> = new EventEmitter<Coordinates>();
+    public locationChanged: EventEmitter<PagamiGeo> = new EventEmitter<PagamiGeo>();
 
-    constructor(private geolocation: Geolocation) { }
+    constructor(private geolocation: Geolocation, private storageService: StorageService) { }
 
-    getCurrentLocation(): Coordinates {
-        if (this.coords) {
-            return this.coords;
-        } else {
-            this.getCurrentPosition();
-            return defaultCoors;
-        }
+    async getCurrentLocation(): Promise<PagamiGeo> {
+        return new Promise(async resolve => {
+            if (this.coords) {
+                resolve(this.coords);
+            } else {
+                const lastCoors = await this.storageService.getLastCurrentCoors();
+                this.getCurrentPosition();
+                resolve(lastCoors ? lastCoors : defaultCoors);
+            }
+        });
     }
 
     private getCurrentPosition() {
         this.geolocation.getCurrentPosition().then((data) => {
-            if (data && data.coords) {
-                this.coords = data.coords;
-                this.locationChanged.emit(this.coords);
-            }
+            this.setCoors(mapToGeoPoint(data.coords));
         });
+    }
+
+    private setCoors(coors: PagamiGeo) {
+        this.coords = coors;
+        this.storageService.setCurrentCoors(coors);
+        this.locationChanged.emit(this.coords);
     }
 
     enableLocation() {
@@ -51,8 +55,7 @@ export class GeolocationService {
             this.watch = this.geolocation.watchPosition();
             this.watch.subscribe((data) => {
                 if (data && data.coords) {
-                    this.coords = data.coords;
-                    this.locationChanged.emit(this.coords);
+                    this.setCoors(mapToGeoPoint(data.coords));
                 }
             });
         }

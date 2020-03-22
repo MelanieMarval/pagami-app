@@ -66,7 +66,6 @@ export class TutorialPage {
 
     async onUserNotRegistered() {
         const userToRegister = await this.storageService.getGoogleUser();
-        delete userToRegister.authenticationIdToken;
         await this.storageService.setUserUnregistered(userToRegister);
         this.loading = false;
         this.route.navigate(['/terms']);
