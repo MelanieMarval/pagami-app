@@ -4,4 +4,5 @@
     <string name="title_activity_main">Pagami</string>
     <string name="package_name">io.ionic.pagami</string>
     <string name="custom_url_scheme">io.ionic.pagami</string>
+    <string name="server_client_id">901661269353-n7n4nor724ruta2enamnphmagsje79ru.apps.googleusercontent.com</string>
 </resources>
