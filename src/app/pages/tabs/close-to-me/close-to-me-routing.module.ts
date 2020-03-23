@@ -18,5 +18,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class CloseToMeRoutingModule {
-}
+export class CloseToMeRoutingModule { }

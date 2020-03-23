@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from './modal/modal';
 import { StorageService } from '../../core/storage/storage.service';
-import { User } from '../../core/users/user';
+import { User } from '../../core/api/users/user';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,14 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonSlides, ToastController } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from '../../core/auth/auth.service';
-import '@codetrix-studio/capacitor-google-auth';
-import { auth } from 'firebase/app';
 import { StorageService } from '../../core/storage/storage.service';
-import { User } from '../../core/users/user';
+import { User } from '../../core/api/users/user';
 import { RESPONSE } from '../../utils/Const';
 import { Router } from '@angular/router';
+import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
+import { AuthService } from '../../core/api/auth/auth.service';
 
 @Component({
     selector: 'page-tutorial',
@@ -24,7 +21,7 @@ export class TutorialPage {
     loading = false;
 
     constructor(
-        private angularFireAuth: AngularFireAuth,
+        private googleAuthService: GoogleAuthService,
         private authService: AuthService,
         private storageService: StorageService,
         private toastController: ToastController,
@@ -40,45 +37,36 @@ export class TutorialPage {
     async googleSignIn() {
         try {
             this.loading = true;
-            const googleUser = await Plugins.GoogleAuth.signIn();
-            const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
-            const fireCredential = await this.angularFireAuth.auth.signInWithCredential(credential);
-            const token = await fireCredential.user.getIdToken(false);
-            this.authService.singIn(token).then(
+            await this.googleAuthService.singIn();
+            this.authService.singIn().then(
                 (success: any) => {
                     if (success.passed) {
-                        this.onLoginSuccess(success.response, token);
+                        this.onLoginSuccess(success.response);
                     } else {
                         if (success.code === RESPONSE.CODE.NOT_REGISTERED) {
-                            this.onUserNotRegistered(googleUser, token);
+                            this.onUserNotRegistered();
                         } else {
                             this.onUnknownError();
                         }
                     }
                 }
             );
-        } catch (e) {
+        } catch (err) {
+            console.log(err);
             this.loading = false;
         }
     }
 
-    async onLoginSuccess(user: User, token: string) {
-        await this.storageService.setToken(token);
-        await this.storageService.seUser(user);
+    async onLoginSuccess(pagamiUser: User) {
+        await this.storageService.setPagamiUser(pagamiUser);
+        await this.storageService.setLogged(true);
         this.loading = false;
         this.route.navigate(['/app/tabs/close-to-me']);
     }
 
-    async onUserNotRegistered(googleUser, token: string) {
-        const userToRegister = {
-            name: googleUser.givenName,
-            lastname: googleUser.familyName,
-            email: googleUser.email,
-            photoUrl: googleUser.imageUrl,
-            terms: false
-        };
+    async onUserNotRegistered() {
+        const userToRegister = await this.storageService.getGoogleUser();
         await this.storageService.setUserUnregistered(userToRegister);
-        await this.storageService.setToken(token);
         this.loading = false;
         this.route.navigate(['/terms']);
     }

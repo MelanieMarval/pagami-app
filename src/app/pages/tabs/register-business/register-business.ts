@@ -1,8 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {ToastController} from '@ionic/angular';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {DOCUMENT} from '@angular/common';
-import {MapPage} from '../../parent/MapPage';
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import { DOCUMENT } from '@angular/common';
+import { MapPage } from '../../parent/MapPage';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
+import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { PlacesService } from '../../../core/api/places/places.service';
+import { Place } from '../../../core/api/places/place';
+import { Router } from '@angular/router';
+import { StorageService } from '../../../core/storage/storage.service';
 
 @Component({
     selector: 'app-register-business',
@@ -14,35 +19,78 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
     @ViewChild('mapCanvas', {static: true}) mapElement: ElementRef;
 
     beforeSaveLocation = true;
+    saving = false;
+    placeToSave;
 
     constructor(
-        public toastController: ToastController,
-        geolocation: Geolocation,
-        @Inject(DOCUMENT) doc: Document) {
-        super(geolocation, doc);
-    }
-
-    async ngAfterViewInit() {
-      this.loadMap(true);
+        private storageService: StorageService,
+        private router: Router,
+        private toastController: ToastController,
+        @Inject(DOCUMENT) doc: Document,
+        protected geolocationService: GeolocationService,
+        private placesService: PlacesService) {
+        super(doc, geolocationService);
     }
 
     async saveLocation() {
-
-        const toast = await this.toastController.create({
-            color: 'pagami-surface',
-            duration: 2000,
-            cssClass: 'toast-bottom-custom',
-            message: 'Ubicación guardada exitosamente',
-            position: 'bottom',
-        });
-
-        await toast.present();
-        this.beforeSaveLocation = false;
+        this.saving = true;
+        const coors = await this.geolocationService.getCurrentLocation();
+        const place: Place = {
+            latitude: coors.latitude,
+            longitude: coors.longitude,
+            accuracy: coors.accuracy,
+        };
+        this.placesService.save(place).then(
+            async (success: any) => {
+                const toast = await this.toastController.create({
+                    color: 'pagami-surface',
+                    duration: 2000,
+                    cssClass: 'toast-bottom-custom',
+                    message: 'Ubicación guardada exitosamente',
+                    position: 'bottom',
+                });
+                await toast.present();
+                this.placeToSave = success.response;
+                this.beforeSaveLocation = false;
+                this.saving = false;
+            }
+            , reason => {
+                this.saving = false;
+            });
     }
 
-    onCurrentPositionChanged(position: any) {
-        this.setupMarkerCurrentPosition(position);
-        this.changeMapCenter(position);
+    onCurrentPositionChanged(coors: PagamiGeo) {
+        this.setupMarkerCurrentPosition(coors);
+        this.changeMapCenter(coors);
     }
 
+    async navigateToBusinessDetails() {
+        await this.storageService.setPlaceUnregistered(this.placeToSave);
+        await this.router.navigate(['/app/business-details', this.placeToSave.id]);
+        this.beforeSaveLocation = true;
+        this.placeToSave = undefined;
+        this.saving = false;
+    }
+
+    async ngAfterViewInit() {
+        /**
+         * load map and wait
+         */
+        await this.loadMap(true);
+        /**
+         * subscribing to current location changes
+         */
+        this.geolocationService.locationChanged.subscribe(
+            (coors: PagamiGeo) => {
+                this.onCurrentPositionChanged(coors);
+            });
+        /**
+         * Enable watch location if status is disabled
+         */
+        this.geolocationService.enableLocation();
+        /**
+         * set center and marker position
+         */
+        this.onCurrentPositionChanged(await this.geolocationService.getCurrentLocation());
+    }
 }

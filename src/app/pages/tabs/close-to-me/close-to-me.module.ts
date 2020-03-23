@@ -8,6 +8,7 @@ import { CloseToMeRoutingModule } from './close-to-me-routing.module';
 import { CloseToMePage } from './close-to-me';
 import { NearbyPage } from './nearby/nearby';
 import { IonBottomDrawerModule } from '../../../modules/ion-bottom-drawer/ion-bottom-drawer.module';
+import { CoreModule } from '../../../core/core.module';
 
 @NgModule({
     imports: [
@@ -16,8 +17,10 @@ import { IonBottomDrawerModule } from '../../../modules/ion-bottom-drawer/ion-bo
         FormsModule,
         CloseToMeRoutingModule,
         IonBottomDrawerModule,
+        CoreModule
     ],
-    declarations: [CloseToMePage, NearbyPage]
+    declarations: [CloseToMePage, NearbyPage],
+    providers: []
 })
 export class CloseToMeModule {
 }

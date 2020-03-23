@@ -46,7 +46,7 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopModule)
             },
             {
-                path: 'business-details', component: BusinessDetailsPage
+                path: 'business-details/:id', component: BusinessDetailsPage
             },
             {
                 path: 'business-details/select-icon', component: SelectIconPage

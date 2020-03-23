@@ -1,6 +1,6 @@
 
 <ion-content class="close-to-me-scroll">
-    <ion-header class="header-search-map">
+    <ion-header class="header-search-map" [ngClass]="bottomDrawer.drawerState === 2 ? 'unset' : ''">
         <ion-grid>
             <ion-row>
                 <ion-col size="1">
@@ -24,7 +24,7 @@
 
     <div class="background-sheet-header" [hidden]="bottomDrawer.drawerState !== 2"></div>
 
-    <div #mapCanvas class="map-canvas" style="height: 100%; width:100%; margin-bottom: -50px"></div>
+    <div #mapCanvas class="map-canvas"></div>
 
     <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button color="{{ fabAttached ? 'map':'light'}}" (click)="attachedPosition()">

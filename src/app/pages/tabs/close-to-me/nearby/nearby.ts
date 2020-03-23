@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PlacesService } from '../../../../core/api/places/places.service';
 
 @Component({
     selector: 'app-nearby',
@@ -11,9 +12,11 @@ export class NearbyPage implements OnInit {
     @Input() drawerState = 0;
     selectedCategory = 0;
 
-    constructor() {
+    constructor(private placesService: PlacesService) {
     }
 
     ngOnInit() {
+        this.placesService.getAll()
+            .then(success => console.log(success));
     }
 }

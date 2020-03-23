@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../core/storage/storage.service';
-import { getGoogleMaps } from '../parent/MapPage';
 import { IonContent, ToastController } from '@ionic/angular';
-import { User } from '../../core/users/user';
+import { User } from '../../core/api/users/user';
+import { GeolocationService } from '../../core/geolocation/geolocation.service';
 
 @Component({
     selector: 'app-user-register',
@@ -22,8 +22,8 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
     @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
     constructor(private storageService: StorageService,
-                public toastController: ToastController,
-    ) {
+                private toastController: ToastController,
+                private geolocationService: GeolocationService) {
     }
 
     ngOnInit() {
@@ -37,9 +37,7 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
     }
 
     async ngAfterViewInit() {
-        this.googleMaps = await getGoogleMaps(
-            'AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s'
-        );
+        this.googleMaps = await this.geolocationService.getGoogleMaps();
         this.autocompleteService = new this.googleMaps.places.AutocompleteService();
     }
 

@@ -418,3 +418,17 @@ ion-bottom-drawer {
         100% { opacity: 0;}
     }
 }
+
+.map-canvas {
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: whitesmoke;
+    transition: opacity 150ms ease-in;
+}
+
+a[rel='noopener'] div img, .gmnoprint {
+    opacity: 0;
+}

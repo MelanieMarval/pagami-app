@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
-import { AuthService } from './auth/auth.service';
-import { MainService } from './main/main.service';
-import { PlacesService } from './places/places.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GeolocationService } from './geolocation/geolocation.service';
 import { StorageService } from './storage/storage.service';
+import { ApiService } from './api/api.service';
+import { AuthService } from './api/auth/auth.service';
+import { PlacesService } from './api/places/places.service';
+import { GoogleAuthService } from './google-auth/google-auth.service';
 
 @NgModule({
     declarations: [],
     imports: [],
     exports: [],
     providers: [
-        MainService,
+        Geolocation,
+        GeolocationService,
+        StorageService,
+        ApiService,
         AuthService,
         PlacesService,
-        StorageService
+        GoogleAuthService
     ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

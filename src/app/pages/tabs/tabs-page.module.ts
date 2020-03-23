@@ -8,23 +8,22 @@ import {TabsPageRoutingModule} from './tabs-page-routing.module';
 import {WalletModule} from './wallet/wallet.module';
 import {MyBusinessPage} from './my-business/my-business';
 import {RegisterBusinessPage} from './register-business/register-business';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
+import { CoreModule } from '../../core/core.module';
 
 @NgModule({
     imports: [
         CommonModule,
         IonicModule,
         WalletModule,
-        TabsPageRoutingModule
+        TabsPageRoutingModule,
+        CoreModule
     ],
     declarations: [
         TabsPage,
         MyBusinessPage,
         RegisterBusinessPage
     ],
-    providers: [
-        Geolocation
-    ]
+    providers: []
 })
 export class TabsModule {
 }
