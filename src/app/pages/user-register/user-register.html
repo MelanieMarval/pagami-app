@@ -4,7 +4,7 @@
 
     <ion-item-group class="image-user-center">
         <ion-avatar class="border-white-1px">
-            <img [src]="user.photoUrl">
+            <ion-img [src]="user.photoUrl"></ion-img>
         </ion-avatar>
     </ion-item-group>
 
@@ -44,5 +44,8 @@
 </ion-content>
 
 <div class="footer-button">
-    <ion-button class="button-large" expand="block" color="pagami" (click)="registerUser()">Guardar mi Cuenta</ion-button>
+    <ion-button [disabled]="saving" class="button-large" expand="block" (click)="registerUser()" color="pagami">
+        <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+        <span *ngIf="!saving">Guardar mi Cuenta</span>
+    </ion-button>
 </div>

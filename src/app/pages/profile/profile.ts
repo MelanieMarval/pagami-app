@@ -1,10 +1,15 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { AlertController, IonContent, ToastController } from '@ionic/angular';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AlertController, IonContent } from '@ionic/angular';
 
 import { InputFilePage } from '../parent/InputFilePage';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { Router } from '@angular/router';
+import { PagamiToast } from '../../toast/pagami.toast';
+import { StorageService } from '../../core/storage/storage.service';
+import { User } from '../../core/api/users/user';
+import { AuthService } from '../../core/api/auth/auth.service';
+import { FireStorage } from '../../core/fire-storage/fire.storage';
 
 
 @Component({
@@ -15,27 +20,31 @@ import { Router } from '@angular/router';
 export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit {
 
     isEditing = false;
+    user: User = {};
     googleMaps: any;
     autocompleteService: any;
-    textSearched = '';
     places: any = [];
+    updating = false;
 
     @ViewChild('ionContentEdit', {static: false}) private ionContentEdit: IonContent;
     @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
     constructor(
-                private router: Router,
-                private googleAuthService: GoogleAuthService,
-                private alertController: AlertController,
-                private toastController: ToastController,
-                private geolocationService: GeolocationService,
-                public zone: NgZone
+        private router: Router,
+        private googleAuthService: GoogleAuthService,
+        private alertController: AlertController,
+        private toast: PagamiToast,
+        private fireStorage: FireStorage,
+        private geolocationService: GeolocationService,
+        private storageService: StorageService,
+        private authService: AuthService,
     ) {
         super();
     }
 
-    ngOnInit() {
-        this.textSearched = 'Valencia, Carabobo, Venezuela';
+    async ngOnInit() {
+        this.user = await this.storageService.getPagamiUser();
+        this.previewUrl = this.user.photoUrl;
     }
 
     async ngAfterViewInit() {
@@ -45,11 +54,11 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
 
 
     searchPlace() {
-        if (this.textSearched.length > 0) {
+        if (this.user.location.length > 0) {
             if (this.itemLocation.nativeElement.classList.contains('item-has-focus') === true) {
                 const config = {
                     types: ['geocode'],
-                    input: this.textSearched
+                    input: this.user.location
                 };
                 this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
                     if (status === this.googleMaps.places.PlacesServiceStatus.OK && predictions) {
@@ -70,32 +79,68 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
 
     async setPlace(place) {
         console.log('-> place', place);
-        this.textSearched = await place;
+        this.user.location = await place;
         this.places = [];
     }
 
     editProfile() {
         if (this.isEditing) {
             this.isEditing = false;
-
+            this.updating = false;
         } else {
             this.isEditing = true;
-            this.previewUrl = 'assets/img/avatar-profile.jpg';
+            this.previewUrl = this.user.photoUrl;
             console.log('Vas a editar tu perfil');
         }
     }
 
-    async saveProfile() {
-        const toast = await this.toastController.create({
-            color: 'pagami-surface',
-            duration: 2000,
-            cssClass: 'toast-bottom-custom-without-tabs',
-            message: 'Cambios guardados exitosamente',
-            position: 'bottom',
-        });
+    saveProfile() {
+        const user = this.user;
+        if (user.name === '' || user.lastname === '' || user.location === '' || user.phone === '' || user.email === '') {
+            return this.toast.messageErrorWithoutTabs('Todos su informacion debe estar rellenada');
+        }
+        if (user.phone.length < 8 || user.phone.length > 15) {
+            return this.toast.messageErrorWithoutTabs('Su numero de telefono debe contener minimo 8 digitos y menos de 15', 2500);
+        }
+        if (this.previewUrl !== this.user.photoUrl) {
+            this.saveImage();
+        } else {
+            this.updateUser();
+        }
+    }
 
+    async saveImage() {
+        this.updating = true;
+        const success = await this.fireStorage.saveProfileImage(this.fileData);
+        if (success) {
+            this.user.photoUrl = success;
+            this.updateUser();
+        } else {
+            this.errorUpdating();
+        }
+    }
+
+    updateUser() {
+        this.updating = true;
+        this.authService.update(this.user)
+            .then(async success => {
+                if (success.passed === true) {
+                    console.log('-> success.response', success.response);
+                    await this.storageService.setPagamiUser(success.response);
+                    this.user = await this.storageService.getPagamiUser();
+                    this.updating = false;
+                    this.isEditing = false;
+                    this.toast.messageSuccessWithoutTabs('Informacion actualizada con exito');
+                } else {
+                    this.errorUpdating();
+                }
+            });
+    }
+
+    errorUpdating() {
+        this.updating = false;
         this.isEditing = false;
-        await toast.present();
+        this.toast.messageErrorWithoutTabs('No se ha podido actualizar. Intente de nuevo!');
     }
 
     async deleteAccountConfirm() {
@@ -152,6 +197,7 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
 
     async closeSession() {
         await this.googleAuthService.singOut();
-        this.router.navigateByUrl('/tutorial');
+        await this.router.navigateByUrl('/tutorial');
     }
+
 }

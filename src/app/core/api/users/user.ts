@@ -5,8 +5,8 @@ export interface User {
     email?: string;
     phone?: string;
     location?: string;
-    notification?: boolean;
-    fillOrder?: boolean;
+    notifications?: boolean;
+    fillOrders?: boolean;
     terms?: boolean;
     state?: string;
     createTime?: string;

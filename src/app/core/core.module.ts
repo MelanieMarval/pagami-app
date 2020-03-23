@@ -6,6 +6,8 @@ import { ApiService } from './api/api.service';
 import { AuthService } from './api/auth/auth.service';
 import { PlacesService } from './api/places/places.service';
 import { GoogleAuthService } from './google-auth/google-auth.service';
+import { FireStorage } from './fire-storage/fire.storage';
+
 
 @NgModule({
     declarations: [],
@@ -18,7 +20,8 @@ import { GoogleAuthService } from './google-auth/google-auth.service';
         ApiService,
         AuthService,
         PlacesService,
-        GoogleAuthService
+        GoogleAuthService,
+        FireStorage
     ]
 })
 export class CoreModule {

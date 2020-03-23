@@ -1,8 +1,13 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { StorageService } from '../../core/storage/storage.service';
 import { IonContent, ToastController } from '@ionic/angular';
-import { User } from '../../core/api/users/user';
+import { Router } from '@angular/router';
+
+// Services
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
+import { StorageService } from '../../core/storage/storage.service';
+import { User } from '../../core/api/users/user';
+import { AuthService } from '../../core/api/auth/auth.service';
+import { PagamiToast } from '../../toast/pagami.toast';
 
 @Component({
     selector: 'app-user-register',
@@ -14,26 +19,23 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
 
     googleMaps: any;
     autocompleteService: any;
-    textSearched = '';
     places: any = [];
     user: User = {};
+    saving = false;
 
     @ViewChild('ionContent', {static: false}) private ionContent: IonContent;
     @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
     constructor(private storageService: StorageService,
-                private toastController: ToastController,
-                private geolocationService: GeolocationService) {
+                private authService: AuthService,
+                private toast: PagamiToast,
+                private geolocationService: GeolocationService,
+                private route: Router) {
     }
 
     ngOnInit() {
         this.storageService.getUserUnregistered()
-            .then(user => {
-                if (user) {
-                    this.user = user;
-                    console.log('-> user', user);
-                }
-            });
+            .then(user => user ? this.user = user : '');
     }
 
     async ngAfterViewInit() {
@@ -55,7 +57,7 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
                             this.places.push(prediction);
                         });
                     }
-                    this.ionContent.scrollToBottom(200);
+                    this.ionContent.scrollToBottom(200).then();
                 });
             } else {
                 this.places = [];
@@ -71,16 +73,20 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
         this.places = [];
     }
 
-    async registerUser() {
-        const toast = await this.toastController.create({
-            color: 'pagami-surface',
-            duration: 2000,
-            cssClass: 'toast-bottom-custom-without-tabs',
-            message: 'Cambios guardados exitosamente',
-            position: 'bottom',
-        });
+    registerUser() {
+        this.saving = true;
+        this.user.fillOrders = true;
+        this.user.notifications = true;
 
-        await toast.present();
+        this.authService.create(this.user)
+            .then(async response => {
+                if (response.passed === true) {
+                    await this.storageService.setPagamiUser(response.response);
+                    this.saving = false;
+                    await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
+                    this.route.navigate(['/app/tabs/close-to-me']);
+                }
+            });
     }
 
 }

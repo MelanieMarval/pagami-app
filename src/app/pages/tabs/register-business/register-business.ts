@@ -8,6 +8,7 @@ import { PlacesService } from '../../../core/api/places/places.service';
 import { Place } from '../../../core/api/places/place';
 import { Router } from '@angular/router';
 import { StorageService } from '../../../core/storage/storage.service';
+import { PagamiToast } from '../../../toast/pagami.toast';
 
 @Component({
     selector: 'app-register-business',
@@ -25,7 +26,7 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
     constructor(
         private storageService: StorageService,
         private router: Router,
-        private toastController: ToastController,
+        private toast: PagamiToast,
         @Inject(DOCUMENT) doc: Document,
         protected geolocationService: GeolocationService,
         private placesService: PlacesService) {
@@ -42,14 +43,7 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         };
         this.placesService.save(place).then(
             async (success: any) => {
-                const toast = await this.toastController.create({
-                    color: 'pagami-surface',
-                    duration: 2000,
-                    cssClass: 'toast-bottom-custom',
-                    message: 'Ubicación guardada exitosamente',
-                    position: 'bottom',
-                });
-                await toast.present();
+                await this.toast.messageSuccessAboveButton('Ubicación guardada exitosamente')
                 this.placeToSave = success.response;
                 this.beforeSaveLocation = false;
                 this.saving = false;

@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { UserRegisterPage } from './user-register';
 import { UserRegisterPageRoutingModule } from './user-register-routing.module';
 import { FormsModule } from '@angular/forms';
-import { CoreModule } from '../../core/core.module';
 
 @NgModule({
     imports: [
@@ -13,7 +12,6 @@ import { CoreModule } from '../../core/core.module';
         IonicModule,
         UserRegisterPageRoutingModule,
         FormsModule,
-        CoreModule
     ],
     declarations: [UserRegisterPage],
     entryComponents: [UserRegisterPage],

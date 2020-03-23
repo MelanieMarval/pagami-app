@@ -1,10 +1,10 @@
 
 <ion-content class="close-to-me-scroll">
-    <ion-header class="header-search-map" [ngClass]="bottomDrawer.drawerState === 2 ? 'unset' : ''">
-        <ion-grid>
+    <ion-header class="header-search-map">
+        <ion-grid [ngClass]="bottomDrawer.drawerState === 2 ? 'unset' : ''">
             <ion-row>
                 <ion-col size="1">
-                    <ion-button class="btn-no-style" routerLink="/app/tabs/close-to-me/nearby">
+                    <ion-button class="btn-no-style" routerLink="/app/orders">
                         <ion-icon class="card-i size-icon-default" name="cart"></ion-icon>
                     </ion-button>
                 </ion-col>
