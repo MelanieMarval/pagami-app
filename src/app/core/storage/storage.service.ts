@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { User } from '../api/users/user';
 import { PagamiGeo } from '../geolocation/pagami.geo';
+import { Place } from '../api/places/place';
 
 const IS_LOGGED = 'is_logged';
 const SESSION_TOKEN = 'session_token';
 const PAGAMI_USER = 'pagami_user';
 const GOOGLE_USER = 'google_user';
 const USER_UNREGISTERED = 'user_unregistered';
+const PLACE_UNREGISTERED = 'place_unregistered';
 const LAST_COORS = 'last_pagami_coors';
 
 @Injectable({
@@ -95,6 +97,20 @@ export class StorageService {
     getLastCurrentCoors(): Promise<PagamiGeo> {
         return new Promise(resolve => {
             this.storage.get(LAST_COORS)
+                .then(
+                    data => resolve(data),
+                    () => resolve(undefined)
+                );
+        });
+    }
+
+    setPlaceUnregistered(place: any): Promise<any> {
+        return this.storage.set(PLACE_UNREGISTERED, place);
+    }
+
+    getPlaceUnregistered(): Promise<Place> {
+        return new Promise(resolve => {
+            this.storage.get(PLACE_UNREGISTERED)
                 .then(
                     data => resolve(data),
                     () => resolve(undefined)

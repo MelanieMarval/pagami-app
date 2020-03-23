@@ -17,10 +17,11 @@
     <div #mapCanvas class="map-canvas"></div>
 
     <div class="footer-button footer-button--div">
-        <ion-button class="button-large" expand="block" (click)="saveLocation()" color="pagami" *ngIf="beforeSaveLocation">
-            Guardar ubicacion
+        <ion-button [disabled]="saving" class="button-large" expand="block" (click)="saveLocation()" color="pagami" *ngIf="beforeSaveLocation">
+            <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+            <span *ngIf="!saving">Guardar ubicacion</span>
         </ion-button>
-        <ion-button class="button-large" expand="block" routerLink="/app/business-details" color="pagami" *ngIf="!beforeSaveLocation">
+        <ion-button class="button-large" expand="block" (click)="navigateToBusinessDetails()" color="pagami" *ngIf="!beforeSaveLocation">
             Continuar
         </ion-button>
     </div>
