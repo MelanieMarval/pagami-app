@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonSlides, ToastController } from '@ionic/angular';
+import { IonSlides } from '@ionic/angular';
 import { StorageService } from '../../core/storage/storage.service';
 import { User } from '../../core/api/users/user';
 import { RESPONSE } from '../../utils/Const';
 import { Router } from '@angular/router';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { AuthService } from '../../core/api/auth/auth.service';
+import { PagamiToast } from '../../toast/pagami.toast';
 
 @Component({
     selector: 'page-tutorial',
@@ -24,7 +25,7 @@ export class TutorialPage {
         private googleAuthService: GoogleAuthService,
         private authService: AuthService,
         private storageService: StorageService,
-        private toastController: ToastController,
+        private toast: PagamiToast,
         private route: Router) {
     }
 
@@ -52,7 +53,7 @@ export class TutorialPage {
                 }
             );
         } catch (err) {
-            console.log(err);
+            this.toast.messageErrorWithoutTabs(err.message);
             this.loading = false;
         }
     }
@@ -72,15 +73,7 @@ export class TutorialPage {
     }
 
     async onUnknownError() {
-        const toast = await this.toastController.create({
-            color: 'pagami-surface',
-            duration: 2000,
-            cssClass: 'toast-bottom-custom',
-            message: 'Un error ha ocurrido',
-            position: 'bottom',
-        });
-
-        await toast.present();
+        this.toast.messageErrorWithoutTabs('Un error ha ocurrido');
         this.loading = false;
     }
 }

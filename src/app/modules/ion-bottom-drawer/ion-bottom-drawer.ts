@@ -67,10 +67,13 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         const hammer = new Hammer(this._element.nativeElement);
         hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
         hammer.on('pan panstart panend', (ev: any) => {
+            console.log();
             if (ev.direction === Hammer.DIRECTION_DOWN) {
                 // nothing
             } else if (ev.direction === Hammer.DIRECTION_UP) {
-                if (this.state === DrawerState.Top && this.contentPosition === 0) {
+                if (this.state === DrawerState.Top
+                    && this.contentPosition === 0
+                    && this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
                     this.ionContent.scrollToPoint(undefined, 135, 200);
                 }
             }
