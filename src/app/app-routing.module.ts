@@ -5,11 +5,11 @@ import {SelectIconPage} from './pages/details-business/select-icon/select-icon';
 import {OrdersPage} from './pages/orders/orders';
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'tutorial',
-        pathMatch: 'full'
-    },
+    // {
+    //     path: '',
+    //     redirectTo: 'tutorial',
+    //     pathMatch: 'full'
+    // },
     {
         path: 'tutorial',
         loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),

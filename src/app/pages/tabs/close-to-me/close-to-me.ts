@@ -22,7 +22,8 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         minimumHeight: 118,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
-        hidden: false
+        hidden: false,
+        showBackToolbar: false
     };
     bottomHeightChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -96,5 +97,26 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
          * set center and marker position
          */
         this.onCurrentPositionChanged(await this.geolocationService.getCurrentLocation());
+    }
+
+    onDrawerPositionChange(position: number) {
+        if (this.bottomDrawer.showBackToolbar === false && this.bottomDrawer.distanceTop === position) {
+            console.log('drawer esta en el top');
+        }
+        if (this.bottomDrawer.showBackToolbar === true && this.bottomDrawer.distanceTop !== position) {
+            console.log('drawer quitado del top');
+        }
+        this.bottomDrawer.showBackToolbar = this.bottomDrawer.distanceTop === position;
+        // console.log(position);
+    }
+
+    onScrollContent(position: number) {
+        if (position === 0 && this.bottomDrawer.contentPosition !== 0) {
+            console.log('contenido scroleado a 0');
+        }
+        if (position !== 0 && this.bottomDrawer.contentPosition === 0) {
+            console.log('contenido quitado de la posicion 0');
+        }
+        this.bottomDrawer.contentPosition = position;
     }
 }

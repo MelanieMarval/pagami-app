@@ -1,7 +1,7 @@
 
 <ion-content class="close-to-me-scroll">
     <ion-header class="header-search-map">
-        <ion-grid [ngClass]="bottomDrawer.drawerState === 2 ? 'unset' : ''">
+        <ion-grid [ngClass]="bottomDrawer.showBackToolbar ? 'unset' : 'none'">
             <ion-row>
                 <ion-col size="1">
                     <ion-button class="btn-no-style" routerLink="/app/orders">
@@ -22,7 +22,7 @@
         </ion-grid>
     </ion-header>
 
-    <div class="background-sheet-header" [hidden]="bottomDrawer.drawerState !== 2"></div>
+    <div class="background-sheet-header" [hidden]="!bottomDrawer.showBackToolbar"></div>
 
     <div #mapCanvas class="map-canvas"></div>
 
@@ -35,10 +35,10 @@
 
 <ion-bottom-drawer [disableDrag]="bottomDrawer.disableDrag" [(state)]="bottomDrawer.drawerState" [minimumHeight]="bottomDrawer.minimumHeight"
                    [dockedHeight]="bottomDrawer.dockedHeight" [shouldBounce]="bottomDrawer.shouldBounce" [distanceTop]="bottomDrawer.distanceTop"
-                   (scrollContent)="bottomDrawer.contentPosition = $event" [bottomHeightChange]="bottomHeightChange" (hideBottomSheet)="onBottomSheetHide($event)"
-                   class="nearby-drawer">
+                   (scrollContent)="onScrollContent($event)" [bottomHeightChange]="bottomHeightChange" (hideBottomSheet)="onBottomSheetHide($event)"
+                   (drawerPositionChange)="onDrawerPositionChange($event)"  class="nearby-drawer">
     <div class="drawer-content nearby-expanded">
-        <div [ngClass]="{'with-overflow-y': bottomDrawer.drawerState === 2 && bottomDrawer.contentPosition > 0}">
+        <div [ngClass]="{'with-overflow-y': bottomDrawer.showBackToolbar && bottomDrawer.contentPosition > 0}">
             <app-nearby [drawerState]="bottomDrawer.drawerState"></app-nearby>
         </div>
     </div>

@@ -82,6 +82,7 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
             .then(async response => {
                 if (response.passed === true) {
                     await this.storageService.setPagamiUser(response.response);
+                    await this.storageService.setLogged(true);
                     this.saving = false;
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
                     this.route.navigate(['/app/tabs/close-to-me']);
