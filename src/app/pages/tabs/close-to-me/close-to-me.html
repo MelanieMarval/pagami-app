@@ -38,7 +38,7 @@
                    (scrollContent)="onScrollContent($event)" [bottomHeightChange]="bottomHeightChange" (hideBottomSheet)="onBottomSheetHide($event)"
                    (drawerPositionChange)="onDrawerPositionChange($event)"  class="nearby-drawer">
     <div class="drawer-content nearby-expanded">
-        <div [ngClass]="{'with-overflow-y': bottomDrawer.showBackToolbar && bottomDrawer.contentPosition > 0}">
+        <div [ngClass]="{'with-overflow-y': bottomDrawer.showBackToolbar && bottomDrawer.contentPosition > 0 && bottomDrawer.drawerState == 2}">
             <app-nearby [drawerState]="bottomDrawer.drawerState"></app-nearby>
         </div>
     </div>

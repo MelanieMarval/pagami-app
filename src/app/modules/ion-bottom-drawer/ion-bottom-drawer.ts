@@ -78,6 +78,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
             this._setDrawerCurrentTopPosition(this._element.nativeElement.getBoundingClientRect().top);
             const scrollY = -1 * (ev.deltaY - this._lastDeltaY);
             this._lastDeltaY = ev.deltaY;
+            // console.log(ev.type)
             if (ev.type === 'panstart') {
                 this.currentIonContentPosition = this.contentPosition;
             }
@@ -99,12 +100,17 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                     //}
                 }
             } else if (ev.direction === Hammer.DIRECTION_UP) {
+                //console.log('Hammer.DIRECTION_UP');
                 if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
+                    //console.log('this._element.nativeElement.getBoundingClientRect().top === this.distanceTop');
                     if (this.state === DrawerState.Top) {
+                        //console.log('scroll to x x')
+                        //console.log(this.contentPosition)
                         if (this.contentPosition === 0) {
                             this.ionContent.scrollToPoint(undefined, 135, 200);
                         }
                     } else {
+                        //console.log(this.state)
                         // console.log('scroll content');
                         // console.log(scrollY);
                         this.currentIonContentPosition += scrollY;
@@ -113,15 +119,15 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                     }
                 }
             }
-            if (this.contentPosition > 1 || (this.contentPosition === 1 && ev.direction === Hammer.DIRECTION_UP)) {
-                return;
-            }
+            // if (this.contentPosition > 1 || (this.contentPosition === 1 && ev.direction === Hammer.DIRECTION_UP)) {
+            //     return;
+            // }
             switch (ev.type) {
                 case 'panstart':
                     this._handlePanStart();
                     break;
                 case 'panend':
-                    console.log('pan end');
+                    // console.log('pan end');
                     this._handlePanEnd(ev);
                     if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop
                         && this.state === DrawerState.Top && this.currentIonContentPosition > 0) {
@@ -129,6 +135,9 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                     }
                     break;
                 default:
+                    if (ev.direction === Hammer.DIRECTION_DOWN && this.contentPosition > 1) {
+                        return;
+                    }
                     this._handlePan(ev);
             }
         });
@@ -187,7 +196,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
             }
         }
         if (this.state !== DrawerState.Top && this.contentPosition !== 0) {
-            this.ionContent.scrollToTop();
+            this.ionContent.scrollToPoint(undefined, 0);
         }
         this.stateChange.emit(this.state);
     }
@@ -253,6 +262,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     }
 
     setupContentTopPosition(position: number) {
+        if (position < 0) { position = 0; }
         this.contentPosition = position;
         this.scrollContent.emit(this.contentPosition);
     }
@@ -267,7 +277,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     onScrollContentEnd() {
         if (this._element.nativeElement.getBoundingClientRect().top !== this.distanceTop) {
-            this.ionContent.scrollToTop();
+            this.ionContent.scrollToPoint(undefined, 0);
         }
     }
 }

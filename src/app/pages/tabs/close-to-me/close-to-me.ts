@@ -101,10 +101,10 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     onDrawerPositionChange(position: number) {
         if (this.bottomDrawer.showBackToolbar === false && this.bottomDrawer.distanceTop === position) {
-            console.log('drawer esta en el top');
+            // console.log('drawer esta en el top');
         }
         if (this.bottomDrawer.showBackToolbar === true && this.bottomDrawer.distanceTop !== position) {
-            console.log('drawer quitado del top');
+            // console.log('drawer quitado del top');
         }
         this.bottomDrawer.showBackToolbar = this.bottomDrawer.distanceTop === position;
         // console.log(position);
@@ -112,15 +112,16 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     onScrollContent(position: number) {
         if (position === 0 && this.bottomDrawer.contentPosition !== 0) {
-            console.log('contenido scroleado a 0');
+            // console.log('contenido scroleado a 0');
         }
         if (position !== 0 && this.bottomDrawer.contentPosition === 0) {
-            console.log('contenido quitado de la posicion 0');
+            // console.log('contenido quitado de la posicion 0');
         }
         this.bottomDrawer.contentPosition = position;
     }
 
     onDrawerStateChange($event: DrawerState) {
-        console.log('New Drawer state: ' + $event);
+        this.bottomDrawer.drawerState = $event;
+        // console.log('New Drawer state: ' + $event);
     }
 }
