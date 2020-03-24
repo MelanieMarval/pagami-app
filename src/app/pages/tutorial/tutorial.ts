@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { StorageService } from '../../core/storage/storage.service';
 import { User } from '../../core/api/users/user';
 import { RESPONSE } from '../../utils/Const';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { PagamiToast } from '../../toast/pagami.toast';
+import { ModalPage } from './modal/modal';
 
 @Component({
     selector: 'page-tutorial',
@@ -26,7 +27,26 @@ export class TutorialPage {
         private authService: AuthService,
         private storageService: StorageService,
         private toast: PagamiToast,
-        private route: Router) {
+        private route: Router,
+        private modalController: ModalController) {
+    }
+
+    async presentModal() {
+        const modal = await this.modalController.create({
+            component: ModalPage,
+            animated: false,
+            cssClass: 'modal-fade'
+        });
+        await modal.present();
+
+        setTimeout(() => {
+            // Close modal
+            this.route.navigate(['/terms']).then(r => {
+                setTimeout(() => {
+                    modal.dismiss();
+                }, 2000);
+            });
+        }, 4000);
     }
 
     slideDidChange() {
@@ -69,11 +89,11 @@ export class TutorialPage {
         const userToRegister = await this.storageService.getGoogleUser();
         await this.storageService.setUserUnregistered(userToRegister);
         this.loading = false;
-        this.route.navigate(['/terms']);
+        this.presentModal().then();
     }
 
     async onUnknownError() {
-        this.toast.messageErrorWithoutTabs('Un error ha ocurrido');
+        await this.toast.messageErrorWithoutTabs('Un error ha ocurrido');
         this.loading = false;
     }
 }

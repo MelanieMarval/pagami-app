@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TermsPage } from './terms';
-import { ModalPage } from './modal/modal';
 
 @NgModule({
     imports: [
@@ -15,10 +14,9 @@ import { ModalPage } from './modal/modal';
     ],
     declarations: [
         TermsPage,
-        ModalPage
     ],
-    exports: [ModalPage],
-    entryComponents: [ModalPage]
+    exports: [],
+    entryComponents: []
 })
 export class TermsModule {
 }

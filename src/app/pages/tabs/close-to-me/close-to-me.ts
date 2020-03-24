@@ -18,8 +18,8 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         shouldBounce: true,
         disableDrag: false,
         distanceTop: 62,
-        dockedHeight: 520,
-        minimumHeight: 118,
+        dockedHeight: 504,
+        minimumHeight: 108,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false,
@@ -41,7 +41,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         this.appService.showNearby.subscribe(() => {
             if (this.bottomDrawer.drawerState === DrawerState.Bottom
                 || this.bottomDrawer.drawerState === DrawerState.Top) {
-                this.bottomHeightChange.emit(118);
+                this.bottomHeightChange.emit(108);
                 this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
                 this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
             }

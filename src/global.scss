@@ -373,7 +373,7 @@ ion-bottom-drawer {
 }
 
 .fab-corner-lr {
-    bottom: 16px;
+    bottom: 18px;
     right: 16px;
 }
 
@@ -411,12 +411,12 @@ ion-bottom-drawer {
 .modal-fade{
     opacity: 0;
     animation-name: fade-in-out;
-    animation-duration: 5s;
+    animation-duration: 6s;
 
     @keyframes fade-in-out {
         0%   { opacity: 0;}
-        10%  { opacity: 1;}
-        75%  { opacity: 1;}
+        20%  { opacity: 1;}
+        80%  { opacity: 1;}
         100% { opacity: 0;}
     }
 }

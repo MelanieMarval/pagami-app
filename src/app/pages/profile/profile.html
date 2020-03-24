@@ -1,7 +1,10 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/app/tabs/close-to-me"></ion-back-button>
+            <ion-back-button *ngIf="!isEditing" defaultHref="/app/tabs/close-to-me"></ion-back-button>
+            <ion-button *ngIf="isEditing" (click)="editProfile()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
         </ion-buttons>
         <ion-title>Perfil</ion-title>
         <ion-buttons slot="end">
@@ -58,7 +61,7 @@
 
     </ion-list>
 
-    <div class="footer-button footer-button--div" >
+    <div class="footer-button" >
         <ion-button class="button-large" expand="block" color="danger" [disabled]="updating" (click)="deleteAccountConfirm()">Eliminar Cuenta</ion-button>
     </div>
 </ion-content>

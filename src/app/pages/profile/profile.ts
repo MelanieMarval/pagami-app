@@ -96,7 +96,7 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
 
     saveProfile() {
         const user = this.user;
-        if (user.name === '' || user.lastname === '' || user.location === '' || user.phone === '' || user.email === '') {
+        if (user.name.trim() === '' || user.lastname.trim() === '' || user.location.trim() === '' || user.phone.trim() === '' || user.email.trim() === '') {
             return this.toast.messageErrorWithoutTabs('Todos su informacion debe estar rellenada');
         }
         if (user.phone.length < 8 || user.phone.length > 15) {

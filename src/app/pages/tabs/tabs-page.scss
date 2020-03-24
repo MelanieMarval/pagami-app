@@ -1,12 +1,18 @@
 ion-tab-bar {
     border: 0 !important;
     --background: #2d3748;
+    height: 48px;
 
-    ion-tab-button {
+    .tab-button {
         --color: #a0aec0;
         --color-selected: #fff;
+        &__icon{
+            width: 20px;
+            height: 20px;
+        }
         ion-label {
             font-family: 'Quicksand', 'Roboto', sans-serif;
+            font-weight: 500;
         }
     }
 }

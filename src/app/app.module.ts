@@ -11,8 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Components
 import { AppComponent } from './app.component';
-import { BusinessDetailsPage } from './pages/details-business/business-details';
-import { SelectIconPage } from './pages/details-business/select-icon/select-icon';
+import { BusinessDetailsPage } from './pages/business-details/business-details';
+import { SelectIconPage } from './pages/business-details/select-icon/select-icon';
 import { OrdersPage } from './pages/orders/orders';
 import { AppService } from './services/app.service';
 
@@ -25,7 +25,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-
 
 @NgModule({
     declarations: [AppComponent, OrdersPage, BusinessDetailsPage, SelectIconPage],
@@ -42,7 +41,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
         AngularFireStorageModule,
         AngularFireAuthModule,
         IonicStorageModule.forRoot(),
-        CoreModule
+        CoreModule,
     ],
     providers: [
         StatusBar,
@@ -51,6 +50,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
         PagamiToast,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
+    exports: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
