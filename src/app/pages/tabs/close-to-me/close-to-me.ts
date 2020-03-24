@@ -119,4 +119,8 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         }
         this.bottomDrawer.contentPosition = position;
     }
+
+    onDrawerStateChange($event: DrawerState) {
+        console.log('New Drawer state: ' + $event);
+    }
 }

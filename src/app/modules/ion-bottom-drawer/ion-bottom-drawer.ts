@@ -85,7 +85,19 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 return;
             }
             if (ev.direction === Hammer.DIRECTION_DOWN) {
-                // nothing
+                if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
+                    //if (this.state === DrawerState.Top) {
+                        // if (this.contentPosition === 0) {
+                        //     this.ionContent.scrollToPoint(undefined, 135, 200);
+                        // }
+                    //} else {
+                        // console.log('scroll content');
+                        // console.log(scrollY);
+                        this.currentIonContentPosition += scrollY;
+                        this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
+                            .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
+                    //}
+                }
             } else if (ev.direction === Hammer.DIRECTION_UP) {
                 if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
                     if (this.state === DrawerState.Top) {

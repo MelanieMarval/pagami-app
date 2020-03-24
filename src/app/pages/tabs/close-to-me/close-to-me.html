@@ -33,7 +33,7 @@
     </ion-fab>
 </ion-content>
 
-<ion-bottom-drawer [disableDrag]="bottomDrawer.disableDrag" [(state)]="bottomDrawer.drawerState" [minimumHeight]="bottomDrawer.minimumHeight"
+<ion-bottom-drawer [disableDrag]="bottomDrawer.disableDrag" [(state)]="bottomDrawer.drawerState" [minimumHeight]="bottomDrawer.minimumHeight" (stateChange)="onDrawerStateChange($event)"
                    [dockedHeight]="bottomDrawer.dockedHeight" [shouldBounce]="bottomDrawer.shouldBounce" [distanceTop]="bottomDrawer.distanceTop"
                    (scrollContent)="onScrollContent($event)" [bottomHeightChange]="bottomHeightChange" (hideBottomSheet)="onBottomSheetHide($event)"
                    (drawerPositionChange)="onDrawerPositionChange($event)"  class="nearby-drawer">
