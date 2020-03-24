@@ -25,12 +25,12 @@ const routes: Routes = [
                 path: 'wallet',
                 loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
             },
+            {
+                path: '**',
+                redirectTo: 'close-to-me',
+                pathMatch: 'full'
+            }
         ],
-    },
-    {
-        path: '**',
-        redirectTo: 'close-to-me',
-        pathMatch: 'full'
     }
 ];
 

@@ -1,3 +1,6 @@
-<p>
-  avatar-header works!
-</p>
+
+<a routerLink="/app/profile" [ngClass]="addClass ? 'position-avatar' : ''">
+    <ion-avatar class="toolbar-avatar" slot="end">
+        <ion-img [src]="user.photoUrl | NoImage" alt="Image of profile"></ion-img>
+    </ion-avatar>
+</a>

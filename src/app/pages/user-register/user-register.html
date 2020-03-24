@@ -11,12 +11,12 @@
     <ion-list lines="none" class="inputs-container" *ngIf="user">
         <ion-item color="pagami-surface">
             <ion-label position="floating">Nombre</ion-label>
-            <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+            <ion-input type="text" [(ngModel)]="user.name" maxlength="30"></ion-input>
             <ion-icon name="person" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
             <ion-label position="floating">Apellido</ion-label>
-            <ion-input type="text" [(ngModel)]="user.lastname"></ion-input>
+            <ion-input type="text" [(ngModel)]="user.lastname" maxlength="30"></ion-input>
             <ion-icon name="people" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
@@ -26,7 +26,7 @@
         </ion-item>
         <ion-item color="pagami-surface">
             <ion-label position="floating">Telefono</ion-label>
-            <ion-input type="tel" [(ngModel)]="user.phone"></ion-input>
+            <ion-input type="tel" [(ngModel)]="user.phone" maxlength="15"></ion-input>
             <ion-icon name="call" slot="start"></ion-icon>
         </ion-item>
         <ion-item #itemLocation color="pagami-surface">

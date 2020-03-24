@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 @Component({
     selector: 'app-terms',
     templateUrl: 'modal.html',
-    styleUrls: ['../terms.scss']
+    styleUrls: ['../../terms/terms.scss']
 })
 export class ModalPage {
 

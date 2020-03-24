@@ -74,16 +74,27 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
     }
 
     registerUser() {
+        const user = this.user;
+        console.log('-> user', user);
+        if (!user.location || !user.phone) {
+            return this.toast.messageErrorWithoutTabs('No puede dejar datos vacios');
+        }
+        if (user.name.trim() === '' || user.lastname.trim() === '' || user.location.trim() === '' || user.phone.trim() === '' || user.email.trim() === '') {
+            return this.toast.messageErrorWithoutTabs('Todos su información debe estar rellenada');
+        }
+        if (user.phone.length < 8 || user.phone.length > 15) {
+            return this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener entre 8 y 15 dígitos', 2500);
+        }
         this.saving = true;
-        this.user.fillOrders = true;
-        this.user.notifications = true;
+        user.fillOrders = true;
+        user.notifications = true;
 
-        this.authService.create(this.user)
+        this.authService.create(user)
             .then(async response => {
                 if (response.passed === true) {
                     await this.storageService.setPagamiUser(response.response);
-                    this.saving = false;
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
+                    this.saving = false;
                     this.route.navigate(['/app/tabs/close-to-me']);
                 }
             });

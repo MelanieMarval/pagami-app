@@ -7,11 +7,7 @@
         </ion-title>
     </ion-toolbar>
 </ion-header>
-<a routerLink="/profile" class="position-avatar" *ngIf="!isRegister">
-    <ion-avatar class="toolbar-avatar" slot="end">
-        <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
-    </ion-avatar>
-</a>
+<app-avatar-header *ngIf="!isRegister"></app-avatar-header>
 
 <ion-content *ngIf="!isRegister" scroll-y="false">
     <div class="no-register">
@@ -81,12 +77,7 @@
         </div>
     </div>
 
-    <a routerLink="/app/profile" class="position-avatar" *ngIf="!isEditing">
-        <ion-avatar class="toolbar-avatar" slot="end">
-            <img src="assets/img/avatar-profile.jpg" alt="Image of profile"/>
-        </ion-avatar>
-    </a>
-
+    <app-avatar-header *ngIf="!isEditing" [addClass]="true"></app-avatar-header>
 
         <ion-list class="inputs-container">
             <ion-item color="pagami-surface" *ngIf="isEditing">
