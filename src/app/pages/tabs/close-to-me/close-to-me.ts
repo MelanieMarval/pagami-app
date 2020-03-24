@@ -19,7 +19,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         disableDrag: false,
         distanceTop: 62,
         dockedHeight: 504,
-        minimumHeight: 100,
+        minimumHeight: 108,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false
