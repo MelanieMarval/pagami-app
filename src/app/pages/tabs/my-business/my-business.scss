@@ -1,83 +1,71 @@
 ion-col.md {
-  display: flex;
+    display: flex;
 }
 
-.no-register{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.no-register {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  ion-text{
-    margin-top: 36px;
-    font-size: 20px;
-    font-weight: bolder;
-    line-height: 27px;
-    text-align: center;
-  }
+    ion-text {
+        margin-top: 36px;
+        font-size: 20px;
+        font-weight: bolder;
+        line-height: 27px;
+        text-align: center;
+    }
 }
 
 
-.header-image{
-  //background: url("src/assets/img/avatar-business.jpg") no-repeat center, linear-gradient(to bottom, rgba(0,0,0,0.31) 0%,rgba(0,0,0,0.31) 1%,rgba(0,0,0,0) 27%,rgba(0,0,0,0) 46%,rgba(0,0,0,0) 66%,rgba(0,0,0,0.51) 100%) ;
-  //background-image: url("src/assets/img/avatar-business.jpg");
-  //background-repeat: no-repeat;
-  //background-size: cover;
-  //background-position: center;
+.header-image {
+    &--info {
+        position: absolute;
+        bottom: 0;
 
-  //ion-toolbar{
-  //  --background: transparent;
-  //}
-
-  &--info{
-    position: absolute;
-    bottom: 0;
-
-    ion-item{
-      --background: transparent;
-      height: 40px;
-      ion-icon{
-        margin-right: 4px;
-        color: #FFF
-      }
-    }
-    .info-category{
-      font-size: 13px;
-      text-transform: uppercase;
-      ion-icon{
-        width: 15px;
-      }
-    }
-    ion-text{
-      font-size: 20px;
-      margin-left: 15px;
-    }
-    .info-title{
-      position: relative;
-
-      ion-fab{
-        right: 15px;
-        top: 18px;
-        ion-fab-button{
-          width: 24px;
-          height: 24px;
-
-          ion-icon{
-            width: 14px;
-          }
+        ion-item {
+            --background: transparent;
+            height: 40px;
+            ion-icon {
+                margin-right: 4px;
+                color: #FFF
+            }
         }
-      }
-    }
+        .info-category {
+            font-size: 13px;
+            text-transform: uppercase;
+            ion-icon {
+                width: 15px;
+            }
+        }
+        ion-text {
+            font-size: 20px;
+            margin-left: 15px;
+        }
 
-    .info-rating{
-      font-size: 12px;
-      ion-icon{
-        width: 10px;
-      }
-    }
+        .info-title {
+            position: relative;
+            ion-fab {
+                //right: 15px;
+                top: 18px;
+                ion-fab-button {
+                    width: 24px;
+                    height: 24px;
+                    ion-icon {
+                        width: 14px;
+                    }
+                }
+            }
+        }
+        .info-rating {
+            font-size: 12px;
+            ion-icon {
+                width: 10px;
+            }
+        }
 
-  }
+    }
 }
 
 

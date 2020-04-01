@@ -49,7 +49,7 @@ const routes: Routes = [
                 path: 'business-details/:id', component: BusinessDetailsPage
             },
             {
-                path: 'business-details/select-icon', component: SelectIconPage
+                path: 'business-details/:id/select-icon', component: SelectIconPage
             },
             {
                 path: 'profile',

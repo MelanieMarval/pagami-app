@@ -185,14 +185,17 @@ ion-searchbar > div > input {
 .footer-button {
     padding: 17px;
     background: var(--ion-background-color);
-}
 
-.footer-button--div {
-    position: absolute;
-    background: transparent;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    &.--without-pt {
+        padding-top: 0;
+    }
+    &--div {
+        position: absolute;
+        background: transparent;
+        right: 0;
+        left: 0;
+        bottom: 0;
+    }
 }
 
 .button-large, .button-small {
@@ -216,18 +219,21 @@ ion-searchbar > div > input {
 .inputs-container {
     margin: 15px 20px 0;
 
-  ion-item{
-    border-radius: 5px 5px 0 0;
-    margin-bottom: 17px;
-    border-bottom: 2px solid;
-    --highlight-background: var(--ion-color-pagami-surface);
-    transition: ease .4s;
-    &.item-has-focus{
-      border-bottom: 2px solid var(--ion-color-pagami);
+    &.--without-mt {
+        margin-top: 2px;
     }
-    ion-label.ios{
-      transform: translate3d(0, 13px, 0px);
-    }
+    ion-item{
+        border-radius: 5px 5px 0 0;
+        margin-bottom: 17px;
+        border-bottom: 2px solid;
+        --highlight-background: var(--ion-color-pagami-surface);
+        transition: ease .4s;
+        &.item-has-focus{
+            border-bottom: 2px solid var(--ion-color-pagami);
+        }
+        ion-label.ios{
+            transform: translate3d(0, 13px, 0px);
+        }
 
         ion-icon {
             margin-top: auto;
@@ -255,7 +261,7 @@ ion-checkbox {
 }
 
 .link-buttons-container {
-    margin: 25px 20px;
+    margin: 10px 20px;
 
     ion-item {
         border-radius: 5px;
@@ -302,6 +308,25 @@ ion-checkbox {
     }
 }
 
+.item-search{
+    margin-bottom: 0 !important;
+}
+.results-search{
+    --background: var(--ion-color-pagami-surface);
+    position: relative;
+    top: -25px;
+    padding: 0 20px;
+    &.--first-item{
+        top: -7px;
+    }
+    ion-label {
+        padding-left: 10px
+    }
+    .border-radius-bottom {
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+}
 /* END inputs */
 /*  ***********************  */
 
@@ -313,7 +338,6 @@ ion-checkbox {
 .alert-wrapper {
     max-width: 90% !important;
 }
-
 /* END alerts */
 /*  ***********************  */
 
@@ -341,6 +365,18 @@ ion-checkbox {
 }
 
 /* END products */
+/*  ***********************  */
+
+/* ***TOAST IN ALL PAGES*** */
+.toast-bottom-custom {
+    width: 95%;
+    transform: translateY(-140px) translateX(3%);
+}
+.toast-bottom-custom-without-tabs {
+    width: 95%;
+    transform: translateY(-75px) translateX(3%);
+}
+/* END toast */
 /*  ***********************  */
 
 ion-bottom-drawer {
@@ -371,9 +407,12 @@ ion-bottom-drawer {
     width: 24px;
     height: 24px;
 }
+.icon-white{
+    filter: invert(97%) sepia(0%) saturate(7494%) hue-rotate(187deg) brightness(102%) contrast(103%);
+}
 
 .fab-corner-lr {
-    bottom: 18px;
+    bottom: 16px;
     right: 16px;
 }
 
@@ -396,15 +435,6 @@ ion-bottom-drawer {
 .btn-no-style {
     --box-shadow: unset;
     --background: transparent;
-}
-
-.toast-bottom-custom {
-    width: 95%;
-    transform: translateY(-145px) translateX(3%);
-}
-.toast-bottom-custom-without-tabs {
-  width: 95%;
-  transform: translateY(-90px) translateX(3%);
 }
 
 
@@ -442,4 +472,5 @@ a[rel='noopener'] div img, .gmnoprint {
     z-index: 10;
     top: 56px;
 }
+
 

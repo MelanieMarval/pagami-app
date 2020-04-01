@@ -6,6 +6,7 @@ import {ProductsPageRoutingModule} from './products-routing.module';
 
 import {ProductsPage} from './products';
 import {AddProductPage} from './add-product/add-product';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {AddProductPage} from './add-product/add-product';
         CommonModule,
         IonicModule,
         HttpClientModule,
-        ProductsPageRoutingModule
+        ProductsPageRoutingModule,
+        FormsModule
     ],
     declarations: [
         ProductsPage,

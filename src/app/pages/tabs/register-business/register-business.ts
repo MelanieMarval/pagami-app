@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { ToastController } from '@ionic/angular';
 import { DOCUMENT } from '@angular/common';
 import { MapPage } from '../../parent/MapPage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
@@ -43,10 +42,16 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
         };
         this.placesService.save(place).then(
             async (success: any) => {
-                await this.toast.messageSuccessAboveButton('Ubicación guardada exitosamente')
-                this.placeToSave = success.response;
-                this.beforeSaveLocation = false;
-                this.saving = false;
+                if (success.passed === true) {
+                    await this.toast.messageSuccessAboveButton('Ubicación guardada exitosamente');
+                    this.placeToSave = success.response;
+                    this.beforeSaveLocation = false;
+                    this.saving = false;
+                } else {
+                    console.log('-> success', success);
+                    this.saving = false;
+                    await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
+                }
             }
             , reason => {
                 this.saving = false;
@@ -60,6 +65,7 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
 
     async navigateToBusinessDetails() {
         await this.storageService.setPlaceUnregistered(this.placeToSave);
+        console.log('-> this.placeToSave', this.placeToSave);
         await this.router.navigate(['/app/business-details', this.placeToSave.id]);
         this.beforeSaveLocation = true;
         this.placeToSave = undefined;
