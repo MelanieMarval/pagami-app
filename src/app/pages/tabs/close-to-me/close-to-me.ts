@@ -23,7 +23,8 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false,
-        showBackToolbar: false
+        showBackToolbar: false,
+        disableScrollContent: true
     };
     bottomHeightChange: EventEmitter<number> = new EventEmitter<number>();
 

@@ -48,6 +48,10 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     @Output() drawerPositionChange: EventEmitter<number> = new EventEmitter<number>();
 
+    @Output() disableScrollContent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    diasbleScroll = true;
+
     private _lastDeltaY = 0;
 
     currentDistanceTop = 0;
@@ -76,12 +80,14 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
         hammer.on('pan panstart panend', (ev: any) => {
             this._setDrawerCurrentTopPosition(this._element.nativeElement.getBoundingClientRect().top);
-            const scrollY = -1 * (ev.deltaY - this._lastDeltaY);
-            this._lastDeltaY = ev.deltaY;
             // console.log(ev.type)
             if (ev.type === 'panstart') {
+                console.log('pan start')
                 this.currentIonContentPosition = this.contentPosition;
+                this._lastDeltaY = 0;
             }
+            const scrollY = -1 * (ev.deltaY - this._lastDeltaY);
+            this._lastDeltaY = ev.deltaY;
             if (this.disableDrag) {
                 return;
             }
@@ -106,8 +112,10 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                     if (this.state === DrawerState.Top) {
                         //console.log('scroll to x x')
                         //console.log(this.contentPosition)
-                        if (this.contentPosition === 0) {
-                            this.ionContent.scrollToPoint(undefined, 135, 200);
+                        if (this.diasbleScroll) {
+                            this.currentIonContentPosition += scrollY;
+                            this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
+                                .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
                         }
                     } else {
                         //console.log(this.state)
@@ -198,6 +206,11 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         if (this.state !== DrawerState.Top && this.contentPosition !== 0) {
             this.ionContent.scrollToPoint(undefined, 0);
         }
+        if (this.state === DrawerState.Top && this.contentPosition > 0) {
+            console.log('active scroll content');
+            this.diasbleScroll = false;
+            this.disableScrollContent.emit(false);
+        }
         this.stateChange.emit(this.state);
     }
 
@@ -265,6 +278,11 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         if (position < 0) { position = 0; }
         this.contentPosition = position;
         this.scrollContent.emit(this.contentPosition);
+        if (position === 0) {
+            console.log('disable scroll')
+            this.diasbleScroll = true;
+            this.disableScrollContent.emit(true);
+        }
     }
 
     changeBottomHeight(height) {
