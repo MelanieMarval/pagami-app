@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {WalletPage} from './wallet';
 import {ActivityPage} from './activity/activity';
 import {WalletPageRoutingModule} from './wallet-routing.module';
+import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 
 @NgModule({
     imports: [
@@ -13,7 +14,7 @@ import {WalletPageRoutingModule} from './wallet-routing.module';
         FormsModule,
         WalletPageRoutingModule
     ],
-    declarations: [WalletPage, ActivityPage]
+    declarations: [WalletPage, ActivityPage, CapitalizePipe]
 })
 export class WalletModule {
 }

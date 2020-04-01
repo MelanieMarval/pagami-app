@@ -9,12 +9,23 @@ export class PagamiToast {
     constructor(private toastController: ToastController) {
     }
 
+    async messageSuccessTop(message: string, duration = 2000) {
+        const toast = await this.toastController.create({
+            message,
+            duration,
+            color: 'pagami-surface',
+            position: 'top',
+        });
+
+        await toast.present();
+    }
+
     async messageSuccessWithoutTabs(message: string, duration = 2000) {
         const toast = await this.toastController.create({
-            color: 'pagami-surface',
-            duration,
-            cssClass: 'toast-bottom-custom-without-tabs',
             message,
+            duration,
+            color: 'pagami-surface',
+            cssClass: 'toast-bottom-custom-without-tabs',
             position: 'bottom',
         });
 
@@ -23,27 +34,40 @@ export class PagamiToast {
 
     async messageSuccessAboveButton(message: string, duration = 2000) {
         const toast = await this.toastController.create({
+            message,
+            duration,
             color: 'pagami-surface',
-            duration,
             cssClass: 'toast-bottom-custom',
-            message,
             position: 'bottom',
         });
 
         await toast.present();
     }
 
-    async messageErrorWithoutTabs(message: string, duration = 2000) {
+    async messageErrorWithoutTabs(message: string, duration = 2500, header = 'Error!') {
         const toast = await this.toastController.create({
-            color: 'danger',
-            duration,
-            cssClass: 'toast-bottom-custom-without-tabs',
-            header: 'Error!',
+            header,
             message,
+            duration,
+            color: 'danger',
+            cssClass: 'toast-bottom-custom-without-tabs',
             position: 'bottom',
         });
 
         await toast.present();
     }
+    async messageErrorAboveButton(message: string, duration = 2500, header = 'Error!') {
+        const toast = await this.toastController.create({
+            header,
+            message,
+            duration,
+            color: 'danger',
+            cssClass: 'toast-bottom-custom',
+            position: 'bottom',
+        });
+
+        await toast.present();
+    }
+
 
 }

@@ -29,7 +29,7 @@ h3{
 
 
 .profile--section-3{
-  margin: 26px 10px;
+  margin: 20px 10px;
 
   ion-item {
     margin: 16px 0;
@@ -53,16 +53,7 @@ div#alert-1-msg {
   color: #FFFFFF !important;
 }
 
-/* ***Editing*** */
-.results-search{
-    --background: var(--ion-color-pagami-surface);
-    position: relative;
-    top: -25px;
-    padding: 0 20px;
-    ion-label {
-        padding-left: 10px
-    }
-}
+
 .border-radius-bottom {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;

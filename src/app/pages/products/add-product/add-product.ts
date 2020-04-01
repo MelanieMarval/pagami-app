@@ -1,8 +1,11 @@
-import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {AlertController} from '@ionic/angular';
-import {InputFilePage} from '../../parent/InputFilePage';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { InputFilePage } from '../../parent/InputFilePage';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
+import { ValidationUtils } from '../../../utils/validation.utils';
+import { PagamiToast } from '../../../toast/pagami.toast';
 
 @Component({
     selector: 'app-add-product',
@@ -11,20 +14,26 @@ import {InputFilePage} from '../../parent/InputFilePage';
 })
 export class AddProductPage extends InputFilePage {
 
+    product = {
+        name: '',
+        price: 0,
+        stock: 0,
+    };
+
     constructor(
         private http: HttpClient,
         private alertController: AlertController,
         private route: Router,
+        private toast: PagamiToast,
+        protected geolocationService: GeolocationService
     ) {
-        super();
-    }
-
-    fileProgress(fileInput: any) {
-        this.fileData = fileInput.target.files[0] as File;
-        this.preview();
+        super(geolocationService);
     }
 
     onSubmit() {
+        if (!ValidationUtils.validateEmpty(this.product)) {
+            this.toast.messageErrorWithoutTabs('Todos los campos deben estar llenos').then();
+        }
         // const formData = new FormData();
         // formData.append('file', this.fileData);
         // this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData, {
@@ -43,7 +52,7 @@ export class AddProductPage extends InputFilePage {
         //
         //     });
 
-        this.route.navigate(['/app/my-products']);
+        this.route.navigate(['/app/my-products']).then();
     }
 
     async confirmDeleteProduct() {

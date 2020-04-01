@@ -28,11 +28,11 @@
 
 
 <!-- IF REGISTER -->
+<!-- IF NOT EDITING -->
+<ion-content *ngIf="isRegister && !isEditing">
 
-<ion-content *ngIf="isRegister">
-
-    <ion-header class="header-image" *ngIf="!isEditing">
-        <ion-img src="assets/img/avatar-business.jpg" alt="Background Image"></ion-img>
+    <ion-header class="header-image">
+        <ion-img [src]="previewUrl" alt="Background Image"></ion-img>
 
         <div class="header-image--info">
             <ion-item lines="none" class="info-category">
@@ -43,7 +43,7 @@
 
             <div class="info-title">
                 <ion-text color="light">
-                    Tienda D1
+                    {{place.name}}
                     <ion-icon name="shield-checkmark" color="success"></ion-icon>
                 </ion-text>
                 <ion-fab horizontal="end" vertical="center" slot="fixed">
@@ -65,10 +65,51 @@
         </div>
     </ion-header>
 
-    <div class="add-image" *ngIf="isEditing">
+    <app-avatar-header [addClass]="true"></app-avatar-header>
+
+    <ion-list class="inputs-container">
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">WhatsApp</ion-label>
+            <ion-input type="text" readonly [value]="place.whatsapp"></ion-input>
+            <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input type="tel" readonly [value]="place.phone"></ion-input>
+            <ion-icon name="call" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item  color="pagami-surface">
+            <ion-label position="floating">Pagina Web</ion-label>
+            <ion-input type="url" readonly [value]="place.website"></ion-input>
+            <ion-icon name="link" slot="start"></ion-icon>
+        </ion-item>
+    </ion-list>
+
+    <ion-list class="link-buttons-container" lines="none">
+        <ion-item button routerLink="/app/my-products" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Mis Productos</ion-label>
+        </ion-item>
+        <ion-item button routerLink="/app/my-products" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Mis Servicios</ion-label>
+        </ion-item>
+        <ion-item button routerLink="/app/my-products" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Pedidos</ion-label>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
+
+
+<!-- IF EDITING -->
+<ion-content *ngIf="isRegister && isEditing">
+
+    <div class="add-image">
         <div class="add-image-background">
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)" [readonly]="updating"></ion-input>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">
                     <ion-icon name="camera"></ion-icon>
@@ -77,64 +118,56 @@
         </div>
     </div>
 
-    <app-avatar-header *ngIf="!isEditing" [addClass]="true"></app-avatar-header>
+    <ion-list class="inputs-container">
+        <ion-item #itemLocation color="pagami-surface" class="item-search">
+            <ion-label position="floating">Ubicacion</ion-label>
+            <ion-input type="text" name="location" [(ngModel)]="place.location" (ionChange)="searchPlace($event.target)" [readonly]="updating"></ion-input>
+            <ion-icon name="location" slot="start"></ion-icon>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="places.length > 0" class="w-100 results-search --first-item" lines="none">
+        <ion-item *ngFor="let place of places; let i = index;" (click)="setPlace(place.description)" color="pagami-surface" [ngClass]="places.length === i+1 ? 'border-radius-bottom' : ''">
+            <ion-label>{{place.description}}</ion-label>
+        </ion-item>
+    </ion-list>
 
-        <ion-list class="inputs-container">
-            <ion-item color="pagami-surface" *ngIf="isEditing">
-                <ion-label position="floating">Ubicacion</ion-label>
-                <ion-input type="text" required value="Calle 30 & Autopista Sur, Itagüi, Antioquia"></ion-input>
-                <ion-icon name="location" slot="start"></ion-icon>
-            </ion-item>
-            <ion-item color="pagami-surface" *ngIf="isEditing">
-                <ion-label position="floating">Nombre de la empresa</ion-label>
-                <ion-input type="text" required value="Tiendas D1"></ion-input>
-                <ion-icon name="business" slot="start"></ion-icon>
-            </ion-item>
-            <ion-item color="pagami-surface">
-                <ion-label position="floating">WhatsApp</ion-label>
-                <ion-input type="text" [readonly]="!isEditing" value="+57 310 4804289"></ion-input>
-                <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-            </ion-item>
-            <ion-item color="pagami-surface">
-                <ion-label position="floating">Telefono</ion-label>
-                <ion-input type="tel" [readonly]="!isEditing" value="+57 310 4804289"></ion-input>
-                <ion-icon name="call" slot="start"></ion-icon>
-            </ion-item>
-            <ion-item  color="pagami-surface">
-                <ion-label position="floating">Pagina Web</ion-label>
-                <ion-input type="url" [readonly]="!isEditing" value="adidas.com.co"></ion-input>
-                <ion-icon name="link" slot="start"></ion-icon>
-            </ion-item>
-        </ion-list>
+    <ion-list class="inputs-container --without-mt">
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Nombre de la empresa</ion-label>
+            <ion-input type="text" name="name" [(ngModel)]="place.name" [readonly]="updating"></ion-input>
+            <ion-icon name="business" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input type="tel" name="phone" [(ngModel)]="place.phone" maxlength="15" [readonly]="updating"></ion-input>
+            <ion-icon name="call" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">WhatsApp</ion-label>
+            <ion-input type="text" name="whatsapp" [(ngModel)]="place.whatsapp" maxlength="15" [readonly]="updating"></ion-input>
+            <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item  color="pagami-surface">
+            <ion-label position="floating">Pagina Web</ion-label>
+            <ion-input type="url" name="website" [(ngModel)]="place.website" [readonly]="updating"></ion-input>
+            <ion-icon name="link" slot="start"></ion-icon>
+        </ion-item>
+    </ion-list>
 
-        <div class="footer-button" *ngIf="isEditing">
-            <ion-row>
-                <ion-col size="6">
-                    <ion-button class="button-small" expand="block" color="pagami-surface" (click)="cancelEditbusiness()">
-                        Cancelar
-                    </ion-button>
-                </ion-col>
-                <ion-col size="6">
-                    <ion-button class="button-small" expand="block" color="pagami" (click)="saveBusiness()">
-                        Continuar
-                    </ion-button>
-                </ion-col>
-            </ion-row>
-        </div>
-
-        <ion-list class="link-buttons-container" lines="none" *ngIf="!isEditing">
-            <ion-item button routerLink="/app/my-products" color="pagami-surface">
-                <ion-icon name="arrow-forward" slot="end"></ion-icon>
-                <ion-label>Mis Productos</ion-label>
-            </ion-item>
-            <ion-item button routerLink="/app/my-products" color="pagami-surface">
-                <ion-icon name="arrow-forward" slot="end"></ion-icon>
-                <ion-label>Mis Servicios</ion-label>
-            </ion-item>
-            <ion-item button routerLink="/app/my-products" color="pagami-surface">
-                <ion-icon name="arrow-forward" slot="end"></ion-icon>
-                <ion-label>Pedidos</ion-label>
-            </ion-item>
-        </ion-list>
+    <div class="footer-button --without-pt">
+        <ion-row>
+            <ion-col size="6">
+                <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami-surface" (click)="editBusiness()">
+                    Cancelar
+                </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami" (click)="saveBusiness()">
+                    <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
+                    <span *ngIf="!updating">Guardar</span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
 
 </ion-content>

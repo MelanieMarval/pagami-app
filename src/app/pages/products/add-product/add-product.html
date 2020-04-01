@@ -16,7 +16,6 @@
 
 <ion-content>
 
-
     <div class="add-image add-image-margin">
         <div class="add-image-background">
             <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
@@ -29,24 +28,20 @@
         </div>
     </div>
 
-<!--    <div *ngIf="fileUploadProgress">-->
-<!--        Upload progress: {{ fileUploadProgress }}-->
-<!--    </div>-->
-
-    <ion-item-group class="inputs-container">
-        <ion-item lines="none" color="pagami-surface">
+    <ion-list lines="none" class="inputs-container">
+        <ion-item color="pagami-surface">
             <ion-label position="floating">Nombre del producto</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" name="name" [(ngModel)]="product.name"></ion-input>
         </ion-item>
-        <ion-item lines="none"  color="pagami-surface">
+        <ion-item color="pagami-surface">
             <ion-label position="floating">Precio del producto</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" name="price" [(ngModel)]="product.price"></ion-input>
         </ion-item>
-        <ion-item lines="none"  color="pagami-surface">
+        <ion-item color="pagami-surface">
             <ion-label position="floating">Cantidad disponible</ion-label>
-            <ion-input type="number"></ion-input>
+            <ion-input type="number" name="stock" [(ngModel)]="product.stock"></ion-input>
         </ion-item>
-    </ion-item-group>
+    </ion-list>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-corner-lr">
         <ion-fab-button color="pagami" (click)="onSubmit()">

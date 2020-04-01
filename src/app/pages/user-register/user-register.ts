@@ -8,6 +8,8 @@ import { StorageService } from '../../core/storage/storage.service';
 import { User } from '../../core/api/users/user';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { PagamiToast } from '../../toast/pagami.toast';
+import { InputFilePage } from '../parent/InputFilePage';
+import { ValidationUtils } from '../../utils/validation.utils';
 
 @Component({
     selector: 'app-user-register',
@@ -15,7 +17,7 @@ import { PagamiToast } from '../../toast/pagami.toast';
     styleUrls: ['./user-register.scss'],
 })
 
-export class UserRegisterPage implements OnInit, AfterViewInit {
+export class UserRegisterPage extends InputFilePage implements OnInit, AfterViewInit {
 
     googleMaps: any;
     autocompleteService: any;
@@ -23,48 +25,17 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
     user: User = {};
     saving = false;
 
-    @ViewChild('ionContent', {static: false}) private ionContent: IonContent;
-    @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
-
     constructor(private storageService: StorageService,
                 private authService: AuthService,
                 private toast: PagamiToast,
-                private geolocationService: GeolocationService,
+                protected geolocationService: GeolocationService,
                 private route: Router) {
+        super(geolocationService);
     }
 
     ngOnInit() {
         this.storageService.getUserUnregistered()
             .then(user => user ? this.user = user : '');
-    }
-
-    async ngAfterViewInit() {
-        this.googleMaps = await this.geolocationService.getGoogleMaps();
-        this.autocompleteService = new this.googleMaps.places.AutocompleteService();
-    }
-
-    searchPlace(e) {
-        if (e.target.value.length > 0) {
-            if (this.itemLocation.nativeElement.classList.contains('item-has-focus') === true) {
-                const config = {
-                    types: ['geocode'],
-                    input: e.target.value
-                };
-                this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-                    if (status === this.googleMaps.places.PlacesServiceStatus.OK && predictions) {
-                        this.places = [];
-                        predictions.forEach((prediction) => {
-                            this.places.push(prediction);
-                        });
-                    }
-                    this.ionContent.scrollToBottom(200).then();
-                });
-            } else {
-                this.places = [];
-            }
-        } else {
-            this.places = [];
-        }
     }
 
     async setPlace(place) {
@@ -79,10 +50,13 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
         if (!user.location || !user.phone) {
             return this.toast.messageErrorWithoutTabs('No puede dejar datos vacios');
         }
-        if (user.name.trim() === '' || user.lastname.trim() === '' || user.location.trim() === '' || user.phone.trim() === '' || user.email.trim() === '') {
+        if (!ValidationUtils.validateEmpty(user)) {
             return this.toast.messageErrorWithoutTabs('Todos su información debe estar rellenada');
         }
-        if (user.phone.length < 8 || user.phone.length > 15) {
+        // if (user.name.trim() === '' || user.lastname.trim() === '' || user.location.trim() === '' || user.phone.trim() === '' || user.email.trim() === '') {
+        //     return this.toast.messageErrorWithoutTabs('Todos su información debe estar rellenada');
+        // }
+        if (!ValidationUtils.validatePhone(user.phone)) {
             return this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener entre 8 y 15 dígitos', 2500);
         }
         this.saving = true;
@@ -94,9 +68,11 @@ export class UserRegisterPage implements OnInit, AfterViewInit {
                 if (response.passed === true) {
                     await this.storageService.setPagamiUser(response.response);
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
-                    await this.storageService.setLogged(true);
                     this.saving = false;
-                    this.route.navigate(['/app/tabs/close-to-me']);
+                    await this.route.navigate(['/app/tabs/close-to-me']);
+                } else {
+                    this.saving = false;
+                    return this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
                 }
             });
     }

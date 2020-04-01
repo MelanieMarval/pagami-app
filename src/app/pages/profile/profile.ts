@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AlertController, IonContent } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 import { InputFilePage } from '../parent/InputFilePage';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
@@ -10,6 +10,7 @@ import { StorageService } from '../../core/storage/storage.service';
 import { User } from '../../core/api/users/user';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
+import { ValidationUtils } from '../../utils/validation.utils';
 
 
 @Component({
@@ -17,17 +18,11 @@ import { FireStorage } from '../../core/fire-storage/fire.storage';
     templateUrl: 'profile.html',
     styleUrls: ['profile.scss']
 })
-export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit {
+export class ProfilePage extends InputFilePage implements OnInit {
 
     isEditing = false;
     user: User = {};
-    googleMaps: any;
-    autocompleteService: any;
-    places: any = [];
     updating = false;
-
-    @ViewChild('ionContentEdit', {static: false}) private ionContentEdit: IonContent;
-    @ViewChild('itemLocation', {static: false, read: ElementRef}) private itemLocation: ElementRef;
 
     constructor(
         private router: Router,
@@ -35,11 +30,11 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
         private alertController: AlertController,
         private toast: PagamiToast,
         private fireStorage: FireStorage,
-        private geolocationService: GeolocationService,
+        protected geolocationService: GeolocationService,
         private storageService: StorageService,
         private authService: AuthService,
     ) {
-        super();
+        super(geolocationService);
     }
 
     async ngOnInit() {
@@ -47,39 +42,9 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
         this.previewUrl = this.user.photoUrl;
     }
 
-    async ngAfterViewInit() {
-        this.googleMaps = await this.geolocationService.getGoogleMaps();
-        this.autocompleteService = new this.googleMaps.places.AutocompleteService();
-    }
-
-
-    searchPlace() {
-        if (this.user.location.length > 0) {
-            if (this.itemLocation.nativeElement.classList.contains('item-has-focus') === true) {
-                const config = {
-                    types: ['geocode'],
-                    input: this.user.location
-                };
-                this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-                    if (status === this.googleMaps.places.PlacesServiceStatus.OK && predictions) {
-                        this.places = [];
-                        predictions.forEach((prediction) => {
-                            this.places.push(prediction);
-                        });
-                    }
-                    this.ionContentEdit.scrollToBottom(200);
-                });
-            } else {
-                this.places = [];
-            }
-        } else {
-            this.places = [];
-        }
-    }
-
-    async setPlace(place) {
+    setPlace(place) {
         console.log('-> place', place);
-        this.user.location = await place;
+        this.user.location = place;
         this.places = [];
     }
 
@@ -89,17 +54,14 @@ export class ProfilePage extends InputFilePage implements OnInit, AfterViewInit 
             this.updating = false;
         } else {
             this.isEditing = true;
-            this.previewUrl = this.user.photoUrl;
-            console.log('Vas a editar tu perfil');
         }
     }
 
-    saveProfile() {
-        const user = this.user;
-        if (user.name.trim() === '' || user.lastname.trim() === '' || user.location.trim() === '' || user.phone.trim() === '' || user.email.trim() === '') {
+    validateForm() {
+        if (!ValidationUtils.validateEmpty(this.user)) {
             return this.toast.messageErrorWithoutTabs('Todos su informacion debe estar rellenada');
         }
-        if (user.phone.length < 8 || user.phone.length > 15) {
+        if (!ValidationUtils.validatePhone(this.user.phone)) {
             return this.toast.messageErrorWithoutTabs('Su numero de telefono debe contener minimo 8 digitos y menos de 15', 2500);
         }
         if (this.previewUrl !== this.user.photoUrl) {

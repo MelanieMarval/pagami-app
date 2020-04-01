@@ -28,6 +28,12 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async myRegisters() {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/by-registered`, options);
+        return this.apiService.serverListener(request);
+    }
+
     async save(place: Place) {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.post(`${this.URL}`, place, options);
