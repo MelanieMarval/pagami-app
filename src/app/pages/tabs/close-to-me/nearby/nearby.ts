@@ -16,7 +16,7 @@ export class NearbyPage implements OnInit {
     }
 
     ngOnInit() {
-        this.placesService.getAll()
-            .then(success => console.log(success));
+        // this.placesService.getAll()
+        //     .then(success => console.log(success));
     }
 }

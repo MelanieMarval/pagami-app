@@ -26,7 +26,7 @@ export class ActivityPage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.placesService.getAll()
+        this.placesService.myRegisters()
             .then(async success => {
                 if (success.passed) {
                     console.log(success.response);
