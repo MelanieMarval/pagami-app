@@ -23,7 +23,7 @@ export class AppComponent {
     initializeApp() {
         this.platform.ready().then(async () => {
             const isLogged = await this.storageService.isLogged();
-            isLogged ? await this.openHome() : await this.openTutorial();
+            // isLogged ? await this.openHome() : await this.openTutorial();
             this.splashScreen.hide();
         });
     }

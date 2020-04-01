@@ -68,11 +68,11 @@
         <ion-list class="inputs-container item-group-flex">
             <ion-label class="ion-label--title">Tipo de Negocio</ion-label>
             <ion-item lines="none" class="checkbox-container">
-                <ion-checkbox color="pagami" slot="start" name="store" (click)="selectCommerce('store')" [checked]="this.place.type === 'STORE'"></ion-checkbox>
+                <ion-checkbox color="pagami" slot="start" name="store" (click)="selectTypeStore()" [(ngModel)]="isStore"></ion-checkbox>
                 <ion-label>Tienda</ion-label>
             </ion-item>
             <ion-item lines="none" class="checkbox-container">
-                <ion-checkbox color="pagami" slot="start" name="service" (click)="selectCommerce('service')" [checked]="this.place.type === 'SERVICE'"></ion-checkbox>
+                <ion-checkbox color="pagami" slot="start" name="service" (click)="selectTypeService()" [(ngModel)]="isService"></ion-checkbox>
                 <ion-label>Servicios</ion-label>
             </ion-item>
         </ion-list>

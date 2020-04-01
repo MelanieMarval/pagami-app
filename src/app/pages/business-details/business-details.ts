@@ -19,6 +19,8 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
     place: Place = {latitude: 0, longitude: 0};
     saving = false;
+    isStore = false;
+    isService = false;
 
     constructor(private storageService: StorageService,
                 private placesService: PlacesService,
@@ -41,15 +43,14 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         this.places = [];
     }
 
-    selectCommerce(selected) {
-        console.log('-> selected', selected);
-        if (selected === 'store') {
-            this.place.type = PLACES.TYPE.STORE;
-        }
-        if (selected === 'service') {
-            this.place.type = PLACES.TYPE.SERVICE;
-        }
-        console.log(this.place.type);
+    selectTypeStore() {
+        this.place.type = PLACES.TYPE.STORE;
+        this.isService = false;
+    }
+
+    selectTypeService() {
+        this.place.type = PLACES.TYPE.SERVICE;
+        this.isStore = false;
     }
 
     validateForm() {
