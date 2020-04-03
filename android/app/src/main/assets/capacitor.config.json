@@ -6,6 +6,11 @@
     "webDir": "www",
     "cordova": {},
     "plugins": {
+        "SplashScreen": {
+            "launchAutoHide": false
+        },
+        "showSpinner": true,
+        "androidSplashResourceName": "splash",
         "GoogleAuth": {
             "scopes": [
                 "profile",

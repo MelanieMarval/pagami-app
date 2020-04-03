@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "full build": "ionic build & npx cap copy & npx cap update & npx cap sync & npx cap open android"
   },
   "private": true,
   "dependencies": {

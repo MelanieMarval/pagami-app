@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {BusinessDetailsPage} from './pages/business-details/business-details';
-import {SelectIconPage} from './pages/business-details/select-icon/select-icon';
-import {OrdersPage} from './pages/orders/orders';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { BusinessDetailsPage } from './pages/business-details/business-details';
+import { SelectIconPage } from './pages/business-details/select-icon/select-icon';
+import { OrdersPage } from './pages/orders/orders';
 
 const routes: Routes = [
     // {
@@ -12,7 +12,7 @@ const routes: Routes = [
     // },
     {
         path: 'tutorial',
-        loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
+        loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule)
     },
     {
         path: 'terms',
@@ -65,7 +65,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {
