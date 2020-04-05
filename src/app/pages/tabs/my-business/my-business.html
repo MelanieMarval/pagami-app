@@ -7,7 +7,8 @@
         </ion-title>
     </ion-toolbar>
 </ion-header>
-<app-avatar-header *ngIf="!isRegister"></app-avatar-header>
+
+<app-avatar-header *ngIf="isRegister"></app-avatar-header>
 
 <ion-content *ngIf="!isRegister" scroll-y="false">
     <div class="no-register">
@@ -20,7 +21,7 @@
 </ion-content>
 
 <ion-footer class="footer-button" *ngIf="!isRegister">
-    <ion-button class="button-large" expand="block" color="pagami" routerLink="#">
+    <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/tabs/close-to-me/find-my-business">
         Buscar mi empresa
     </ion-button>
 </ion-footer>

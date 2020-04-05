@@ -16,6 +16,9 @@ const routes: Routes = [
             {
                 path: 'register-business',
                 component: RegisterBusinessPage
+            },
+            {
+                path: 'find-my-business'
             }
         ],
     },

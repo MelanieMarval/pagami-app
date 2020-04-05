@@ -9,13 +9,14 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class TabsPage {
 
-    currentUrl;
+    currentUrl = '';
 
     constructor(private appService: AppService, private router: Router) {
         router.events.subscribe((value: any) => {
             if (value instanceof NavigationEnd) {
                 this.currentUrl = value.url;
                 this.currentUrl = value.url.substring(value.url.lastIndexOf('/') + 1);
+                console.log(this.currentUrl);
             }
         });
     }

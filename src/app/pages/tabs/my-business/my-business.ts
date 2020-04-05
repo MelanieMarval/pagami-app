@@ -14,7 +14,7 @@ import { PlacesService } from '../../../core/api/places/places.service';
 })
 export class MyBusinessPage extends InputFilePage implements OnInit {
 
-    isRegister = true;
+    isRegister = false;
     isEditing = false;
     updating = false;
     place: Place = {latitude: 0, longitude: 0};

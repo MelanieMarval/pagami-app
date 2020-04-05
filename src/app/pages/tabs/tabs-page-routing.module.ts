@@ -23,7 +23,7 @@ const routes: Routes = [
             },
             {
                 path: '**',
-                redirectTo: 'close-to-me',
+                redirectTo: 'close-to-me/search',
                 pathMatch: 'full'
             }
         ],
