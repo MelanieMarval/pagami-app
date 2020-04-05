@@ -18,10 +18,6 @@ const routes: Routes = [
                 component: MyBusinessPage
             },
             {
-                path: 'register-business',
-                component: RegisterBusinessPage
-            },
-            {
                 path: 'wallet',
                 loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
             },

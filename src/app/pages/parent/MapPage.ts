@@ -62,7 +62,7 @@ export class MapPage {
             lat: coords.latitude,
             lng: coords.longitude
         };
-        this.map.setCenter(position);
+        this.map.panTo(position);
     }
 
     setupMarkerCurrentPosition(coords: PagamiGeo) {

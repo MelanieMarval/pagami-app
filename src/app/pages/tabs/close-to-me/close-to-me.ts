@@ -5,6 +5,11 @@ import { DrawerState } from '../../../modules/ion-bottom-drawer/drawer-state';
 import { AppService } from '../../../services/app.service';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { Place } from '../../../core/api/places/place';
+import { PlacesService } from '../../../core/api/places/places.service';
+import { PagamiToast } from '../../../toast/pagami.toast';
+import { StorageService } from '../../../core/storage/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-close-to-me',
@@ -12,6 +17,8 @@ import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
     styleUrls: ['close-to-me.scss']
 })
 export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
+
+    @ViewChild('fab', {static: false, read: ElementRef}) private ionFab: ElementRef;
 
     fabAttached = true;
     bottomDrawer = {
@@ -27,10 +34,16 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
         disableScrollContent: true
     };
     bottomHeightChange: EventEmitter<number> = new EventEmitter<number>();
-
-    @ViewChild('fab', {static: false, read: ElementRef}) private ionFab: ElementRef;
+    modeRegister = false;
+    beforeSaveLocation = true;
+    saving = false;
+    placeToSave: any;
 
     constructor(
+        private router: Router,
+        private storageService: StorageService,
+        private toast: PagamiToast,
+        private placesService: PlacesService,
         private renderer: Renderer2,
         private appService: AppService,
         @Inject(DOCUMENT) doc: Document,
@@ -40,6 +53,7 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.appService.showNearby.subscribe(() => {
+            this.modeRegister = false;
             if (this.bottomDrawer.drawerState === DrawerState.Bottom
                 || this.bottomDrawer.drawerState === DrawerState.Top) {
                 this.bottomHeightChange.emit(108);
@@ -47,10 +61,18 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
                 this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
             }
         });
+        this.appService.showRegister.subscribe(() => {
+            this.modeRegister = true;
+            this.onBottomSheetHide(true);
+            this.bottomHeightChange.emit(0);
+            this.beforeSaveLocation = true;
+            this.placeToSave = undefined;
+            this.map.panTo(this.currentPositionMarker.getPosition());
+        });
     }
 
     onCurrentPositionChanged(coors: PagamiGeo) {
-        if (this.fabAttached) {
+        if (this.fabAttached || this.modeRegister) {
             this.setupMarkerCurrentPosition(coors);
             this.changeMapCenter(coors);
         }
@@ -124,5 +146,40 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
     onDrawerStateChange($event: DrawerState) {
         this.bottomDrawer.drawerState = $event;
         // console.log('New Drawer state: ' + $event);
+    }
+
+    async saveLocation() {
+        this.saving = true;
+        const coors = await this.geolocationService.getCurrentLocation();
+        const place: Place = {
+            latitude: coors.latitude,
+            longitude: coors.longitude,
+            accuracy: coors.accuracy,
+        };
+        this.placesService.save(place).then(
+            async (success: any) => {
+                if (success.passed === true) {
+                    await this.toast.messageSuccessAboveButton('Ubicación guardada exitosamente');
+                    this.placeToSave = success.response;
+                    this.beforeSaveLocation = false;
+                    this.saving = false;
+                } else {
+                    console.log('-> success', success);
+                    this.saving = false;
+                    await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
+                }
+            }
+            , reason => {
+                this.saving = false;
+            });
+    }
+
+    async navigateToBusinessDetails() {
+        await this.storageService.setPlaceUnregistered(this.placeToSave);
+        console.log('-> this.placeToSave', this.placeToSave);
+        await this.router.navigate(['/app/business-details', this.placeToSave.id]);
+        this.beforeSaveLocation = true;
+        this.placeToSave = undefined;
+        this.saving = false;
     }
 }

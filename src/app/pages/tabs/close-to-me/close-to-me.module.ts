@@ -9,6 +9,7 @@ import { IonBottomDrawerModule } from '../../../modules/ion-bottom-drawer/ion-bo
 import { CloseToMePage } from './close-to-me';
 import { NearbyPage } from './nearby/nearby';
 import { AvatarHeaderModule } from '../../../modules/avatar-header/avatar-header.module';
+import { RegisterBusinessPage } from '../register-business/register-business';
 
 @NgModule({
     imports: [
@@ -17,9 +18,9 @@ import { AvatarHeaderModule } from '../../../modules/avatar-header/avatar-header
         FormsModule,
         CloseToMeRoutingModule,
         IonBottomDrawerModule,
-        AvatarHeaderModule,
+        AvatarHeaderModule
     ],
-    declarations: [CloseToMePage, NearbyPage],
+    declarations: [CloseToMePage, NearbyPage, RegisterBusinessPage],
     providers: []
 })
 export class CloseToMeModule {

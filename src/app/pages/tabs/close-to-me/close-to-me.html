@@ -1,6 +1,7 @@
 
 <ion-content class="close-to-me-scroll">
-    <ion-header class="header-search-map">
+
+    <ion-header class="header-search-map" [hidden]="modeRegister">
         <ion-grid [ngClass]="bottomDrawer.showBackToolbar ? 'unset' : 'none'">
             <ion-row>
                 <ion-col size="1">
@@ -18,15 +19,39 @@
         </ion-grid>
     </ion-header>
 
+    <ion-header *ngIf="modeRegister" class="header-search-map header-search-map--surface" [hidden]="!beforeSaveLocation">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="1">
+                    <ion-icon name="location" class="size-icon-default"></ion-icon>
+                </ion-col>
+                <ion-col size="11">
+                    <ion-searchbar placeholder="Parate frente a la empresa y guarda la ubicacion" color="pagami-surface" class="without-search-icon" disabled></ion-searchbar>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-header>
+
     <div class="background-sheet-header" [hidden]="!bottomDrawer.showBackToolbar"></div>
 
     <div #mapCanvas class="map-canvas"></div>
 
-    <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed" [hidden]="modeRegister">
         <ion-fab-button color="{{ fabAttached ? 'map':'light'}}" (click)="attachedPosition()">
             <ion-icon src="assets/icon/my_location.svg"></ion-icon>
         </ion-fab-button>
     </ion-fab>
+
+    <div class="footer-button footer-button--div" *ngIf="modeRegister">
+        <ion-button [disabled]="saving" class="button-large" expand="block" (click)="saveLocation()" color="pagami" *ngIf="beforeSaveLocation">
+            <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+            <span *ngIf="!saving">Guardar ubicacion</span>
+        </ion-button>
+        <ion-button class="button-large" expand="block" (click)="navigateToBusinessDetails()" color="pagami" *ngIf="!beforeSaveLocation">
+            Continuar
+        </ion-button>
+    </div>
+
 </ion-content>
 
 <ion-bottom-drawer [disableDrag]="bottomDrawer.disableDrag" [(state)]="bottomDrawer.drawerState" [minimumHeight]="bottomDrawer.minimumHeight" (stateChange)="onDrawerStateChange($event)"

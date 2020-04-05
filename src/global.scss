@@ -183,7 +183,7 @@ ion-searchbar > div > input {
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button {
-    padding: 17px;
+    padding: 17px !important;
     background: var(--ion-background-color);
 
     &.--without-pt {

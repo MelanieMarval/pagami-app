@@ -1,11 +1,12 @@
-
 .list-md {
-    margin: 10px 14px;
+    padding: 8px;
 }
 
 .item-activity {
     color: #A0AEC0 !important;
     font-size: 12px;
+    margin-left: 8px;
+    margin-right: 8px;
 
     ion-icon {
         width: 20px;
@@ -104,6 +105,11 @@ ion-text.status--transfer {
 
 .status--incomplete{
     color: #ffbe25;
+}
+
+ion-footer.footer-button {
+    padding-top: 11px;
+    padding-bottom: 11px;
 }
 
 

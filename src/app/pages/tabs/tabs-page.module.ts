@@ -7,7 +7,6 @@ import { TabsPageRoutingModule } from './tabs-page-routing.module';
 
 import { WalletModule } from './wallet/wallet.module';
 import { MyBusinessPage } from './my-business/my-business';
-import { RegisterBusinessPage } from './register-business/register-business';
 import { AvatarHeaderModule } from '../../modules/avatar-header/avatar-header.module';
 import { FormsModule } from '@angular/forms';
 
@@ -22,8 +21,7 @@ import { FormsModule } from '@angular/forms';
     ],
     declarations: [
         TabsPage,
-        MyBusinessPage,
-        RegisterBusinessPage
+        MyBusinessPage
     ],
     providers: []
 })
