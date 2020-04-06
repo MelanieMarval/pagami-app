@@ -2,6 +2,7 @@ import { ElementRef, Inject, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { PagamiGeo } from '../../core/geolocation/pagami.geo';
+import { Place } from '../../core/api/places/place';
 // // @ts-ignore
 // import GoogleMaps = google.maps;
 // // @ts-ignore
@@ -24,6 +25,7 @@ export class MapPage {
     map: any;
     currentPositionMarker: any;
     currentPositionCircle: any;
+    nearbyPlaces: any[];
     // @ts-ignore
     googleMaps: any;
     accuracy: number;
@@ -104,6 +106,34 @@ export class MapPage {
                 this.currentPositionCircle.setCenter(position);
             }
         }
+    }
+
+    onClickPlace(place: Place) { }
+
+    setupPlaces(places: Place[]) {
+        this.nearbyPlaces = [];
+        const map = this.map;
+        places.forEach(place => {
+            const position: any = {
+                lat: place.latitude,
+                lng: place.longitude
+            };
+            const marker = new this.googleMaps.Marker({
+                position,
+                map,
+                icon: `assets/marker/${this.aleatorio(1, 3)}.png`
+            });
+            // marker.setValues(place);
+            marker.addListener('click', event => {
+               this.onClickPlace(place);
+            });
+            this.nearbyPlaces.push(marker);
+        });
+    }
+
+    aleatorio(inferior, superior) {
+        const resAleatorio = Math.floor((Math.random() * (superior - inferior + 1)) + inferior);
+        return resAleatorio;
     }
 
     getDefaultOptions(): any {

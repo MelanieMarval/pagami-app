@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { Place } from './place';
+import { ApiResponse } from '../api.response';
 
 @Injectable({
     providedIn: 'root'
@@ -40,12 +41,6 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
-    async saveList(places: Place[]) {
-        const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.post(`${this.URL}/save-all`, places, options);
-        return this.apiService.serverListener(request);
-    }
-
     async update(place: Place) {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.put(`${this.URL}`, place, options);
@@ -55,6 +50,12 @@ export class PlacesService {
     async delete(id: string) {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.delete(`${this.URL}/${id}`, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async getNearby(): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/nearby/search`, options);
         return this.apiService.serverListener(request);
     }
 }

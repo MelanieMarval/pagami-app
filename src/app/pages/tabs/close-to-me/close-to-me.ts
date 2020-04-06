@@ -10,6 +10,7 @@ import { PlacesService } from '../../../core/api/places/places.service';
 import { PagamiToast } from '../../../toast/pagami.toast';
 import { StorageService } from '../../../core/storage/storage.service';
 import { Router } from '@angular/router';
+import { ApiResponse } from '../../../core/api/api.response';
 
 @Component({
     selector: 'app-close-to-me',
@@ -68,7 +69,18 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
             this.beforeSaveLocation = true;
             this.placeToSave = undefined;
             this.map.panTo(this.currentPositionMarker.getPosition());
+            this.map.setZoom(20);
         });
+        this.placesService.getNearby().then((success: ApiResponse) => {
+            if (success.passed) {
+                this.setupPlaces(success.response);
+            }
+        });
+    }
+
+    onClickPlace(place: Place) {
+        console.log(place);
+        this.bottomDrawer.drawerState = DrawerState.Docked;
     }
 
     onCurrentPositionChanged(coors: PagamiGeo) {
@@ -164,7 +176,6 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
                     this.beforeSaveLocation = false;
                     this.saving = false;
                 } else {
-                    console.log('-> success', success);
                     this.saving = false;
                     await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
                 }
@@ -176,7 +187,6 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     async navigateToBusinessDetails() {
         await this.storageService.setPlaceUnregistered(this.placeToSave);
-        console.log('-> this.placeToSave', this.placeToSave);
         await this.router.navigate(['/app/business-details', this.placeToSave.id]);
         this.beforeSaveLocation = true;
         this.placeToSave = undefined;

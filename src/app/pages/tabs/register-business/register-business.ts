@@ -48,7 +48,6 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
                     this.beforeSaveLocation = false;
                     this.saving = false;
                 } else {
-                    console.log('-> success', success);
                     this.saving = false;
                     await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
                 }
@@ -65,7 +64,6 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
 
     async navigateToBusinessDetails() {
         await this.storageService.setPlaceUnregistered(this.placeToSave);
-        console.log('-> this.placeToSave', this.placeToSave);
         await this.router.navigate(['/app/business-details', this.placeToSave.id]);
         this.beforeSaveLocation = true;
         this.placeToSave = undefined;

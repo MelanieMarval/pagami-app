@@ -12,11 +12,9 @@ export class NearbyPage implements OnInit {
     @Input() drawerState = 0;
     selectedCategory = 0;
 
-    constructor(private placesService: PlacesService) {
+    constructor() {
     }
 
     ngOnInit() {
-        // this.placesService.getAll()
-        //     .then(success => console.log(success));
     }
 }
