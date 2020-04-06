@@ -47,7 +47,7 @@
             <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
             <span *ngIf="!saving">Guardar ubicacion</span>
         </ion-button>
-        <ion-button class="button-large" expand="block" (click)="navigateToBusinessDetails()" color="pagami" *ngIf="!beforeSaveLocation">
+        <ion-button class="button-large" expand="block" (click)="navigateToBusinessDetails()" routerLink="/app/business-details" color="pagami" *ngIf="!beforeSaveLocation">
             Continuar
         </ion-button>
     </div>

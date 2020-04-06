@@ -9,6 +9,7 @@ import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { PlacesService } from '../../core/api/places/places.service';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { ValidationUtils } from '../../utils/validation.utils';
+import { StorageInstance } from '../../providers/storage.instance';
 
 @Component({
     selector: 'app-business-details',
@@ -27,18 +28,29 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
                 private route: Router,
                 private toast: PagamiToast,
                 private fireStorage: FireStorage,
+                private storageInstance: StorageInstance,
                 protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
 
-    async ngOnInit() {
-        this.place = await this.storageService.getPlaceUnregistered();
+    ngOnInit() {
+        setTimeout(async () => {
+            this.setupData();
+        }, 500);
+    }
+
+    setupData() {
+        this.place = this.storageInstance.placeToEdit;
         this.previewUrl = this.place.photoUrl ? this.place.photoUrl : undefined;
-        console.log('-> this.place', this.place);
+        if (this.place.type === PLACES.TYPE.STORE) {
+            this.isStore = true;
+        }
+        if (this.place.type === PLACES.TYPE.SERVICE) {
+            this.isService = true;
+        }
     }
 
     setPlace(place) {
-        console.log('-> place', place);
         this.place.location = place;
         this.places = [];
     }
@@ -54,7 +66,6 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     }
 
     validateForm() {
-        console.log('Quiero guardar esta empresa');
         const business = this.place;
         if (!business.location || !business.name || !business.website || !this.place.type || !business.phone) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
@@ -73,7 +84,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe agregar una fotografia');
         } else {
-            if (!this.place.photoUrl) {
+            if (this.previewUrl !== this.place.photoUrl) {
                 this.saveImage();
             } else {
                 this.navigateToSelectIcon();
@@ -95,9 +106,8 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
     async navigateToSelectIcon() {
         this.saving = true;
-        console.log('-> this.place', this.place);
-        await this.storageService.setPlaceUnregistered(this.place);
-        await this.route.navigate(['/app/business-details', this.place.id, 'select-icon']);
+        this.storageInstance.placeToEdit = this.place;
+        await this.route.navigate(['/app/business-details/select-icon']);
         this.saving = false;
     }
 

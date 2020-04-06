@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { BusinessDetailsPage } from './pages/business-details/business-details';
-import { SelectIconPage } from './pages/business-details/select-icon/select-icon';
 import { OrdersPage } from './pages/orders/orders';
 
 const routes: Routes = [
@@ -46,10 +44,8 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopModule)
             },
             {
-                path: 'business-details/:id', component: BusinessDetailsPage
-            },
-            {
-                path: 'business-details/:id/select-icon', component: SelectIconPage
+                path: 'business-details',
+                loadChildren: () => import('./pages/business-details/business-details.module').then(m => m.BusinessDetailsModule)
             },
             {
                 path: 'profile',
@@ -61,7 +57,12 @@ const routes: Routes = [
                 pathMatch: 'full'
             },
         ]
-    }
+    },
+    {
+        path: '**',
+        redirectTo: 'tabs',
+        pathMatch: 'full'
+    },
 ];
 
 @NgModule({

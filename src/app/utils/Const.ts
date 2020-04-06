@@ -22,6 +22,7 @@ export const PLACES = {
     },
     STATUS: {
         WAITING: 'WAITING',
+        ACCEPTED: 'ACCEPTED',
         VERIFIED: 'VERIFIED',
         REJECTED: 'REJECTED',
         INCOMPLETE: 'INCOMPLETE',

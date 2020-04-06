@@ -2,6 +2,8 @@ import { Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { GoogleAuthService } from '../google-auth/google-auth.service';
+import { catchError, mergeMap, timeout } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -17,11 +19,11 @@ export class ApiService {
      */
     serverListener(request: Observable<any>) {
         return request.pipe(
-            // timeout(environment.TIMEOUT),
-            // catchError(this.handleError),
-            // mergeMap(res => {
-            //     return this.handlerResponse(res);
-            // }),
+            timeout(environment.TIMEOUT),
+            catchError(this.handleError),
+            mergeMap(res => {
+                return this.handlerResponse(res);
+            }),
         ).toPromise();
     }
 
@@ -36,7 +38,7 @@ export class ApiService {
         const errorMessage = error.message;
         return throwError({
             message: errorMessage,
-            withStatus200: false,
+            passed: false,
             num: 0
         });
     }

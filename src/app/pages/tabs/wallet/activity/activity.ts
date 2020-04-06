@@ -3,8 +3,9 @@ import { PlacesService } from '../../../../core/api/places/places.service';
 import { PagamiToast } from '../../../../toast/pagami.toast';
 import { Place } from '../../../../core/api/places/place';
 import { StorageService } from '../../../../core/storage/storage.service';
-import { Router } from '@angular/router';
+import { ResolveEnd, Router } from '@angular/router';
 import { PLACES } from '../../../../utils/Const';
+import { StorageInstance } from '../../../../providers/storage.instance';
 
 @Component({
     selector: 'app-activity',
@@ -17,25 +18,28 @@ export class ActivityPage implements OnInit {
     error = false;
     registers: Place[];
     STATUS = PLACES.STATUS;
-    date = new Date();
+    indexOfPlaceToEdit: number = undefined;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageService,
                 private router: Router,
-                private toast: PagamiToast) {
+                private toast: PagamiToast,
+                private storageInstance: StorageInstance) {
     }
 
     ngOnInit(): void {
+        this.router.events.subscribe(next => {
+            if (next instanceof ResolveEnd) {
+                this.setPlaceEdited();
+            }
+        });
+        console.log('onInit called');
         this.placesService.myRegisters()
             .then(async success => {
                 if (success.passed) {
-                    console.log(success.response);
                     this.registers = await success.response.filter(place => place.status);
-                    console.log(this.registers);
-                    setTimeout(time => {
-                        this.loading = false;
-                        this.error = false;
-                    }, 1000);
+                    this.loading = false;
+                    this.error = false;
                 }
             })
             .catch(error => {
@@ -44,9 +48,20 @@ export class ActivityPage implements OnInit {
                 this.error = true;
             });
     }
+
+    setPlaceEdited() {
+        if (this.storageInstance.placeEdited && this.indexOfPlaceToEdit) {
+            this.registers[this.indexOfPlaceToEdit] = this.storageInstance.placeEdited;
+            this.storageInstance.placeEdited = undefined;
+            this.indexOfPlaceToEdit = undefined;
+        }
+    }
+
     messageStatus(status: string): string {
         switch (status) {
             case this.STATUS.WAITING:
+                return 'En espera de aceptacion';
+            case this.STATUS.ACCEPTED:
                 return 'En espera de verificacion';
             case this.STATUS.VERIFIED:
                 return 'Verificado';
@@ -60,8 +75,17 @@ export class ActivityPage implements OnInit {
     }
 
     async navigateToBusinessDetails(register: Place) {
-        await this.storageService.setPlaceUnregistered(register);
-        await this.router.navigate(['/app/business-details', register.id]);
+        this.indexOfPlaceToEdit = this.registers.indexOf(register);
+        this.storageInstance.placeToEdit = Object.assign({}, register);
+        await this.router.navigate(['/app/business-details']);
     }
 
+    getPhoto(register: Place) {
+        if (register.status === 'INCOMPLETE') {
+            return undefined;
+        } else {
+            const arrayPhoto = register.photoUrl.split('?');
+            return `${arrayPhoto[0]}_64x64?${arrayPhoto[1]}`;
+        }
+    }
 }

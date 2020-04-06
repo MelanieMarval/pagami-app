@@ -21,7 +21,7 @@
     border-radius: 3px;
 
     ion-card-subtitle {
-        font-size: 10px;
+        font-size: 12px;
         color: #718096;
         text-transform: unset;
     }
@@ -43,7 +43,7 @@
         }
 
         ion-card-title {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: normal;
             color: #FFF;
         }
@@ -71,6 +71,10 @@ ion-card-header {
         color: #FFF;
     }
 }
+.footer-button {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
 
 /* *****STATUS CARDS***** */
 span.status--verified {
@@ -84,8 +88,12 @@ ion-text.status--verified {
     }
 }
 
-.status--waiting {
+.status--accepted {
     color: #FBD38D;
+}
+
+.status--waiting {
+    color: #999;
 }
 
 .status--rejected {
@@ -105,11 +113,6 @@ ion-text.status--transfer {
 
 .status--incomplete{
     color: #ffbe25;
-}
-
-ion-footer.footer-button {
-    padding-top: 6px;
-    padding-bottom: 6px;
 }
 
 

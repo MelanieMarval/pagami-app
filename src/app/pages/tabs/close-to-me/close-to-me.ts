@@ -9,8 +9,9 @@ import { Place } from '../../../core/api/places/place';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { PagamiToast } from '../../../toast/pagami.toast';
 import { StorageService } from '../../../core/storage/storage.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse } from '../../../core/api/api.response';
+import { StorageInstance } from '../../../providers/storage.instance';
 
 @Component({
     selector: 'app-close-to-me',
@@ -42,11 +43,13 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
 
     constructor(
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private storageService: StorageService,
         private toast: PagamiToast,
         private placesService: PlacesService,
         private renderer: Renderer2,
         private appService: AppService,
+        private storageInstance: StorageInstance,
         @Inject(DOCUMENT) doc: Document,
         protected geolocationService: GeolocationService) {
         super(doc, geolocationService);
@@ -185,9 +188,16 @@ export class CloseToMePage extends MapPage implements OnInit, AfterViewInit {
             });
     }
 
-    async navigateToBusinessDetails() {
-        await this.storageService.setPlaceUnregistered(this.placeToSave);
-        await this.router.navigate(['/app/business-details', this.placeToSave.id]);
+    navigateToBusinessDetails() {
+        this.storageInstance.placeToEdit = this.placeToSave;
+        // console.log(this.activatedRoute);
+        // await this.router.navigate(['/app/business-details'], {
+        //     relativeTo: this.activatedRoute,
+        //     // replaceUrl: false,
+        //     // skipLocationChange: true,
+        //     // preserveFragment: false
+        // });
+        // console.log('entre al metodo');
         this.beforeSaveLocation = true;
         this.placeToSave = undefined;
         this.saving = false;

@@ -183,7 +183,7 @@ ion-searchbar > div > input {
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button {
-    padding: 17px !important;
+    padding: 17px;
     background: var(--ion-background-color);
 
     &.--without-pt {
@@ -197,7 +197,6 @@ ion-searchbar > div > input {
         bottom: 0;
     }
 }
-
 .button-large, .button-small {
     height: 56px;
     width: 100%;
@@ -211,7 +210,6 @@ ion-searchbar > div > input {
 .button-small {
     height: 36px;
 }
-
 /* END button */
 /*  ***********************  */
 
@@ -363,7 +361,6 @@ ion-checkbox {
         }
     }
 }
-
 /* END products */
 /*  ***********************  */
 
@@ -377,6 +374,17 @@ ion-checkbox {
     transform: translateY(-75px) translateX(3%);
 }
 /* END toast */
+/*  ***********************  */
+
+/* PROGRESS BAR CONTAINER */
+.progress-bar-container{
+    height: 5px;
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    top: 56px;
+}
+/* END progress bar */
 /*  ***********************  */
 
 ion-bottom-drawer {
@@ -463,14 +471,6 @@ ion-bottom-drawer {
 
 a[rel='noopener'] div img, .gmnoprint {
     opacity: 0;
-}
-
-.progress-bar-container{
-    height: 5px;
-    width: 100%;
-    position: fixed;
-    z-index: 10;
-    top: 56px;
 }
 
 .gm-style-iw, .gm-style-iw-c {

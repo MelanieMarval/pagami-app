@@ -64,7 +64,8 @@ export class RegisterBusinessPage extends MapPage implements AfterViewInit {
 
     async navigateToBusinessDetails() {
         await this.storageService.setPlaceUnregistered(this.placeToSave);
-        await this.router.navigate(['/app/business-details', this.placeToSave.id]);
+        console.log('navigateToBusinessDetails');
+        await this.router.navigate(['/app/business-details']);
         this.beforeSaveLocation = true;
         this.placeToSave = undefined;
         this.saving = false;

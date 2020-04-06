@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CloseToMePage} from './close-to-me';
 import {NearbyPage} from './nearby/nearby';
-import { RegisterBusinessPage } from '../register-business/register-business';
 
 const routes: Routes = [
     {
@@ -10,12 +9,10 @@ const routes: Routes = [
         component: CloseToMePage,
         children: [
             {
-                path: 'search',
-                component: NearbyPage
+                path: 'search'
             },
             {
-                path: 'register-business',
-                component: RegisterBusinessPage
+                path: 'register-business'
             },
             {
                 path: 'find-my-business'
