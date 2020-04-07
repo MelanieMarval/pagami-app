@@ -33,6 +33,6 @@ export class AppComponent {
     }
 
     private openHome(): Promise<boolean> {
-        return this.router.navigateByUrl('/app/tabs/close-to-me/search');
+        return this.router.navigateByUrl('/app/tabs/map/search');
     }
 }

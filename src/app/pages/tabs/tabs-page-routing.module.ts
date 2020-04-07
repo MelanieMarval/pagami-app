@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs-page';
-import { MyBusinessPage } from './my-business/my-business';
-import { RegisterBusinessPage } from './register-business/register-business';
 
 const routes: Routes = [
     {
@@ -10,20 +8,24 @@ const routes: Routes = [
         component: TabsPage,
         children: [
             {
-                path: 'close-to-me',
-                loadChildren: () => import('./close-to-me/close-to-me.module').then(m => m.CloseToMeModule)
+                path: 'map',
+                loadChildren: () => import('./map/map.module').then(m => m.MapModule)
             },
             {
                 path: 'my-business',
-                component: MyBusinessPage
+                loadChildren: () => import('./my-business/my-business.module').then(m => m.MyBusinessModule)
             },
             {
                 path: 'wallet',
                 loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
             },
             {
+                path: 'wallet/activity',
+                loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
+            },
+            {
                 path: '**',
-                redirectTo: 'close-to-me/search',
+                redirectTo: 'map/search',
                 pathMatch: 'full'
             }
         ],

@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { Place } from '../../../core/api/places/place';
 import { ValidationUtils } from '../../../utils/validation.utils';
-import { PagamiToast } from '../../../toast/pagami.toast';
+import { ToastProvider } from '../../../providers/toast.provider';
 import { PlacesService } from '../../../core/api/places/places.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
     place: Place = {latitude: 0, longitude: 0};
 
     constructor(
-        private toast: PagamiToast,
+        private toast: ToastProvider,
         private placesService: PlacesService,
         protected geolocationService: GeolocationService
     ) {

@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CloseToMePage} from './close-to-me';
-import {NearbyPage} from './nearby/nearby';
+import { MapPage } from './map-page';
 
 const routes: Routes = [
     {
         path: '',
-        component: CloseToMePage,
+        component: MapPage,
         children: [
             {
                 path: 'search'
@@ -18,10 +17,6 @@ const routes: Routes = [
                 path: 'find-my-business'
             }
         ],
-    },
-    {
-        path: 'nearby',
-        component: NearbyPage
     }
 ];
 
@@ -29,4 +24,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class CloseToMeRoutingModule { }
+export class MapRoutingModule { }

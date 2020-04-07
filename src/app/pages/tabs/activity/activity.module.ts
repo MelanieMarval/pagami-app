@@ -2,8 +2,9 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WalletPage } from './wallet';
+import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { RouterModule } from '@angular/router';
+import { ActivityPage } from './activity';
 
 @NgModule({
     imports: [
@@ -11,10 +12,10 @@ import { RouterModule } from '@angular/router';
         CommonModule,
         FormsModule,
         RouterModule.forChild([{
-            path: '', component: WalletPage
+            path: '', component: ActivityPage
         }])
     ],
-    declarations: [WalletPage]
+    declarations: [ ActivityPage, CapitalizePipe]
 })
-export class WalletModule {
+export class ActivityModule {
 }

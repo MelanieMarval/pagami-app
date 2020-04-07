@@ -17,37 +17,37 @@ export class PlacesService {
         this.httpClient = apiService.httpClient;
     }
 
-    async getAll() {
+    async getAll(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}`, options);
         return this.apiService.serverListener(request);
     }
 
-    async findById(id: string) {
+    async findById(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/${id}`, options);
         return this.apiService.serverListener(request);
     }
 
-    async myRegisters() {
+    async myRegisters(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/by-registered`, options);
         return this.apiService.serverListener(request);
     }
 
-    async save(place: Place) {
+    async save(place: Place): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.post(`${this.URL}`, place, options);
         return this.apiService.serverListener(request);
     }
 
-    async update(place: Place) {
+    async update(place: Place): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.put(`${this.URL}`, place, options);
         return this.apiService.serverListener(request);
     }
 
-    async delete(id: string) {
+    async delete(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.delete(`${this.URL}/${id}`, options);
         return this.apiService.serverListener(request);

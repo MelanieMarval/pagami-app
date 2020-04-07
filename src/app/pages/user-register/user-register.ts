@@ -7,7 +7,7 @@ import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { StorageService } from '../../core/storage/storage.service';
 import { User } from '../../core/api/users/user';
 import { AuthService } from '../../core/api/auth/auth.service';
-import { PagamiToast } from '../../toast/pagami.toast';
+import { ToastProvider } from '../../providers/toast.provider';
 import { InputFilePage } from '../parent/InputFilePage';
 import { ValidationUtils } from '../../utils/validation.utils';
 
@@ -27,7 +27,7 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
 
     constructor(private storageService: StorageService,
                 private authService: AuthService,
-                private toast: PagamiToast,
+                private toast: ToastProvider,
                 protected geolocationService: GeolocationService,
                 private route: Router) {
         super(geolocationService);
@@ -69,7 +69,7 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
                     await this.storageService.setPagamiUser(response.response);
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
                     this.saving = false;
-                    await this.route.navigate(['/app/tabs/close-to-me']);
+                    await this.route.navigate(['/app/tabs/map']);
                 } else {
                     this.saving = false;
                     return this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);

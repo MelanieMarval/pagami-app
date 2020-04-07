@@ -1,7 +1,7 @@
 <ion-tabs>
 
     <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="close-to-me/search" class="tab-button" (click)="openNearby()"  [class.tab-selected]="currentUrl === 'search'">
+        <ion-tab-button tab="map/search" class="tab-button" (click)="openNearby()" [class.tab-selected]="currentUrl === 'search'">
             <ion-icon name="navigate" class="tab-button__icon"></ion-icon>
             <ion-label>Cerca De Mi</ion-label>
         </ion-tab-button>
@@ -11,7 +11,7 @@
             <ion-label>Mi Empresa</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="close-to-me/register-business" class="tab-button" (click)="openRegister()" [class.tab-selected]="currentUrl === 'register-business'">
+        <ion-tab-button tab="map/register-business" class="tab-button" (click)="openRegister()" [class.tab-selected]="currentUrl === 'register-business'">
             <ion-icon name="business" class="tab-button__icon"></ion-icon>
             <ion-label>Registrar</ion-label>
         </ion-tab-button>

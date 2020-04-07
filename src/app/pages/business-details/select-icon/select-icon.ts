@@ -5,8 +5,8 @@ import { CATEGORY_ICONS } from '../../../utils/Const';
 import { Place } from '../../../core/api/places/place';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { StorageService } from '../../../core/storage/storage.service';
-import { PagamiToast } from '../../../toast/pagami.toast';
-import { StorageInstance } from '../../../providers/storage.instance';
+import { ToastProvider } from '../../../providers/toast.provider';
+import { IntentProvider } from '../../../providers/intent.provider';
 
 @Component({
     selector: 'app-select-icon',
@@ -21,18 +21,17 @@ export class SelectIconPage implements OnInit {
     saving: boolean;
 
     constructor(
-        public toast: PagamiToast,
+        public toast: ToastProvider,
         private route: Router,
         private http: HttpClient,
         private storageService: StorageService,
-        private storageInstance: StorageInstance,
+        private storageInstance: IntentProvider,
         private placesService: PlacesService,
     ) {
     }
 
     async ngOnInit() {
         this.place = this.storageInstance.placeToEdit;
-        console.log('-> this.place', this.place);
         this.selectedIcon = this.place.icon ? this.categoryIcons.findIndex(icon => icon.name === this.place.icon) : 0;
     }
 
@@ -40,7 +39,6 @@ export class SelectIconPage implements OnInit {
         this.selectedIcon = index;
         this.place.icon = name;
         this.storageInstance.placeToEdit = this.place;
-        console.log('-> this.place.icon', this.place.icon);
     }
 
     saveIconBusiness() {

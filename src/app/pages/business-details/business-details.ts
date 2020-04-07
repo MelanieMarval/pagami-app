@@ -4,12 +4,12 @@ import { StorageService } from '../../core/storage/storage.service';
 import { Place } from '../../core/api/places/place';
 import { Router } from '@angular/router';
 import { PLACES } from '../../utils/Const';
-import { PagamiToast } from '../../toast/pagami.toast';
+import { ToastProvider } from '../../providers/toast.provider';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { PlacesService } from '../../core/api/places/places.service';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { ValidationUtils } from '../../utils/validation.utils';
-import { StorageInstance } from '../../providers/storage.instance';
+import { IntentProvider } from '../../providers/intent.provider';
 
 @Component({
     selector: 'app-business-details',
@@ -26,21 +26,19 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     constructor(private storageService: StorageService,
                 private placesService: PlacesService,
                 private route: Router,
-                private toast: PagamiToast,
+                private toast: ToastProvider,
                 private fireStorage: FireStorage,
-                private storageInstance: StorageInstance,
+                private storageInstance: IntentProvider,
                 protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
 
     ngOnInit() {
-        setTimeout(async () => {
-            this.setupData();
-        }, 500);
+        this.setupData(this.storageInstance.placeToEdit);
     }
 
-    setupData() {
-        this.place = this.storageInstance.placeToEdit;
+    setupData(place: Place) {
+        this.place = place;
         this.previewUrl = this.place.photoUrl ? this.place.photoUrl : undefined;
         if (this.place.type === PLACES.TYPE.STORE) {
             this.isStore = true;

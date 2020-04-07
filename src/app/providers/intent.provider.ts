@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { Place } from '../core/api/places/place';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class StorageInstance {
+export class IntentProvider {
 
     // tslint:disable-next-line:variable-name
     private _placeToEdit: Place;

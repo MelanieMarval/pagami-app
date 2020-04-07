@@ -18,7 +18,7 @@ import { Place } from '../../core/api/places/place';
 // // @ts-ignore
 // import LatLng = google.maps.LatLng;
 
-export class MapPage {
+export class GoogleMapPage {
 
     @ViewChild('mapCanvas', { static: true }) mapElement: ElementRef;
 

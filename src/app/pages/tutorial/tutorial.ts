@@ -6,7 +6,7 @@ import { RESPONSE } from '../../utils/Const';
 import { Router } from '@angular/router';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { AuthService } from '../../core/api/auth/auth.service';
-import { PagamiToast } from '../../toast/pagami.toast';
+import { ToastProvider } from '../../providers/toast.provider';
 import { ModalPage } from './modal/modal';
 
 @Component({
@@ -26,7 +26,7 @@ export class TutorialPage {
         private googleAuthService: GoogleAuthService,
         private authService: AuthService,
         private storageService: StorageService,
-        private toast: PagamiToast,
+        private toast: ToastProvider,
         private route: Router,
         private modalController: ModalController) {
     }
@@ -82,7 +82,7 @@ export class TutorialPage {
         await this.storageService.setPagamiUser(pagamiUser);
         await this.storageService.setLogged(true);
         this.loading = false;
-        this.route.navigate(['/app/tabs/close-to-me']);
+        this.route.navigate(['/app/tabs/map/search']);
     }
 
     async onUserNotRegistered() {

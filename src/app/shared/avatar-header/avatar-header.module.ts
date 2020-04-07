@@ -1,4 +1,4 @@
-import { Input, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { AvatarHeaderComponent } from './avatar-header.component';
 import { NoImagePipe } from '../../pipes/no-image.pipe';

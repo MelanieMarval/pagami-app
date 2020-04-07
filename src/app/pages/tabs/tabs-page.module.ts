@@ -6,8 +6,7 @@ import { TabsPage } from './tabs-page';
 import { TabsPageRoutingModule } from './tabs-page-routing.module';
 
 import { WalletModule } from './wallet/wallet.module';
-import { MyBusinessPage } from './my-business/my-business';
-import { AvatarHeaderModule } from '../../modules/avatar-header/avatar-header.module';
+import { AvatarHeaderModule } from '../../shared/avatar-header/avatar-header.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -20,8 +19,7 @@ import { FormsModule } from '@angular/forms';
         FormsModule
     ],
     declarations: [
-        TabsPage,
-        MyBusinessPage
+        TabsPage
     ],
     providers: []
 })

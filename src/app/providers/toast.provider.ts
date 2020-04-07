@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 @Injectable({
     providedIn: 'root'
 })
-export class PagamiToast {
+export class ToastProvider {
 
     constructor(private toastController: ToastController) {
     }
@@ -56,6 +56,7 @@ export class PagamiToast {
 
         await toast.present();
     }
+
     async messageErrorAboveButton(message: string, duration = 2500, header = 'Error!') {
         const toast = await this.toastController.create({
             header,

@@ -17,13 +17,13 @@
             <ion-card class="card-place"
                       *ngFor="let register of registers"
                       [button]="register.status === STATUS.INCOMPLETE || register.status === STATUS.WAITING"
-                      (click)="register.status === STATUS.INCOMPLETE || register.status === STATUS.WAITING ? navigateToBusinessDetails(register) : ''">
+                      (click)="showDetails(register)">
                 <ion-card-header>
                     <ion-row>
                         <ion-col size="10">
                             <ion-card-subtitle>
                                 {{ register.createTime | date:'d/M/y'}} · {{ register.createTime | date:'shortTime'}} ·
-                                <span [classList]="['status--'+register.status | lowercase]">{{messageStatus(register.status)}}</span>
+                                <span [classList]="['status--'+register.status | lowercase]">{{placeMessageStatus(register.status)}}</span>
                             </ion-card-subtitle>
                         </ion-col>
                         <ion-col size="2">
@@ -35,15 +35,15 @@
                     <ion-row>
                         <ion-col size="2">
                             <ion-avatar class="border-white-1px">
-                                <ion-img [src]="getPhoto(register)"></ion-img>
+                                <ion-img [src]="placeThumbnailPhoto(register)"></ion-img>
                             </ion-avatar>
                         </ion-col>
                         <ion-col size="7">
-                            <ion-card-title>{{register.status === STATUS.INCOMPLETE ? 'Incompleto' : register.name | Capitalize}}</ion-card-title>
+                            <ion-card-title>{{register.status === STATUS.INCOMPLETE ? '' : register.name | Capitalize}}</ion-card-title>
                         </ion-col>
                         <ion-col size="3">
                             <ion-text [class]="['status--'+register.status | lowercase]">
-                                $0.00 USD
+                                {{register.status === STATUS.VERIFIED ? '$0.00 USD' : ''}}
                             </ion-text>
                         </ion-col>
                     </ion-row>

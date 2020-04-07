@@ -2,19 +2,21 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WalletPage } from './wallet';
 import { RouterModule } from '@angular/router';
+import { MyBusinessPage } from './my-business';
+import { AvatarHeaderModule } from '../../../shared/avatar-header/avatar-header.module';
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
+        AvatarHeaderModule,
         RouterModule.forChild([{
-            path: '', component: WalletPage
+            path: '', component: MyBusinessPage
         }])
     ],
-    declarations: [WalletPage]
+    declarations: [ MyBusinessPage ]
 })
-export class WalletModule {
+export class MyBusinessModule {
 }

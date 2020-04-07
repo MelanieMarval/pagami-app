@@ -5,7 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { InputFilePage } from '../../parent/InputFilePage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { ValidationUtils } from '../../../utils/validation.utils';
-import { PagamiToast } from '../../../toast/pagami.toast';
+import { ToastProvider } from '../../../providers/toast.provider';
 
 @Component({
     selector: 'app-add-product',
@@ -24,7 +24,7 @@ export class AddProductPage extends InputFilePage {
         private http: HttpClient,
         private alertController: AlertController,
         private route: Router,
-        private toast: PagamiToast,
+        private toast: ToastProvider,
         protected geolocationService: GeolocationService
     ) {
         super(geolocationService);

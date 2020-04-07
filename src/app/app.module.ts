@@ -12,10 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 // Components
 import { AppComponent } from './app.component';
 import { OrdersPage } from './pages/orders/orders';
-import { AppService } from './services/app.service';
+import { MapProvider } from './providers/map.provider';
 
 import { CoreModule } from './core/core.module';
-import { PagamiToast } from './toast/pagami.toast';
+import { ToastProvider } from './providers/toast.provider';
 
 import { firebaseConfig } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -23,7 +23,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { StorageInstance } from './providers/storage.instance';
+import { IntentProvider } from './providers/intent.provider';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage],
@@ -45,9 +45,9 @@ import { StorageInstance } from './providers/storage.instance';
     providers: [
         StatusBar,
         SplashScreen,
-        AppService,
-        PagamiToast,
-        StorageInstance,
+        MapProvider,
+        ToastProvider,
+        IntentProvider,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     exports: [],

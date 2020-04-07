@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppService } from '../../services/app.service';
+import { MapProvider } from '../../providers/map.provider';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -11,12 +11,11 @@ export class TabsPage {
 
     currentUrl = '';
 
-    constructor(private appService: AppService, private router: Router) {
+    constructor(private appService: MapProvider, private router: Router) {
         router.events.subscribe((value: any) => {
             if (value instanceof NavigationEnd) {
                 this.currentUrl = value.url;
                 this.currentUrl = value.url.substring(value.url.lastIndexOf('/') + 1);
-                console.log(this.currentUrl);
             }
         });
     }
