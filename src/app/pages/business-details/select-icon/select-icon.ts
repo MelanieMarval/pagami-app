@@ -53,7 +53,7 @@ export class SelectIconPage implements OnInit {
                         this.storageInstance.placeEdited = success.response;
                         this.saving = false;
                         await this.toast.messageSuccessWithoutTabs('Empresa registrada con exito!');
-                        await this.route.navigate(['/app/tabs/wallet/activity']);
+                        await this.route.navigate(['/app/tabs/users/activity']);
                     } else {
                         this.saving = false;
                         await this.toast.messageErrorWithoutTabs('No se ha guardar su informacion. Intente de nuevo!');

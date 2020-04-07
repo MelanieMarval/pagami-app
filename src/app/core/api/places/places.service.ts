@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { Place } from './place';
 import { ApiResponse } from '../api.response';
+import { PLACES } from '../../../utils/Const';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,12 @@ export class PlacesService {
     async getAll(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}`, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async getAllWaiting(): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/status/${PLACES.STATUS.WAITING}`, options);
         return this.apiService.serverListener(request);
     }
 

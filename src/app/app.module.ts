@@ -4,6 +4,11 @@ import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { IonicStorageModule } from '@ionic/storage';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -12,18 +17,14 @@ import { AppRoutingModule } from './app-routing.module';
 // Components
 import { AppComponent } from './app.component';
 import { OrdersPage } from './pages/orders/orders';
+// Providers
 import { MapProvider } from './providers/map.provider';
-
-import { CoreModule } from './core/core.module';
+import { IntentProvider } from './providers/intent.provider';
 import { ToastProvider } from './providers/toast.provider';
 
+import { CoreModule } from './core/core.module';
+import { PipesModule } from './pipes/pipes.module';
 import { firebaseConfig } from '../environments/environment';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { IonicStorageModule } from '@ionic/storage';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { IntentProvider } from './providers/intent.provider';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage],
@@ -41,6 +42,7 @@ import { IntentProvider } from './providers/intent.provider';
         AngularFireAuthModule,
         IonicStorageModule.forRoot(),
         CoreModule,
+        PipesModule,
     ],
     providers: [
         StatusBar,

@@ -21,6 +21,15 @@ const routes: Routes = [
         loadChildren: () => import('./pages/user-register/user-register.module').then(m => m.UserRegisterModule),
     },
     {
+        path: 'admin',
+        children: [
+            {
+                path: 'tabs',
+                loadChildren: () => import('./pages/admin/tabs/tabs-admin.module').then(m => m.TabsModule)
+            }
+        ]
+    },
+    {
         path: 'app',
         children: [
             {

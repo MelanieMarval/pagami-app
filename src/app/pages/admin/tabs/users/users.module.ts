@@ -2,21 +2,19 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UsersPage } from './users';
 import { RouterModule } from '@angular/router';
-import { ActivityPage } from './activity';
-import { PipesModule } from '../../../pipes/pipes.module';
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
-        PipesModule,
         RouterModule.forChild([{
-            path: '', component: ActivityPage
-        }]),
+            path: '', component: UsersPage
+        }])
     ],
-    declarations: [ ActivityPage ]
+    declarations: [UsersPage]
 })
-export class ActivityModule {
+export class UsersModule {
 }
