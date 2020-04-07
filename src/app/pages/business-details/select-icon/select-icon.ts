@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CATEGORY_ICONS } from '../../../utils/Const';
 import { Place } from '../../../core/api/places/place';
 import { PlacesService } from '../../../core/api/places/places.service';
-import { StorageService } from '../../../core/storage/storage.service';
+
+// Providers
+import { StorageProvider } from '../../../providers/storage.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { IntentProvider } from '../../../providers/intent.provider';
 
@@ -24,7 +26,7 @@ export class SelectIconPage implements OnInit {
         public toast: ToastProvider,
         private route: Router,
         private http: HttpClient,
-        private storageService: StorageService,
+        private storageService: StorageProvider,
         private storageInstance: IntentProvider,
         private placesService: PlacesService,
     ) {
@@ -33,6 +35,7 @@ export class SelectIconPage implements OnInit {
     async ngOnInit() {
         this.place = this.storageInstance.placeToEdit;
         this.selectedIcon = this.place.icon ? this.categoryIcons.findIndex(icon => icon.name === this.place.icon) : 0;
+        this.place.icon = this.place.icon ? this.place.icon : this.categoryIcons[0].name;
     }
 
     async selectIcon(index, name) {

@@ -8,7 +8,7 @@ import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { Place } from '../../../core/api/places/place';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { ToastProvider } from '../../../providers/toast.provider';
-import { StorageService } from '../../../core/storage/storage.service';
+import { StorageProvider } from '../../../providers/storage.provider';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse } from '../../../core/api/api.response';
 import { IntentProvider } from '../../../providers/intent.provider';
@@ -44,7 +44,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private storageService: StorageService,
+        private storageService: StorageProvider,
         private toast: ToastProvider,
         private placesService: PlacesService,
         private renderer: Renderer2,

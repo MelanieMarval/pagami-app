@@ -21,12 +21,12 @@ export const PLACES = {
         SERVICE: 'SERVICE'
     },
     STATUS: {
-        WAITING: 'WAITING',
-        ACCEPTED: 'ACCEPTED',
-        VERIFIED: 'VERIFIED',
-        REJECTED: 'REJECTED',
-        INCOMPLETE: 'INCOMPLETE',
-        DISABLED: 'DISABLED'
+        WAITING: 'WAITING',     // can edit
+        ACCEPTED: 'ACCEPTED',   // can view details (without buttons products or services)
+        VERIFIED: 'VERIFIED',   // can view details, (with buttons)
+        REJECTED: 'REJECTED',   // disabled
+        INCOMPLETE: 'INCOMPLETE', // can edit
+        DISABLED: 'DISABLED'    // can not show
     }
 };
 

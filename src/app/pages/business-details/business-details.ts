@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { InputFilePage } from '../parent/InputFilePage';
-import { StorageService } from '../../core/storage/storage.service';
-import { Place } from '../../core/api/places/place';
 import { Router } from '@angular/router';
+import { InputFilePage } from '../parent/InputFilePage';
+import { Place } from '../../core/api/places/place';
 import { PLACES } from '../../utils/Const';
-import { ToastProvider } from '../../providers/toast.provider';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
+import { ValidationUtils } from '../../utils/validation.utils';
+
+// Services
 import { PlacesService } from '../../core/api/places/places.service';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
-import { ValidationUtils } from '../../utils/validation.utils';
+
+// Providers
+import { StorageProvider } from '../../providers/storage.provider';
+import { ToastProvider } from '../../providers/toast.provider';
 import { IntentProvider } from '../../providers/intent.provider';
 
 @Component({
@@ -23,7 +27,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     isStore = false;
     isService = false;
 
-    constructor(private storageService: StorageService,
+    constructor(private storageService: StorageProvider,
                 private placesService: PlacesService,
                 private route: Router,
                 private toast: ToastProvider,
@@ -46,11 +50,6 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         if (this.place.type === PLACES.TYPE.SERVICE) {
             this.isService = true;
         }
-    }
-
-    setPlace(place) {
-        this.place.location = place;
-        this.places = [];
     }
 
     selectTypeStore() {

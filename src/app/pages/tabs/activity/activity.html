@@ -16,7 +16,7 @@
         <ion-item-group *ngIf="!loading && !error">
             <ion-card class="card-place"
                       *ngFor="let register of registers"
-                      [button]="register.status === STATUS.INCOMPLETE || register.status === STATUS.WAITING"
+                      [button]="register.status !== STATUS.REJECTED"
                       (click)="showDetails(register)">
                 <ion-card-header>
                     <ion-row>

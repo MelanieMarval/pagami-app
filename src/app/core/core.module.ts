@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from './geolocation/geolocation.service';
-import { StorageService } from './storage/storage.service';
+import { StorageProvider } from '../providers/storage.provider';
 import { ApiService } from './api/api.service';
 import { AuthService } from './api/auth/auth.service';
 import { PlacesService } from './api/places/places.service';
@@ -16,7 +16,7 @@ import { FireStorage } from './fire-storage/fire.storage';
     providers: [
         Geolocation,
         GeolocationService,
-        StorageService,
+        StorageProvider,
         ApiService,
         AuthService,
         PlacesService,

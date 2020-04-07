@@ -6,7 +6,7 @@ import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { Router } from '@angular/router';
 import { ToastProvider } from '../../providers/toast.provider';
-import { StorageService } from '../../core/storage/storage.service';
+import { StorageProvider } from '../../providers/storage.provider';
 import { User } from '../../core/api/users/user';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
@@ -31,7 +31,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
         private toast: ToastProvider,
         private fireStorage: FireStorage,
         protected geolocationService: GeolocationService,
-        private storageService: StorageService,
+        private storageService: StorageProvider,
         private authService: AuthService,
     ) {
         super(geolocationService);

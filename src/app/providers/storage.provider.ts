@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { User } from '../api/users/user';
-import { PagamiGeo } from '../geolocation/pagami.geo';
-import { Place } from '../api/places/place';
+import { User } from '../core/api/users/user';
+import { PagamiGeo } from '../core/geolocation/pagami.geo';
+import { Place } from '../core/api/places/place';
 
 const IS_LOGGED = 'is_logged';
 const SESSION_TOKEN = 'session_token';
@@ -15,7 +15,7 @@ const LAST_COORS = 'last_pagami_coors';
 @Injectable({
     providedIn: 'root'
 })
-export class StorageService {
+export class StorageProvider {
 
     constructor(private storage: Storage) {
     }

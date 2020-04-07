@@ -7,10 +7,9 @@ import { Place } from '../core/api/places/place';
 })
 export class IntentProvider {
 
-    // tslint:disable-next-line:variable-name
     private _placeToEdit: Place;
-    // tslint:disable-next-line:variable-name
     private _placeEdited: Place;
+    private _placeToShow: Place;
 
     get placeEdited(): Place {
         return this._placeEdited;
@@ -26,5 +25,13 @@ export class IntentProvider {
 
     set placeToEdit(value: Place) {
         this._placeToEdit = value;
+    }
+
+    get placeToShow(): Place {
+        return this._placeToShow;
+    }
+
+    set placeToShow(value: Place) {
+        this._placeToShow = value;
     }
 }

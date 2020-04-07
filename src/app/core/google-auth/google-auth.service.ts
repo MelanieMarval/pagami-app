@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import '@codetrix-studio/capacitor-google-auth';
 import { Plugins } from '@capacitor/core';
 import { auth } from 'firebase/app';
-import { StorageService } from '../storage/storage.service';
+import { StorageProvider } from '../../providers/storage.provider';
 import { ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class GoogleAuthService {
     private googleAuth = Plugins.GoogleAuth;
 
     constructor(private angularFireAuth: AngularFireAuth,
-                private storageService: StorageService,
+                private storageService: StorageProvider,
                 public toastController: ToastController) { }
 
     async singIn(): Promise<any> {

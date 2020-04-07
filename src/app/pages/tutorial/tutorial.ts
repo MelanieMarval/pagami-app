@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonSlides, ModalController } from '@ionic/angular';
-import { StorageService } from '../../core/storage/storage.service';
+import { StorageProvider } from '../../providers/storage.provider';
 import { User } from '../../core/api/users/user';
 import { RESPONSE } from '../../utils/Const';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ export class TutorialPage {
     constructor(
         private googleAuthService: GoogleAuthService,
         private authService: AuthService,
-        private storageService: StorageService,
+        private storageService: StorageProvider,
         private toast: ToastProvider,
         private route: Router,
         private modalController: ModalController) {

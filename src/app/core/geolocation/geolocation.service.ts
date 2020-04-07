@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 // @ts-ignore
 import GoogleMaps = google.maps;
-import { StorageService } from '../storage/storage.service';
+import { StorageProvider } from '../../providers/storage.provider';
 import { mapToGeoPoint, PagamiGeo } from './pagami.geo';
 
 const defaultCoors: PagamiGeo = {
@@ -24,7 +24,7 @@ export class GeolocationService {
 
     public locationChanged: EventEmitter<PagamiGeo> = new EventEmitter<PagamiGeo>();
 
-    constructor(private geolocation: Geolocation, private storageService: StorageService) { }
+    constructor(private geolocation: Geolocation, private storageService: StorageProvider) { }
 
     async getCurrentLocation(): Promise<PagamiGeo> {
         return new Promise(async resolve => {

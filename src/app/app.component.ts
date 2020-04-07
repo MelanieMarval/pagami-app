@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { StorageService } from './core/storage/storage.service';
+import { StorageProvider } from './providers/storage.provider';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
@@ -15,7 +15,7 @@ export class AppComponent {
     constructor(
         private router: Router,
         private platform: Platform,
-        private storageService: StorageService
+        private storageService: StorageProvider
     ) {
         this.initializeApp();
     }

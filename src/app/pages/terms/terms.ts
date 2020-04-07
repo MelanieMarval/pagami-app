@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../tutorial/modal/modal';
-import { StorageService } from '../../core/storage/storage.service';
+import { StorageProvider } from '../../providers/storage.provider';
 import { User } from '../../core/api/users/user';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class TermsPage {
 
     termsAccepted = false;
 
-    constructor(private storageService: StorageService,
+    constructor(private storageService: StorageProvider,
                 private route: Router, ) {
     }
 

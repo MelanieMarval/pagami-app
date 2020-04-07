@@ -1,16 +1,14 @@
 
 <!-- IF NOT REGISTER -->
-<ion-header *ngIf="!isRegister">
-    <ion-toolbar>
-        <ion-title>
-            Mi Empresa
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
-<app-avatar-header *ngIf="isRegister"></app-avatar-header>
-
 <ion-content *ngIf="!isRegister" scroll-y="false">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>
+                Mi Empresa
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+
     <div class="no-register">
         <ion-img src="assets/img/my-business-no-register.png"></ion-img>
         <ion-text>
@@ -19,7 +17,6 @@
         </ion-text>
     </div>
 </ion-content>
-
 <ion-footer class="footer-button" *ngIf="!isRegister">
     <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
         Buscar mi empresa

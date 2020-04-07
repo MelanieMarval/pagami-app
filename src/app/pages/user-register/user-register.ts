@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 // Services
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
-import { StorageService } from '../../core/storage/storage.service';
+import { StorageProvider } from '../../providers/storage.provider';
 import { User } from '../../core/api/users/user';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { ToastProvider } from '../../providers/toast.provider';
@@ -25,7 +25,7 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
     user: User = {};
     saving = false;
 
-    constructor(private storageService: StorageService,
+    constructor(private storageService: StorageProvider,
                 private authService: AuthService,
                 private toast: ToastProvider,
                 protected geolocationService: GeolocationService,
