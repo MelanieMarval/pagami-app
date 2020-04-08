@@ -41,9 +41,9 @@ export class BusinessesPage implements OnInit {
                 this.verifyItemUpdated();
             }
         });
-        this.placesService.myRegisters().then(async (success: ApiResponse) => {
+        this.placesService.getAll().then(async (success: ApiResponse) => {
                 if (success.passed) {
-                    this.registers = await success.response.filter(place => place.status);
+                    this.registers = await success.response.filter(place => place.status !== this.STATUS.INCOMPLETE);
                     this.loading = false;
                     this.error = false;
                 } else {

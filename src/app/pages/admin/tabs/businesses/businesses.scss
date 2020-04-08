@@ -2,18 +2,11 @@
     padding: 8px;
 }
 
-.item-activity {
-    color: #A0AEC0 !important;
-    font-size: 12px;
-    margin-left: 8px;
-    margin-right: 8px;
-
-    ion-icon {
-        width: 20px;
-    }
-    ion-icon.ios {
-        margin: 0;
-    }
+.text-gray {
+    color: #A0AEC0;
+}
+.flex-direction-column{
+    flex-direction: column;
 }
 
 .card-place {
@@ -51,17 +44,6 @@
     }
 }
 
-.card-money {
-    background: #2D3748;
-    border-radius: 3px;
-
-    ion-card-content {
-        padding: 10px;
-        font-size: 13px;
-        color: #A0AEC0;
-    }
-}
-
 ion-card-header {
     padding: 10px 10px 0;
 
@@ -70,10 +52,6 @@ ion-card-header {
         font-weight: normal;
         color: #FFF;
     }
-}
-.footer-button {
-    padding-top: 6px;
-    padding-bottom: 6px;
 }
 
 /* *****STATUS CARDS***** */

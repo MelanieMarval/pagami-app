@@ -52,7 +52,7 @@ export class StorageProvider {
         return this.storage.set(PAGAMI_USER, user);
     }
 
-    getPagamiUser(): Promise<any> {
+    getPagamiUser(): Promise<User> {
         return new Promise(resolve => {
             this.storage.get(PAGAMI_USER)
                 .then(

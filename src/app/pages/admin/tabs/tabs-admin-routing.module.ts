@@ -8,6 +8,11 @@ const routes: Routes = [
         component: TabsAdmin,
         children: [
             {
+                path: '',
+                redirectTo: 'activity',
+                pathMatch: 'full'
+            },
+            {
                 path: 'activity',
                 loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
             },

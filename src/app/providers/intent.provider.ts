@@ -10,6 +10,8 @@ export class IntentProvider {
     private _placeToEdit: Place;
     private _placeEdited: Place;
     private _placeToShow: Place;
+    private _placeToAccept: Place;
+    private _returnPlaceToAccept: Place;
 
     get placeEdited(): Place {
         return this._placeEdited;
@@ -34,4 +36,23 @@ export class IntentProvider {
     set placeToShow(value: Place) {
         this._placeToShow = value;
     }
+
+    // Admin
+    get placeToAccept(): Place {
+        return this._placeToAccept;
+    }
+
+    set placeToAccept(value: Place) {
+        this._placeToAccept = value;
+    }
+
+    get returnPlaceToAccept(): Place {
+        return this._returnPlaceToAccept;
+    }
+
+    set returnPlaceToAccept(value: Place) {
+        this._returnPlaceToAccept = value;
+    }
+
+
 }

@@ -91,32 +91,32 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
             }
             if (ev.direction === Hammer.DIRECTION_DOWN) {
                 if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
-                    //if (this.state === DrawerState.Top) {
+                    // if (this.state === DrawerState.Top) {
                         // if (this.contentPosition === 0) {
                         //     this.ionContent.scrollToPoint(undefined, 135, 200);
                         // }
-                    //} else {
+                    // } else {
                         // console.log('scroll content');
                         // console.log(scrollY);
                         this.currentIonContentPosition += scrollY;
                         this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
                             .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
-                    //}
+                    // }
                 }
             } else if (ev.direction === Hammer.DIRECTION_UP) {
-                //console.log('Hammer.DIRECTION_UP');
+                // console.log('Hammer.DIRECTION_UP');
                 if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
-                    //console.log('this._element.nativeElement.getBoundingClientRect().top === this.distanceTop');
+                    // console.log('this._element.nativeElement.getBoundingClientRect().top === this.distanceTop');
                     if (this.state === DrawerState.Top) {
-                        //console.log('scroll to x x')
-                        //console.log(this.contentPosition)
+                        // console.log('scroll to x x')
+                        // console.log(this.contentPosition)
                         if (this.diasbleScroll) {
                             this.currentIonContentPosition += scrollY;
                             this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
                                 .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
                         }
                     } else {
-                        //console.log(this.state)
+                        // console.log(this.state)
                         // console.log('scroll content');
                         // console.log(scrollY);
                         this.currentIonContentPosition += scrollY;

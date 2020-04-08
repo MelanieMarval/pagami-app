@@ -6,24 +6,25 @@
         <ion-item-group class="ion-padding-vertical" *ngIf="showNotification">
             <ion-item button (click)="showNotification = false" detailIcon="" lines="none" color="pagami-surface" class="notification">
                 <ion-note slot="end" color="pagami" >OKAY</ion-note>
-                <ion-label>Tienes {{registers.length | plural:'nuevo registro'}}</ion-label>
+                <ion-label>Tienes {{records.length | plural:'nuevo registro'}}</ion-label>
             </ion-item>
         </ion-item-group>
 
         <ion-item-group class="animated fast slideInUp">
             <ion-card class="card-place"
-                      *ngFor="let register of registers"
+                      *ngFor="let record of records"
                       [button]="true"
-                      (click)="showDetails(register)">
+                      (click)="showRecord(record)">
                 <ion-card-header>
                     <ion-row>
-                        <ion-col size="10">
+                        <ion-col size="11">
                             <ion-card-subtitle>
-                                {{ register.createTime | date:'d/M/y'}} · {{ register.createTime | date:'shortTime'}} ·
-                                <span [classList]="['status--'+register.status | lowercase]">{{placeMessageStatus(register.status)}}</span>
+                                {{ record.createTime | date:'d/M/y'}} · {{ record.createTime | date:'shortTime'}} ·
+                                <span>{{record.location}}</span>
                             </ion-card-subtitle>
                         </ion-col>
-                        <ion-col size="2">
+                        <ion-col size="1">
+                            <ion-icon name="arrow-forward" color="light" style="font-size: 20px"></ion-icon>
                         </ion-col>
                     </ion-row>
                 </ion-card-header>
@@ -32,16 +33,13 @@
                     <ion-row>
                         <ion-col size="2">
                             <ion-avatar class="border-white-1px">
-                                <ion-img [src]="placeThumbnailPhoto(register)"></ion-img>
+                                <ion-img [src]="placeThumbnailPhoto(record)"></ion-img>
                             </ion-avatar>
                         </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>{{register.name | capitalize}}</ion-card-title>
+                        <ion-col size="8">
+                            <ion-card-title>{{record.name | capitalize}}</ion-card-title>
                         </ion-col>
                         <ion-col size="3">
-                            <ion-text [class]="['status--'+register.status | lowercase]">
-                                $0.00 USD
-                            </ion-text>
                         </ion-col>
                     </ion-row>
                 </ion-card-content>
@@ -50,17 +48,17 @@
     </ion-list>
 
     <ion-list *ngIf="loading || error" class="ion-padding">
-
         <ion-item-group>
             <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(5).split('')">
                 <ion-card-header>
                     <ion-row>
-                        <ion-col size="10">
+                        <ion-col size="11">
                             <ion-card-subtitle>
                                 <ion-skeleton-text [animated]="!error" style="width: 85%"></ion-skeleton-text>
                             </ion-card-subtitle>
                         </ion-col>
-                        <ion-col size="2">
+                        <ion-col size="1">
+                            <ion-skeleton-text [animated]="!error" style="width: 90%; font-size: 20px"></ion-skeleton-text>
                         </ion-col>
                     </ion-row>
                 </ion-card-header>
@@ -72,11 +70,10 @@
                                 <ion-skeleton-text></ion-skeleton-text>
                             </ion-avatar>
                         </ion-col>
-                        <ion-col size="7">
+                        <ion-col size="8">
                             <ion-skeleton-text [animated]="!error" style="width: 70%"></ion-skeleton-text>
                         </ion-col>
                         <ion-col size="3">
-                            <ion-skeleton-text [animated]="!error" style="width: 80%"></ion-skeleton-text>
                         </ion-col>
                     </ion-row>
                 </ion-card-content>

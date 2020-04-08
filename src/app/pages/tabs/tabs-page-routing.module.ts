@@ -16,11 +16,11 @@ const routes: Routes = [
                 loadChildren: () => import('./my-business/my-business.module').then(m => m.MyBusinessModule)
             },
             {
-                path: 'users',
+                path: 'wallet',
                 loadChildren: () => import('./wallet/wallet.module').then(m => m.WalletModule)
             },
             {
-                path: 'users/activity',
+                path: 'wallet/activity',
                 loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
             },
             {

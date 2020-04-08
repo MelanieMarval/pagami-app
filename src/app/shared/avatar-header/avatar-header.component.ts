@@ -12,7 +12,7 @@ export class AvatarHeaderComponent implements OnInit {
     @Input() addClass = false;
     user: User = {};
 
-    constructor(private storageService: StorageProvider,) {
+    constructor(private storageService: StorageProvider) {
     }
 
     async ngOnInit() {

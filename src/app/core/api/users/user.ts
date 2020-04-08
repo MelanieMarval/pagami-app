@@ -11,5 +11,6 @@ export interface User {
     state?: string;
     createTime?: string;
     lastUpdate?: string;
+    type?: string;
     // TODO, add another elements from this model
 }

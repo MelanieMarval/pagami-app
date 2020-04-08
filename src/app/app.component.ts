@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { StorageProvider } from './providers/storage.provider';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
+import { USER } from './utils/Const';
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -22,8 +23,17 @@ export class AppComponent {
 
     initializeApp() {
         this.platform.ready().then(async () => {
-            const isLogged = await this.storageService.isLogged();
-            // isLogged ? await this.openHome() : await this.openTutorial();
+            // const isLogged = await this.storageService.isLogged();
+            // const user = await this.storageService.getPagamiUser();
+            // if (isLogged) {
+            //     if (user.type && user.type === USER.TYPE.ADMIN) {
+            //         await this.openAdminPanel();
+            //     } else {
+            //         await this.openHome();
+            //     }
+            // } else {
+            //     await this.openTutorial();
+            // }
             await SplashScreen.hide();
         });
     }
@@ -34,5 +44,9 @@ export class AppComponent {
 
     private openHome(): Promise<boolean> {
         return this.router.navigateByUrl('/app/tabs/map/search');
+    }
+
+    private openAdminPanel(): Promise<boolean> {
+        return this.router.navigateByUrl('/admin/tabs/activity');
     }
 }

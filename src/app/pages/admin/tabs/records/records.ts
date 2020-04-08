@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { ApiResponse } from '../../../../core/api/api.response';
 import { Place } from '../../../../core/api/places/place';
@@ -17,50 +17,46 @@ import { PlaceUtils } from '../../../../utils/place.utils';
     templateUrl: 'records.html',
     styleUrls: ['records.scss']
 })
-export class RecordsPage implements OnInit {
+export class RecordsPage implements OnInit, AfterViewChecked {
 
     loading = true;
     error = false;
     showNotification = true;
-    registers: Place[];
+    records: Place[];
     STATUS = PLACES.STATUS;
-    indexOfPlaceToEdit: number = undefined;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
-    placeMessageStatus = PlaceUtils.getMessageStatus;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageProvider,
                 private router: Router,
                 private toast: ToastProvider,
-                private storageInstance: IntentProvider) {
+                private activatedRoute: ActivatedRoute,
+                private intentProvider: IntentProvider) {
     }
 
     ngOnInit() {
-        this.placesService.getAllWaiting().then(async (success: ApiResponse) => {
-                if (success.passed) {
-                    this.registers = await success.response.filter(place => place.status);
-                    this.error = false;
-                } else {
-                    this.error = true;
-                }
-                this.loading = false;
-            });
+        this.placesService.getAllWaiting().then((success: ApiResponse) => {
+            this.loading = false;
+            if (success.passed) {
+                this.records = success.response;
+                this.error = false;
+            } else {
+                this.error = true;
+            }
+        });
     }
 
-    showDetails(place: Place) {
-        if (place.status === this.STATUS.INCOMPLETE || place.status === this.STATUS.WAITING) {
-            this.indexOfPlaceToEdit = this.registers.indexOf(place);
-            this.storageInstance.placeToEdit = Object.assign({}, place);
-            this.router.navigate(['/app/business-details']).then();
-            return;
-        }
-        if (place.status === this.STATUS.ACCEPTED || place.status === this.STATUS.VERIFIED) {
-            this.storageInstance.placeToShow = place;
-            this.router.navigate(['/app/shop']).then();
+    ngAfterViewChecked(): void {
+        if (this.intentProvider.returnPlaceToAccept) {
+            const index = this.records.indexOf(this.records.filter(record => record.id === this.intentProvider.returnPlaceToAccept.id)[0]);
+            this.records.splice(index, 1);
+            this.intentProvider.returnPlaceToAccept = undefined;
         }
     }
 
-    closeNotification() {
-
+    showRecord(place: Place) {
+        this.intentProvider.placeToAccept = place;
+        this.router.navigate(['admin/tabs/records/details']);
     }
+
 }

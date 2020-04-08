@@ -1,0 +1,82 @@
+
+<ion-header class="header-image">
+    <ion-toolbar class="background-transparent">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/admin/tabs/records"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
+
+    <div class="header-image--info">
+        <ion-item lines="none" class="info-category">
+            <ion-icon slot="start" [src]="'assets/category-icons/'+place.icon+'.svg'"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>ALMACENES · {{placeTypeSpanish(place.type)}}</ion-label>
+        </ion-item>
+        <div class="info-title">
+            <ion-text color="light">
+                {{place.name}}
+            </ion-text>
+        </div>
+        <ion-item lines="none" class="info-rating">
+            <ion-label>{{place.location}}</ion-label>
+        </ion-item>
+    </div>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="none" class="inputs-container">
+        <ion-item-group class="ion-margin-bottom">
+            <ion-label class="group-label">Ubicacion</ion-label>
+            <ion-item class="item-admin ion-no-padding">
+                <ion-avatar slot="start" class="item-admin__avatar">
+                    <ion-icon src="assets/icon/location-on.svg" class="size-icon-default"></ion-icon>
+                </ion-avatar>
+                <ion-label>{{place.location}}</ion-label>
+            </ion-item>
+        </ion-item-group>
+        <ion-item-group class="ion-margin-bottom">
+            <ion-label class="group-label">Telefonos</ion-label>
+            <ion-item class="item-admin ion-no-padding">
+                <ion-avatar slot="start" class="item-admin__avatar">
+                    <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
+                </ion-avatar>
+                <ion-label>{{place.phone}}</ion-label>
+            </ion-item>
+            <ion-item class="item-admin ion-no-padding">
+                <ion-avatar slot="start" class="item-admin__avatar">
+                    <ion-icon name="logo-whatsapp" class="size-icon-default"></ion-icon>
+                </ion-avatar>
+                <ion-label>{{place.samePhone ? place.phone : place.whatsapp}}</ion-label>
+            </ion-item>
+        </ion-item-group>
+        <ion-item-group class="ion-margin-bottom">
+            <ion-label class="group-label">Pagina Web</ion-label>
+            <ion-item class="item-admin ion-no-padding">
+                <ion-avatar slot="start" class="item-admin__avatar">
+                    <ion-icon src="assets/icon/web.svg" class="size-icon-default"></ion-icon>
+                </ion-avatar>
+                <ion-label>{{place.website}}</ion-label>
+            </ion-item>
+        </ion-item-group>
+    </ion-list>
+
+</ion-content>
+
+<ion-footer class="footer-button" *ngIf="!saved">
+    <ion-row>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()" [disabled]="saving || rejecting">
+                <ion-spinner *ngIf="rejecting" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!rejecting">Rechazar</span>
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
+                <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!saving">Aceptar</span>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

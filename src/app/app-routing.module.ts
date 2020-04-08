@@ -24,6 +24,11 @@ const routes: Routes = [
         path: 'admin',
         children: [
             {
+                path: '',
+                redirectTo: 'tabs',
+                pathMatch: 'full'
+            },
+            {
                 path: 'tabs',
                 loadChildren: () => import('./pages/admin/tabs/tabs-admin.module').then(m => m.TabsModule)
             }

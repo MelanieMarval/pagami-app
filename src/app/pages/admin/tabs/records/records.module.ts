@@ -5,15 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { RecordsPage } from './records';
 import { PipesModule } from '../../../../pipes/pipes.module';
+import { RecordDetailsModule } from '../record-details/record-details.module';
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild([{
-            path: '', component: RecordsPage
-        }]),
+        RouterModule.forChild([
+            {path: '', component: RecordsPage},
+            {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)}
+        ]),
         PipesModule,
     ],
     declarations: [ RecordsPage ]

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonSlides, ModalController } from '@ionic/angular';
 import { StorageProvider } from '../../providers/storage.provider';
 import { User } from '../../core/api/users/user';
-import { RESPONSE } from '../../utils/Const';
+import { RESPONSE, USER } from '../../utils/Const';
 import { Router } from '@angular/router';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { AuthService } from '../../core/api/auth/auth.service';
@@ -82,7 +82,11 @@ export class TutorialPage {
         await this.storageService.setPagamiUser(pagamiUser);
         await this.storageService.setLogged(true);
         this.loading = false;
-        this.route.navigate(['/app/tabs/map/search']);
+        if (pagamiUser.type === USER.TYPE.ADMIN) {
+            await this.route.navigate(['/admin/tabs/activity']);
+        } else {
+           await this.route.navigate(['/app/tabs/map/search']);
+        }
     }
 
     async onUserNotRegistered() {

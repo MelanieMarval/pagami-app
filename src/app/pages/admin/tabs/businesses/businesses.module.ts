@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BusinessesPage } from './businesses';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { BusinessesPage } from './businesses';
         FormsModule,
         RouterModule.forChild([{
             path: '', component: BusinessesPage
-        }])
+        }]),
+        PipesModule
     ],
     declarations: [ BusinessesPage ]
 })

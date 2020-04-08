@@ -14,6 +14,13 @@ export const STATUS = {
     ERROR: 500,
 };
 
+export const USER = {
+    TYPE: {
+        ADMIN: 'ADMIN',
+        NORMAL: 'NORMAL'
+    }
+};
+
 
 export const PLACES = {
     TYPE: {
@@ -50,4 +57,4 @@ export const CATEGORY_ICONS = [
     { name: '008-comida-1' },
     { name: '009-cabina-del-teleferico' },
     { name: '009-helado' },
-]
+];

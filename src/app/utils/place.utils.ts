@@ -15,7 +15,7 @@ export class PlaceUtils {
     static getMessageStatus(status: string): string {
         switch (status) {
             case PLACES.STATUS.WAITING:
-                return 'En espera de aceptacion';
+                return 'Esperando de aceptacion';
             case PLACES.STATUS.ACCEPTED:
                 return 'En espera de verificacion';
             case PLACES.STATUS.VERIFIED:
@@ -26,6 +26,15 @@ export class PlaceUtils {
                 return 'Incompleto';
             default:
                 return 'Desabilitado';
+        }
+    }
+
+    static getTypeSpanish(type: string): string {
+        switch (type) {
+            case PLACES.TYPE.SERVICE:
+                return 'SERVICIO';
+            case PLACES.TYPE.STORE:
+                return 'TIENDA';
         }
     }
 }

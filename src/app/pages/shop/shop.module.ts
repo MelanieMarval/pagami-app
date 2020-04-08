@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {IonicModule} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
-import {ProductsPageRoutingModule} from './shop-routing.module';
+import {ShopPageRoutingModule} from './shop-routing.module';
 
 import {ShopPage} from './shop';
 import {ServicesPage} from './services/services';
@@ -15,7 +15,7 @@ import {OrderSummaryPage} from './order-summary/order-summary';
         CommonModule,
         IonicModule,
         HttpClientModule,
-        ProductsPageRoutingModule
+        ShopPageRoutingModule
     ],
     declarations: [
         ShopPage,
