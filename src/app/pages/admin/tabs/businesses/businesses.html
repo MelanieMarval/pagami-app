@@ -2,64 +2,55 @@
 <ion-content>
 
     <ion-list>
-        <ion-card class="ion-margin-bottom" color="pagami-surface">
-            <ion-card-content>
-                <ion-row>
-                    <ion-col size="12">
-                        <ion-text class="text-gray">Registradas</ion-text>
-                        <p>{{'50000'}}</p>
-                    </ion-col>
-                    <ion-col size="4">
-                        <ion-text class="text-gray">Verificadas</ion-text>
-                        <p>{{'3200'}}</p>
-                    </ion-col>
-                    <ion-col size="4">
-                        <ion-text class="text-gray">No verificadas</ion-text>
-                        <p>{{'1300'}}</p>
-                    </ion-col>
-                    <ion-col size="4">
-                        <ion-text class="text-gray">Vencidas</ion-text>
-                        <p>{{'500'}}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-card-content>
-        </ion-card>
-
         <ion-item-group *ngIf="!loading && !error">
-            <ion-card class="card-place"
-                      *ngFor="let register of registers"
-                      [button]="register.status !== STATUS.REJECTED"
-                      (click)="showDetails(register)">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                {{ register.createTime | date:'d/M/y'}} · {{ register.createTime | date:'shortTime'}} ·
-                                <span [classList]="['status--'+register.status | lowercase]">{{placeMessageStatus(register.status)}}</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
 
+            <ion-card class="ion-margin-bottom" color="pagami-surface">
                 <ion-card-content>
                     <ion-row>
-                        <ion-col size="2">
+                        <ion-col size="12">
+                            <ion-text class="text-gray">Registradas</ion-text>
+                            <p>{{this.registers.length}}</p>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-text class="text-gray">Verificadas</ion-text>
+                            <p>{{filterRegisters(STATUS.VERIFIED)}}</p>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-text class="text-gray">No verificadas</ion-text>
+                            <p>{{filterRegisters(STATUS.ACCEPTED)}}</p>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-text class="text-gray">Vencidas</ion-text>
+                            <p>{{filterRegisters(STATUS.DISABLED)}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+
+            <ion-card class="card-place"
+                      *ngFor="let register of registers">
+                <ion-card-content class="ion-no-padding">
+                    <ion-row>
+                        <ion-col size="2" class="ion-justify-content-center">
                             <ion-avatar class="border-white-1px">
                                 <ion-img [src]="placeThumbnailPhoto(register)"></ion-img>
                             </ion-avatar>
                         </ion-col>
-                        <ion-col size="7" class="flex-direction-column">
-                            <ion-card-title>{{register.name | capitalize}}</ion-card-title>
+                        <ion-col size="10" class="">
+                            <ion-card-subtitle>
+                                {{ register.createTime | date:'d/M/y'}} · {{ register.createTime | date:'shortTime'}}
+                            </ion-card-subtitle>
+                            <ion-card-title>
+                                {{register.name | capitalize}}
+                                <span [ngSwitch]="register.status">
+                                    <ion-icon *ngSwitchCase="STATUS.VERIFIED" name="shield-checkmark" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
+                                    <ion-icon *ngSwitchCase="STATUS.REJECTED" name="close-circle" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
+                                    <ion-icon *ngSwitchCase="STATUS.ACCEPTED" name="time-outline" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
+                                </span>
+                            </ion-card-title>
                             <ion-card-subtitle>
                                 Se unio el {{ register.createTime | date:'d MMMM'}} de {{ register.createTime | date:'y'}}
                             </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text [class]="['status--'+register.status | lowercase]">
-                                {{register.status === STATUS.VERIFIED ? '$0.00 USD' : ''}}
-                            </ion-text>
                         </ion-col>
                     </ion-row>
                 </ion-card-content>
@@ -67,34 +58,47 @@
         </ion-item-group>
 
         <ion-item-group *ngIf="loading || error">
-            <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(5).split('')">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                <ion-skeleton-text [animated]="!error" style="width: 85%"></ion-skeleton-text>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
+            <ion-card class="ion-margin-bottom" color="pagami-surface">
                 <ion-card-content>
                     <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <ion-skeleton-text></ion-skeleton-text>
-                            </ion-avatar>
+                        <ion-col size="12">
+                            <ion-skeleton-text [animated]="!error" style="width: 30%"></ion-skeleton-text>
                         </ion-col>
-                        <ion-col size="7">
-                            <ion-skeleton-text [animated]="!error" style="width: 70%"></ion-skeleton-text>
+                        <ion-col size="4">
+                            <ion-skeleton-text [animated]="!error" style="width: 80%"></ion-skeleton-text>
                         </ion-col>
-                        <ion-col size="3">
+                        <ion-col size="4">
+                            <ion-skeleton-text [animated]="!error" style="width: 80%"></ion-skeleton-text>
+                        </ion-col>
+                        <ion-col size="4">
                             <ion-skeleton-text [animated]="!error" style="width: 80%"></ion-skeleton-text>
                         </ion-col>
                     </ion-row>
                 </ion-card-content>
+            </ion-card>
+
+            <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(5).split('')">
+                <ion-card-content class="ion-no-padding">
+                    <ion-row>
+                        <ion-col size="2" class="ion-justify-content-center">
+                            <ion-avatar class="border-white-1px">
+                                <ion-skeleton-text></ion-skeleton-text>
+                            </ion-avatar>
+                        </ion-col>
+                        <ion-col size="10" class="">
+                            <ion-card-subtitle style="width: 30%">
+                                <ion-skeleton-text [animated]="!error"></ion-skeleton-text>
+                            </ion-card-subtitle>
+                            <ion-card-title style="width: 60%">
+                                <ion-skeleton-text [animated]="!error"></ion-skeleton-text>
+                            </ion-card-title>
+                            <ion-card-subtitle style="width: 70%">
+                                <ion-skeleton-text [animated]="!error"></ion-skeleton-text>
+                            </ion-card-subtitle>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+
             </ion-card>
         </ion-item-group>
 

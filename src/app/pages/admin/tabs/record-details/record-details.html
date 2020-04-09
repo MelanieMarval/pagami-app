@@ -16,12 +16,10 @@
         </ion-item>
         <div class="info-title">
             <ion-text color="light">
-                {{place.name}}
+                {{place.name | capitalize}}
             </ion-text>
         </div>
-        <ion-item lines="none" class="info-rating">
-            <ion-label>{{place.location}}</ion-label>
-        </ion-item>
+        <ion-label class="info-country">{{place.location.country}}</ion-label>
     </div>
 </ion-header>
 
@@ -33,7 +31,7 @@
                 <ion-avatar slot="start" class="item-admin__avatar">
                     <ion-icon src="assets/icon/location-on.svg" class="size-icon-default"></ion-icon>
                 </ion-avatar>
-                <ion-label>{{place.location}}</ion-label>
+                <ion-label>{{place.location.address}}</ion-label>
             </ion-item>
         </ion-item-group>
         <ion-item-group class="ion-margin-bottom">

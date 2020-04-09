@@ -43,7 +43,7 @@ export class BusinessesPage implements OnInit {
         });
         this.placesService.getAll().then(async (success: ApiResponse) => {
                 if (success.passed) {
-                    this.registers = await success.response.filter(place => place.status !== this.STATUS.INCOMPLETE);
+                    this.registers = await success.response;
                     this.loading = false;
                     this.error = false;
                 } else {
@@ -61,16 +61,9 @@ export class BusinessesPage implements OnInit {
         }
     }
 
-    showDetails(place: Place) {
-        if (place.status === this.STATUS.INCOMPLETE || place.status === this.STATUS.WAITING) {
-            this.indexOfPlaceToEdit = this.registers.indexOf(place);
-            this.storageInstance.placeToEdit = Object.assign({}, place);
-            this.router.navigate(['/app/business-details']).then();
-            return;
-        }
-        if (place.status === this.STATUS.ACCEPTED || place.status === this.STATUS.VERIFIED) {
-            this.storageInstance.placeToShow = place;
-            this.router.navigate(['/app/shop']).then();
-        }
+    filterRegisters(status: string): number {
+        let total;
+        total = this.registers.filter(place => place.status === status);
+        return total.length;
     }
 }

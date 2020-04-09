@@ -5,13 +5,11 @@
 .text-gray {
     color: #A0AEC0;
 }
-.flex-direction-column{
-    flex-direction: column;
-}
 
 .card-place {
     background: #2D3748;
     border-radius: 3px;
+    padding: 10px;
 
     ion-card-subtitle {
         font-size: 12px;
@@ -20,13 +18,13 @@
     }
 
     ion-card-content {
-        padding: 0 10px 5px 10px;
         font-size: 12px;
         color: #A0AEC0;
 
         ion-col {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: start;
         }
 
         ion-avatar {
@@ -44,53 +42,29 @@
     }
 }
 
-ion-card-header {
-    padding: 10px 10px 0;
-
-    ion-card-title {
-        font-size: 32px;
-        font-weight: normal;
-        color: #FFF;
-    }
-}
-
 /* *****STATUS CARDS***** */
-span.status--verified {
-    color: #68D391;
-}
-ion-text.status--verified {
-    color: #FFFFFF;
+.status{
+    position: relative;
+    top: 2px;
 
-    &:before {
-        content: "+";
+    &--verified {
+        color: #68D391;
     }
-}
-
-.status--accepted {
-    color: #FBD38D;
-}
-
-.status--waiting {
-    color: #999;
-}
-
-.status--rejected {
-    color: #E53E3E;
-}
-
-span.status--transfer {
-    color: #63B3ED;
-}
-ion-text.status--transfer {
-    color: #FFFFFF;
-
-    &:before {
-        content: "-";
+    &--accepted {
+        color: #FBD38D;
     }
-}
-
-.status--incomplete{
-    color: #ffbe25;
+    &--waiting {
+        color: #999;
+    }
+    &--rejected {
+        color: #E53E3E;
+    }
+    &--transfer {
+        color: #63B3ED;
+    }
+    &--incomplete{
+        color: #ffbe25;
+    }
 }
 
 

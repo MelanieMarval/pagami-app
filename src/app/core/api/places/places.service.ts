@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
@@ -56,7 +56,7 @@ export class PlacesService {
 
     async changeStatus(id: string, status: string, reason?: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.put(`${this.URL}/${id}/status/${status}`, { reason }, options);
+        const request = this.httpClient.put(`${this.URL}/${id}/status/${status}`, {reason}, options);
         return this.apiService.serverListener(request);
     }
 
@@ -70,5 +70,11 @@ export class PlacesService {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/nearby/search`, options);
         return this.apiService.serverListener(request);
+    }
+
+    async getPlaceByGeocode(lat: number, lng: number): Promise<any> {
+        // tslint:disable-next-line:max-line-length
+        const request = this.httpClient.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s`);
+        return request.toPromise();
     }
 }

@@ -41,23 +41,34 @@ export class ActivityPage implements OnInit {
                 this.verifyItemUpdated();
             }
         });
+        this.getRegisters();
+    }
+
+    getRegisters() {
+        this.loading = true;
         this.placesService.myRegisters().then(async (success: ApiResponse) => {
-                if (success.passed) {
-                    this.registers = await success.response.filter(place => place.status);
-                    this.loading = false;
-                    this.error = false;
-                } else {
-                    this.loading = false;
-                    this.error = true;
-                }
-            });
+            if (success.passed) {
+                this.registers = await success.response.filter(place => place.status);
+                this.loading = false;
+                this.error = false;
+            } else {
+                this.loading = false;
+                this.error = true;
+            }
+        });
     }
 
     verifyItemUpdated() {
-        if (this.storageInstance.placeEdited && isNumber(this.indexOfPlaceToEdit)) {
-            this.registers[this.indexOfPlaceToEdit] = this.storageInstance.placeEdited;
+        if (this.storageInstance.placeEdited) {
+            if (this.registers.filter(place => place.id === this.storageInstance.placeEdited.id).length === 0) {
+                this.getRegisters();
+            } else {
+                if (isNumber(this.indexOfPlaceToEdit)) {
+                    this.registers[this.indexOfPlaceToEdit] = this.storageInstance.placeEdited;
+                    this.indexOfPlaceToEdit = undefined;
+                }
+            }
             this.storageInstance.placeEdited = undefined;
-            this.indexOfPlaceToEdit = undefined;
         }
     }
 

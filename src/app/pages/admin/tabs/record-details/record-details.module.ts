@@ -4,6 +4,7 @@ import {IonicModule} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {RecordDetailsRoutingModule} from './record-details-routing.module';
 import { RecordDetailsPage } from './record-details';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 
 
@@ -12,7 +13,8 @@ import { RecordDetailsPage } from './record-details';
         CommonModule,
         IonicModule,
         HttpClientModule,
-        RecordDetailsRoutingModule
+        RecordDetailsRoutingModule,
+        PipesModule
     ],
     declarations: [
         RecordDetailsPage,

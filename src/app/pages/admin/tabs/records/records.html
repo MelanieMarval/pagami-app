@@ -20,10 +20,10 @@
                         <ion-col size="11">
                             <ion-card-subtitle>
                                 {{ record.createTime | date:'d/M/y'}} · {{ record.createTime | date:'shortTime'}} ·
-                                <span>{{record.location}}</span>
+                                <span>{{record.location.country}}</span>
                             </ion-card-subtitle>
                         </ion-col>
-                        <ion-col size="1">
+                        <ion-col size="1" class="padding-icon-link">
                             <ion-icon name="arrow-forward" color="light" style="font-size: 20px"></ion-icon>
                         </ion-col>
                     </ion-row>
@@ -36,10 +36,8 @@
                                 <ion-img [src]="placeThumbnailPhoto(record)"></ion-img>
                             </ion-avatar>
                         </ion-col>
-                        <ion-col size="8">
+                        <ion-col size="10">
                             <ion-card-title>{{record.name | capitalize}}</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
                         </ion-col>
                     </ion-row>
                 </ion-card-content>
@@ -79,7 +77,14 @@
                 </ion-card-content>
             </ion-card>
         </ion-item-group>
-
     </ion-list>
+
+    <div *ngIf="!showNotification && !loading && !error" class="no-registers animated fast fadeIn">
+        <ion-img src="assets/img/registers-no-registers.png"></ion-img>
+        <ion-text>
+            Todo listo <br>
+            <span>No hay nada en registros</span>
+        </ion-text>
+    </div>
 
 </ion-content>

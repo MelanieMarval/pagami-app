@@ -7,7 +7,15 @@ export interface Place {
     photoUrl?: string;
     name?: string;
     icon?: string;
-    location?: string;
+    location?: {
+        address?: string        // escrito por el usuario
+        addressLine?: string,   // extraido de google
+        postalCode?: string,
+        acronym?: string,
+        country?: string,
+        state?: string,
+        city?: string,
+    };
     phone?: string;
     samePhone?: boolean;
     whatsapp?: string;

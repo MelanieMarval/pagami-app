@@ -23,9 +23,9 @@
 
     <form (ngSubmit)="validateForm()">
         <ion-list class="inputs-container">
-            <ion-item #itemLocation color="pagami-surface" class="item-search">
+            <ion-item #itemLocation color="pagami-surface" class="item-search" *ngIf="place.location">
                 <ion-label position="floating">Dirección</ion-label>
-                <ion-input type="text" required name="location" [(ngModel)]="place.location"></ion-input>
+                <ion-input type="text" required name="location" [(ngModel)]="place.location.address"></ion-input>
                 <ion-icon src="assets/icon/locate-checkmark.svg" slot="start"></ion-icon>
             </ion-item>
         </ion-list>

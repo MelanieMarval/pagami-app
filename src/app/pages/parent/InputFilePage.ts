@@ -10,6 +10,7 @@ export class InputFilePage implements AfterViewInit {
     protected googleMaps: any;
     protected autocompleteService: any;
     // protected geocoder: any;
+    protected geocode: any;
     protected places: any[] = [];
 
     protected fileData: any;
@@ -23,6 +24,17 @@ export class InputFilePage implements AfterViewInit {
         this.autocompleteService = new this.googleMaps.places.AutocompleteService();
         // this.geocoder = new this.googleMaps.Geocoder();
     }
+
+    // getPlaceByCoords(lat: number, lng: number) {
+    //     this.geocode = new this.googleMaps.Geocoder();
+    //     const position: any = {
+    //         lat,
+    //         lng
+    //     };
+    //     this.geocode.geocode({location: position}, (results, status) => {
+    //         console.log(results);
+    //     });
+    // }
 
     searchPlace(e, scroll = false) {
         if (e.value.length > 0) {

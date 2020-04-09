@@ -50,10 +50,12 @@ ion-col.md {
             }
 
         }
-        .info-rating {
-            font-size: 12px;
-            --background: transparent;
-            height: 40px;
+        .info-country {
+            display: block;
+            padding: 10px 17px;
+            font-family: 'Quicksand', 'Roboto', sans-serif;
+            font-size: 14px;
+            color: white;
         }
 
     }

@@ -13,6 +13,14 @@ export class IntentProvider {
     private _placeToAccept: Place;
     private _returnPlaceToAccept: Place;
 
+    get placeToEdit(): Place {
+        return this._placeToEdit;
+    }
+
+    set placeToEdit(value: Place) {
+        this._placeToEdit = value;
+    }
+
     get placeEdited(): Place {
         return this._placeEdited;
     }
@@ -21,13 +29,6 @@ export class IntentProvider {
         this._placeEdited = value;
     }
 
-    get placeToEdit(): Place {
-        return this._placeToEdit;
-    }
-
-    set placeToEdit(value: Place) {
-        this._placeToEdit = value;
-    }
 
     get placeToShow(): Place {
         return this._placeToShow;
@@ -38,6 +39,13 @@ export class IntentProvider {
     }
 
     // Admin
+    get returnPlaceToAccept(): Place {
+        return this._returnPlaceToAccept;
+    }
+
+    set returnPlaceToAccept(value: Place) {
+        this._returnPlaceToAccept = value;
+    }
     get placeToAccept(): Place {
         return this._placeToAccept;
     }
@@ -46,13 +54,6 @@ export class IntentProvider {
         this._placeToAccept = value;
     }
 
-    get returnPlaceToAccept(): Place {
-        return this._returnPlaceToAccept;
-    }
-
-    set returnPlaceToAccept(value: Place) {
-        this._returnPlaceToAccept = value;
-    }
 
 
 }

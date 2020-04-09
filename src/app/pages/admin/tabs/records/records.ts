@@ -21,7 +21,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
 
     loading = true;
     error = false;
-    showNotification = true;
+    showNotification = false;
     records: Place[];
     STATUS = PLACES.STATUS;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
@@ -39,6 +39,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
             this.loading = false;
             if (success.passed) {
                 this.records = success.response;
+                this.showNotification = this.records.length !== 0;
                 this.error = false;
             } else {
                 this.error = true;
