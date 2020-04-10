@@ -2,52 +2,91 @@
 <ion-content>
 
     <ion-list>
+        <ion-item-group *ngIf="!loading">
+            <ion-card class="ion-margin-bottom" color="pagami-surface">
+                <ion-card-content>
+                    <ion-row>
+                        <ion-col size="5">
+                            <ion-text class="text-gray">Registrados</ion-text>
+                            <p *ngIf="users">{{users.length}}</p>
+                        </ion-col>
+                        <ion-col size="7">
+                            <ion-text class="text-gray">Cuentas Eliminadas</ion-text>
+                            <p>{{'2'}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
 
-        <ion-card class="ion-margin-bottom" color="pagami-surface">
-            <ion-card-content>
-                <ion-row>
-                    <ion-col size="5">
-                        <ion-text class="text-gray">Registrados</ion-text>
-                        <p>{{users.length}}</p>
-                    </ion-col>
-                    <ion-col size="7">
-                        <ion-text class="text-gray">Cuentas Eliminadas</ion-text>
-                        <p>{{'8'}}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-card-content>
-        </ion-card>
+            <ion-card class="card-admin-3rows"
+                        *ngFor="let user of users"
+                        button (click)="goToProfileUser(user)">
+                <ion-card-content class="ion-no-padding">
+                    <ion-row>
+                        <ion-col size="2" class="ion-justify-content-center">
+                            <ion-avatar class="border-white-1px">
+                                <ion-img [src]="user.photoUrl | noImage"></ion-img>
+                            </ion-avatar>
+                        </ion-col>
+                        <ion-col size="10" class="">
+                            <ion-card-subtitle>
+                                {{user.location.country | uppercase}}
+                            </ion-card-subtitle>
+                            <ion-card-title>
+                                {{user.name | capitalize}}
+    <!--                            <span [ngSwitch]="user.status">-->
+    <!--                                <ion-icon *ngSwitchCase="STATUS.VERIFIED" name="shield-checkmark" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
+    <!--                                <ion-icon *ngSwitchCase="STATUS.REJECTED" name="close-circle" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
+    <!--                                <ion-icon *ngSwitchCase="STATUS.ACCEPTED" name="time-outline" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
+    <!--                            </span>-->
+                            </ion-card-title>
+                            <ion-card-subtitle>
+                                Se unio el {{ user.createTime | date:'d MMMM'}} de {{ user.createTime | date:'y'}}
+                            </ion-card-subtitle>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+        </ion-item-group>
 
-        <ion-card class="card-admin-3rows"
-                  *ngFor="let user of users">
-            <ion-card-content class="ion-no-padding">
-                <ion-row>
-                    <ion-col size="2" class="ion-justify-content-center">
-                        <ion-avatar class="border-white-1px">
-                            <ion-img [src]="user.photoUrl | noImage"></ion-img>
-                        </ion-avatar>
-                    </ion-col>
-                    <ion-col size="10" class="">
-                        <ion-card-subtitle>
-                            {{user.location | uppercase}}
-                        </ion-card-subtitle>
-                        <ion-card-title>
-                            {{user.name | capitalize}}
-<!--                            <span [ngSwitch]="user.status">-->
-<!--                                <ion-icon *ngSwitchCase="STATUS.VERIFIED" name="shield-checkmark" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
-<!--                                <ion-icon *ngSwitchCase="STATUS.REJECTED" name="close-circle" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
-<!--                                <ion-icon *ngSwitchCase="STATUS.ACCEPTED" name="time-outline" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
-<!--                            </span>-->
-                        </ion-card-title>
-                        <ion-card-subtitle>
-                            Se unio el {{ user.createTime | date:'d MMMM'}} de {{ user.createTime | date:'y'}}
-                        </ion-card-subtitle>
-                    </ion-col>
-                </ion-row>
-            </ion-card-content>
-        </ion-card>
-
-
+        <ion-item-group *ngIf="loading">
+            <ion-card class="ion-margin-bottom" color="pagami-surface">
+                <ion-card-content>
+                    <ion-row>
+                        <ion-col size="5">
+                            <ion-skeleton-text style="width: 65%"></ion-skeleton-text>
+                            <ion-skeleton-text style="width: 50%"></ion-skeleton-text>
+                        </ion-col>
+                        <ion-col size="7">
+                            <ion-skeleton-text style="width: 70%"></ion-skeleton-text>
+                            <ion-skeleton-text style="width: 30%"></ion-skeleton-text>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+            <ion-card class="card-admin-3rows" *ngFor="let dummy of ' '.repeat(5).split('')">
+                <ion-card-content class="ion-no-padding">
+                    <ion-row>
+                        <ion-col size="2" class="ion-justify-content-center">
+                            <ion-avatar class="border-white-1px">
+                                <ion-skeleton-text></ion-skeleton-text>
+                            </ion-avatar>
+                        </ion-col>
+                        <ion-col size="10" class="">
+                            <ion-card-subtitle style="width: 30%">
+                                <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-card-subtitle>
+                            <ion-card-title style="width: 60%">
+                                <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-card-title>
+                            <ion-card-subtitle style="width: 70%">
+                                <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-card-subtitle>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+        </ion-item-group>
 
     </ion-list>
 

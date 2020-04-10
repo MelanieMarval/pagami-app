@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
+import { User } from '../core/api/users/user';
 
 
 @Injectable({
@@ -10,8 +11,11 @@ export class IntentProvider {
     private _placeToEdit: Place;
     private _placeEdited: Place;
     private _placeToShow: Place;
+
+    // Admin
     private _placeToAccept: Place;
     private _returnPlaceToAccept: Place;
+    private _userToEdit: User;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -46,6 +50,7 @@ export class IntentProvider {
     set returnPlaceToAccept(value: Place) {
         this._returnPlaceToAccept = value;
     }
+
     get placeToAccept(): Place {
         return this._placeToAccept;
     }
@@ -54,6 +59,11 @@ export class IntentProvider {
         this._placeToAccept = value;
     }
 
+    get userToEdit(): User {
+        return this._userToEdit;
+    }
 
-
+    set userToEdit(value: User) {
+        this._userToEdit = value;
+    }
 }

@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/admin/tabs/users"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Perfil</ion-title>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="updating"></ion-progress-bar>
+</div>
+
+<ion-content>
+
+    <ion-list>
+        <ion-item-group class="profile--section-1">
+            <ion-avatar class="border-white-1px">
+                <ion-img [src]="user.photoUrl"></ion-img>
+            </ion-avatar>
+            <ion-text class="text-join">Se unio el {{user.createTime | date:'d'}} de {{user.createTime | date:'MMMM y'}}</ion-text>
+            <h3>456 Empresas registradas</h3>
+        </ion-item-group>
+
+        <ion-list lines="none" class="inputs-container">
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Telefono</ion-label>
+                <ion-input type="tel" [(ngModel)]="user.phone" readonly></ion-input>
+                <ion-icon src="assets/icon/call.svg" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Correo electronico</ion-label>
+                <ion-input type="email" [(ngModel)]="user.email" readonly></ion-input>
+                <ion-icon src="assets/icon/alternate-email.svg" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Ubicacion</ion-label>
+                <ion-input type="text" [(ngModel)]="user.location.address" readonly></ion-input>
+                <ion-icon src="assets/icon/locate-checkmark.svg" slot="start"></ion-icon>
+            </ion-item>
+        </ion-list>
+    </ion-list>
+
+    <div class="footer-button" >
+<!--        <ion-button class="button-large" expand="block" color="danger" [disabled]="updating" (click)="deleteAccountConfirm()">Eliminar Cuenta</ion-button>-->
+    </div>
+</ion-content>

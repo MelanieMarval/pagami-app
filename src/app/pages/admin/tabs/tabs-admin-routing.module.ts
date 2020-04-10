@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsAdmin } from './tabs-admin';
+import { UserProfilePage } from './user-profile/user-profile';
 
 const routes: Routes = [
     {
@@ -34,6 +35,10 @@ const routes: Routes = [
                 pathMatch: 'full'
             }
         ],
+    },
+    {
+        path: 'users/profile',
+        component: UserProfilePage
     }
 ];
 
