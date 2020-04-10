@@ -23,13 +23,13 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /* Animaciones */
-@import "assets/css/animated.min.css";
+@import "assets/css/animated.min";
 
 /* Headers and Toolbars */
-@import "assets/css/headers-toolbars.scss";
+@import "assets/css/headers-toolbars";
 
 /* Inputs and forms */
-@import "assets/css/inputs.scss";
+@import "assets/css/inputs";
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button {
@@ -143,7 +143,7 @@
         ion-col {
             display: flex;
             flex-direction: column;
-            align-items: start;
+            align-items: flex-start;
         }
 
         ion-avatar {
