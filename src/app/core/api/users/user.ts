@@ -4,7 +4,10 @@ export interface User {
     photoUrl?: string;
     email?: string;
     phone?: string;
-    location?: string;
+    location?: {
+        country?: string;
+        address?: string;
+    };
     notifications?: boolean;
     fillOrders?: boolean;
     terms?: boolean;

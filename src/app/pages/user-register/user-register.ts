@@ -39,11 +39,17 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
 
     ngOnInit() {
         this.storageService.getUserUnregistered()
-            .then(user => user ? this.user = user : '');
+            .then(user => {
+                if (user) {
+                    this.user = user;
+                    this.user.location = {};
+                }
+            });
     }
 
     async setPlace(place) {
-        this.user.location = await place;
+        this.user.location.address = await place.description;
+        this.user.location.country = await place.terms.slice(-1)[0].value;
         this.places = [];
     }
 
@@ -99,6 +105,7 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
             .then(async response => {
                 if (response.passed === true) {
                     await this.storageService.setPagamiUser(response.response);
+                    await this.storageService.setLogged(true);
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
                     this.saving = false;
                     await this.route.navigate(['/app/tabs/map']);
