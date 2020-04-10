@@ -36,9 +36,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
             photoUrl: 'assets/img/avatar-business.jpg',
             name: 'Tiendas D1',
             icon: '015-store',
-            location: {
-                address: 'Calle 30 & Autopista Sur, Itagüi, Antioquia'
-            },
+            location: { address: 'Calle 30 & Autopista Sur, Itagüi, Antioquia' },
             phone: '+574104804289',
             whatsapp: '+573104804289',
             website: 'adidas.com.co',
