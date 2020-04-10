@@ -24,5 +24,6 @@ export interface Place {
     status?: string;
     createTime?: string;
     lastUpdate?: string;
+    distance?: number; // in meters
     // TODO, add another elements from this model
 }

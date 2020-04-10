@@ -37,4 +37,14 @@ export class PlaceUtils {
                 return 'TIENDA';
         }
     }
+
+    static getMessageDistance(distance: number): string {
+        if (distance === 0) {
+           return `Esta aqui.`;
+        } else if (distance > 2000) {
+            return `A ${Math.trunc(distance / 1000)} kilometros de ti.`;
+        } else {
+            return `A ${distance} metros de ti.`;
+        }
+    }
 }
