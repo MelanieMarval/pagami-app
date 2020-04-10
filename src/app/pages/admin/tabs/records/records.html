@@ -1,7 +1,7 @@
 
 <ion-content>
 
-    <ion-list *ngIf="!loading && !error" class="ion-padding">
+    <ion-list *ngIf="!loading && !error && !empty" class="ion-padding">
 
         <ion-item-group class="ion-padding-vertical" *ngIf="showNotification">
             <ion-item button (click)="showNotification = false" detailIcon="" lines="none" color="pagami-surface" class="notification">
@@ -79,7 +79,7 @@
         </ion-item-group>
     </ion-list>
 
-    <div *ngIf="!showNotification && !loading && !error" class="no-registers animated fast fadeIn">
+    <div *ngIf="empty" class="no-registers animated fast fadeIn">
         <ion-img src="assets/img/registers-no-registers.png"></ion-img>
         <ion-text>
             Todo listo <br>

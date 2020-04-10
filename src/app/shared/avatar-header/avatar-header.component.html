@@ -1,6 +1,6 @@
 
 <a routerLink="/app/profile" [ngClass]="addClass ? 'position-avatar' : ''">
     <ion-avatar class="toolbar-avatar" slot="end">
-        <ion-img [src]="user.photoUrl | noImage" alt="Image of profile"></ion-img>
+        <ion-img [src]="userThumbnailPhoto(user)" alt="Image of profile"></ion-img>
     </ion-avatar>
 </a>

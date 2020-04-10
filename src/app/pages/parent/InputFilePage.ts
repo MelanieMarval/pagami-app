@@ -9,8 +9,6 @@ export class InputFilePage implements AfterViewInit {
 
     protected googleMaps: any;
     protected autocompleteService: any;
-    // protected geocoder: any;
-    protected geocode: any;
     protected places: any[] = [];
 
     protected fileData: any;
@@ -22,19 +20,7 @@ export class InputFilePage implements AfterViewInit {
     async ngAfterViewInit() {
         this.googleMaps = await this.geolocationService.getGoogleMaps();
         this.autocompleteService = new this.googleMaps.places.AutocompleteService();
-        // this.geocoder = new this.googleMaps.Geocoder();
     }
-
-    // getPlaceByCoords(lat: number, lng: number) {
-    //     this.geocode = new this.googleMaps.Geocoder();
-    //     const position: any = {
-    //         lat,
-    //         lng
-    //     };
-    //     this.geocode.geocode({location: position}, (results, status) => {
-    //         console.log(results);
-    //     });
-    // }
 
     searchPlace(e, scroll = false) {
         if (e.value.length > 0) {
@@ -48,16 +34,6 @@ export class InputFilePage implements AfterViewInit {
                         this.places = [];
                         predictions.forEach((prediction) => {
                             this.places.push(prediction);
-                            // this.geocoder.geocode({
-                            //         placeId: prediction.place_id
-                            //     // tslint:disable-next-line:no-shadowed-variable
-                            //     }, (responses, status) => {
-                            //         console.log(status);
-                            //         if (status === 'OK') {
-                            //             const lat = responses[0].geometry.location;
-                            //             console.log(lat);
-                            //         }
-                            //     });
                         });
                     }
                     if (scroll) {

@@ -9,7 +9,6 @@ import { ToastProvider } from '../../../../providers/toast.provider';
 import { StorageProvider } from '../../../../providers/storage.provider';
 import { IntentProvider } from '../../../../providers/intent.provider';
 // Utils
-import { isNumber } from 'util';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
 
@@ -26,7 +25,6 @@ export class BusinessesPage implements OnInit {
     STATUS = PLACES.STATUS;
     indexOfPlaceToEdit: number = undefined;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
-    placeMessageStatus = PlaceUtils.getMessageStatus;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageProvider,
@@ -41,20 +39,21 @@ export class BusinessesPage implements OnInit {
                 this.verifyItemUpdated();
             }
         });
-        this.placesService.getAll().then(async (success: ApiResponse) => {
+        this.placesService.getAllAvailable()
+            .then(async (success: ApiResponse) => {
+                this.loading = false;
                 if (success.passed) {
                     this.registers = await success.response;
-                    this.loading = false;
                     this.error = false;
                 } else {
-                    this.loading = false;
                     this.error = true;
+                    this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
                 }
             });
     }
 
     verifyItemUpdated() {
-        if (this.storageInstance.placeEdited && isNumber(this.indexOfPlaceToEdit)) {
+        if (this.storageInstance.placeEdited && Number(this.indexOfPlaceToEdit)) {
             this.registers[this.indexOfPlaceToEdit] = this.storageInstance.placeEdited;
             this.storageInstance.placeEdited = undefined;
             this.indexOfPlaceToEdit = undefined;
