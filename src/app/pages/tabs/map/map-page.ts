@@ -1,17 +1,17 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { GoogleMapPage } from '../../parent/GoogleMapPage';
-import { DOCUMENT } from '@angular/common';
-import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
-import { MapProvider } from '../../../providers/map.provider';
-import { GeolocationService } from '../../../core/geolocation/geolocation.service';
-import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
-import { Place } from '../../../core/api/places/place';
-import { PlacesService } from '../../../core/api/places/places.service';
-import { ToastProvider } from '../../../providers/toast.provider';
-import { StorageProvider } from '../../../providers/storage.provider';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponse } from '../../../core/api/api.response';
-import { IntentProvider } from '../../../providers/intent.provider';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {GoogleMapPage} from '../../parent/GoogleMapPage';
+import {DOCUMENT} from '@angular/common';
+import {DrawerState} from '../../../shared/ion-bottom-drawer/drawer-state';
+import {MapProvider} from '../../../providers/map.provider';
+import {GeolocationService} from '../../../core/geolocation/geolocation.service';
+import {PagamiGeo} from '../../../core/geolocation/pagami.geo';
+import {Place} from '../../../core/api/places/place';
+import {PlacesService} from '../../../core/api/places/places.service';
+import {ToastProvider} from '../../../providers/toast.provider';
+import {StorageProvider} from '../../../providers/storage.provider';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ApiResponse} from '../../../core/api/api.response';
+import {IntentProvider} from '../../../providers/intent.provider';
 
 @Component({
     selector: 'app-map-page',
@@ -40,6 +40,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     beforeSaveLocation = true;
     saving = false;
     placeToSave: any;
+    selectedPlace;
+    nearPlaces: Place[] = [];
 
     constructor(
         private router: Router,
@@ -77,7 +79,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     onClickPlace(place: Place) {
-        console.log(place);
+        this.selectedPlace = place;
         this.bottomDrawer.drawerState = DrawerState.Docked;
     }
 
@@ -134,10 +136,25 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (geo) {
             this.placesService.getNearby(geo.latitude, geo.longitude).then((success: ApiResponse) => {
                 if (success.passed) {
+                    this.setupPlacesToDrawer(success.response);
                     this.setupPlaces(success.response);
                 }
             });
         }
+    }
+
+    setupPlacesToDrawer(places: Place[]) {
+        places.forEach(place => {
+            const latlng = this.toLatLng(
+                place.latitude,
+                place.longitude
+            );
+            place.distance = this.calculateDistance(
+                this.currentPositionMarker.getPosition(),
+                latlng
+            );
+        });
+        this.nearPlaces = places;
     }
 
     onDrawerPositionChange(position: number) {

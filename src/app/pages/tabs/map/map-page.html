@@ -60,7 +60,7 @@
                    (drawerPositionChange)="onDrawerPositionChange($event)" (disableScrollContent)="bottomDrawer.disableScrollContent = $event" class="nearby-drawer">
     <div class="drawer-content nearby-expanded">
         <div [ngClass]="{'with-overflow-y': bottomDrawer.showBackToolbar && bottomDrawer.contentPosition > 0 && bottomDrawer.drawerState == 2 && !bottomDrawer.disableScrollContent}">
-            <app-nearby [drawerState]="bottomDrawer.drawerState"></app-nearby>
+            <app-nearby [drawerState]="bottomDrawer.drawerState" [selectedPlace]="selectedPlace" [nearPlaces]="nearPlaces"></app-nearby>
         </div>
     </div>
 </ion-bottom-drawer>
