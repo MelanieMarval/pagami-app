@@ -19,7 +19,7 @@ export class ShopPage implements OnInit {
         id: 'nkjhniohnil4',
         lastUpdate: '54545',
         latitude: 0,
-        location: 'Ubicado en un lugar del mundo',
+        location: { address: 'Ubicado en un lugar del mundo'},
         longitude: 0,
         name: 'Una Tienda',
         phone: '04154545445',

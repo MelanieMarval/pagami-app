@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { Place } from './place';
 import { ApiResponse } from '../api.response';
@@ -66,8 +66,9 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
-    async getNearby(): Promise<ApiResponse> {
+    async getNearby(lat: number, lng: number): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
+        options.params = new HttpParams().set('latitude', String(lat)).set('longitude', String(lng));
         const request = this.httpClient.get(`${this.URL}/nearby/search`, options);
         return this.apiService.serverListener(request);
     }

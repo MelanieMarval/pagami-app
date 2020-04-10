@@ -74,11 +74,6 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             this.map.panTo(this.currentPositionMarker.getPosition());
             this.map.setZoom(20);
         });
-        this.placesService.getNearby().then((success: ApiResponse) => {
-            if (success.passed) {
-                this.setupPlaces(success.response);
-            }
-        });
     }
 
     onClickPlace(place: Place) {
@@ -134,7 +129,15 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         /**
          * set center and marker position
          */
-        this.onCurrentPositionChanged(await this.geolocationService.getCurrentLocation());
+        const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
+        this.onCurrentPositionChanged(geo);
+        if (geo) {
+            this.placesService.getNearby(geo.latitude, geo.longitude).then((success: ApiResponse) => {
+                if (success.passed) {
+                    this.setupPlaces(success.response);
+                }
+            });
+        }
     }
 
     onDrawerPositionChange(position: number) {
