@@ -1,15 +1,18 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonContent, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { User } from '../../core/api/users/user';
+import { InputFilePage } from '../parent/InputFilePage';
+import { FireStorage } from '../../core/fire-storage/fire.storage';
 
 // Services
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
-import { StorageProvider } from '../../providers/storage.provider';
-import { User } from '../../core/api/users/user';
 import { AuthService } from '../../core/api/auth/auth.service';
-import { ToastProvider } from '../../providers/toast.provider';
-import { InputFilePage } from '../parent/InputFilePage';
 import { ValidationUtils } from '../../utils/validation.utils';
+
+// Providers
+import { ToastProvider } from '../../providers/toast.provider';
+import { StorageProvider } from '../../providers/storage.provider';
+
 
 @Component({
     selector: 'app-user-register',
@@ -29,7 +32,8 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
                 private authService: AuthService,
                 private toast: ToastProvider,
                 protected geolocationService: GeolocationService,
-                private route: Router) {
+                private route: Router,
+                private fireStorage: FireStorage) {
         super(geolocationService);
     }
 
@@ -39,14 +43,12 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
     }
 
     async setPlace(place) {
-        console.log('-> place', place);
         this.user.location = await place;
         this.places = [];
     }
 
-    registerUser() {
+    async registerUser() {
         const user = this.user;
-        console.log('-> user', user);
         if (!user.location || !user.phone) {
             return this.toast.messageErrorWithoutTabs('No puede dejar datos vacios');
         }
@@ -63,6 +65,36 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
         user.fillOrders = true;
         user.notifications = true;
 
+        await this.getBase64Image(user.photoUrl, async (base64image) => {
+            const success = await this.fireStorage.saveProfileImage(base64image);
+            if (success) {
+                this.user.photoUrl = success;
+                this.addUser(this.user);
+            } else {
+                this.saving = false;
+                this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
+                return;
+            }
+        });
+    }
+
+    getBase64Image(URL, callback) {
+        let img;
+        img = new Image();
+        img.onload = (() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(callback, 'image/png');
+
+        });
+        img.setAttribute('crossOrigin', 'anonymous'); //
+        img.src = URL;
+    }
+
+    private addUser(user: User) {
         this.authService.create(user)
             .then(async response => {
                 if (response.passed === true) {
@@ -72,9 +104,8 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
                     await this.route.navigate(['/app/tabs/map']);
                 } else {
                     this.saving = false;
-                    return this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
+                    this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
                 }
             });
     }
-
 }

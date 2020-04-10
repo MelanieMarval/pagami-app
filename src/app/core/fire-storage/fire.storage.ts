@@ -31,11 +31,13 @@ export class FireStorage {
                             resolve(next);
                         }, error => {
                             resolve(undefined);
+                            console.log(error);
                         });
                     })
                 ).subscribe();
             } catch (e) {
                 resolve(undefined);
+                console.log(e);
             }
         });
     }

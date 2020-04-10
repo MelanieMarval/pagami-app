@@ -3,373 +3,53 @@
 
     <ion-list>
 
-        <ion-item-group>
-            <ion-card class="card-money">
-                <ion-card-header>
-                    <ion-card-title>$ 6.00</ion-card-title>
-                </ion-card-header>
+        <ion-card class="ion-margin-bottom" color="pagami-surface">
+            <ion-card-content>
+                <ion-row>
+                    <ion-col size="5">
+                        <ion-text class="text-gray">Registrados</ion-text>
+                        <p>{{'500'}}</p>
+                    </ion-col>
+                    <ion-col size="7">
+                        <ion-text class="text-gray">Cuentas Eliminadas</ion-text>
+                        <p>{{'8'}}</p>
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+        </ion-card>
 
-                <ion-card-content>
-                    Disponible
-                </ion-card-content>
-            </ion-card>
-        </ion-item-group>
+        <ion-card class="card-admin-3rows"
+                  *ngFor="let user of users">
+            <ion-card-content class="ion-no-padding">
+                <ion-row>
+                    <ion-col size="2" class="ion-justify-content-center">
+                        <ion-avatar class="border-white-1px">
+                            <ion-img [src]="user.photoUrl"></ion-img>
+                        </ion-avatar>
+                    </ion-col>
+                    <ion-col size="10" class="">
+                        <ion-card-subtitle>
+                            {{user.location | uppercase}}
+                        </ion-card-subtitle>
+                        <ion-card-title>
+                            {{user.name | capitalize}}
+<!--                            <span [ngSwitch]="user.status">-->
+<!--                                <ion-icon *ngSwitchCase="STATUS.VERIFIED" name="shield-checkmark" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
+<!--                                <ion-icon *ngSwitchCase="STATUS.REJECTED" name="close-circle" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
+<!--                                <ion-icon *ngSwitchCase="STATUS.ACCEPTED" name="time-outline" [classList]="['status status&#45;&#45;'+user.status | lowercase]"></ion-icon>-->
+<!--                            </span>-->
+                        </ion-card-title>
+                        <ion-card-subtitle>
+                            Se unio el {{ user.createTime | date:'d MMMM'}} de {{ user.createTime | date:'y'}}
+                        </ion-card-subtitle>
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+        </ion-card>
 
-        <ion-item-group>
-            <ion-item button routerLink="/app/tabs/wallet/activity" detailIcon="" lines="none" class="item-activity">
-                <ion-icon slot="end" name="arrow-forward"></ion-icon>
-                <ion-label>Actividad</ion-label>
-            </ion-item>
-        </ion-item-group>
 
-
-        <ion-item-group>
-            <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(2).split('')">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--verified">Verificado</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                              <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>White Sugar</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--verified">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--wait-verification">En espera de verificación</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Think Coffee</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--wait-verification">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--rejected">Rechazado</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>
-                                <ion-text>
-                                    <h5>En mi Casita</h5>
-                                </ion-text>
-                            </ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--rejected">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <img src="assets/img/avatar-business.jpg">
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-        </ion-item-group>
 
     </ion-list>
 
 </ion-content>
 
-<ion-footer class="footer-button">
-    <ion-row>
-        <ion-col size="6">
-            <ion-button class="button-small" expand="block" color="pagami-surface">Transferencia</ion-button>
-        </ion-col>
-        <ion-col size="6">
-            <ion-button class="button-small" expand="block">Retirar Dinero</ion-button>
-        </ion-col>
-    </ion-row>
-</ion-footer>

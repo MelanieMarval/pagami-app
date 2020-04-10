@@ -21,6 +21,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
 
     loading = true;
     error = false;
+    empty = false;
     showNotification = false;
     records: Place[];
     STATUS = PLACES.STATUS;
@@ -40,9 +41,11 @@ export class RecordsPage implements OnInit, AfterViewChecked {
             if (success.passed) {
                 this.records = success.response;
                 this.showNotification = this.records.length !== 0;
+                this.empty = this.records.length === 0;
                 this.error = false;
             } else {
                 this.error = true;
+                this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
             }
         });
     }
