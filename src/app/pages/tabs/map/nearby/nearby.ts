@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Place} from '../../../../core/api/places/place';
-import {PLACES} from '../../../../utils/Const';
-import {PlaceUtils} from '../../../../utils/place.utils';
+import { Component, Input, OnInit } from '@angular/core';
+import { Place } from '../../../../core/api/places/place';
+import { PLACES } from '../../../../utils/Const';
+import { PlaceUtils } from '../../../../utils/place.utils';
 
 @Component({
     selector: 'app-nearby',
@@ -23,5 +23,4 @@ export class NearbyPage implements OnInit {
 
     ngOnInit() {
     }
-
 }

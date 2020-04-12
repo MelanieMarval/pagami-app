@@ -1,6 +1,6 @@
-export interface PlaceFilterDto {
+export interface PlaceFilter {
     latitude: number;
     longitude: number;
     radius: number; // kilometers
-    placeType: string;
+    placeType?: string;
 }

@@ -1,17 +1,18 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {GoogleMapPage} from '../../parent/GoogleMapPage';
-import {DOCUMENT} from '@angular/common';
-import {DrawerState} from '../../../shared/ion-bottom-drawer/drawer-state';
-import {MapProvider} from '../../../providers/map.provider';
-import {GeolocationService} from '../../../core/geolocation/geolocation.service';
-import {PagamiGeo} from '../../../core/geolocation/pagami.geo';
-import {Place} from '../../../core/api/places/place';
-import {PlacesService} from '../../../core/api/places/places.service';
-import {ToastProvider} from '../../../providers/toast.provider';
-import {StorageProvider} from '../../../providers/storage.provider';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ApiResponse} from '../../../core/api/api.response';
-import {IntentProvider} from '../../../providers/intent.provider';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { GoogleMapPage } from '../../parent/GoogleMapPage';
+import { DOCUMENT } from '@angular/common';
+import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
+import { MapProvider } from '../../../providers/map.provider';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
+import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { Place } from '../../../core/api/places/place';
+import { PlacesService } from '../../../core/api/places/places.service';
+import { ToastProvider } from '../../../providers/toast.provider';
+import { StorageProvider } from '../../../providers/storage.provider';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiResponse } from '../../../core/api/api.response';
+import { IntentProvider } from '../../../providers/intent.provider';
+import { PlaceFilter } from '../../../core/api/places/place.filter';
 
 @Component({
     selector: 'app-map-page',
@@ -42,6 +43,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     placeToSave: any;
     selectedPlace;
     nearPlaces: Place[] = [];
+    isSearching = false;
 
     constructor(
         private router: Router,
@@ -60,8 +62,10 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     ngOnInit() {
         this.appService.showNearby.subscribe(() => {
             this.modeRegister = false;
+            console.log(this.router.url);
             if (this.bottomDrawer.drawerState === DrawerState.Bottom
-                || this.bottomDrawer.drawerState === DrawerState.Top) {
+                || this.bottomDrawer.drawerState === DrawerState.Top
+                || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {
                 this.bottomHeightChange.emit(108);
                 this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
                 this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
@@ -134,7 +138,12 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
         this.onCurrentPositionChanged(geo);
         if (geo) {
-            this.placesService.getNearby(geo.latitude, geo.longitude).then((success: ApiResponse) => {
+            const filter: PlaceFilter = {
+                latitude: geo.latitude,
+                longitude: geo.longitude,
+                radius: 1000
+            };
+            this.placesService.getNearby(filter).then((success: ApiResponse) => {
                 if (success.passed) {
                     this.setupPlacesToDrawer(success.response);
                     this.setupPlaces(success.response);
@@ -199,5 +208,16 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.beforeSaveLocation = true;
         this.placeToSave = undefined;
         this.saving = false;
+    }
+
+    onFocusSearch() {
+        this.bottomDrawer.drawerState = DrawerState.Top;
+        this.bottomDrawer.disableDrag = true;
+        this.isSearching = true;
+    }
+
+    onFocusExit() {
+        this.bottomDrawer.disableDrag = false;
+        this.isSearching = false;
     }
 }

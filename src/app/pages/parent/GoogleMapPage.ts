@@ -107,7 +107,7 @@ export class GoogleMapPage {
                 this.currentPositionMarker.setPosition(position);
             }
             if (this.currentPositionCircle) {
-                this.currentPositionCircle.setRadius(coords.accuracy);
+                this.currentPositionCircle.setRadius(/*coords.accuracy*/30);
                 this.currentPositionCircle.setCenter(position);
             }
         }
