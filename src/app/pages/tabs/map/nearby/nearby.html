@@ -31,7 +31,16 @@
         <ion-row *ngIf="selectedPlace">
             <ion-card button color="pagami-surface" class="card" routerLink="/app/shop">
                 <div class="card-img-contain">
-                    <ion-img [src]="selectedPlace.photoUrl" class="card-img"></ion-img>
+                    <ion-skeleton-text
+                        class="card-img-skeleton"
+                        [hidden]="selectedPlace.loaded"
+                        animated>
+                    </ion-skeleton-text>
+                    <ion-img
+                        [style.opacity]="selectedPlace.loaded ? 1 : 0"
+                        [src]="selectedPlace.photoUrl" class="card-img"
+                        (ionImgDidLoad)="selectedPlace.loaded = true">
+                    </ion-img>
                 </div>
                 <ion-card-header class="card-header">
                     <ion-card-subtitle class="card-subtitle">
@@ -48,10 +57,20 @@
                 </ion-card-header>
             </ion-card>
         </ion-row>
-            <ion-row *ngFor="let place of nearPlaces" [hidden]="selectedPlace && selectedPlace.id === place.id">
+            <ion-row *ngFor="let place of nearPlaces;" [hidden]="selectedPlace && selectedPlace.id === place.id">
                 <ion-card button color="pagami-surface" class="card" routerLink="/app/shop">
                     <div class="card-img-contain">
-                        <ion-img [src]="place.photoUrl" class="card-img"></ion-img>
+                        <ion-skeleton-text
+                            class="card-img-skeleton"
+                            [hidden]="place.loaded"
+                            animated>
+                        </ion-skeleton-text>
+                        <ion-img
+                            [style.opacity]="place.loaded ? 1 : 0"
+                            [src]="place.photoUrl"
+                            class="card-img"
+                            (ionImgDidLoad)="place.loaded = true">
+                        </ion-img>
                     </div>
                     <ion-card-header class="card-header">
                         <ion-card-subtitle class="card-subtitle">

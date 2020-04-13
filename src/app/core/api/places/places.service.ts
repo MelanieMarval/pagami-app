@@ -5,6 +5,7 @@ import { ApiService } from '../api.service';
 import { Place } from './place';
 import { ApiResponse } from '../api.response';
 import { PLACES } from '../../../utils/Const';
+import { PlaceFilter } from './place.filter';
 
 @Injectable({
     providedIn: 'root'
@@ -72,9 +73,9 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
-    async getNearby(lat: number, lng: number): Promise<ApiResponse> {
+    async getNearby(filter: any): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        options.params = new HttpParams().set('latitude', String(lat)).set('longitude', String(lng));
+        options.params = new HttpParams({ fromObject: filter });
         const request = this.httpClient.get(`${this.URL}/nearby/search`, options);
         return this.apiService.serverListener(request);
     }

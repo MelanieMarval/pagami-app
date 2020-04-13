@@ -20,6 +20,16 @@ import LatLng = google.maps.LatLng;
 // // @ts-ignore
 // import LatLng = google.maps.LatLng;
 
+const removeDefaultMarkers = [
+    {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [
+            { visibility: 'off' }
+        ]
+    }
+];
+
 export class GoogleMapPage {
 
     @ViewChild('mapCanvas', {static: true}) mapElement: ElementRef;
@@ -36,11 +46,11 @@ export class GoogleMapPage {
     ) {
     }
 
-    async loadMap(locked: boolean = false) {
+    async loadMap() {
         try {
             this.googleMaps = await this.geolocationService.getGoogleMaps();
             const mapEle = this.mapElement.nativeElement;
-            this.map = new this.googleMaps.Map(mapEle, locked ? this.getDefaultOptionsLocked() : this.getDefaultOptions());
+            this.map = new this.googleMaps.Map(mapEle, this.getDefaultOptions());
 
             this.googleMaps.event.addListenerOnce(this.map, 'idle', () => {
                 mapEle.classList.add('show-map');
@@ -107,7 +117,7 @@ export class GoogleMapPage {
                 this.currentPositionMarker.setPosition(position);
             }
             if (this.currentPositionCircle) {
-                this.currentPositionCircle.setRadius(coords.accuracy);
+                this.currentPositionCircle.setRadius(/*coords.accuracy*/30);
                 this.currentPositionCircle.setCenter(position);
             }
         }
@@ -167,7 +177,8 @@ export class GoogleMapPage {
             mapTypeControl: false,
             zoomControl: false,
             streetViewControl: false,
-            fullscreenControl: false
+            fullscreenControl: false,
+            styles: removeDefaultMarkers
         };
     }
 

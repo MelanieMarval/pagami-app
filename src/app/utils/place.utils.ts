@@ -44,7 +44,7 @@ export class PlaceUtils {
         } else if (distance > 2000) {
             return `A ${Math.trunc(distance / 1000)} kilometros de ti.`;
         } else {
-            return `A ${distance} metros de ti.`;
+            return `A ${Math.trunc(distance)} metros de ti.`;
         }
     }
 }
