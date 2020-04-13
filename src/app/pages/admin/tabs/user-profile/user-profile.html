@@ -40,7 +40,21 @@
         </ion-list>
     </ion-list>
 
-    <div class="footer-button" >
-<!--        <ion-button class="button-large" expand="block" color="danger" [disabled]="updating" (click)="deleteAccountConfirm()">Eliminar Cuenta</ion-button>-->
-    </div>
 </ion-content>
+
+<ion-footer class="footer-button">
+    <ion-row>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" color="pagami-surface"
+                        [disabled]="updating"
+                        (click)="showAlert('status')">
+                {{messages.status?.button}}</ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" color="pagami"
+                        [disabled]="updating || user.status === STATUS.DISABLED"
+                        (click)="showAlert('type')">
+                {{messages.type?.button}}</ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

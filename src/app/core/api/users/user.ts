@@ -1,4 +1,5 @@
 export interface User {
+    id?: string;
     name?: string;
     lastname?: string;
     photoUrl?: string;
@@ -11,7 +12,7 @@ export interface User {
     notifications?: boolean;
     fillOrders?: boolean;
     terms?: boolean;
-    state?: string;
+    status?: string;
     createTime?: string;
     lastUpdate?: string;
     type?: string;

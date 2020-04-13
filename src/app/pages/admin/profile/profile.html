@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/admin/tabs/activity"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Perfil</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="closeSessionConfirm()" [disabled]="updating">
+                <ion-icon name="log-in-outline" class="toolbar-icon"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="updating"></ion-progress-bar>
+</div>
+
+<ion-content>
+
+    <ion-list>
+        <ion-item-group class="profile--section-1">
+            <ion-avatar>
+                <ion-img [src]="'assets/icon/pagami_icon_256px.png'"></ion-img>
+            </ion-avatar>
+            <h2>{{user.name}} {{user.lastname}}</h2>
+            <ion-text class="text-join">Se unio el {{user.createTime | date:'d'}} de {{user.createTime | date:'MMMM y'}}</ion-text>
+        </ion-item-group>
+
+        <ion-item-group class="profile--section-3">
+            <ion-item lines="none">
+                <ion-label>Activar notificaciones</ion-label>
+                <ion-toggle slot="end" name="notifications" color="pagami" [disabled]="updating" [(ngModel)]="user.notifications" (ngModelChange)="updateUser()"></ion-toggle>
+            </ion-item>
+        </ion-item-group>
+
+    </ion-list>
+
+</ion-content>

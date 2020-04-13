@@ -31,7 +31,11 @@ const routes: Routes = [
             {
                 path: 'tabs',
                 loadChildren: () => import('./pages/admin/tabs/tabs-admin.module').then(m => m.TabsModule)
-            }
+            },
+            {
+                path: 'profile',
+                loadChildren: () => import('./pages/admin/profile/profile.module').then(m => m.ProfileModule)
+            },
         ]
     },
     {

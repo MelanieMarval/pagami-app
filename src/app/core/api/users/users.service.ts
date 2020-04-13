@@ -22,4 +22,16 @@ export class UsersService {
         return this.apiService.serverListener(request);
     }
 
+    async changeStatus(status: string, id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/status/${status}`, {}, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async changeType(type: string, id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/type/${type}`, {}, options);
+        return this.apiService.serverListener(request);
+    }
+
 }

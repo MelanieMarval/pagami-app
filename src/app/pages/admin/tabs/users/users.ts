@@ -3,6 +3,8 @@ import { User } from '../../../../core/api/users/user';
 import { UsersService } from '../../../../core/api/users/users.service';
 import { Router } from '@angular/router';
 import { IntentProvider } from '../../../../providers/intent.provider';
+import { USER } from '../../../../utils/Const';
+import { ToastProvider } from '../../../../providers/toast.provider';
 
 @Component({
     selector: 'app-admin-users',
@@ -11,12 +13,15 @@ import { IntentProvider } from '../../../../providers/intent.provider';
 })
 export class UsersPage implements OnInit {
 
-    users: User[];
     loading = true;
+    empty = false;
+    users: User[];
+    status = USER.STATUS;
 
     constructor(private userService: UsersService,
                 private intentProvider: IntentProvider,
-                private router: Router) {
+                private router: Router,
+                private toast: ToastProvider,) {
     }
 
     ngOnInit(): void {
@@ -25,7 +30,9 @@ export class UsersPage implements OnInit {
                 this.loading = false;
                 if (success.passed) {
                     this.users = success.response;
+                    this.empty = this.users.length === 0;
                 } else {
+                    this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 5000);
                 }
             });
     }
@@ -34,5 +41,11 @@ export class UsersPage implements OnInit {
         this.intentProvider.userToEdit = user;
         console.log(user);
         this.router.navigate(['admin/tabs/users/profile']);
+    }
+
+    filterUsers(status: string): number {
+        let total: User[];
+        total = this.users.filter(user => user.status === status);
+        return total.length;
     }
 }

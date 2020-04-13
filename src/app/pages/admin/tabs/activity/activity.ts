@@ -9,7 +9,6 @@ import { ToastProvider } from '../../../../providers/toast.provider';
 import { StorageProvider } from '../../../../providers/storage.provider';
 import { IntentProvider } from '../../../../providers/intent.provider';
 // Utils
-import { isNumber } from 'util';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
 
@@ -22,6 +21,7 @@ export class ActivityPage implements OnInit {
 
     loading = true;
     error = false;
+    empty = false;
     registers: Place[];
     STATUS = PLACES.STATUS;
     indexOfPlaceToEdit: number = undefined;
@@ -42,19 +42,20 @@ export class ActivityPage implements OnInit {
             }
         });
         this.placesService.myRegisters().then(async (success: ApiResponse) => {
+                this.loading = false;
                 if (success.passed) {
-                    this.registers = await success.response.filter(place => place.status);
-                    this.loading = false;
+                    this.registers = success.response;
                     this.error = false;
+                    this.empty = this.registers.length === 0;
                 } else {
-                    this.loading = false;
                     this.error = true;
+                    this.toast.messageErrorWithoutTabs('La informacion no se ha podido cargar. Intente de nuevo!', 5000);
                 }
             });
     }
 
     verifyItemUpdated() {
-        if (this.storageInstance.placeEdited && isNumber(this.indexOfPlaceToEdit)) {
+        if (this.storageInstance.placeEdited && Number(this.indexOfPlaceToEdit)) {
             this.registers[this.indexOfPlaceToEdit] = this.storageInstance.placeEdited;
             this.storageInstance.placeEdited = undefined;
             this.indexOfPlaceToEdit = undefined;
@@ -72,5 +73,9 @@ export class ActivityPage implements OnInit {
             this.storageInstance.placeToShow = place;
             this.router.navigate(['/app/shop']).then();
         }
+    }
+
+    goToProfile() {
+        this.router.navigate(['/admin/profile']);
     }
 }

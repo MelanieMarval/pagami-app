@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { RecordsPage } from './records';
 import { PipesModule } from '../../../../pipes/pipes.module';
 import { RecordDetailsModule } from '../record-details/record-details.module';
+import { BackgroundEmptyModule } from '../../../../shared/background-empty/background-empty.module';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { RecordDetailsModule } from '../record-details/record-details.module';
             {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)}
         ]),
         PipesModule,
+        BackgroundEmptyModule,
     ],
     declarations: [ RecordsPage ]
 })

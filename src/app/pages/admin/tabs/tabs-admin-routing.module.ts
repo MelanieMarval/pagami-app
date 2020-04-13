@@ -28,17 +28,17 @@ const routes: Routes = [
             {
                 path: 'users',
                 loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
-            },
-            {
-                path: '**',
-                redirectTo: 'activity',
-                pathMatch: 'full'
             }
         ],
     },
     {
         path: 'users/profile',
         component: UserProfilePage
+    },
+    {
+        path: '**',
+        redirectTo: 'activity',
+        pathMatch: 'full'
     }
 ];
 

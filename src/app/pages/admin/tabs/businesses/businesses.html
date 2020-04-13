@@ -2,7 +2,7 @@
 <ion-content>
 
     <ion-list>
-        <ion-item-group *ngIf="!loading && !error">
+        <ion-item-group *ngIf="!loading && !error && !empty">
 
             <ion-card class="ion-margin-bottom" color="pagami-surface">
                 <ion-card-content>
@@ -102,5 +102,8 @@
         </ion-item-group>
 
     </ion-list>
+
+    <app-background-empty *ngIf="empty" [title]="'Aun no hay registros'"
+                          [text]="'Cuando hayan empresas se veran aqui'"></app-background-empty>
 
 </ion-content>

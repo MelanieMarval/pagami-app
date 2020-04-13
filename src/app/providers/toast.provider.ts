@@ -9,12 +9,12 @@ export class ToastProvider {
     constructor(private toastController: ToastController) {
     }
 
-    async messageSuccessTop(message: string, duration = 2000) {
+    async messageSuccessBottom(message: string, duration = 2000) {
         const toast = await this.toastController.create({
             message,
             duration,
             color: 'pagami-surface',
-            position: 'top',
+            position: 'bottom',
         });
 
         await toast.present();

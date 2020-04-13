@@ -18,6 +18,11 @@ export const USER = {
     TYPE: {
         ADMIN: 'ADMIN',
         NORMAL: 'NORMAL'
+    },
+    STATUS: {
+        REGISTERED: 'REGISTERED',
+        ACTIVE: 'ACTIVE',
+        DISABLED: 'DISABLED'
     }
 };
 

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { UsersPage } from './users';
 import { PipesModule } from '../../../../pipes/pipes.module';
 import { UserProfilePage } from '../user-profile/user-profile';
+import { BackgroundEmptyModule } from '../../../../shared/background-empty/background-empty.module';
 
 @NgModule({
     imports: [
@@ -14,9 +15,10 @@ import { UserProfilePage } from '../user-profile/user-profile';
         CommonModule,
         FormsModule,
         RouterModule.forChild([
-            { path: '', component: UsersPage }
+            {path: '', component: UsersPage}
         ]),
-        PipesModule
+        PipesModule,
+        BackgroundEmptyModule
     ],
     declarations: [UsersPage, UserProfilePage]
 })

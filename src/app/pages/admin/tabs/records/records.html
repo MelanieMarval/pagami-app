@@ -79,12 +79,6 @@
         </ion-item-group>
     </ion-list>
 
-    <div *ngIf="empty" class="no-registers animated fast fadeIn">
-        <ion-img src="assets/img/registers-no-registers.png"></ion-img>
-        <ion-text>
-            Todo listo <br>
-            <span>No hay nada en registros</span>
-        </ion-text>
-    </div>
+    <app-background-empty *ngIf="empty" [title]="'Todo listo'" [text]="'No hay nada en registros'"></app-background-empty>
 
 </ion-content>

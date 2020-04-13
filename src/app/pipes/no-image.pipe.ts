@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NoImagePipe implements PipeTransform {
 
     transform(image: any): string {
-        console.log(image);
         if (image) {
             return image;
         }

@@ -59,23 +59,4 @@ ion-card-header {
     padding-bottom: 6px;
 }
 
-.no-registers {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    ion-text {
-        margin-top: 28px;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 27px;
-        text-align: center;
-        color: #A0AEC0;
-        span {
-            font-size: 14px;
-        }
-    }
-}
 

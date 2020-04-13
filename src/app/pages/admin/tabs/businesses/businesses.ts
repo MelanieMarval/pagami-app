@@ -21,6 +21,7 @@ export class BusinessesPage implements OnInit {
 
     loading = true;
     error = false;
+    empty = false;
     registers: Place[];
     STATUS = PLACES.STATUS;
     indexOfPlaceToEdit: number = undefined;
@@ -44,6 +45,7 @@ export class BusinessesPage implements OnInit {
                 this.loading = false;
                 if (success.passed) {
                     this.registers = await success.response;
+                    this.empty = this.registers.length === 0;
                     this.error = false;
                 } else {
                     this.error = true;
