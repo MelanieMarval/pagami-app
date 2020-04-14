@@ -46,16 +46,22 @@ export class ActivityPage implements OnInit {
 
     getRegisters() {
         this.loading = true;
-        this.placesService.myRegisters().then(async (success: ApiResponse) => {
-            if (success.passed) {
-                this.registers = await success.response.filter(place => place.status);
-                this.loading = false;
-                this.error = false;
-            } else {
+        this.placesService.myRegisters()
+            .then(async (success: ApiResponse) => {
+                if (success.passed) {
+                    this.registers = await success.response.filter(place => place.status);
+                    this.loading = false;
+                    this.error = false;
+                } else {
+                    this.loading = false;
+                    this.error = true;
+                    this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
+                }
+            }).catch(error => {
                 this.loading = false;
                 this.error = true;
-            }
-        });
+                this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
+            });
     }
 
     verifyItemUpdated() {

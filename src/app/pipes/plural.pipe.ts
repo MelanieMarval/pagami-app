@@ -9,7 +9,7 @@ export class PluralPipe implements PipeTransform {
         let phrase = String(value) + ' ';
 
         if (value === 1) {
-            phrase = text;
+            phrase = phrase + text;
         } else {
             const words = text.split(' ');
             for (const word of words) {

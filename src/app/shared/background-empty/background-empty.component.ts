@@ -9,6 +9,7 @@ export class BackgroundEmptyComponent implements OnInit {
 
     @Input() title = '';
     @Input() text = '';
+    @Input() height = 100;
     @Input() src ?= 'assets/img/registers-no-registers.png';
 
     constructor() {

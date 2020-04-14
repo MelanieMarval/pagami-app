@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Place } from '../../core/api/places/place';
 import { PLACES } from '../../utils/Const';
 import { IntentProvider } from '../../providers/intent.provider';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -33,14 +34,14 @@ export class ShopPage implements OnInit {
         whatsapp: '024147848885'
     };
 
-    constructor(private intentProvider: IntentProvider) {
+    constructor(private intentProvider: IntentProvider,
+                private router: Router) {
     }
 
     ngOnInit() {
         if (this.intentProvider.placeToShow) {
             this.place = this.intentProvider.placeToShow;
         }
-        console.log(this.place);
     }
 
 

@@ -1,29 +1,18 @@
-<!--<ion-header>-->
-<!--    <ion-toolbar class="toolbar-simple">-->
-<!--        <ion-buttons slot="start">-->
-<!--            <ion-back-button defaultHref="/app/admin/activity"></ion-back-button>-->
-<!--        </ion-buttons>-->
-<!--        <ion-title class="without-right">Actividad</ion-title>-->
-<!--    </ion-toolbar>-->
-<!--</ion-header>-->
-<!--<div class="progress-bar-container">-->
-<!--    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading && !error"></ion-progress-bar>-->
-<!--</div>-->
 
 <ion-content>
 
-    <ion-list *ngIf="!loading && !error && !empty">
+    <ion-list *ngIf="!loading && !error" class="h-100">
 
-        <div class="ion-margin avatar-container">
+        <div class="ion-margin avatar-container" >
             <ion-avatar (click)="goToProfile()">
                 <ion-img src="assets/icon/pagami_icon_256px.png"></ion-img>
             </ion-avatar>
         </div>
 
         <ion-item-group>
-            <ion-card class="card-money">
+            <ion-card button class="card-money">
                 <ion-card-header>
-                    <ion-card-title>$ 300.00</ion-card-title>
+                    <ion-card-title>$ 0.00</ion-card-title>
                 </ion-card-header>
 
                 <ion-card-content>
@@ -32,15 +21,10 @@
             </ion-card>
         </ion-item-group>
 
-<!--        <ion-item-group>-->
-<!--&lt;!&ndash;            <ion-item button routerLink="/app/tabs/wallet/activity" detailIcon="" lines="none" class="item-activity">&ndash;&gt;-->
-<!--            <ion-item lines="none" class="item-activity">-->
-<!--                <ion-icon slot="end" name="arrow-forward"></ion-icon>-->
-<!--                <ion-label>Actividad</ion-label>-->
-<!--            </ion-item>-->
-<!--        </ion-item-group>-->
+        <app-background-empty *ngIf="empty" [title]="'Aun no hay registros'"
+                              [text]="'Cuando hayan movimientos los veras aqui'" [height]="55"></app-background-empty>
 
-        <ion-item-group >
+        <ion-item-group *ngIf="!empty">
             <ion-card class="card-place"
                       *ngFor="let register of registers"
                       [button]="register.status !== STATUS.REJECTED"
@@ -124,8 +108,5 @@
             </ion-card>
         </ion-item-group>
     </ion-list>
-
-    <app-background-empty *ngIf="empty" [title]="'Aun no hay registros'"
-                          [text]="'Cuando hayan movimientos los veras aqui'"></app-background-empty>
 
 </ion-content>

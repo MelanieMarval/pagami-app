@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ResolveEnd, Router } from '@angular/router';
 import { PlacesService } from '../../../../core/api/places/places.service';
-import { ApiResponse } from '../../../../core/api/api.response';
-import { Place } from '../../../../core/api/places/place';
 
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
@@ -11,6 +9,8 @@ import { IntentProvider } from '../../../../providers/intent.provider';
 // Utils
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
+import { Place } from '../../../../core/api/places/place';
+import { ApiResponse } from '../../../../core/api/api.response';
 
 @Component({
     selector: 'app-admin-activity',
@@ -41,17 +41,20 @@ export class ActivityPage implements OnInit {
                 this.verifyItemUpdated();
             }
         });
-        this.placesService.myRegisters().then(async (success: ApiResponse) => {
-                this.loading = false;
-                if (success.passed) {
-                    this.registers = success.response;
-                    this.error = false;
-                    this.empty = this.registers.length === 0;
-                } else {
-                    this.error = true;
-                    this.toast.messageErrorWithoutTabs('La informacion no se ha podido cargar. Intente de nuevo!', 5000);
-                }
-            });
+        this.loading = false;
+        this.error = false;
+        this.empty = true;
+        // this.placesService.myRegisters().then(async (success: ApiResponse) => {
+        //         this.loading = false;
+        //         if (success.passed) {
+        //             this.registers = success.response;
+        //             this.error = false;
+        //             this.empty = this.registers.length !== 0;
+        //         } else {
+        //             this.error = true;
+        //             this.toast.messageErrorWithoutTabs('La informacion no se ha podido cargar. Intente de nuevo!', 5000);
+        //         }
+        //     });
     }
 
     verifyItemUpdated() {

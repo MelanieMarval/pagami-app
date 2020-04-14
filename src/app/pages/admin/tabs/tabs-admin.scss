@@ -6,15 +6,33 @@ ion-tab-bar {
     .tab-button {
         --color: #a0aec0;
         --color-selected: #fff;
-        &__icon{
+
+        &__icon {
+            margin-top: 5px;
+            margin-bottom: 1px;
             width: 20px;
             // height: 20px;
+            &--noti {
+                height: 16px;
+            }
         }
+
         ion-label {
             font-family: 'Quicksand', 'Roboto', sans-serif;
             font-weight: 500;
+            margin-bottom: 5px;
         }
     }
+}
+
+.red-notification {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    border-radius: 50%;
+    background: red;
+    right: -1px;
+    top: 3px;
 }
 
 @media (max-width: 390px) {

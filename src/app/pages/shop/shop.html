@@ -17,7 +17,7 @@
         <div class="info-title">
             <ion-text color="light">
                 {{place.name}}
-                <ion-icon name="shield-checkmark" color="success" *ngIf="place.status === STATUS.VERIFIED"></ion-icon>
+                <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success"></ion-icon>
             </ion-text>
         </div>
         <ion-item lines="none" class="info-rating">
@@ -51,7 +51,7 @@
         </ion-item>
     </ion-list>
 
-    <ion-list class="link-buttons-container" lines="none" *ngIf="place.status === STATUS.VERIFIED">
+    <ion-list *ngIf="place.status === STATUS.VERIFIED" class="link-buttons-container" lines="none">
         <ion-item button routerLink="/app/shop/products" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Productos</ion-label>

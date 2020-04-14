@@ -36,6 +36,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
+        this.intentProvider.showNotification = false;
         this.placesService.getAllWaiting().then((success: ApiResponse) => {
             this.loading = false;
             if (success.passed) {

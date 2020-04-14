@@ -12,11 +12,6 @@ export class IntentProvider {
     private _placeEdited: Place;
     private _placeToShow: Place;
 
-    // Admin
-    private _placeToAccept: Place;
-    private _returnPlaceToAccept: Place;
-    private _userToEdit: User;
-
     get placeToEdit(): Place {
         return this._placeToEdit;
     }
@@ -43,6 +38,11 @@ export class IntentProvider {
     }
 
     // Admin
+    private _placeToAccept: Place;
+    private _returnPlaceToAccept: Place;
+    private _userToEdit: User;
+    private _showNotification: boolean;
+
     get returnPlaceToAccept(): Place {
         return this._returnPlaceToAccept;
     }
@@ -65,5 +65,13 @@ export class IntentProvider {
 
     set userToEdit(value: User) {
         this._userToEdit = value;
+    }
+
+    get showNotification(): boolean {
+        return this._showNotification;
+    }
+
+    set showNotification(value: boolean) {
+        this._showNotification = value;
     }
 }

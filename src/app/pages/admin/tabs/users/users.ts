@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { USER } from '../../../../utils/Const';
 import { User } from '../../../../core/api/users/user';
 import { UsersService } from '../../../../core/api/users/users.service';
-import { Router } from '@angular/router';
-import { IntentProvider } from '../../../../providers/intent.provider';
-import { USER } from '../../../../utils/Const';
+// Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
+import { IntentProvider } from '../../../../providers/intent.provider';
 
 @Component({
     selector: 'app-admin-users',

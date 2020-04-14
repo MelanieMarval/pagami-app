@@ -1,12 +1,12 @@
 
 <ion-content>
 
-    <ion-list>
+    <ion-list class="h-100">
 
         <ion-item-group>
-            <ion-card class="card-money">
+            <ion-card button class="card-money">
                 <ion-card-header>
-                    <ion-card-title>$ 6.00</ion-card-title>
+                    <ion-card-title>$ {{'0.00'}}</ion-card-title>
                 </ion-card-header>
 
                 <ion-card-content>
@@ -22,9 +22,11 @@
             </ion-item>
         </ion-item-group>
 
+        <app-background-empty *ngIf="empty" title="Oh oh! Esta vacio"
+                              text="Parece que aun no has realizado ninguna transaccion" height="70"></app-background-empty>
 
-        <ion-item-group>
-            <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(2).split('')">
+        <ion-item-group *ngIf="!empty">
+            <ion-card class="card-place">
                 <ion-card-header>
                     <ion-row>
                         <ion-col size="10">
@@ -160,72 +162,6 @@
                 </ion-card-content>
             </ion-card>
 
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <ion-img src="assets/img/avatar-business.jpg"></ion-img>
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card class="card-place">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-card-subtitle>
-                                12/05/2019 · 3:40 pm ·
-                                <span class="status--transfer">Transferencia</span>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="2">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <ion-img src="assets/img/avatar-business.jpg"></ion-img>
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="7">
-                            <ion-card-title>Camila Gutierrez</ion-card-title>
-                        </ion-col>
-                        <ion-col size="3">
-                            <ion-text class="status--transfer">
-                                $6.00 USD
-                            </ion-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
         </ion-item-group>
 
     </ion-list>
@@ -235,10 +171,10 @@
 <ion-footer class="footer-button">
     <ion-row>
         <ion-col size="6">
-            <ion-button class="button-small" expand="block" color="pagami-surface">Transferencia</ion-button>
+            <ion-button class="button-small" expand="block" color="pagami-surface" (click)="alert.alertComingSoon()">Transferencia</ion-button>
         </ion-col>
         <ion-col size="6">
-            <ion-button class="button-small" expand="block">Retirar Dinero</ion-button>
+            <ion-button class="button-small" expand="block" (click)="alert.alertComingSoon()">Retirar Dinero</ion-button>
         </ion-col>
     </ion-row>
 </ion-footer>

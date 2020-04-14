@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Place } from '../../../../core/api/places/place';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
+import { Router } from '@angular/router';
+import { IntentProvider } from '../../../../providers/intent.provider';
 
 @Component({
     selector: 'app-nearby',
@@ -18,9 +20,15 @@ export class NearbyPage implements OnInit {
     STATUS = PLACES.STATUS;
     messageDistance = PlaceUtils.getMessageDistance;
 
-    constructor() {
+    constructor(private router: Router,
+                private intentProvider: IntentProvider) {
     }
 
     ngOnInit() {
+    }
+
+    async goToShopDetails(place: Place) {
+        this.intentProvider.placeToShow = await place;
+        await this.router.navigate(['app/shop']);
     }
 }

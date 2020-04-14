@@ -1,18 +1,21 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { GoogleMapPage } from '../../parent/GoogleMapPage';
 import { DOCUMENT } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
-import { MapProvider } from '../../../providers/map.provider';
-import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { Place } from '../../../core/api/places/place';
+import { ApiResponse } from '../../../core/api/api.response';
+import { PlaceFilter } from '../../../core/api/places/place.filter';
+// Services
+import { GoogleMapPage } from '../../parent/GoogleMapPage';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PlacesService } from '../../../core/api/places/places.service';
+// Providers
+import { MapProvider } from '../../../providers/map.provider';
+import { AlertProvider } from '../../../providers/alert.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiResponse } from '../../../core/api/api.response';
 import { IntentProvider } from '../../../providers/intent.provider';
-import { PlaceFilter } from '../../../core/api/places/place.filter';
 
 @Component({
     selector: 'app-map-page',
@@ -50,6 +53,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         private activatedRoute: ActivatedRoute,
         private storageService: StorageProvider,
         private toast: ToastProvider,
+        private alert: AlertProvider,
         private placesService: PlacesService,
         private renderer: Renderer2,
         private appService: MapProvider,
@@ -62,7 +66,6 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     ngOnInit() {
         this.appService.showNearby.subscribe(() => {
             this.modeRegister = false;
-            console.log(this.router.url);
             if (this.bottomDrawer.drawerState === DrawerState.Bottom
                 || this.bottomDrawer.drawerState === DrawerState.Top
                 || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {

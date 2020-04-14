@@ -27,7 +27,7 @@
             </ion-avatar>
             <h2>{{user.name}} {{user.lastname}} <ion-icon src="assets/icon/edit-pencil.svg" (click)="editProfile()" class="icon-edit"></ion-icon></h2>
             <ion-text class="text-join">Se unio el {{user.createTime | date:'d'}} de {{user.createTime | date:'MMMM y'}}</ion-text>
-            <h3>456 Empresas registradas</h3>
+            <h3>{{totalRegisters | plural:'Empresa registrada'}}</h3>
         </ion-item-group>
 
         <ion-list lines="none" class="inputs-container">

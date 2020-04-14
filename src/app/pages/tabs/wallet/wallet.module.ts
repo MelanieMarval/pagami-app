@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WalletPage } from './wallet';
 import { RouterModule } from '@angular/router';
+import { BackgroundEmptyModule } from '../../../shared/background-empty/background-empty.module';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { RouterModule } from '@angular/router';
         FormsModule,
         RouterModule.forChild([{
             path: '', component: WalletPage
-        }])
+        }]),
+        BackgroundEmptyModule
     ],
     declarations: [WalletPage]
 })
