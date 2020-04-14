@@ -113,12 +113,17 @@
 /*  ***********************  */
 
 /* PROGRESS BAR CONTAINER */
-.progress-bar-container{
+.progress-bar-container {
     height: 5px;
     width: 100%;
     position: fixed;
     z-index: 10;
+}
+.md + .progress-bar-container {
     top: 56px;
+}
+.ios + .progress-bar-container {
+    top: 44px;
 }
 /* END progress bar */
 /*  ***********************  */

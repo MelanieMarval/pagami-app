@@ -9,7 +9,7 @@ ion-tab-bar {
         --color-selected: #fff;
         &__icon{
             width: 20px;
-            // height: 20px;
+            max-height: 23px;
         }
         ion-label {
             font-family: 'Quicksand', 'Roboto', sans-serif;

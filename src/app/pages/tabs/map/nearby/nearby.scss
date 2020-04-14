@@ -18,7 +18,7 @@
 
 .scrollable-draw {
     justify-content: center;
-    padding: 8px 8px 10px;
+    padding: 8px 8px 0;
 
     &-children {
         width: 42px;
@@ -31,6 +31,7 @@
 .nearby-title {
     font-size: 16px;
     color: #FFFFFF;
+    margin: 12px 0 2px;
 }
 
 .size-icon-mini {
@@ -41,6 +42,7 @@
 
 .card {
     width: 100%;
+    margin: 10px;
     &-img-contain {
         height: 210px;
         position: relative;
