@@ -11,6 +11,7 @@ export class IntentProvider {
     private _placeToEdit: Place;
     private _placeEdited: Place;
     private _placeToShow: Place;
+    private _placeToClaim: Place;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -28,7 +29,6 @@ export class IntentProvider {
         this._placeEdited = value;
     }
 
-
     get placeToShow(): Place {
         return this._placeToShow;
     }
@@ -37,7 +37,15 @@ export class IntentProvider {
         this._placeToShow = value;
     }
 
-    // Admin
+    get placeToClaim(): Place {
+        return this._placeToClaim;
+    }
+
+    set placeToClaim(value: Place) {
+        this._placeToClaim = value;
+    }
+
+// Admin
     private _placeToAccept: Place;
     private _returnPlaceToAccept: Place;
     private _userToEdit: User;

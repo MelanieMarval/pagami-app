@@ -54,6 +54,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         private storageService: StorageProvider,
         private toast: ToastProvider,
         private alert: AlertProvider,
+        private intentProvider: IntentProvider,
         private placesService: PlacesService,
         private renderer: Renderer2,
         private appService: MapProvider,
@@ -87,7 +88,13 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onClickPlace(place: Place) {
         this.selectedPlace = place;
-        this.bottomDrawer.drawerState = DrawerState.Docked;
+        if (this.router.url === '/app/tabs/map/find-my-business') {
+            this.intentProvider.placeToShow = undefined;
+            this.intentProvider.placeToClaim = place;
+            this.router.navigate(['app/shop']);
+        } else {
+            this.bottomDrawer.drawerState = DrawerState.Docked;
+        }
     }
 
     onCurrentPositionChanged(coors: PagamiGeo) {

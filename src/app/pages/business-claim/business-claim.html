@@ -1,0 +1,52 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/shop"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Datos de la Empresa</ion-title>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
+
+<ion-content>
+    <div class="ion-margin ion-text-center">
+        <ion-text class="ion-text-center">
+            Para verififcacion de la empresa debe rellenar el siguiente formulario <i>(esta informacion no sera compartida
+            con los usuarios)</i>:
+        </ion-text>
+    </div>
+
+    <form (ngSubmit)="saveData()">
+
+        <ion-list lines="none" class="inputs-container">
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Rif de la empresa</ion-label>
+                <ion-input required></ion-input>
+                <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Telefono de contacto</ion-label>
+                <ion-input required></ion-input>
+                <ion-icon slot="start" src="assets/icon/call.svg"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Correo de contacto</ion-label>
+                <ion-input required></ion-input>
+                <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Notas o comentarios</ion-label>
+                <ion-textarea rows="6" cols="20"></ion-textarea>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>
+
+<ion-footer class="footer-button background-transparent" slot="fixed">
+    <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/business-claim/plans">
+        Enviar datos
+    </ion-button>
+</ion-footer>
+

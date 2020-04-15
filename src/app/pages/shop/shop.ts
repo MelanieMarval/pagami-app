@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class ShopPage implements OnInit {
 
     STATUS = PLACES.STATUS;
+    claim = false;
     place: Place = {
         accuracy: 0,
         createTime: String(new Date()),
@@ -38,11 +39,17 @@ export class ShopPage implements OnInit {
                 private router: Router) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.intentProvider.placeToShow) {
+            this.claim = false;
             this.place = this.intentProvider.placeToShow;
+            return;
+        }
+        if (this.intentProvider.placeToClaim) {
+            this.claim = true;
+            this.place = this.intentProvider.placeToClaim;
+            return;
         }
     }
-
 
 }
