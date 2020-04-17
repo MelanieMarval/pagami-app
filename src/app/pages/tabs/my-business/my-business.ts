@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { InputFilePage } from '../../parent/InputFilePage';
-import { ToastController } from '@ionic/angular';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { Place } from '../../../core/api/places/place';
 import { ValidationUtils } from '../../../utils/validation.utils';
@@ -16,6 +15,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
 
     isRegister = false;
     isEditing = false;
+    isClaim = true;
     updating = false;
     place: Place = {latitude: 0, longitude: 0};
 
@@ -47,12 +47,6 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
 
     editBusiness() {
         this.isEditing = !this.isEditing;
-    }
-
-    setPlace(place) {
-        console.log('-> place', place);
-        this.place.location = place;
-        this.places = [];
     }
 
     async saveBusiness() {
