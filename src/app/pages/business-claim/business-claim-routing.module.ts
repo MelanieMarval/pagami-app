@@ -7,13 +7,11 @@ const routes: Routes = [
     {
         path: '',
         component: BusinessClaimPage,
-        children: [
-            {
-                path: 'plans',
-                component: PlansPage
-            },
-        ],
-    }
+    },
+    {
+        path: 'plans',
+        component: PlansPage
+    },
 ];
 
 @NgModule({

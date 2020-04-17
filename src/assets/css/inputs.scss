@@ -14,6 +14,13 @@
         &.item-has-focus{
             border-bottom: 2px solid var(--ion-color-pagami);
         }
+        &.ion-touched.ion-invalid{
+            border-bottom: 2px solid var(--ion-color-danger);
+            .label-floating {
+                font-weight: bold;
+                color: var(--ion-color-danger);
+            }
+        }
         ion-label.ios{
             transform: translate3d(0, 13px, 0px);
         }
@@ -23,7 +30,19 @@
             margin-bottom: auto;
         }
     }
+    .error-text {
+        color: var(--ion-color-danger);
+        padding-left: 12px;
+        font-weight: bold;
+        height: 26px;
+        margin-bottom: 4px;
+    }
 
+}
+.--with-formGroup{
+    ion-item {
+        margin-bottom: 0;
+    }
 }
 
 .checkbox-container {

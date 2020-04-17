@@ -11,42 +11,62 @@
 </div>
 
 <ion-content>
-    <div class="ion-margin ion-text-center">
+    <div class="ion-margin ion-padding-vertical ion-text-center">
         <ion-text class="ion-text-center">
             Para verififcacion de la empresa debe rellenar el siguiente formulario <i>(esta informacion no sera compartida
             con los usuarios)</i>:
         </ion-text>
     </div>
 
-    <form (ngSubmit)="saveData()">
-
-        <ion-list lines="none" class="inputs-container">
+    <form [formGroup]="form" (ngSubmit)="saveData()">
+        <ion-list lines="none" class="inputs-container --with-formGroup">
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Rif de la empresa</ion-label>
-                <ion-input required></ion-input>
+                <ion-input formControlName="rif" type="text" maxlength="20"></ion-input>
                 <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
             </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('rif').errors?.required && form.get('rif').touched">*Este campo es requerido</small>
+                <small *ngIf="form.get('rif').errors?.maxlength">Maximo 20 caracteres</small>
+            </div>
+
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Telefono de contacto</ion-label>
-                <ion-input required></ion-input>
+                <ion-input formControlName="phone" type="text" maxlength="15"></ion-input>
                 <ion-icon slot="start" src="assets/icon/call.svg"></ion-icon>
             </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('phone').errors?.required && form.get('phone').touched">*Este campo es requerido</small>
+                <small *ngIf="form.get('phone').errors?.pattern && form.get('phone').touched">No es un numero valido <br></small>
+                <small *ngIf="(form.get('phone').errors?.minlength || form.get('phone').errors?.maxlength) && form.get('phone').touched && !form.get('phone').errors?.pattern">Debe tener entre 8 y 15 caracteres</small>
+            </div>
+
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Correo de contacto</ion-label>
-                <ion-input required></ion-input>
+                <ion-input formControlName="email" type="text"></ion-input>
                 <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
             </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('email').errors?.required && form.get('email').touched">*Este campo es requerido</small>
+                <small *ngIf="form.get('email').errors?.pattern && form.get('email').touched">No es un correo valido</small>
+            </div>
+
             <ion-item color="pagami-surface">
-                <ion-label position="floating">Notas o comentarios</ion-label>
-                <ion-textarea rows="6" cols="20"></ion-textarea>
+                <ion-label position="floating">Notas o comentarios (opcional)</ion-label>
+                <ion-textarea rows="6" maxlength="300" formControlName="notes"></ion-textarea>
             </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('notes').errors?.minlength && form.get('notes').touched">Minimo 5 caracteres y maximo 300</small>
+            </div>
         </ion-list>
+
+        <div class="footer-button footer-button--div" slot="fixed">
+            <ion-button class="button-large" expand="block" color="pagami" type="submit" [disabled]="form.invalid">
+                Enviar datos
+            </ion-button>
+        </div>
     </form>
+
 </ion-content>
 
-<ion-footer class="footer-button background-transparent" slot="fixed">
-    <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/business-claim/plans">
-        Enviar datos
-    </ion-button>
-</ion-footer>
 
