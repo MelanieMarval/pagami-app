@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { CATEGORY_ICONS } from '../../../utils/Const';
 import { Place } from '../../../core/api/places/place';
 import { PlacesService } from '../../../core/api/places/places.service';
 
@@ -9,6 +8,7 @@ import { PlacesService } from '../../../core/api/places/places.service';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { IntentProvider } from '../../../providers/intent.provider';
+import { CATEGORY_ICONS } from '../../../utils/category.icons';
 
 @Component({
     selector: 'app-select-icon',
