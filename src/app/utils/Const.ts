@@ -43,6 +43,15 @@ export const PLACES = {
 };
 
 
+export const CLAIMS = {
+    STATUS: {
+        WAITING: 'WAITING',
+        ACCEPTED: 'ACCEPTED',
+        REJECTED: 'REJECTED'
+    }
+};
+
+
 export const CATEGORY_ICONS = [
     { name: '001-comida' },
     { name: '001-fruta' },
