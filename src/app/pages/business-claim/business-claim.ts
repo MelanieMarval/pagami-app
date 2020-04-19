@@ -25,7 +25,7 @@ export class BusinessClaimPage implements OnInit {
                 Validators.pattern('^(\\+[1-9][0-9]*(\\([0-9]*\\)|-[0-9]*-))?[0]?[1-9][0-9\\- ]*$')]),
             email: new FormControl('', [Validators.required,
                 Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$')]),
-            notes: new FormControl('',[Validators.minLength(5), Validators.maxLength(300)])
+            notes: new FormControl('', [Validators.minLength(5), Validators.maxLength(300)])
         });
     }
 

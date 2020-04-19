@@ -5,6 +5,7 @@ import { Place } from '../../../core/api/places/place';
 import { ValidationUtils } from '../../../utils/validation.utils';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { PlacesService } from '../../../core/api/places/places.service';
+import { ClaimService } from '../../../core/api/claim/claim.service';
 
 @Component({
     selector: 'app-my-business',
@@ -15,11 +16,12 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
 
     isRegister = false;
     isEditing = false;
-    isClaim = true;
+    isClaim = false;
     updating = false;
     place: Place = {latitude: 0, longitude: 0};
 
     constructor(
+        private claim: ClaimService,
         private toast: ToastProvider,
         private placesService: PlacesService,
         protected geolocationService: GeolocationService
@@ -43,6 +45,8 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
             type: 'STORE'
         };
         this.previewUrl = this.place.photoUrl;
+        this.claim.getMyBusiness()
+            .then(success => console.log(success) );
     }
 
     editBusiness() {

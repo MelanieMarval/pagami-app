@@ -25,15 +25,15 @@ export class AppComponent {
         this.platform.ready().then(async () => {
             const isLogged = await this.storageService.isLogged();
             const user = await this.storageService.getPagamiUser();
-            // if (isLogged) {
-            //     if (user.type && user.type === USER.TYPE.ADMIN) {
-            //         await this.openAdminPanel();
-            //     } else {
-            //         await this.openHome();
-            //     }
-            // } else {
-            //     await this.openTutorial();
-            // }
+            if (isLogged) {
+                if (user.type && user.type === USER.TYPE.ADMIN) {
+                    await this.openAdminPanel();
+                } else {
+                    await this.openHome();
+                }
+            } else {
+                await this.openTutorial();
+            }
             await SplashScreen.hide();
         });
     }
