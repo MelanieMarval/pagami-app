@@ -39,14 +39,14 @@ export class AppComponent {
     }
 
     private openTutorial(): Promise<boolean> {
-        return this.router.navigateByUrl('/tutorial');
+        return this.router.navigateByUrl('/tutorial', { replaceUrl: true });
     }
 
     private openHome(): Promise<boolean> {
-        return this.router.navigateByUrl('/app/tabs/map/search');
+        return this.router.navigateByUrl('/app/tabs/map/search', { replaceUrl: true });
     }
 
     private openAdminPanel(): Promise<boolean> {
-        return this.router.navigateByUrl('/admin/tabs/activity');
+        return this.router.navigateByUrl('/admin/tabs/activity', { replaceUrl: true });
     }
 }

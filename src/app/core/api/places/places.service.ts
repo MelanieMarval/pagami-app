@@ -31,6 +31,12 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async getAllAccepted(): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/status/${PLACES.STATUS.ACCEPTED}`, options);
+        return this.apiService.serverListener(request);
+    }
+
     async getAllAvailable(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/all-available`, options);

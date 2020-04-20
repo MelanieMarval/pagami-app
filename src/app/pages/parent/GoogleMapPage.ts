@@ -7,6 +7,7 @@ import {Place} from '../../core/api/places/place';
 import GoogleMaps = google.maps;
 // @ts-ignore
 import LatLng = google.maps.LatLng;
+import { MAP_MODE } from '../../utils/Const';
 // // @ts-ignore
 // import LatLngLiteral = google.maps.LatLngLiteral;
 // // @ts-ignore
@@ -19,6 +20,7 @@ import LatLng = google.maps.LatLng;
 // import Circle = google.maps.Circle;
 // // @ts-ignore
 // import LatLng = google.maps.LatLng;
+
 
 const removeDefaultMarkers = [
     {
@@ -41,6 +43,7 @@ export class GoogleMapPage {
     // @ts-ignore
     googleMaps: any;
     accuracy: number;
+    currentUrl: string;
 
     constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService
     ) {
@@ -142,8 +145,10 @@ export class GoogleMapPage {
             marker.addListener('click', event => {
                 const latlng = new GoogleMaps.LatLng(position.lat, position.lng);
                 this.onClickPlace(place);
-                this.map.setZoom(20);
-                this.offsetCenter(latlng, 0, 200);
+                if (this.currentUrl ===  MAP_MODE.SEARCH) {
+                    this.map.setZoom(20);
+                    this.offsetCenter(latlng, 0, 200);
+                }
             });
             this.nearbyPlaces.push(marker);
         });

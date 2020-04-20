@@ -83,9 +83,9 @@ export class TutorialPage {
         await this.storageService.setLogged(true);
         this.loading = false;
         if (pagamiUser.type === USER.TYPE.ADMIN) {
-            await this.route.navigate(['/admin/tabs/activity']);
+            await this.route.navigate(['/admin/tabs/activity'], { replaceUrl: true });
         } else {
-           await this.route.navigate(['/app/tabs/map/search']);
+           await this.route.navigate(['/app/tabs/map/search'], { replaceUrl: true });
         }
     }
 

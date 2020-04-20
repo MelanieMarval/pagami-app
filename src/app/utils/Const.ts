@@ -50,3 +50,11 @@ export const CLAIMS = {
         REJECTED: 'REJECTED'
     }
 };
+
+
+
+export const MAP_MODE = {
+    SEARCH: 'search',
+    FIND_BUSINESS: 'find-my-business',
+    REGISTER_BUSINESS: 'register-business',
+};

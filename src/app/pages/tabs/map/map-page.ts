@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
 import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { Place } from '../../../core/api/places/place';
@@ -16,6 +16,7 @@ import { AlertProvider } from '../../../providers/alert.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { IntentProvider } from '../../../providers/intent.provider';
+import { MAP_MODE } from '../../../utils/Const';
 
 @Component({
     selector: 'app-map-page',
@@ -40,12 +41,14 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         disableScrollContent: true
     };
     bottomHeightChange: EventEmitter<number> = new EventEmitter<number>();
-    modeRegister = false;
+    isRegistering = false;
     beforeSaveLocation = true;
     saving = false;
     placeToSave: any;
     selectedPlace;
     nearPlaces: Place[] = [];
+    searchPlaces: Place[] = [];
+    findBusinessPlaces: Place[] = [];
     isSearching = false;
 
     constructor(
@@ -65,25 +68,60 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.appService.showNearby.subscribe(() => {
-            this.modeRegister = false;
-            if (this.bottomDrawer.drawerState === DrawerState.Bottom
-                || this.bottomDrawer.drawerState === DrawerState.Top
-                || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {
-                this.bottomHeightChange.emit(108);
-                this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
-                this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        this.router.events.subscribe(value => {
+            if (value instanceof NavigationEnd) {
+                this.currentUrl = value.url.substring(value.url.lastIndexOf('/') + 1);
+                this.selectMode(this.currentUrl);
             }
         });
-        this.appService.showRegister.subscribe(() => {
-            this.modeRegister = true;
-            this.onBottomSheetHide(true);
-            this.bottomHeightChange.emit(0);
-            this.beforeSaveLocation = true;
-            this.placeToSave = undefined;
-            this.map.panTo(this.currentPositionMarker.getPosition());
-            this.map.setZoom(20);
+        this.appService.showNearby.subscribe(() => {
+            this.selectMode(this.currentUrl);
         });
+        this.appService.showRegister.subscribe(() => {
+            this.selectMode(this.currentUrl);
+        });
+    }
+
+    selectMode(mode: string) {
+        switch (mode) {
+            case MAP_MODE.FIND_BUSINESS:
+                this.modeFindMyBusiness();
+                break;
+            case MAP_MODE.REGISTER_BUSINESS:
+                this.modeRegister();
+                break;
+            case MAP_MODE.SEARCH:
+                this.modeSearch();
+                break;
+        }
+    }
+
+    modeSearch() {
+        this.isRegistering = false;
+        if (this.bottomDrawer.drawerState === DrawerState.Bottom
+            || this.bottomDrawer.drawerState === DrawerState.Top
+            || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {
+            this.bottomHeightChange.emit(108);
+            this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
+            this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        }
+    }
+
+    modeRegister() {
+        this.isRegistering = true;
+        this.onBottomSheetHide(true);
+        this.bottomHeightChange.emit(0);
+        this.beforeSaveLocation = true;
+        this.placeToSave = undefined;
+        this.map.panTo(this.currentPositionMarker.getPosition());
+        this.map.setZoom(20);
+    }
+
+    modeFindMyBusiness() {
+        this.isRegistering = false;
+        this.onBottomSheetHide(true);
+        this.bottomHeightChange.emit(0);
+        this.getAcceptedPlaces();
     }
 
     onClickPlace(place: Place) {
@@ -98,7 +136,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     onCurrentPositionChanged(coors: PagamiGeo) {
-        if (this.fabAttached || this.modeRegister) {
+        if (this.fabAttached || this.isRegistering) {
             this.setupMarkerCurrentPosition(coors);
             this.changeMapCenter(coors);
         }
@@ -147,19 +185,32 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
          */
         const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
         this.onCurrentPositionChanged(geo);
-        if (geo) {
-            const filter: PlaceFilter = {
-                latitude: geo.latitude,
-                longitude: geo.longitude,
-                radius: 1000
-            };
-            this.placesService.getNearby(filter).then((success: ApiResponse) => {
-                if (success.passed) {
-                    this.setupPlacesToDrawer(success.response);
-                    this.setupPlaces(success.response);
-                }
-            });
-        }
+        this.getNearPlaces();
+    }
+
+    async getNearPlaces() {
+        const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
+        const filter: PlaceFilter = {
+            latitude: geo.latitude,
+            longitude: geo.longitude,
+            radius: 1000
+        };
+        this.placesService.getNearby(filter).then((success: ApiResponse) => {
+            if (success.passed) {
+                this.searchPlaces = success.response;
+                this.setupPlacesToDrawer(success.response);
+                this.setupPlaces(success.response);
+            }
+        });
+    }
+
+    async getAcceptedPlaces() {
+        this.placesService.getAllAccepted().then((success: ApiResponse) => {
+            if (success.passed) {
+                this.findBusinessPlaces = success.response;
+                console.log(this.findBusinessPlaces)
+            }
+        });
     }
 
     setupPlacesToDrawer(places: Place[]) {
