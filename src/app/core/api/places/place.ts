@@ -6,7 +6,10 @@ export interface Place {
     registeredBy?: string;
     photoUrl?: string;
     name?: string;
-    icon?: string;
+    category?: {
+      name?: string;
+      icon?: string;
+    };
     location?: {
         address?: string        // escrito por el usuario
         addressLine?: string,   // extraido de google

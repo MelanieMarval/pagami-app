@@ -15,9 +15,11 @@ import { ClaimService } from '../../../core/api/claim/claim.service';
 export class MyBusinessPage extends InputFilePage implements OnInit {
 
     isRegister = false;
-    isEditing = false;
+    availableToClaim = false;
     isClaim = false;
+    isEditing = false;
     updating = false;
+    loading = true;
     place: Place = {latitude: 0, longitude: 0};
 
     constructor(
@@ -30,23 +32,26 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
     }
 
     ngOnInit() {
-        this.place = {
-            latitude: 48489,
-            longitude: 4548946,
-            accuracy: 4544,
-            registeredBy: '',
-            photoUrl: 'assets/img/avatar-business.jpg',
-            name: 'Tiendas D1',
-            icon: '015-store',
-            location: { address: 'Calle 30 & Autopista Sur, Itagüi, Antioquia' },
-            phone: '+574104804289',
-            whatsapp: '+573104804289',
-            website: 'adidas.com.co',
-            type: 'STORE'
-        };
-        this.previewUrl = this.place.photoUrl;
         this.claim.getMyBusiness()
-            .then(success => console.log(success) );
+            .then(success => {
+                console.log(success);
+                if (success.passed) {
+                    this.loading = false;
+                    if (success.response.status === 'WAITING') {
+                        this.isClaim = true;
+                    } else {
+                        this.isRegister = true;
+                        this.place = success.response;
+                        this.previewUrl = this.place.photoUrl;
+                    }
+                } else {
+                    this.isClaim = false;
+                    if (success.code === 71) {
+                        this.availableToClaim = true;
+                    }
+                    this.loading = false;
+                }
+            });
     }
 
     editBusiness() {
@@ -64,18 +69,18 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
         }
         console.log(this.place);
         this.updating = true;
-        // this.placesService.update(this.place)
-        //     .then(async success => {
-        //         if (success.passed === true) {
-        //             console.log('-> success.response', success.response);
-        //             this.isEditing = false;
-        //             this.updating = false;
-        //             await this.toast.messageSuccessWithoutTabs('Su empresa ha sido actulizada exitosamente!');
-        //         } else {
-        //             this.updating = false;
-        //             await this.toast.messageErrorWithoutTabs('No se han podido actualizar su informacion. Intente de nuevo!');
-        //         }
-        //     });
+        this.placesService.update(this.place)
+            .then(async success => {
+                if (success.passed === true) {
+                    console.log('-> success.response', success.response);
+                    this.isEditing = false;
+                    this.updating = false;
+                    await this.toast.messageSuccessWithoutTabs('Su empresa ha sido actulizada exitosamente!');
+                } else {
+                    this.updating = false;
+                    await this.toast.messageErrorWithoutTabs('No se han podido actualizar su informacion. Intente de nuevo!');
+                }
+            });
     }
 
 }

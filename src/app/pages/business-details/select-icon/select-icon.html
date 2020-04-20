@@ -12,8 +12,8 @@
     <ion-grid>
         <ion-row>
             <ion-col size="3" *ngFor="let icon of categoryIcons, let x = index">
-                <div class="background-icon" [ngClass]="{'selected-icon': selectedIcon === x}" (click)="!saving ? selectIcon(x, icon.name) : ''">
-                    <ion-img [src]="'assets/category-icons/'+icon.name+'.svg'" class="size-icon-default icon-white"></ion-img>
+                <div class="background-icon" [ngClass]="{'selected-icon': selectedIcon === x}" (click)="!saving ? selectIcon(x, icon) : ''">
+                    <ion-img [src]="'assets/category-icons/'+icon.route+'.svg'" class="size-icon-default icon-white"></ion-img>
                     <ion-icon src="assets/icon/check-circle-solid.svg" class="selected-icon__check"></ion-icon>
                 </div>
             </ion-col>

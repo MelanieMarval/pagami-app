@@ -34,19 +34,25 @@ export class SelectIconPage implements OnInit {
 
     async ngOnInit() {
         this.place = this.storageInstance.placeToEdit;
-        this.selectedIcon = this.place.icon ? this.categoryIcons.findIndex(icon => icon.name === this.place.icon) : 0;
-        this.place.icon = this.place.icon ? this.place.icon : this.categoryIcons[0].name;
+        this.selectedIcon = this.place.category ? this.categoryIcons.findIndex(icon => icon.route === this.place.category.icon) : 0;
+        if (this.selectedIcon === 0) {
+            this.place.category = {
+                name: this.categoryIcons[0].name,
+                icon: this.categoryIcons[0].route
+            };
+        }
     }
 
-    async selectIcon(index, name) {
+    async selectIcon(index, icon) {
         this.selectedIcon = index;
-        this.place.icon = name;
+        this.place.category.name = icon.name;
+        this.place.category.icon = icon.route;
         this.storageInstance.placeToEdit = this.place;
     }
 
     saveIconBusiness() {
         this.saving = true;
-        if (this.place.icon) {
+        if (this.place.category.icon) {
             this.placesService.update(this.place)
                 .then(async success => {
                     if (success.passed) {

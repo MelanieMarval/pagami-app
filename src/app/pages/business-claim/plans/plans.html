@@ -17,13 +17,20 @@
     <ion-list class="card-container">
 
         <ion-item-group>
-            <ion-card [button]="!free" class="card-plan" [color]="free ? 'pagami-surface' : 'pagami'" [style.opacity]="free ? .5 : 1">
+            <ion-card class="card-plan"
+                      *ngFor="let plan of plans; let i = index"
+                      (click)="this.selectedPlan = plan.id"
+                      [button]="plan.amount === 0"
+                      [color]="this.selectedPlan === plan.id ? 'pagami' : 'pagami-surface'"
+                      [style.opacity]="plan.amount === 0 ? 1 : .5">
                 <ion-card-header>
                     <ion-row>
                         <ion-col size="10">
-                            <ion-text class="card-plan__name">Emprendedor <ion-icon name="star"></ion-icon> </ion-text>
+                            <ion-text class="card-plan__name">{{plan.name}}
+                                <ion-icon name="star"></ion-icon>
+                            </ion-text>
                         </ion-col>
-                        <ion-col size="2" class="ion-text-end ion-no-padding" *ngIf="!free">
+                        <ion-col size="2" class="ion-text-end ion-no-padding" *ngIf="this.selectedPlan === plan.id">
                             <ion-icon name="checkmark-circle" color="light" class="checkmark"></ion-icon>
                         </ion-col>
                     </ion-row>
@@ -31,36 +38,13 @@
                 <ion-card-content>
                     <ion-row>
                         <ion-col size="6">
-                            <ion-card-title class="card-plan__price cross-out">$12,24 USD</ion-card-title>
+                            <ion-card-title class="card-plan__price" [ngClass]="plan.amount === 0 ? '' : 'cross-out'">
+                                ${{plan.amount}} USD
+                            </ion-card-title>
                         </ion-col>
                         <ion-col size="6" class="ion-text-end ion-align-self-end">
                             <ion-card-subtitle class="card-plan__details">
-                                COP $39,272 / 1 año
-                            </ion-card-subtitle>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card *ngIf="free" button class="card-plan" [color]="free ? 'pagami' : 'pagami-surface'" color="pagami">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-text class="card-plan__name">Gratuito <ion-icon name="star"></ion-icon> </ion-text>
-                        </ion-col>
-                        <ion-col size="2" class="ion-text-end ion-no-padding" *ngIf="free">
-                            <ion-icon name="checkmark-circle" color="light" class="checkmark"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="6">
-                            <ion-card-title class="card-plan__price">$0,00 USD</ion-card-title>
-                        </ion-col>
-                        <ion-col size="6" class="ion-text-end ion-align-self-end">
-                            <ion-card-subtitle class="card-plan__details">
-                                Sin pago / 3 meses
+                                {{plan.daysSubText}} / {{plan.daysText}}
                             </ion-card-subtitle>
                         </ion-col>
                     </ion-row>

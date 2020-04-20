@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
 import { User } from '../core/api/users/user';
+import { Claim } from '../core/api/claim/claim';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class IntentProvider {
     private _placeToEdit: Place;
     private _placeEdited: Place;
     private _placeToShow: Place;
-    private _placeToClaim: Place;
+    private _placeToClaim: Place | Claim;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -37,11 +38,11 @@ export class IntentProvider {
         this._placeToShow = value;
     }
 
-    get placeToClaim(): Place {
+    get placeToClaim(): Place | Claim {
         return this._placeToClaim;
     }
 
-    set placeToClaim(value: Place) {
+    set placeToClaim(value: Place | Claim) {
         this._placeToClaim = value;
     }
 

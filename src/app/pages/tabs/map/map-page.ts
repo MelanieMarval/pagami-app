@@ -126,7 +126,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onClickPlace(place: Place) {
         this.selectedPlace = place;
-        if (this.router.url === '/app/tabs/map/find-my-business') {
+        console.log(this.currentUrl);
+        if (this.currentUrl === MAP_MODE.FIND_BUSINESS) {
             this.intentProvider.placeToShow = undefined;
             this.intentProvider.placeToClaim = place;
             this.router.navigate(['app/shop']);
@@ -208,7 +209,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.placesService.getAllAccepted().then((success: ApiResponse) => {
             if (success.passed) {
                 this.findBusinessPlaces = success.response;
-                console.log(this.findBusinessPlaces)
+                console.log(this.findBusinessPlaces);
             }
         });
     }

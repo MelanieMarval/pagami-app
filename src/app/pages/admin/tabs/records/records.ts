@@ -22,8 +22,13 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     loading = true;
     error = false;
     empty = false;
-    showNotification = false;
-    records: Place[];
+    showNotification = {
+        verified: false,
+        accepted: false
+    };
+    tabView = 'beAccepted';
+    recordsToBeAccepted: Place[];
+    recordsToBeVerified: Place[];
     STATUS = PLACES.STATUS;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
 
@@ -35,26 +40,41 @@ export class RecordsPage implements OnInit, AfterViewChecked {
                 private intentProvider: IntentProvider) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.intentProvider.showNotification = false;
-        this.placesService.getAllWaiting().then((success: ApiResponse) => {
-            this.loading = false;
-            if (success.passed) {
-                this.records = success.response;
-                this.showNotification = this.records.length !== 0;
-                this.empty = this.records.length === 0;
-                this.error = false;
-            } else {
-                this.error = true;
-                this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
-            }
-        });
+        await this.placesService.getAllClaimWaiting()
+            .then(success => {
+                if (success.passed) {
+                    this.recordsToBeVerified = success.response;
+                    this.showNotification.verified = this.recordsToBeVerified.length !== 0;
+                    this.empty = this.recordsToBeVerified.length === 0;
+                } else {
+                    this.error = true;
+                    this.loading = false;
+                    this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
+                }
+            });
+        await this.placesService.getAllWaiting()
+            .then((success: ApiResponse) => {
+                this.loading = false;
+                if (success.passed) {
+                    this.recordsToBeAccepted = success.response;
+                    this.showNotification.accepted = this.recordsToBeAccepted.length !== 0;
+                    this.empty = this.recordsToBeAccepted.length === 0;
+                    this.error = false;
+                } else {
+                    this.error = true;
+                    this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
+                }
+            });
     }
 
     ngAfterViewChecked(): void {
+        // Cuando vuelve luego de aceptar un place lo elimina de la lista
         if (this.intentProvider.returnPlaceToAccept) {
-            const index = this.records.indexOf(this.records.filter(record => record.id === this.intentProvider.returnPlaceToAccept.id)[0]);
-            this.records.splice(index, 1);
+            const index = this.recordsToBeAccepted.indexOf(this.recordsToBeAccepted
+                .filter(record => record.id === this.intentProvider.returnPlaceToAccept.id)[0]);
+            this.recordsToBeAccepted.splice(index, 1);
             this.intentProvider.returnPlaceToAccept = undefined;
         }
     }
@@ -64,4 +84,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
         this.router.navigate(['admin/tabs/records/details']);
     }
 
+    changeTab($event: CustomEvent) {
+        this.tabView = $event.detail.value;
+    }
 }

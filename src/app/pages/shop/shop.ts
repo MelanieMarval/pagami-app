@@ -17,7 +17,10 @@ export class ShopPage implements OnInit {
     place: Place = {
         accuracy: 0,
         createTime: String(new Date()),
-        icon: '002-compras',
+        category: {
+            name: 'Abasto',
+            icon: 'abasto'
+        },
         id: 'nkjhniohnil4',
         lastUpdate: '54545',
         latitude: 0,

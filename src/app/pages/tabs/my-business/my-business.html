@@ -8,18 +8,22 @@
             </ion-title>
         </ion-toolbar>
     </ion-header>
+    <div class="progress-bar-container">
+        <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+    </div>
 
-    <div class="no-register">
+    <div class="no-register" *ngIf="!loading">
         <ion-img src="assets/img/my-business-no-register.png"></ion-img>
-        <ion-text>
+        <ion-text class="ion-padding-horizontal">
             ¡Oh no! <br>
-            <span *ngIf="!isClaim">Aún no has reclamado tu empresa</span>
-            <span *ngIf="isClaim">Tu empresa aun esta en verificacion</span>
+            <span *ngIf="isClaim">Tu empresa aun esta en verificación</span>
+            <span *ngIf="!isClaim && availableToClaim">Aún no has reclamado tu empresa</span>
+            <span *ngIf="!isClaim && !availableToClaim ">Parece que esta opción no esta habilitada para ti.</span>
         </ion-text>
     </div>
 </ion-content>
-<ion-footer class="footer-button" *ngIf="!isRegister">
-    <ion-button *ngIf="!isClaim" class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
+<ion-footer class="footer-button" *ngIf="!isRegister && availableToClaim">
+    <ion-button *ngIf="!isClaim && availableToClaim" class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
         Buscar mi empresa
     </ion-button>
     <ion-button *ngIf="isClaim" class="button-large" expand="block" color="pagami" routerLink="/app/shop">
