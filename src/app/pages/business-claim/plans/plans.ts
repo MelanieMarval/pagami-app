@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastProvider } from '../../../providers/toast.provider';
+import { PlansService } from '../../../core/api/plans/plans.service';
+import { ApiResponse } from '../../../core/api/api.response';
 
 @Component({
     selector: 'page-plans',
@@ -7,15 +9,21 @@ import { ToastProvider } from '../../../providers/toast.provider';
     styleUrls: ['./plans.scss'],
 })
 
-export class PlansPage {
+export class PlansPage implements OnInit {
 
     loading = false;
     save = false;
     free = true;
 
-    constructor(private toast: ToastProvider) {
+    constructor(private toast: ToastProvider, private plansService: PlansService) {
     }
 
+    ngOnInit() {
+        this.plansService.getAll()
+            .then((success: ApiResponse) => {
+                console.log(success.response);
+            });
+    }
 
     pay() {
         this.loading = true;

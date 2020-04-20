@@ -7,6 +7,8 @@ import { AuthService } from './api/auth/auth.service';
 import { PlacesService } from './api/places/places.service';
 import { GoogleAuthService } from './google-auth/google-auth.service';
 import { FireStorage } from './fire-storage/fire.storage';
+import { PlansService } from './api/plans/plans.service';
+import { ClaimService } from './api/claim/claim.service';
 
 
 @NgModule({
@@ -17,11 +19,13 @@ import { FireStorage } from './fire-storage/fire.storage';
         Geolocation,
         GeolocationService,
         StorageProvider,
+        GoogleAuthService,
+        FireStorage,
         ApiService,
         AuthService,
         PlacesService,
-        GoogleAuthService,
-        FireStorage
+        PlansService,
+        ClaimService
     ]
 })
 export class CoreModule {

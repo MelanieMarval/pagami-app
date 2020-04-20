@@ -1,7 +1,7 @@
 
 <ion-content class="close-to-me-scroll">
 
-    <ion-header class="header-search-map" [hidden]="modeRegister">
+    <ion-header class="header-search-map" [hidden]="isRegistering">
         <ion-grid [class.unset]="bottomDrawer.showBackToolbar">
             <ion-row>
                 <ion-col size="1">
@@ -20,7 +20,7 @@
         </ion-grid>
     </ion-header>
 
-    <ion-header *ngIf="modeRegister" class="header-search-map header-search-map--surface" [hidden]="!beforeSaveLocation">
+    <ion-header *ngIf="isRegistering" class="header-search-map header-search-map--surface" [hidden]="!beforeSaveLocation">
         <ion-grid>
             <ion-row>
                 <ion-col size="1">
@@ -37,13 +37,13 @@
 
     <div #mapCanvas class="map-canvas"></div>
 
-    <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed" [hidden]="modeRegister">
+    <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed" [hidden]="isRegistering">
         <ion-fab-button color="{{ fabAttached ? 'map':'light'}}" (click)="attachedPosition()">
             <ion-icon src="assets/icon/my_location.svg"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 
-    <div class="footer-button footer-button--div" *ngIf="modeRegister">
+    <div class="footer-button footer-button--div" *ngIf="isRegistering">
         <ion-button [disabled]="saving" class="button-large" expand="block" (click)="saveLocation()" color="pagami" *ngIf="beforeSaveLocation">
             <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
             <span *ngIf="!saving">Guardar ubicacion</span>

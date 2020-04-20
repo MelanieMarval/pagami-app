@@ -25,28 +25,28 @@ export class AppComponent {
         this.platform.ready().then(async () => {
             const isLogged = await this.storageService.isLogged();
             const user = await this.storageService.getPagamiUser();
-            // if (isLogged) {
-            //     if (user.type && user.type === USER.TYPE.ADMIN) {
-            //         await this.openAdminPanel();
-            //     } else {
-            //         await this.openHome();
-            //     }
-            // } else {
-            //     await this.openTutorial();
-            // }
+            if (isLogged) {
+                if (user.type && user.type === USER.TYPE.ADMIN) {
+                    await this.openAdminPanel();
+                } else {
+                    await this.openHome();
+                }
+            } else {
+                await this.openTutorial();
+            }
             await SplashScreen.hide();
         });
     }
 
     private openTutorial(): Promise<boolean> {
-        return this.router.navigateByUrl('/tutorial');
+        return this.router.navigateByUrl('/tutorial', { replaceUrl: true });
     }
 
     private openHome(): Promise<boolean> {
-        return this.router.navigateByUrl('/app/tabs/map/search');
+        return this.router.navigateByUrl('/app/tabs/map/search', { replaceUrl: true });
     }
 
     private openAdminPanel(): Promise<boolean> {
-        return this.router.navigateByUrl('/admin/tabs/activity');
+        return this.router.navigateByUrl('/admin/tabs/activity', { replaceUrl: true });
     }
 }
