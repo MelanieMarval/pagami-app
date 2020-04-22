@@ -1,0 +1,32 @@
+    <ion-item-group>
+        <ion-card class="card-place" *ngFor="let dummy of dummies">
+            <ion-card-header>
+                <ion-row>
+                    <ion-col size="11">
+                        <ion-card-subtitle>
+                            <ion-skeleton-text animated style="width: 85%"></ion-skeleton-text>
+                        </ion-card-subtitle>
+                    </ion-col>
+                    <ion-col size="1">
+                        <ion-skeleton-text animated style="width: 90%; font-size: 20px"></ion-skeleton-text>
+                    </ion-col>
+                </ion-row>
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-row>
+                    <ion-col size="2">
+                        <ion-avatar class="border-white-1px">
+                            <ion-skeleton-text></ion-skeleton-text>
+                        </ion-avatar>
+                    </ion-col>
+                    <ion-col size="8">
+                        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                    </ion-col>
+                    <ion-col size="3">
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+        </ion-card>
+    </ion-item-group>
+

@@ -49,8 +49,18 @@ export class IntentProvider {
 // Admin
     private _placeToAccept: Place;
     private _returnPlaceToAccept: Place;
+    private _placeToVerified: Place;
+    private _returnPlaceToVerified: Place;
     private _userToEdit: User;
     private _showNotification: boolean;
+
+    get placeToAccept(): Place {
+        return this._placeToAccept;
+    }
+
+    set placeToAccept(value: Place) {
+        this._placeToAccept = value;
+    }
 
     get returnPlaceToAccept(): Place {
         return this._returnPlaceToAccept;
@@ -60,12 +70,20 @@ export class IntentProvider {
         this._returnPlaceToAccept = value;
     }
 
-    get placeToAccept(): Place {
-        return this._placeToAccept;
+    get placeToVerified(): Place {
+        return this._placeToVerified;
     }
 
-    set placeToAccept(value: Place) {
-        this._placeToAccept = value;
+    set placeToVerified(value: Place) {
+        this._placeToVerified = value;
+    }
+
+    get returnPlaceToVerified(): Place {
+        return this._returnPlaceToVerified;
+    }
+
+    set returnPlaceToVerified(value: Place) {
+        this._returnPlaceToVerified = value;
     }
 
     get userToEdit(): User {

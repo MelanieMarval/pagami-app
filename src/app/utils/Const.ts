@@ -38,7 +38,8 @@ export const PLACES = {
         VERIFIED: 'VERIFIED',   // can view details, (with buttons)
         REJECTED: 'REJECTED',   // disabled
         INCOMPLETE: 'INCOMPLETE', // can edit
-        DISABLED: 'DISABLED'    // can not show
+        DISABLED: 'DISABLED',    // can not show
+        CLAIM: 'CLAIM'
     }
 };
 

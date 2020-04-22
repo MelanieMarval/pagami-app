@@ -23,6 +23,9 @@
 </ion-content>
 
 <ion-footer class="footer-button background-transparent" slot="fixed">
+    <div *ngIf="place?.category" class="small-category">
+        <small class="pagami-text-2nd small-category">Categoria: {{place.category?.name}}</small>
+    </div>
     <ion-button [disabled]="saving" class="button-large" expand="block" color="pagami" (click)="saveIconBusiness()">
         <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
         <span *ngIf="!saving">Terminar registro</span>

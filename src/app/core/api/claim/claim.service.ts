@@ -3,7 +3,6 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { ApiResponse } from '../api.response';
-import { CLAIMS } from '../../../utils/Const';
 
 @Injectable({
     providedIn: 'root'
@@ -40,7 +39,7 @@ export class ClaimService {
      */
     async changeStatus(claimId: string, status: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.get(`${this.URL}/${claimId}/status/${status}`, options);
+        const request = this.httpClient.put(`${this.URL}/${claimId}/status/${status}`, {}, options);
         return this.apiService.serverListener(request);
     }
 

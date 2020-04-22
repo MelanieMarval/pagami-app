@@ -12,7 +12,7 @@
         <ion-item lines="none" class="info-category">
             <ion-icon slot="start" [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>ALMACENES · {{placeTypeSpanish(place.type)}}</ion-label>
+            <ion-label>{{place.category.name}} · {{placeTypeSpanish(place.type)}}</ion-label>
         </ion-item>
         <div class="info-title">
             <ion-text color="light">
@@ -71,9 +71,13 @@
             </ion-button>
         </ion-col>
         <ion-col size="6">
-            <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
+            <ion-button *ngIf="isAccepting" class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
                 <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
                 <span *ngIf="!saving">Aceptar</span>
+            </ion-button>
+            <ion-button *ngIf="!isAccepting" class="button-small" expand="block" (click)="verifyPlace()" [disabled]="saving || rejecting">
+                <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!saving">Verificar</span>
             </ion-button>
         </ion-col>
     </ion-row>

@@ -24,7 +24,9 @@
         ion-label.ios{
             transform: translate3d(0, 13px, 0px);
         }
-
+        ion-input {
+            --background: transparent;
+        }
         ion-icon {
             margin-top: auto;
             margin-bottom: auto;

@@ -45,7 +45,7 @@ export class PlacesService {
 
     async getAllClaimWaiting(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.get(`${this.URL}/status/CLAIM`, options);
+        const request = this.httpClient.get(`${this.URL}/status/${PLACES.STATUS.CLAIM}`, options);
         return this.apiService.serverListener(request);
     }
 

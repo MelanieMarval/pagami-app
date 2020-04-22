@@ -50,6 +50,7 @@ export class ShopPage implements OnInit {
         }
         if (this.intentProvider.placeToClaim) {
             this.claim = true;
+            // @ts-ignore
             this.place = this.intentProvider.placeToClaim;
             return;
         }

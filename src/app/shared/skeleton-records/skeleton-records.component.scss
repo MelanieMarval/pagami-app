@@ -1,0 +1,45 @@
+.card-place {
+    background: #2D3748;
+    border-radius: 4px;
+    margin: 10px 0;
+
+    ion-card-subtitle {
+        font-size: 12px;
+        color: #718096;
+        text-transform: unset;
+    }
+
+    ion-card-content {
+        padding: 0 10px 5px 10px;
+        font-size: 12px;
+        color: #A0AEC0;
+
+        ion-col {
+            display: flex;
+            align-items: center;
+        }
+
+        ion-avatar {
+            border: 2px solid;
+            width: 40px;
+            height: 40px;
+        }
+
+        ion-card-title {
+            font-size: 14px;
+            font-weight: normal;
+            color: #FFF;
+        }
+
+    }
+}
+
+ion-card-header {
+    padding: 10px 10px 0;
+
+    ion-card-title {
+        font-size: 32px;
+        font-weight: normal;
+        color: #FFF;
+    }
+}

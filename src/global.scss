@@ -25,11 +25,14 @@
 /* Animaciones */
 @import "assets/css/animated.min";
 
-/* Headers and Toolbars */
+/* Headers and toolbars */
 @import "assets/css/headers-toolbars";
 
 /* Inputs and forms */
 @import "assets/css/inputs";
+
+/* Cards and lists containers */
+@import "assets/css/cards";
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button {
@@ -128,47 +131,6 @@
 /* END progress bar */
 /*  ***********************  */
 
-/* CARDS */
-
-.card-admin-3rows {
-    background: #2D3748;
-    border-radius: 3px;
-    padding: 10px;
-
-    ion-card-subtitle {
-        font-size: 12px;
-        color: #718096;
-        text-transform: unset;
-    }
-
-    ion-card-content {
-        font-size: 12px;
-        color: #A0AEC0;
-
-        ion-col {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        ion-avatar {
-            border: 2px solid;
-            width: 40px;
-            height: 40px;
-        }
-
-        ion-card-title {
-            font-size: 14px;
-            font-weight: normal;
-            color: #FFF;
-        }
-
-    }
-}
-/* END Cards */
-/*  ***********************  */
-
-
 ion-bottom-drawer {
     background: transparent !important;
     --background: transparent !important;
@@ -210,7 +172,6 @@ ion-bottom-drawer {
     --background: transparent !important;
     background: transparent !important;
 }
-
 .with-overflow-y {
     overflow-y: scroll !important;
 }

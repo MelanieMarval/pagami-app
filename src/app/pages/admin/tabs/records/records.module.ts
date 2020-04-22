@@ -7,6 +7,7 @@ import { RecordsPage } from './records';
 import { PipesModule } from '../../../../pipes/pipes.module';
 import { RecordDetailsModule } from '../record-details/record-details.module';
 import { BackgroundEmptyModule } from '../../../../shared/background-empty/background-empty.module';
+import { SkeletonRecordsModule } from '../../../../shared/skeleton-records/skeleton-records.module';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { BackgroundEmptyModule } from '../../../../shared/background-empty/backg
         ]),
         PipesModule,
         BackgroundEmptyModule,
+        SkeletonRecordsModule,
     ],
     declarations: [ RecordsPage ]
 })

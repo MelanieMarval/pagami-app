@@ -1,8 +1,9 @@
 
 <ion-content>
 
-    <ion-list *ngIf="!loading && !error && !empty" class="ion-padding">
+    <ion-list class="ion-padding h-100">
 
+        <!--    TABS TO SELECT    -->
         <ion-segment (ionChange)="changeTab($event)" [value]="tabView">
             <ion-segment-button value="beAccepted">
                 <ion-label>Por Aceptar</ion-label>
@@ -12,128 +13,107 @@
             </ion-segment-button>
         </ion-segment>
 
-        <ion-list *ngIf="tabView === 'beAccepted'">
-            <ion-item-group class="ion-padding-vertical" *ngIf="showNotification.accepted">
-                <ion-item button (click)="showNotification.accepted = false" detailIcon="" lines="none" color="pagami-surface" class="notification">
-                    <ion-note slot="end" color="pagami">OKAY</ion-note>
-                    <ion-label class="ion-text-wrap">Tienes {{recordsToBeAccepted.length | plural:'nuevo registro'}}</ion-label>
-                </ion-item>
-            </ion-item-group>
+<!--    TAB RECORDS TO BE ACCEPTED    -->
+        <ion-list *ngIf="tabView === 'beAccepted'" class="h-100">
+            <app-skeleton-records *ngIf="loading.accepted"></app-skeleton-records>
 
-            <ion-item-group class="">
-                <ion-card class="card-place"
-                          *ngFor="let record of recordsToBeAccepted"
-                          [button]="true"
-                          (click)="showRecord(record)">
-                    <ion-card-header>
-                        <ion-row>
-                            <ion-col size="11">
-                                <ion-card-subtitle>
-                                    {{ record.createTime | date:'d/M/y'}} · {{ record.createTime | date:'shortTime'}} ·
-                                    <span>{{record.location.country}}</span>
-                                </ion-card-subtitle>
-                            </ion-col>
-                            <ion-col size="1" class="padding-icon-link">
-                                <ion-icon name="arrow-forward" color="light" style="font-size: 20px"></ion-icon>
-                            </ion-col>
-                        </ion-row>
-                    </ion-card-header>
+            <div *ngIf="!loading.accepted" class="h-100">
+                <ion-item-group class="ion-padding-vertical" *ngIf="showNotification.accepted">
+                    <ion-item button (click)="showNotification.accepted = false" detailIcon="" lines="none" color="pagami-surface" class="notification">
+                        <ion-note slot="end" color="pagami">OKAY</ion-note>
+                        <ion-label class="ion-text-wrap">Tienes {{totalToBeAccepted | plural:'nuevo registro'}}</ion-label>
+                    </ion-item>
+                </ion-item-group>
 
-                    <ion-card-content>
-                        <ion-row>
-                            <ion-col size="2">
-                                <ion-avatar class="border-white-1px">
-                                    <ion-img [src]="placeThumbnailPhoto(record)"></ion-img>
-                                </ion-avatar>
-                            </ion-col>
-                            <ion-col size="10">
-                                <ion-card-title>{{record.name | capitalize}}</ion-card-title>
-                            </ion-col>
-                        </ion-row>
-                    </ion-card-content>
-                </ion-card>
-            </ion-item-group>
+                <ion-item-group class="">
+                    <ion-card class="card-place"
+                              *ngFor="let record of recordsToBeAccepted"
+                              [button]="true"
+                              (click)="showRecord(record, 'accepted')">
+                        <ion-card-header>
+                            <ion-row>
+                                <ion-col size="11">
+                                    <ion-card-subtitle>
+                                        {{ record.createTime | date:'d/M/y'}} · {{ record.createTime | date:'shortTime'}} ·
+                                        <span>{{record.location.country}}</span>
+                                    </ion-card-subtitle>
+                                </ion-col>
+                                <ion-col size="1" class="padding-icon-link">
+                                    <ion-icon name="arrow-forward" color="light" style="font-size: 20px"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                        </ion-card-header>
+
+                        <ion-card-content>
+                            <ion-row>
+                                <ion-col size="2">
+                                    <ion-avatar class="border-white-1px">
+                                        <ion-img [src]="placeThumbnailPhoto(record)"></ion-img>
+                                    </ion-avatar>
+                                </ion-col>
+                                <ion-col size="10">
+                                    <ion-card-title>{{record.name | capitalize}}</ion-card-title>
+                                </ion-col>
+                            </ion-row>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-item-group>
+                <app-background-empty *ngIf="empty.accepted" [title]="'Todo listo'" [text]="'No hay nada en registros por Aceptar'" height="80"></app-background-empty>
+            </div>
         </ion-list>
 
-        <ion-list *ngIf="tabView === 'beVerified'">
-            <ion-item-group class="ion-padding-vertical" *ngIf="showNotification.verified">
-                <ion-item button (click)="showNotification.verified = false" detailIcon="" lines="none" color="pagami-surface" class="notification">
-                    <ion-note slot="end" color="pagami">OKAY</ion-note>
-                    <ion-label class="ion-text-wrap">Tienes {{recordsToBeVerified.length | plural:'nuevo registro'}}</ion-label>
-                </ion-item>
-            </ion-item-group>
+<!--    TAB RECORDS TO BE VERIFIED    -->
+        <ion-list *ngIf="tabView === 'beVerified'" class="h-100">
+            <app-skeleton-records *ngIf="loading.verified"></app-skeleton-records>
 
-            <ion-item-group class="">
-                <ion-card class="card-place"
-                          *ngFor="let record of recordsToBeVerified"
-                          [button]="true"
-                          (click)="showRecord(record)">
-                    <ion-card-header>
-                        <ion-row>
-                            <ion-col size="11">
-                                <ion-card-subtitle>
-                                    {{ record.createTime | date:'d/M/y'}} · {{ record.createTime | date:'shortTime'}} ·
-                                    <span>{{record.location.country}}</span>
-                                </ion-card-subtitle>
-                            </ion-col>
-                            <ion-col size="1" class="padding-icon-link">
-                                <ion-icon name="arrow-forward" color="light" style="font-size: 20px"></ion-icon>
-                            </ion-col>
-                        </ion-row>
-                    </ion-card-header>
+            <div *ngIf="!loading.verified" class="h-100">
+                <ion-item-group class="ion-padding-vertical" *ngIf="showNotification.verified">
+                    <ion-item button (click)="showNotification.verified = false" detailIcon="" lines="none" color="pagami-surface" class="notification">
+                        <ion-note slot="end" color="pagami">OKAY</ion-note>
+                        <ion-label class="ion-text-wrap">Tienes {{recordsToBeVerified.length | plural:'nuevo registro'}}</ion-label>
+                    </ion-item>
+                </ion-item-group>
 
-                    <ion-card-content>
-                        <ion-row>
-                            <ion-col size="2">
-                                <ion-avatar class="border-white-1px">
-                                    <ion-img [src]="placeThumbnailPhoto(record)"></ion-img>
-                                </ion-avatar>
-                            </ion-col>
-                            <ion-col size="10">
-                                <ion-card-title>{{record.name | capitalize}}</ion-card-title>
-                            </ion-col>
-                        </ion-row>
-                    </ion-card-content>
-                </ion-card>
-            </ion-item-group>
+                <ion-item-group class="">
+                    <ion-card class="card-place"
+                              *ngFor="let record of recordsToBeVerified"
+                              [button]="true"
+                              (click)="showRecord(record, 'verified')">
+                        <ion-card-header>
+                            <ion-row>
+                                <ion-col size="11">
+                                    <ion-card-subtitle>
+                                        {{ record.createTime | date:'d/M/y'}} · {{ record.createTime | date:'shortTime'}} ·
+                                        <span>{{record.location.country}}</span>
+                                    </ion-card-subtitle>
+                                </ion-col>
+                                <ion-col size="1" class="padding-icon-link">
+                                    <ion-icon name="arrow-forward" color="light" style="font-size: 20px"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                        </ion-card-header>
+
+                        <ion-card-content>
+                            <ion-row>
+                                <ion-col size="2">
+                                    <ion-avatar class="border-white-1px">
+                                        <ion-img [src]="placeThumbnailPhoto(record)"></ion-img>
+                                    </ion-avatar>
+                                </ion-col>
+                                <ion-col size="10">
+                                    <ion-card-title>{{record.name | capitalize}}</ion-card-title>
+                                </ion-col>
+                            </ion-row>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-item-group>
+
+                <app-background-empty *ngIf="this.empty.verified" [title]="'Todo listo'" [text]="'No hay nada en registros por verificar'" height="80"></app-background-empty>
+            </div>
         </ion-list>
 
     </ion-list>
 
-    <ion-list *ngIf="loading || error" class="ion-padding">
-        <ion-item-group>
-            <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(5).split('')">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="11">
-                            <ion-card-subtitle>
-                                <ion-skeleton-text [animated]="!error" style="width: 85%"></ion-skeleton-text>
-                            </ion-card-subtitle>
-                        </ion-col>
-                        <ion-col size="1">
-                            <ion-skeleton-text [animated]="!error" style="width: 90%; font-size: 20px"></ion-skeleton-text>
-                        </ion-col>
-                    </ion-row>
-                </ion-card-header>
 
-                <ion-card-content>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-avatar class="border-white-1px">
-                                <ion-skeleton-text></ion-skeleton-text>
-                            </ion-avatar>
-                        </ion-col>
-                        <ion-col size="8">
-                            <ion-skeleton-text [animated]="!error" style="width: 70%"></ion-skeleton-text>
-                        </ion-col>
-                        <ion-col size="3">
-                        </ion-col>
-                    </ion-row>
-                </ion-card-content>
-            </ion-card>
-        </ion-item-group>
-    </ion-list>
-
-    <app-background-empty *ngIf="empty" [title]="'Todo listo'" [text]="'No hay nada en registros'"></app-background-empty>
 
 </ion-content>

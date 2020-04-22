@@ -28,5 +28,11 @@ export interface Place {
     createTime?: string;
     lastUpdate?: string;
     distance?: number; // in meters
+    claim?: {
+        claimId?: string;
+        createdTime?: object;
+        status?: string;
+        userId?: string;
+    };
     // TODO, add another elements from this model
 }

@@ -15,7 +15,7 @@ export class PlaceUtils {
     static getMessageStatus(status: string): string {
         switch (status) {
             case PLACES.STATUS.WAITING:
-                return 'Esperando de aceptacion';
+                return 'Esperando aceptacion';
             case PLACES.STATUS.ACCEPTED:
                 return 'En espera de verificacion';
             case PLACES.STATUS.VERIFIED:

@@ -43,7 +43,9 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
     setupData(place: Place) {
         this.place = place;
-        this.getAddress(place.latitude, place.longitude);
+        if (!this.place.location) {
+            this.getAddress(place.latitude, place.longitude);
+        }
         this.previewUrl = this.place.photoUrl ? this.place.photoUrl : undefined;
         if (this.place.type === PLACES.TYPE.STORE) {
             this.isStore = true;
