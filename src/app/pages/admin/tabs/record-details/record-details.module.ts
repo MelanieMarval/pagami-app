@@ -1,11 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {IonicModule} from '@ionic/angular';
-import {HttpClientModule} from '@angular/common/http';
-import {RecordDetailsRoutingModule} from './record-details-routing.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
 import { RecordDetailsPage } from './record-details';
 import { PipesModule } from '../../../../pipes/pipes.module';
-
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -13,8 +12,10 @@ import { PipesModule } from '../../../../pipes/pipes.module';
         CommonModule,
         IonicModule,
         HttpClientModule,
-        RecordDetailsRoutingModule,
-        PipesModule
+        PipesModule,
+        RouterModule.forChild([{
+            path: '', component: RecordDetailsPage
+        }]),
     ],
     declarations: [
         RecordDetailsPage,

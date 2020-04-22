@@ -54,7 +54,6 @@ export class PlansPage implements OnInit {
                     this.loading = false;
                     console.log(success);
                     if (success.passed) {
-                        this.intentProvider.placeToClaim = undefined;
                         this.save = true;
                         this.toast.messageSuccessBottom('Gracias por tu compra. <br>La verificacion de tu empresa esta en camino!', 3000);
                     } else {

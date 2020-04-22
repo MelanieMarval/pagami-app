@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InputFilePage } from '../parent/InputFilePage';
-import { Place } from '../../core/api/places/place';
-import { PLACES } from '../../utils/Const';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { ValidationUtils } from '../../utils/validation.utils';
 // Services
-import { PlacesService } from '../../core/api/places/places.service';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 // Providers
 import { StorageProvider } from '../../providers/storage.provider';
 import { ToastProvider } from '../../providers/toast.provider';
 import { IntentProvider } from '../../providers/intent.provider';
 import { AlertController } from '@ionic/angular';
+import { PlacesService } from '../../core/api/places/places.service';
+import { Place } from '../../core/api/places/place';
+import { PLACES } from '../../utils/Const';
 
 @Component({
     selector: 'app-business-details',
@@ -27,7 +27,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     isService = false;
 
     constructor(private storageService: StorageProvider,
-                private placesService: PlacesService,
+                private placeService: PlacesService,
                 private route: Router,
                 private toast: ToastProvider,
                 private fireStorage: FireStorage,
@@ -56,7 +56,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     }
 
     getAddress(lat: number, lng: number) {
-        this.placesService.getPlaceByGeocode(lat, lng)
+        this.placeService.getPlaceByGeocode(lat, lng)
             .then(results => {
                 this.mapLocation(results.results);
             });

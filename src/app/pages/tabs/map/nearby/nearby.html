@@ -1,5 +1,5 @@
-<div class="ion-grid-places">
-    <ion-grid>
+<div class="ion-grid-claims">
+    <ion-grid class="no-pb">
         <ion-row class="scrollable-draw">
             <div class="scrollable-draw-children" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
         </ion-row>
@@ -28,61 +28,61 @@
         </ion-row>
     </ion-grid>
     <ion-grid>
-        <ion-row *ngIf="selectedPlace">
-            <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(selectedPlace)">
+        <ion-row *ngIf="selectedclaim">
+            <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(selectedclaim)">
                 <div class="card-img-contain">
                     <ion-skeleton-text
                         class="card-img-skeleton"
-                        [hidden]="selectedPlace.loaded"
+                        [hidden]="selectedclaim.loaded"
                         animated>
                     </ion-skeleton-text>
                     <ion-img
-                        [style.opacity]="selectedPlace.loaded ? 1 : 0"
-                        [src]="selectedPlace.photoUrl" class="card-img"
-                        (ionImgDidLoad)="selectedPlace.loaded = true">
+                        [style.opacity]="selectedclaim.loaded ? 1 : 0"
+                        [src]="selectedclaim.photoUrl" class="card-img"
+                        (ionImgDidLoad)="selectedclaim.loaded = true">
                     </ion-img>
                 </div>
                 <ion-card-header class="card-header">
                     <ion-card-subtitle class="card-subtitle">
-                        <ion-icon name="home" class="size-icon-mini"></ion-icon>&nbsp;
-                        <ion-label>ALMACENES</ion-label>
+                        <ion-icon [src]="'assets/category-icons/'+selectedclaim.category.icon+'.svg'" class="size-icon-mini"></ion-icon>&nbsp;
+                        <ion-label>{{selectedclaim.category.name | uppercase}}</ion-label>
                     </ion-card-subtitle>
                     <ion-card-title class="nearby-title">
-                        {{selectedPlace.name}}
-                        <ion-icon *ngIf="selectedPlace.status === STATUS.VERIFIED" name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
+                        {{selectedclaim.name}}
+                        <ion-icon *ngIf="selectedclaim.status === STATUS.VERIFIED" name="shield-checkmark" color="success"></ion-icon>
                     </ion-card-title>
                     <ion-card-subtitle class="card-subtitle">
-                        Abierto · {{messageDistance(selectedPlace.distance)}}
+                        Abierto · {{messageDistance(selectedclaim.distance)}}
                     </ion-card-subtitle>
                 </ion-card-header>
             </ion-card>
         </ion-row>
-        <ion-row *ngFor="let place of nearPlaces;" [hidden]="selectedPlace && selectedPlace.id === place.id">
-            <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(place)">
+        <ion-row *ngFor="let claim of nearclaims;" [hidden]="selectedclaim && selectedclaim.id === claim.id">
+            <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(claim)">
                 <div class="card-img-contain">
                     <ion-skeleton-text
                         class="card-img-skeleton"
-                        [hidden]="place.loaded"
+                        [hidden]="claim.loaded"
                         animated>
                     </ion-skeleton-text>
                     <ion-img
-                        [style.opacity]="place.loaded ? 1 : 0"
-                        [src]="place.photoUrl"
+                        [style.opacity]="claim.loaded ? 1 : 0"
+                        [src]="claim.photoUrl"
                         class="card-img"
-                        (ionImgDidLoad)="place.loaded = true">
+                        (ionImgDidLoad)="claim.loaded = true">
                     </ion-img>
                 </div>
                 <ion-card-header class="card-header">
                     <ion-card-subtitle class="card-subtitle">
-                        <ion-icon name="home" class="size-icon-mini"></ion-icon>&nbsp;
-                        <ion-label>ALMACENES</ion-label>
+                        <ion-icon [src]="'assets/category-icons/'+claim.category.icon+'.svg'"></ion-icon>&nbsp;
+                        <ion-label>{{claim.category.name | uppercase}}</ion-label>
                     </ion-card-subtitle>
                     <ion-card-title class="nearby-title">
-                        {{place.name}}
-                        <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
+                        {{claim.name}}
+                        <ion-icon *ngIf="claim.status === STATUS.VERIFIED" name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
                     </ion-card-title>
                     <ion-card-subtitle class="card-subtitle">
-                        Abierto · {{messageDistance(place.distance)}}
+                        Abierto · {{messageDistance(claim.distance)}}
                     </ion-card-subtitle>
                 </ion-card-header>
             </ion-card>

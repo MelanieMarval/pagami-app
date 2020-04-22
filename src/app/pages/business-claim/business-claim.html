@@ -13,7 +13,7 @@
 <ion-content>
     <div class="ion-margin ion-padding-vertical ion-text-center">
         <ion-text class="ion-text-center">
-            Para verififcacion de la empresa debe rellenar el siguiente formulario <i>(esta informacion no sera compartida
+            Para verificación de la empresa debe rellenar el siguiente formulario <i>(esta información no será compartida
             con los usuarios)</i>:
         </ion-text>
     </div>
@@ -27,17 +27,17 @@
             </ion-item>
             <div class="error-text">
                 <small *ngIf="form.get('businessRuc').errors?.required && form.get('businessRuc').touched">*Este campo es requerido</small>
-                <small *ngIf="form.get('businessRuc').errors?.maxlength">Maximo 20 caracteres</small>
+                <small *ngIf="form.get('businessRuc').errors?.maxlength">Máximo 20 carácteres</small>
             </div>
 
             <ion-item color="pagami-surface">
-                <ion-label position="floating">Telefono de contacto</ion-label>
+                <ion-label position="floating">Teléfono de contacto</ion-label>
                 <ion-input formControlName="businessPhone" type="text" maxlength="15"></ion-input>
                 <ion-icon slot="start" src="assets/icon/call.svg"></ion-icon>
             </ion-item>
             <div class="error-text">
                 <small *ngIf="form.get('businessPhone').errors?.required && form.get('businessPhone').touched">*Este campo es requerido</small>
-                <small *ngIf="form.get('businessPhone').errors?.pattern && form.get('businessPhone').touched">No es un numero valido <br></small>
+                <small *ngIf="form.get('businessPhone').errors?.pattern && form.get('businessPhone').touched">No es un número válido <br></small>
                 <small *ngIf="(form.get('businessPhone').errors?.minlength || form.get('businessPhone').errors?.maxlength) && form.get('businessPhone').touched && !form.get('businessPhone').errors?.pattern">Debe tener entre 8 y 15 caracteres</small>
             </div>
 
@@ -56,7 +56,7 @@
                 <ion-textarea rows="6" maxlength="300" formControlName="businessComment"></ion-textarea>
             </ion-item>
             <div class="error-text">
-                <small *ngIf="form.get('businessComment').errors?.minlength && form.get('businessComment').touched">Minimo 5 caracteres y maximo 300</small>
+                <small *ngIf="form.get('businessComment').errors?.minlength && form.get('businessComment').touched">Mínimo 5 carácteres y máximo 300</small>
             </div>
         </ion-list>
 

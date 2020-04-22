@@ -16,7 +16,7 @@ import { AlertProvider } from '../../../providers/alert.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { IntentProvider } from '../../../providers/intent.provider';
-import { MAP_MODE } from '../../../utils/Const';
+import { CLAIMS, MAP_MODE } from '../../../utils/Const';
 
 @Component({
     selector: 'app-map-page',

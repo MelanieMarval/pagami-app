@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { ApiResponse } from '../api.response';
+import { CLAIMS } from '../../../utils/Const';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,12 @@ export class ClaimService {
     async getMyBusiness(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/my-business`, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async getWaiting(): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/status/${CLAIMS.STATUS.WAITING}`, options);
         return this.apiService.serverListener(request);
     }
 

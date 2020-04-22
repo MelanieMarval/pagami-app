@@ -9,6 +9,7 @@ export interface Place {
     category?: {
       name?: string;
       icon?: string;
+      subCategory?: number;
     };
     location?: {
         address?: string        // escrito por el usuario

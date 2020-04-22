@@ -49,8 +49,8 @@ export class IntentProvider {
 // Admin
     private _placeToAccept: Place;
     private _returnPlaceToAccept: Place;
-    private _placeToVerified: Place;
-    private _returnPlaceToVerified: Place;
+    private _claimToVerified: Claim;
+    private _returnClaimToVerified: Claim;
     private _userToEdit: User;
     private _showNotification: boolean;
 
@@ -70,20 +70,20 @@ export class IntentProvider {
         this._returnPlaceToAccept = value;
     }
 
-    get placeToVerified(): Place {
-        return this._placeToVerified;
+    get claimToVerified(): Claim {
+        return this._claimToVerified;
     }
 
-    set placeToVerified(value: Place) {
-        this._placeToVerified = value;
+    set claimToVerified(value: Claim) {
+        this._claimToVerified = value;
     }
 
-    get returnPlaceToVerified(): Place {
-        return this._returnPlaceToVerified;
+    get returnClaimToVerified(): Claim {
+        return this._returnClaimToVerified;
     }
 
-    set returnPlaceToVerified(value: Place) {
-        this._returnPlaceToVerified = value;
+    set returnClaimToVerified(value: Claim) {
+        this._returnClaimToVerified = value;
     }
 
     get userToEdit(): User {

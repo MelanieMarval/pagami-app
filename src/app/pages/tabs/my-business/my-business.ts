@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { InputFilePage } from '../../parent/InputFilePage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { Place } from '../../../core/api/places/place';
@@ -6,14 +6,15 @@ import { ValidationUtils } from '../../../utils/validation.utils';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { ClaimService } from '../../../core/api/claim/claim.service';
+import { IntentProvider } from '../../../providers/intent.provider';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-my-business',
     templateUrl: 'my-business.html',
     styleUrls: ['my-business.scss']
 })
-export class MyBusinessPage extends InputFilePage implements OnInit {
-
+export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewChecked {
     isRegister = false;
     availableToClaim = false;
     isClaim = false;
@@ -26,6 +27,8 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
         private claim: ClaimService,
         private toast: ToastProvider,
         private placesService: PlacesService,
+        private intentProvider: IntentProvider,
+        private router: Router,
         protected geolocationService: GeolocationService
     ) {
         super(geolocationService);
@@ -52,6 +55,12 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
                     this.loading = false;
                 }
             });
+    }
+    ngAfterViewChecked(): void {
+        if (this.intentProvider.placeToClaim) {
+            this.intentProvider.placeToClaim = undefined;
+            this.isClaim = true;
+        }
     }
 
     editBusiness() {
@@ -83,4 +92,8 @@ export class MyBusinessPage extends InputFilePage implements OnInit {
             });
     }
 
+    viewShop() {
+        this.intentProvider.placeToShow = this.place;
+        this.router.navigate(['/app/shop']);
+    }
 }

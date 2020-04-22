@@ -9,7 +9,7 @@ const SESSION_TOKEN = 'session_token';
 const PAGAMI_USER = 'pagami_user';
 const GOOGLE_USER = 'google_user';
 const USER_UNREGISTERED = 'user_unregistered';
-const PLACE_UNREGISTERED = 'place_unregistered';
+const PLACE_UNREGISTERED = 'PLACE_unregistered';
 const LAST_COORS = 'last_pagami_coors';
 
 @Injectable({

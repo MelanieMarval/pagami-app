@@ -14,9 +14,9 @@
 
     <div class="no-register" *ngIf="!loading">
         <ion-img src="assets/img/my-business-no-register.png"></ion-img>
-        <ion-text class="ion-padding-horizontal">
-            ¡Oh no! <br>
-            <span *ngIf="isClaim">Tu empresa aun esta en verificación</span>
+        <ion-text class="ion-padding-horizontal ion-text-wrap">
+            <span *ngIf="!isClaim">¡Oh no! <br></span>
+            <span *ngIf="isClaim">Se paciente <br>Tu empresa aun esta en verificación</span>
             <span *ngIf="!isClaim && availableToClaim">Aún no has reclamado tu empresa</span>
             <span *ngIf="!isClaim && !availableToClaim ">Parece que esta opción no esta habilitada para ti.</span>
         </ion-text>
@@ -26,7 +26,7 @@
     <ion-button *ngIf="!isClaim && availableToClaim" class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
         Buscar mi empresa
     </ion-button>
-    <ion-button *ngIf="isClaim" class="button-large" expand="block" color="pagami" routerLink="/app/shop">
+    <ion-button *ngIf="isClaim" class="button-large" expand="block" color="pagami" (click)="viewShop()">
         Ver reclamo
     </ion-button>
 </ion-footer>

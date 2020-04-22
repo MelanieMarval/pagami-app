@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { RecordsPage } from './records';
+// Modules
 import { PipesModule } from '../../../../pipes/pipes.module';
-import { RecordDetailsModule } from '../record-details/record-details.module';
 import { BackgroundEmptyModule } from '../../../../shared/background-empty/background-empty.module';
 import { SkeletonRecordsModule } from '../../../../shared/skeleton-records/skeleton-records.module';
+// Pages
+import { ClaimDetailsPage } from '../claim-details/claim-details';
+import { RecordsPage } from './records';
 
 @NgModule({
     imports: [
@@ -16,13 +18,17 @@ import { SkeletonRecordsModule } from '../../../../shared/skeleton-records/skele
         FormsModule,
         RouterModule.forChild([
             {path: '', component: RecordsPage},
-            {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)}
+            {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)},
+            {path: 'claim', component: ClaimDetailsPage}
         ]),
         PipesModule,
         BackgroundEmptyModule,
         SkeletonRecordsModule,
     ],
-    declarations: [ RecordsPage ]
+    declarations: [
+        RecordsPage,
+        ClaimDetailsPage
+    ]
 })
 export class RecordsModule {
 }

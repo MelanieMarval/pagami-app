@@ -32,6 +32,17 @@ export const PLACES = {
         STORE: 'STORE',
         SERVICE: 'SERVICE'
     },
+    CATEGORY: {
+        FOOD: 1,
+        SHOP: 2,
+        HOTELERY: 3,
+        SERVICE: 4,
+        BEAUTY: 5,
+        MEDICINE: 6,
+        INDUSTRY: 7,
+        SPORT: 8,
+        ENTERTAINMENT: 9
+    },
     STATUS: {
         WAITING: 'WAITING',     // can edit
         ACCEPTED: 'ACCEPTED',   // can view details (without buttons products or services)

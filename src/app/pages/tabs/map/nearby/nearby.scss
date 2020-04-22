@@ -31,7 +31,7 @@
 .nearby-title {
     font-size: 16px;
     color: #FFFFFF;
-    margin: 12px 0 2px;
+    margin: 10px 0 0;
 }
 
 .size-icon-mini {
@@ -66,7 +66,7 @@
     &-subtitle {
         font-size: 14px;
         color: #718096 !important;
-        margin: 3px;
+        margin: 3px 3px 0 0;
     }
 }
 
@@ -80,6 +80,9 @@
 
 .ion-grid-places {
     min-height: calc(100vh - (62px + 48px));
+}
+.no-pb {
+    padding-bottom: 0;
 }
 
 

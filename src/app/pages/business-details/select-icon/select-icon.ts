@@ -38,15 +38,19 @@ export class SelectIconPage implements OnInit {
         if (this.selectedIcon === 0) {
             this.place.category = {
                 name: this.categoryIcons[0].name,
-                icon: this.categoryIcons[0].route
+                icon: this.categoryIcons[0].route,
+                subCategory: this.categoryIcons[0].subCategory
             };
         }
     }
 
     async selectIcon(index, icon) {
         this.selectedIcon = index;
-        this.place.category.name = icon.name;
-        this.place.category.icon = icon.route;
+        this.place.category = {
+            name: icon.name,
+            icon: icon.route,
+            subCategory: icon.subCategory
+        };
         this.storageInstance.placeToEdit = this.place;
     }
 

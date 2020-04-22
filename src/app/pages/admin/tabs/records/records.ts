@@ -1,7 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PlacesService } from '../../../../core/api/places/places.service';
-import { Place } from '../../../../core/api/places/place';
 
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
@@ -10,6 +8,11 @@ import { IntentProvider } from '../../../../providers/intent.provider';
 // Utils
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
+// Services
+import { PlacesService } from '../../../../core/api/places/places.service';
+import { ClaimService } from '../../../../core/api/claim/claim.service';
+import { Place } from '../../../../core/api/places/place';
+import { Claim } from '../../../../core/api/claim/claim';
 
 @Component({
     selector: 'app-admin-records',
@@ -34,12 +37,13 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     tabView = 'beAccepted';
     recordsToBeAccepted: Place[];
     totalToBeAccepted: number;
-    recordsToBeVerified: Place[];
+    recordsToBeVerified: Claim[];
     totalToBeVerified: number;
     STATUS = PLACES.STATUS;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
 
     constructor(private placesService: PlacesService,
+                private claimService: ClaimService,
                 private storageService: StorageProvider,
                 private router: Router,
                 private toast: ToastProvider,
@@ -65,14 +69,14 @@ export class RecordsPage implements OnInit, AfterViewChecked {
             this.intentProvider.returnPlaceToAccept = undefined;
             this.cdRef.detectChanges();
         }
-        if (this.intentProvider.returnPlaceToVerified) {
+        if (this.intentProvider.returnClaimToVerified) {
             const index = this.recordsToBeVerified.indexOf(this.recordsToBeVerified
-                .filter(record => record.id === this.intentProvider.returnPlaceToVerified.id)[0]);
+                .filter(record => record.id === this.intentProvider.returnClaimToVerified.id)[0]);
             this.recordsToBeVerified.splice(index, 1);
             this.totalToBeVerified = this.totalToBeVerified - 1;
             this.showNotification.verified = this.totalToBeVerified !== 0;
             this.empty.verified = this.totalToBeVerified === 0;
-            this.intentProvider.returnPlaceToVerified = undefined;
+            this.intentProvider.returnClaimToVerified = undefined;
             this.cdRef.detectChanges();
         }
     }
@@ -101,7 +105,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     getRecordsToBeVerified() {
         console.log('hacer getRecordsToBeVerified');
         this.loading.verified = true;
-        this.placesService.getAllClaimWaiting()
+        this.claimService.getWaiting()
             .then(success => {
                 this.loading.verified = false;
                 if (success.passed) {
@@ -117,15 +121,16 @@ export class RecordsPage implements OnInit, AfterViewChecked {
             });
     }
 
-    showRecord(place: Place, type: string) {
-        if (type === 'verified') {
-            this.intentProvider.placeToAccept = undefined;
-            this.intentProvider.placeToVerified = place;
-        } else {
-            this.intentProvider.placeToVerified = undefined;
-            this.intentProvider.placeToAccept = place;
-        }
+    showPlace(place: Place) {
+        this.intentProvider.claimToVerified = undefined;
+        this.intentProvider.placeToAccept = place;
         this.router.navigate(['admin/tabs/records/details']);
+    }
+
+    showClaim(claim: Claim) {
+        this.intentProvider.placeToAccept = undefined;
+        this.intentProvider.claimToVerified = claim;
+        this.router.navigate(['admin/tabs/records/claim']);
     }
 
     changeTab($event: CustomEvent) {

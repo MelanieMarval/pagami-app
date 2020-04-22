@@ -71,13 +71,9 @@
             </ion-button>
         </ion-col>
         <ion-col size="6">
-            <ion-button *ngIf="isAccepting" class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
+            <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
                 <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
                 <span *ngIf="!saving">Aceptar</span>
-            </ion-button>
-            <ion-button *ngIf="!isAccepting" class="button-small" expand="block" (click)="verifyPlace()" [disabled]="saving || rejecting">
-                <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
-                <span *ngIf="!saving">Verificar</span>
             </ion-button>
         </ion-col>
     </ion-row>

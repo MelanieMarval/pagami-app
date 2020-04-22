@@ -1,31 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 // Services
-import { Place } from '../../../../core/api/places/place';
-import { ClaimService } from '../../../../core/api/claim/claim.service';
 import { PlacesService } from '../../../../core/api/places/places.service';
+import { ClaimService } from '../../../../core/api/claim/claim.service';
+import { Claim } from '../../../../core/api/claim/claim';
 // Providers
 import { IntentProvider } from '../../../../providers/intent.provider';
 import { ToastProvider } from '../../../../providers/toast.provider';
-import { PLACES } from '../../../../utils/Const';
-import { PlaceUtils } from '../../../../utils/place.utils';
+// Utils
+import { CLAIMS, PLACES } from '../../../../utils/Const';
 
 @Component({
-    selector: 'app-admin-record-details',
-    templateUrl: 'record-details.html',
-    styleUrls: ['record-details.scss']
+    selector: 'app-admin-claim-details',
+    templateUrl: 'claim-details.html',
+    styleUrls: ['claim-details.scss']
 })
-
-export class RecordDetailsPage implements OnInit {
+export class ClaimDetailsPage implements OnInit {
 
     STATUS = PLACES.STATUS;
-    place: Place = {latitude: 0, longitude: 0};
-    placeTypeSpanish = PlaceUtils.getTypeSpanish;
+    claim: Claim;
     saving = false;
     saved = false;
     rejecting = false;
     rejectReason = '';
+    isAccepting: boolean;
 
     constructor(private intentProvider: IntentProvider,
                 private placeService: PlacesService,
@@ -37,46 +36,38 @@ export class RecordDetailsPage implements OnInit {
     }
 
     ngOnInit() {
-        if (this.intentProvider.placeToAccept) {
+        if (this.intentProvider.claimToVerified) {
+            this.isAccepting = false;
             this.rejectReason = '';
-            this.place = this.intentProvider.placeToAccept;
+            this.claim = this.intentProvider.claimToVerified;
         }
-        console.log(this.place);
+        console.log(this.claim);
     }
 
-    acceptPlace() {
+    verifyClaim() {
         this.saving = true;
-        this.placeService.changeStatus(this.place.id, this.STATUS.ACCEPTED)
+        this.claimService.changeStatus(this.claim.id, CLAIMS.STATUS.ACCEPTED)
             .then(success => {
                 this.saving = false;
                 if (success.passed) {
                     this.saved = true;
-                    this.intentProvider.placeToAccept = undefined;
-                    this.intentProvider.returnPlaceToAccept = success.response;
-                    this.toast.messageSuccessWithoutTabs('Aceptacion exitosa');
+                    this.intentProvider.claimToVerified = undefined;
+                    this.intentProvider.returnClaimToVerified = success.response;
+                    this.toast.messageSuccessWithoutTabs('Verificacion exitosa');
                 } else {
-                    this.toast.messageErrorAboveButton('Aceptacion Fallida. Intente nuevamente!');
+                    this.toast.messageErrorAboveButton('Verificacion Fallida. Intente nuevamente!');
                 }
             })
             .catch(error => {
                 console.log(error);
                 this.saving = false;
-                this.toast.messageErrorAboveButton('Aceptacion Fallida. Intente nuevamente!');
+                this.toast.messageErrorAboveButton('Verificacion Fallida. Intente nuevamente!');
             });
     }
 
     async openConfirm() {
         const alert = await this.alert.create({
             header: 'Rechazo de Empresa',
-            inputs: [
-                {
-                    name: 'reason',
-                    id: 'reason',
-                    type: 'textarea',
-                    placeholder: 'Razon del rechazo',
-                    value: this.rejectReason
-                }
-            ],
             buttons: [
                 {
                     text: 'Cancelar',
@@ -88,8 +79,7 @@ export class RecordDetailsPage implements OnInit {
                 }, {
                     text: 'Enviar',
                     handler: (data) => {
-                        this.rejectReason = data.reason;
-                        this.rejectPlace();
+                        this.rejectClaim();
                     }
                 }
             ]
@@ -97,9 +87,9 @@ export class RecordDetailsPage implements OnInit {
         await alert.present();
     }
 
-    rejectPlace() {
+    rejectClaim() {
         this.rejecting = true;
-        this.placeService.changeStatus(this.place.id, this.STATUS.REJECTED, this.rejectReason)
+        this.claimService.changeStatus(this.claim.id, CLAIMS.STATUS.REJECTED)
             .then(success => {
                 this.rejecting = false;
                 if (success.passed) {
@@ -111,7 +101,6 @@ export class RecordDetailsPage implements OnInit {
                     this.toast.messageErrorAboveButton('No se ha podido enviar su mensaje. Intente nuevamente!');
                 }
             });
-
     }
 
 }

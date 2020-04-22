@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Place } from '../../core/api/places/place';
-import { PLACES } from '../../utils/Const';
+import { PLACES, CLAIMS } from '../../utils/Const';
 import { IntentProvider } from '../../providers/intent.provider';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
 export class ShopPage implements OnInit {
 
     STATUS = PLACES.STATUS;
-    claim = false;
+    claiming = false;
+    isClaimed = true;
     place: Place = {
         accuracy: 0,
         createTime: String(new Date()),
@@ -37,6 +38,7 @@ export class ShopPage implements OnInit {
         website: 'tiendita.com.ve',
         whatsapp: '024147848885'
     };
+    CLAIMS = CLAIMS.STATUS;
 
     constructor(private intentProvider: IntentProvider,
                 private router: Router) {
@@ -44,14 +46,20 @@ export class ShopPage implements OnInit {
 
     ngOnInit(): void {
         if (this.intentProvider.placeToShow) {
-            this.claim = false;
+            this.claiming = false;
             this.place = this.intentProvider.placeToShow;
             return;
         }
         if (this.intentProvider.placeToClaim) {
-            this.claim = true;
+            this.claiming = true;
             // @ts-ignore
             this.place = this.intentProvider.placeToClaim;
+            if (!this.place.claim || this.place.claim.status === this.CLAIMS.REJECTED) {
+                this.isClaimed = false;
+            } else {
+                this.intentProvider.placeToClaim = undefined;
+                this.isClaimed = true;
+            }
             return;
         }
     }

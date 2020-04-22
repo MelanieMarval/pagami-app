@@ -12,7 +12,7 @@
         <ion-item lines="none" class="info-category">
             <ion-icon slot="start" [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>ALMACENES</ion-label>
+            <ion-label>{{place.category?.name | uppercase}}</ion-label>
         </ion-item>
         <div class="info-title">
             <ion-text color="light">
@@ -63,8 +63,11 @@
     </ion-list>
 </ion-content>
 
-<ion-footer class="footer-button background-transparent" slot="fixed" *ngIf="claim">
-    <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/business-claim">
+<ion-footer class="footer-button background-transparent" slot="fixed" *ngIf="claiming">
+    <ion-button *ngIf="!isClaimed" class="button-large" expand="block" color="pagami" routerLink="/app/business-claim">
         Reclamar esta empresa
     </ion-button>
+    <div *ngIf="isClaimed" class="ion-text-center">
+        <ion-text color="light">Esta empresa ya ha sido reclamada por alguien mas, vuelve e intenta con otra!</ion-text>
+    </div>
 </ion-footer>
