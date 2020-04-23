@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Place } from '../../core/api/places/place';
 import { PLACES, CLAIMS } from '../../utils/Const';
-import { IntentProvider } from '../../providers/intent.provider';
+import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { Router } from '@angular/router';
 
 
@@ -40,7 +40,7 @@ export class ShopPage implements OnInit {
     };
     CLAIMS = CLAIMS.STATUS;
 
-    constructor(private intentProvider: IntentProvider,
+    constructor(private intentProvider: UserIntentProvider,
                 private router: Router) {
     }
 

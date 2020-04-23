@@ -7,12 +7,28 @@ import { Claim } from '../core/api/claim/claim';
 @Injectable({
     providedIn: 'root'
 })
-export class IntentProvider {
+export class AdminIntentProvider {
 
+    private _placeToView: Place;
+    private _placeToAccept: Place;
     private _placeToEdit: Place;
     private _placeEdited: Place;
-    private _placeToShow: Place;
-    private _placeToClaim: Place | Claim;
+    private _returnPlaceToAccept: Place;
+    private _claimToVerified: Claim;
+    private _returnClaimToVerified: Claim;
+    private _userToEdit: User;
+    private _userToView: User;
+    private _showNotification: boolean;
+
+    // Place
+
+    get placeToView(): Place {
+        return this._placeToView;
+    }
+
+    set placeToView(value: Place) {
+        this._placeToView = value;
+    }
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -30,30 +46,6 @@ export class IntentProvider {
         this._placeEdited = value;
     }
 
-    get placeToShow(): Place {
-        return this._placeToShow;
-    }
-
-    set placeToShow(value: Place) {
-        this._placeToShow = value;
-    }
-
-    get placeToClaim(): Place | Claim {
-        return this._placeToClaim;
-    }
-
-    set placeToClaim(value: Place | Claim) {
-        this._placeToClaim = value;
-    }
-
-// Admin
-    private _placeToAccept: Place;
-    private _returnPlaceToAccept: Place;
-    private _claimToVerified: Claim;
-    private _returnClaimToVerified: Claim;
-    private _userToEdit: User;
-    private _showNotification: boolean;
-
     get placeToAccept(): Place {
         return this._placeToAccept;
     }
@@ -70,6 +62,7 @@ export class IntentProvider {
         this._returnPlaceToAccept = value;
     }
 
+    // Claim
     get claimToVerified(): Claim {
         return this._claimToVerified;
     }
@@ -84,6 +77,15 @@ export class IntentProvider {
 
     set returnClaimToVerified(value: Claim) {
         this._returnClaimToVerified = value;
+    }
+
+    // User
+    get userToView(): User {
+        return this._userToView;
+    }
+
+    set userToView(value: User) {
+        this._userToView = value;
     }
 
     get userToEdit(): User {

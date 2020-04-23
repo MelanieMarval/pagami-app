@@ -10,13 +10,13 @@ import { PlaceFilter } from '../../../core/api/places/place.filter';
 import { GoogleMapPage } from '../../parent/GoogleMapPage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PlacesService } from '../../../core/api/places/places.service';
+import { MAP_MODE } from '../../../utils/Const';
 // Providers
 import { MapProvider } from '../../../providers/map.provider';
 import { AlertProvider } from '../../../providers/alert.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
-import { IntentProvider } from '../../../providers/intent.provider';
-import { CLAIMS, MAP_MODE } from '../../../utils/Const';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
 
 @Component({
     selector: 'app-map-page',
@@ -57,11 +57,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         private storageService: StorageProvider,
         private toast: ToastProvider,
         private alert: AlertProvider,
-        private intentProvider: IntentProvider,
+        private intentProvider: UserIntentProvider,
         private placesService: PlacesService,
         private renderer: Renderer2,
         private appService: MapProvider,
-        private storageInstance: IntentProvider,
+        private storageInstance: UserIntentProvider,
         @Inject(DOCUMENT) doc: Document,
         protected geolocationService: GeolocationService) {
         super(doc, geolocationService);

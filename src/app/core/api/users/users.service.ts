@@ -22,6 +22,12 @@ export class UsersService {
         return this.apiService.serverListener(request);
     }
 
+    async findById(id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/${id}`, options);
+        return this.apiService.serverListener(request);
+    }
+
     async changeStatus(status: string, id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.put(`${this.URL}/${id}/status/${status}`, {}, options);

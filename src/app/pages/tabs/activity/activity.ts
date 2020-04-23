@@ -7,7 +7,7 @@ import { Place } from '../../../core/api/places/place';
 // Providers
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
-import { IntentProvider } from '../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
 // Utils
 import { isNumber } from 'util';
 import { PLACES } from '../../../utils/Const';
@@ -32,7 +32,7 @@ export class ActivityPage implements OnInit {
                 private storageService: StorageProvider,
                 private router: Router,
                 private toast: ToastProvider,
-                private storageInstance: IntentProvider) {
+                private storageInstance: UserIntentProvider) {
     }
 
     ngOnInit() {

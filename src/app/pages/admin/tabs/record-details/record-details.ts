@@ -6,7 +6,7 @@ import { Place } from '../../../../core/api/places/place';
 import { ClaimService } from '../../../../core/api/claim/claim.service';
 import { PlacesService } from '../../../../core/api/places/places.service';
 // Providers
-import { IntentProvider } from '../../../../providers/intent.provider';
+import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
@@ -20,6 +20,7 @@ import { PlaceUtils } from '../../../../utils/place.utils';
 export class RecordDetailsPage implements OnInit {
 
     STATUS = PLACES.STATUS;
+    isView: boolean;
     place: Place = {latitude: 0, longitude: 0};
     placeTypeSpanish = PlaceUtils.getTypeSpanish;
     saving = false;
@@ -27,7 +28,7 @@ export class RecordDetailsPage implements OnInit {
     rejecting = false;
     rejectReason = '';
 
-    constructor(private intentProvider: IntentProvider,
+    constructor(private intentProvider: AdminIntentProvider,
                 private placeService: PlacesService,
                 private claimService: ClaimService,
                 private toast: ToastProvider,
@@ -37,8 +38,13 @@ export class RecordDetailsPage implements OnInit {
     }
 
     ngOnInit() {
+        if (this.intentProvider.placeToView) {
+            this.isView = true;
+            this.place = this.intentProvider.placeToView;
+            return;
+        }
         if (this.intentProvider.placeToAccept) {
-            this.rejectReason = '';
+            this.isView = false;
             this.place = this.intentProvider.placeToAccept;
         }
         console.log(this.place);

@@ -6,7 +6,7 @@ import { ValidationUtils } from '../../../utils/validation.utils';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { ClaimService } from '../../../core/api/claim/claim.service';
-import { IntentProvider } from '../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,7 +27,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         private claim: ClaimService,
         private toast: ToastProvider,
         private placesService: PlacesService,
-        private intentProvider: IntentProvider,
+        private intentProvider: UserIntentProvider,
         private router: Router,
         protected geolocationService: GeolocationService
     ) {
@@ -44,7 +44,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                         this.isClaim = true;
                     } else {
                         this.isRegister = true;
-                        this.place = success.response;
+                        this.place = success.response.place;
                         this.previewUrl = this.place.photoUrl;
                     }
                 } else {

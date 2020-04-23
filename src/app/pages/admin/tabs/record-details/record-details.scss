@@ -2,25 +2,6 @@ ion-col.md {
     display: flex;
 }
 
-.group-label{
-    color: #A0AEC0;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-.item-admin {
-    border-bottom: 0;
-    margin-bottom: 0;
-    &__avatar {
-        background: var(--ion-color-pagami-surface);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        ion-icon{
-            filter: invert(55%) sepia(22%) saturate(367%) hue-rotate(176deg) brightness(86%) contrast(89%);
-        }
-    }
-}
-
 .header-image {
 
     &--info {

@@ -6,8 +6,7 @@ import { Place } from '../../../../core/api/places/place';
 
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
-import { StorageProvider } from '../../../../providers/storage.provider';
-import { IntentProvider } from '../../../../providers/intent.provider';
+import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 // Utils
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
@@ -28,10 +27,9 @@ export class BusinessesPage implements OnInit {
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
 
     constructor(private placesService: PlacesService,
-                private storageService: StorageProvider,
                 private router: Router,
                 private toast: ToastProvider,
-                private storageInstance: IntentProvider) {
+                private intentProvider: AdminIntentProvider) {
     }
 
     ngOnInit() {
@@ -55,9 +53,9 @@ export class BusinessesPage implements OnInit {
     }
 
     verifyItemUpdated() {
-        if (this.storageInstance.placeEdited && Number(this.indexOfPlaceToEdit)) {
-            this.registers[this.indexOfPlaceToEdit] = this.storageInstance.placeEdited;
-            this.storageInstance.placeEdited = undefined;
+        if (this.intentProvider.placeEdited && Number(this.indexOfPlaceToEdit)) {
+            this.registers[this.indexOfPlaceToEdit] = this.intentProvider.placeEdited;
+            this.intentProvider.placeEdited = undefined;
             this.indexOfPlaceToEdit = undefined;
         }
     }

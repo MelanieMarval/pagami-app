@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Claim } from '../../core/api/claim/claim';
-import { IntentProvider } from '../../providers/intent.provider';
+import { UserIntentProvider } from '../../providers/user-intent.provider';
 
 @Component({
     selector: 'page-business-claim',
@@ -17,7 +17,7 @@ export class BusinessClaimPage implements OnInit {
     loading: false;
 
     constructor(private router: Router,
-                private intentProvider: IntentProvider) {
+                private intentProvider: UserIntentProvider) {
     }
 
     ngOnInit(): void {

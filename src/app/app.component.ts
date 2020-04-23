@@ -4,7 +4,6 @@ import { Platform } from '@ionic/angular';
 import { StorageProvider } from './providers/storage.provider';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
-import { USER } from './utils/Const';
 const { SplashScreen } = Plugins;
 
 @Component({

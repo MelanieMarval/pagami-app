@@ -6,7 +6,8 @@ import { User } from '../../../../core/api/users/user';
 import { UsersService } from '../../../../core/api/users/users.service';
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
-import { IntentProvider } from '../../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../../providers/user-intent.provider';
+import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 
 @Component({
     selector: 'app-admin-users',
@@ -21,7 +22,7 @@ export class UsersPage implements OnInit {
     status = USER.STATUS;
 
     constructor(private userService: UsersService,
-                private intentProvider: IntentProvider,
+                private intentProvider: AdminIntentProvider,
                 private router: Router,
                 private toast: ToastProvider,) {
     }
@@ -40,6 +41,7 @@ export class UsersPage implements OnInit {
     }
 
     goToProfileUser(user: User) {
+        this.intentProvider.userToView = undefined;
         this.intentProvider.userToEdit = user;
         console.log(user);
         this.router.navigate(['admin/tabs/users/profile']);

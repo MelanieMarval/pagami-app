@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiResponse } from '../../../core/api/api.response';
 import { PlacesService } from '../../../core/api/places/places.service';
 // Providers
-import { IntentProvider } from '../../../providers/intent.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
+import { AdminIntentProvider } from '../../../providers/admin-intent.provider';
 
 @Component({
     selector: 'app-tabs-admin',
@@ -15,7 +15,7 @@ export class TabsAdmin implements OnInit {
 
 
     constructor(private placesService: PlacesService,
-                private intentProvider: IntentProvider,
+                private intentProvider: AdminIntentProvider,
                 private toast: ToastProvider) {
     }
 

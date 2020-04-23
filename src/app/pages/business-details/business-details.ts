@@ -8,7 +8,7 @@ import { GeolocationService } from '../../core/geolocation/geolocation.service';
 // Providers
 import { StorageProvider } from '../../providers/storage.provider';
 import { ToastProvider } from '../../providers/toast.provider';
-import { IntentProvider } from '../../providers/intent.provider';
+import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { AlertController } from '@ionic/angular';
 import { PlacesService } from '../../core/api/places/places.service';
 import { Place } from '../../core/api/places/place';
@@ -31,7 +31,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
                 private route: Router,
                 private toast: ToastProvider,
                 private fireStorage: FireStorage,
-                private storageInstance: IntentProvider,
+                private storageInstance: UserIntentProvider,
                 protected geolocationService: GeolocationService,
                 private alertController: AlertController) {
         super(geolocationService);

@@ -3,7 +3,7 @@ import { ToastProvider } from '../../../providers/toast.provider';
 import { PlansService } from '../../../core/api/plans/plans.service';
 import { ApiResponse } from '../../../core/api/api.response';
 import { Plan } from '../../../core/api/plans/plan';
-import { IntentProvider } from '../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { Claim } from '../../../core/api/claim/claim';
 import { ClaimService } from '../../../core/api/claim/claim.service';
 
@@ -22,7 +22,7 @@ export class PlansPage implements OnInit {
     claim: Claim;
 
     constructor(private toast: ToastProvider,
-                private intentProvider: IntentProvider,
+                private intentProvider: UserIntentProvider,
                 private plansService: PlansService,
                 private claimService: ClaimService) {
     }

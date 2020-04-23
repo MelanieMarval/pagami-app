@@ -10,16 +10,16 @@
 
     <div class="header-image--info">
         <ion-item lines="none" class="info-category">
-            <ion-icon slot="start" [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>
+            <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>{{place.category.name}} · {{placeTypeSpanish(place.type)}}</ion-label>
+            <ion-label>{{place.category?.name}} · {{placeTypeSpanish(place.type)}}</ion-label>
         </ion-item>
         <div class="info-title">
             <ion-text color="light">
                 {{place.name}}
             </ion-text>
         </div>
-        <ion-label class="info-country">{{place.location.country}}</ion-label>
+        <ion-label class="info-country">{{place.location?.country}}</ion-label>
     </div>
 </ion-header>
 
@@ -31,7 +31,7 @@
                 <ion-avatar slot="start" class="item-admin__avatar">
                     <ion-icon src="assets/icon/location-on.svg" class="size-icon-default"></ion-icon>
                 </ion-avatar>
-                <ion-label>{{place.location.address}}</ion-label>
+                <ion-label>{{place.location?.address}}</ion-label>
             </ion-item>
         </ion-item-group>
         <ion-item-group class="ion-margin-bottom">
@@ -62,7 +62,7 @@
 
 </ion-content>
 
-<ion-footer class="footer-button" *ngIf="!saved">
+<ion-footer class="footer-button" *ngIf="!saved && !isView">
     <ion-row>
         <ion-col size="6">
             <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()" [disabled]="saving || rejecting">

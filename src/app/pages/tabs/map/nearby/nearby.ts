@@ -3,7 +3,7 @@ import { Place } from '../../../../core/api/places/place';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
 import { Router } from '@angular/router';
-import { IntentProvider } from '../../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 
 @Component({
     selector: 'app-nearby',
@@ -21,7 +21,7 @@ export class NearbyPage implements OnInit {
     messageDistance = PlaceUtils.getMessageDistance;
 
     constructor(private router: Router,
-                private intentProvider: IntentProvider) {
+                private intentProvider: UserIntentProvider) {
     }
 
     ngOnInit() {

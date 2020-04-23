@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { StorageProvider } from '../../../../providers/storage.provider';
-import { IntentProvider } from '../../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 // Utils
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
@@ -13,6 +13,7 @@ import { PlacesService } from '../../../../core/api/places/places.service';
 import { ClaimService } from '../../../../core/api/claim/claim.service';
 import { Place } from '../../../../core/api/places/place';
 import { Claim } from '../../../../core/api/claim/claim';
+import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 
 @Component({
     selector: 'app-admin-records',
@@ -48,7 +49,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
                 private router: Router,
                 private toast: ToastProvider,
                 private activatedRoute: ActivatedRoute,
-                private intentProvider: IntentProvider,
+                private intentProvider: AdminIntentProvider,
                 private cdRef: ChangeDetectorRef) {
     }
 
@@ -58,6 +59,8 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked(): void {
+        this.intentProvider.placeToView = undefined;
+        this.intentProvider.userToView = undefined;
         // Cuando vuelve luego de aceptar o verificar un place lo elimina de la lista
         if (this.intentProvider.returnPlaceToAccept) {
             const index = this.recordsToBeAccepted.indexOf(this.recordsToBeAccepted
@@ -122,13 +125,12 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     }
 
     showPlace(place: Place) {
-        this.intentProvider.claimToVerified = undefined;
+        this.intentProvider.placeToView = undefined;
         this.intentProvider.placeToAccept = place;
         this.router.navigate(['admin/tabs/records/details']);
     }
 
     showClaim(claim: Claim) {
-        this.intentProvider.placeToAccept = undefined;
         this.intentProvider.claimToVerified = claim;
         this.router.navigate(['admin/tabs/records/claim']);
     }

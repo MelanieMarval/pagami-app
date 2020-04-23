@@ -7,7 +7,7 @@ import { PlacesService } from '../../../core/api/places/places.service';
 // Providers
 import { StorageProvider } from '../../../providers/storage.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
-import { IntentProvider } from '../../../providers/intent.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { CATEGORY_ICONS } from '../../../utils/category.icons';
 
 @Component({
@@ -27,7 +27,7 @@ export class SelectIconPage implements OnInit {
         private route: Router,
         private http: HttpClient,
         private storageService: StorageProvider,
-        private storageInstance: IntentProvider,
+        private storageInstance: UserIntentProvider,
         private placesService: PlacesService,
     ) {
     }

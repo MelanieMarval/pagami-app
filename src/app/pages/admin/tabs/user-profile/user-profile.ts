@@ -5,7 +5,7 @@ import { USER } from '../../../../utils/Const';
 import { User } from '../../../../core/api/users/user';
 import { UsersService } from '../../../../core/api/users/users.service';
 import { ToastProvider } from '../../../../providers/toast.provider';
-import { IntentProvider } from '../../../../providers/intent.provider';
+import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 
 @Component({
     selector: 'app-admin-user-profile',
@@ -15,6 +15,7 @@ import { IntentProvider } from '../../../../providers/intent.provider';
 export class UserProfilePage implements OnInit {
 
     user: User = {location: {}};
+    isView: boolean;
     updating = false;
     TYPE = USER.TYPE;
     STATUS = USER.STATUS;
@@ -23,16 +24,22 @@ export class UserProfilePage implements OnInit {
         status: {}
     };
 
-    constructor(private intentProvider: IntentProvider,
+    constructor(private intentProvider: AdminIntentProvider,
                 private alertController: AlertController,
                 private toast: ToastProvider,
                 private usersService: UsersService) {
     }
 
     ngOnInit(): void {
-        this.user = this.intentProvider.userToEdit;
-        this.setMessagesType();
-        this.setMessagesStatus();
+        if (this.intentProvider.userToView) {
+            this.user = this.intentProvider.userToView;
+            this.isView = true;
+        } else {
+            this.user = this.intentProvider.userToEdit;
+            this.isView = false;
+            this.setMessagesType();
+            this.setMessagesStatus();
+        }
     }
 
     setMessagesType(): void {
@@ -84,7 +91,11 @@ export class UserProfilePage implements OnInit {
                     text: `Si, ${button}`,
                     handler: () => {
                         this.updating = true;
-                        this.disable(value);
+                        if (what === 'type') {
+                            this.changeType();
+                        } else {
+                            this.changeStatus();
+                        }
                     }
                 }
             ]
@@ -92,8 +103,9 @@ export class UserProfilePage implements OnInit {
         await alert.present();
     }
 
-    private disable(status) {
-        this.usersService.changeStatus(status, this.user.id)
+    private changeStatus() {
+        // @ts-ignore
+        this.usersService.changeStatus(this.messages.status.value, this.user.id)
             .then(success => {
                 this.updating = false;
                 if (success.passed) {
@@ -109,8 +121,9 @@ export class UserProfilePage implements OnInit {
             });
     }
 
-    private upgrade(type) {
-        this.usersService.changeType(type, this.user.id)
+    private changeType() {
+        // @ts-ignore
+        this.usersService.changeType(this.messages.type.value, this.user.id)
             .then(success => {
                 this.updating = false;
                 if (success.passed) {

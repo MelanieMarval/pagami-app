@@ -36,6 +36,15 @@ const routes: Routes = [
         component: UserProfilePage
     },
     {
+        path: 'records/claim/profile',
+        component: UserProfilePage
+    },
+    {
+        path: 'records/claim/details',
+        loadChildren: () => import('./record-details/record-details.module').then(m => m.RecordDetailsModule)
+    },
+
+    {
         path: '**',
         redirectTo: 'activity',
         pathMatch: 'full'
