@@ -131,7 +131,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             this.intentProvider.placeToShow = undefined;
             this.intentProvider.placeToClaim = place;
             this.router.navigate(['app/shop']);
-        } else {
+        } else if (this.currentUrl === MAP_MODE.SEARCH) {
             this.bottomDrawer.drawerState = DrawerState.Docked;
         }
     }

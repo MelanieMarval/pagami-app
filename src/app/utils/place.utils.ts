@@ -47,4 +47,18 @@ export class PlaceUtils {
             return `A ${Math.trunc(distance)} metros de ti.`;
         }
     }
+
+    static getMarker(place: Place): string {
+        if (place.category.subCategory === PLACES.CATEGORY.FOOD) {
+            return 'assets/marker-icons/food.png';
+        } else if (place.category.subCategory === PLACES.CATEGORY.HOTELERY) {
+            return 'assets/marker-icons/hotelery.png';
+        } else if (place.category.subCategory === PLACES.CATEGORY.MEDICINE) {
+            return 'assets/marker-icons/medical.png';
+        } else if (place.category.subCategory === PLACES.CATEGORY.SERVICE) {
+            return 'assets/marker-icons/service.png';
+        } else {
+            return 'assets/marker-icons/store.png';
+        }
+    }
 }
