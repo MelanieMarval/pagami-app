@@ -56,6 +56,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.intentProvider.showNotification = false;
         this.getRecordsToBeAccepted();
+        this.getRecordsToBeVerified();
     }
 
     ngAfterViewChecked(): void {
@@ -97,7 +98,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
                     this.totalToBeAccepted = this.recordsToBeAccepted.length;
                     this.empty.accepted = this.recordsToBeAccepted.length === 0;
                     this.error = false;
-                    this.getRecordsToBeVerified();
+
                 } else {
                     this.error = true;
                     this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);

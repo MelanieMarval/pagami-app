@@ -16,52 +16,6 @@
     }
 }
 
-.card-place {
-    background: #2D3748;
-    border-radius: 3px;
-
-    ion-card-subtitle {
-        font-size: 12px;
-        color: #718096;
-        text-transform: unset;
-    }
-
-    ion-card-content {
-        padding: 0 10px 5px 10px;
-        font-size: 12px;
-        color: #A0AEC0;
-
-        ion-col {
-            display: flex;
-            align-items: center;
-        }
-
-        ion-avatar {
-            border: 2px solid;
-            width: 40px;
-            height: 40px;
-        }
-
-        ion-card-title {
-            font-size: 14px;
-            font-weight: normal;
-            color: #FFF;
-        }
-
-    }
-}
-
-.card-money {
-    background: #2D3748;
-    border-radius: 3px;
-
-    ion-card-content {
-        padding: 10px;
-        font-size: 13px;
-        color: #A0AEC0;
-    }
-}
-
 ion-card-header {
     padding: 10px 10px 0;
 
@@ -77,31 +31,33 @@ ion-card-header {
 }
 
 /* *****STATUS CARDS***** */
-span.status--verified {
-    color: #68D391;
+.status{
+    &--verified {
+        color: #68D391;
+    }
+    &--accepted {
+        color: #FBD38D;
+    }
+    &--waiting {
+        color: #999;
+    }
+    &--rejected {
+        color: #E53E3E;
+    }
+    &--transfer {
+        color: #63B3ED;
+    }
+    &--incomplete{
+        color: #ffbe25;
+    }
 }
+
 ion-text.status--verified {
     color: #FFFFFF;
 
     &:before {
         content: "+";
     }
-}
-
-.status--accepted {
-    color: #FBD38D;
-}
-
-.status--waiting {
-    color: #999;
-}
-
-.status--rejected {
-    color: #E53E3E;
-}
-
-span.status--transfer {
-    color: #63B3ED;
 }
 ion-text.status--transfer {
     color: #FFFFFF;
@@ -110,11 +66,3 @@ ion-text.status--transfer {
         content: "-";
     }
 }
-
-.status--incomplete{
-    color: #ffbe25;
-}
-
-
-
-

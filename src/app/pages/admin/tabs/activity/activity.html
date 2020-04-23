@@ -25,7 +25,7 @@
                               [text]="'Cuando hayan movimientos los veras aqui'" [height]="55"></app-background-empty>
 
         <ion-item-group *ngIf="!empty">
-            <ion-card class="card-place"
+            <ion-card class="card card-place"
                       *ngFor="let register of registers"
                       [button]="register.status !== STATUS.REJECTED"
                       (click)="showDetails(register)">

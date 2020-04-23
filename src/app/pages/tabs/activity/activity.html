@@ -14,7 +14,7 @@
 
     <ion-list>
         <ion-item-group *ngIf="!loading && !error">
-            <ion-card class="card-place"
+            <ion-card class="card card-place"
                       *ngFor="let register of registers"
                       [button]="register.status !== STATUS.REJECTED"
                       (click)="showDetails(register)">
@@ -183,7 +183,7 @@
         </ion-item-group>
 
         <ion-item-group *ngIf="loading || error">
-            <ion-card class="card-place" *ngFor="let dummy of ' '.repeat(5).split('')">
+            <ion-card class="card card-place" *ngFor="let dummy of ' '.repeat(5).split('')">
                 <ion-card-header>
                     <ion-row>
                         <ion-col size="10">
