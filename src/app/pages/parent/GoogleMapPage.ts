@@ -8,6 +8,7 @@ import GoogleMaps = google.maps;
 // @ts-ignore
 import LatLng = google.maps.LatLng;
 import { MAP_MODE } from '../../utils/Const';
+import {PlaceUtils} from '../../utils/place.utils';
 // // @ts-ignore
 // import LatLngLiteral = google.maps.LatLngLiteral;
 // // @ts-ignore
@@ -132,15 +133,20 @@ export class GoogleMapPage {
     setupPlaces(places: Place[]) {
         this.nearbyPlaces = [];
         const map = this.map;
-        places.forEach(place => {
+        places.forEach((place: Place) => {
             const position: any = {
                 lat: place.latitude,
                 lng: place.longitude
             };
+            const icon = {
+                url: PlaceUtils.getMarker(place),
+                scaledSize: new this.googleMaps.Size(30, 32)
+            };
+
             const marker = new this.googleMaps.Marker({
                 position,
                 map,
-                icon: `assets/marker/${this.aleatorio(1, 3)}.png`
+                icon
             });
             marker.addListener('click', event => {
                 const latlng = new GoogleMaps.LatLng(position.lat, position.lng);
