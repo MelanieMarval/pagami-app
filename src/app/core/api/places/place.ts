@@ -25,6 +25,7 @@ export interface Place {
     whatsapp?: string;
     website?: string;
     type?: string;
+    rejectedReason?: string;
     status?: string;
     createTime?: string;
     lastUpdate?: string;

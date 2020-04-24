@@ -1,4 +1,3 @@
-
 <!-- IF NOT REGISTER -->
 <ion-content *ngIf="!isRegister" scroll-y="false">
     <ion-header>
@@ -15,19 +14,21 @@
     <div class="no-register" *ngIf="!loading">
         <ion-img src="assets/img/my-business-no-register.png"></ion-img>
         <ion-text class="ion-padding-horizontal ion-text-wrap">
+            <span *ngIf="isClaim">
+                Se paciente <br>
+                Tu empresa ( <ion-label>{{claim.placeName}}</ion-label>
+                <img [src]="claim.placePhoto" class="size-icon-default d-inline border-white-1px" alt=""/> )
+                aun esta en verificación <br>
+            </span>
             <span *ngIf="!isClaim">¡Oh no! <br></span>
-            <span *ngIf="isClaim">Se paciente <br>Tu empresa aun esta en verificación</span>
             <span *ngIf="!isClaim && availableToClaim">Aún no has reclamado tu empresa</span>
             <span *ngIf="!isClaim && !availableToClaim ">Parece que esta opción no esta habilitada para ti.</span>
         </ion-text>
     </div>
 </ion-content>
-<ion-footer class="footer-button" *ngIf="!isRegister && availableToClaim">
-    <ion-button *ngIf="!isClaim && availableToClaim" class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
+<ion-footer class="footer-button" *ngIf="!isRegister && !isClaim && availableToClaim">
+    <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
         Buscar mi empresa
-    </ion-button>
-    <ion-button *ngIf="isClaim" class="button-large" expand="block" color="pagami" (click)="viewShop()">
-        Ver reclamo
     </ion-button>
 </ion-footer>
 <!-- END NOT REGISTER -->
@@ -84,7 +85,7 @@
             <ion-input type="tel" readonly [value]="place.phone"></ion-input>
             <ion-icon name="call" slot="start"></ion-icon>
         </ion-item>
-        <ion-item  color="pagami-surface">
+        <ion-item color="pagami-surface">
             <ion-label position="floating">Pagina Web</ion-label>
             <ion-input type="url" readonly [value]="place.website"></ion-input>
             <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>
@@ -115,7 +116,8 @@
     <div class="add-image">
         <div class="add-image-background">
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)" [readonly]="updating"></ion-input>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"
+                       [readonly]="updating"></ion-input>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">
                     <ion-icon name="camera"></ion-icon>
@@ -127,7 +129,8 @@
     <ion-list class="inputs-container --without-mt">
         <ion-item color="pagami-surface">
             <ion-label position="floating">Ubicacion</ion-label>
-            <ion-input type="text" name="location" [(ngModel)]="place.location.address" [readonly]="updating"></ion-input>
+            <ion-input type="text" name="location" [(ngModel)]="place.location.address"
+                       [readonly]="updating"></ion-input>
             <ion-icon name="location" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
@@ -137,15 +140,17 @@
         </ion-item>
         <ion-item color="pagami-surface">
             <ion-label position="floating">Telefono</ion-label>
-            <ion-input type="tel" name="phone" [(ngModel)]="place.phone" maxlength="15" [readonly]="updating"></ion-input>
+            <ion-input type="tel" name="phone" [(ngModel)]="place.phone" maxlength="15"
+                       [readonly]="updating"></ion-input>
             <ion-icon name="call" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
             <ion-label position="floating">WhatsApp</ion-label>
-            <ion-input type="text" name="whatsapp" [(ngModel)]="place.whatsapp" maxlength="15" [readonly]="updating"></ion-input>
+            <ion-input type="text" name="whatsapp" [(ngModel)]="place.whatsapp" maxlength="15"
+                       [readonly]="updating"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
         </ion-item>
-        <ion-item  color="pagami-surface">
+        <ion-item color="pagami-surface">
             <ion-label position="floating">Pagina Web</ion-label>
             <ion-input type="url" name="website" [(ngModel)]="place.website" [readonly]="updating"></ion-input>
             <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>
@@ -155,12 +160,14 @@
     <div class="footer-button --without-pt">
         <ion-row>
             <ion-col size="6">
-                <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami-surface" (click)="editBusiness()">
+                <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami-surface"
+                            (click)="editBusiness()">
                     Cancelar
                 </ion-button>
             </ion-col>
             <ion-col size="6">
-                <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami" (click)="saveBusiness()">
+                <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami"
+                            (click)="saveBusiness()">
                     <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
                     <span *ngIf="!updating">Guardar</span>
                 </ion-button>

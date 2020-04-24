@@ -8,6 +8,7 @@ import { PlacesService } from '../../../core/api/places/places.service';
 import { ClaimService } from '../../../core/api/claim/claim.service';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { Router } from '@angular/router';
+import { Claim } from '../../../core/api/claim/claim';
 
 @Component({
     selector: 'app-my-business',
@@ -22,9 +23,10 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     updating = false;
     loading = true;
     place: Place = {latitude: 0, longitude: 0};
+    claim: Claim;
 
     constructor(
-        private claim: ClaimService,
+        private claimService: ClaimService,
         private toast: ToastProvider,
         private placesService: PlacesService,
         private intentProvider: UserIntentProvider,
@@ -35,13 +37,14 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     ngOnInit() {
-        this.claim.getMyBusiness()
+        this.claimService.getMyBusiness()
             .then(success => {
                 console.log(success);
                 if (success.passed) {
                     this.loading = false;
                     if (success.response.status === 'WAITING') {
                         this.isClaim = true;
+                        this.claim = success.response;
                     } else {
                         this.isRegister = true;
                         this.place = success.response.place;
@@ -92,8 +95,4 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             });
     }
 
-    viewShop() {
-        this.intentProvider.placeToShow = this.place;
-        this.router.navigate(['/app/shop']);
-    }
 }

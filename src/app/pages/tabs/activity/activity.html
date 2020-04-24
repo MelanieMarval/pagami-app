@@ -16,17 +16,19 @@
         <ion-item-group *ngIf="!loading && !error">
             <ion-card class="card card-place"
                       *ngFor="let register of registers"
-                      [button]="register.status !== STATUS.REJECTED"
-                      (click)="showDetails(register)">
+                      [button]="true"
+                      (click)="register.status !== STATUS.REJECTED ? showDetails(register) : register.showReason = !register.showReason">
                 <ion-card-header>
                     <ion-row>
-                        <ion-col size="10">
+                        <ion-col size="11">
                             <ion-card-subtitle>
                                 {{ register.createTime | date:'d/M/y'}} · {{ register.createTime | date:'shortTime'}} ·
                                 <span [classList]="['status--'+register.status | lowercase]">{{placeMessageStatus(register.status)}}</span>
                             </ion-card-subtitle>
                         </ion-col>
-                        <ion-col size="2">
+                        <ion-col size="1">
+                            <ion-icon *ngIf="register.status === STATUS.REJECTED" name="close-circle"></ion-icon>
+                            <ion-icon *ngIf="register.status === STATUS.WAITING" name="time-outline"></ion-icon>
                         </ion-col>
                     </ion-row>
                 </ion-card-header>
@@ -45,6 +47,15 @@
                             <ion-text [class]="['status--'+register.status | lowercase]">
                                 {{register.status === STATUS.VERIFIED ? '$0.00 USD' : ''}}
                             </ion-text>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="register.showReason" class="animated fadeInDown faster">
+                        <ion-col size="12">
+                            <ion-row>
+                                <ion-col size="11"><ion-card-subtitle>Razon</ion-card-subtitle></ion-col>
+                                <ion-col size="1"><ion-icon name="chevron-up" size="large"></ion-icon></ion-col>
+                                <ion-col size="12"><ion-text>{{register.rejectedReason}}</ion-text></ion-col>
+                            </ion-row>
                         </ion-col>
                     </ion-row>
                 </ion-card-content>

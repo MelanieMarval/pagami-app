@@ -10,7 +10,7 @@
 
     <div class="header-image--info">
         <ion-item lines="none" class="info-category">
-            <ion-icon slot="start" [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>
+            <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
             &nbsp;&nbsp;
             <ion-label>{{place.category?.name | uppercase}}</ion-label>
         </ion-item>

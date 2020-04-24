@@ -4,16 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { StorageProvider } from '../../../../providers/storage.provider';
-import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 // Utils
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
+import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 // Services
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { ClaimService } from '../../../../core/api/claim/claim.service';
 import { Place } from '../../../../core/api/places/place';
 import { Claim } from '../../../../core/api/claim/claim';
-import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 
 @Component({
     selector: 'app-admin-records',
@@ -87,10 +86,8 @@ export class RecordsPage implements OnInit, AfterViewChecked {
 
     getRecordsToBeAccepted() {
         this.loading.accepted = true;
-        console.log('hacer getRecordsToBeAccepted');
         this.placesService.getAllWaiting()
             .then(success => {
-                console.log('hacer consulta');
                 this.loading.accepted = false;
                 if (success.passed) {
                     this.recordsToBeAccepted = success.response;

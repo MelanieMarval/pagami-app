@@ -90,4 +90,8 @@ export class ActivityPage implements OnInit {
             this.router.navigate(['/app/shop']).then();
         }
     }
+
+    showReason() {
+
+    }
 }
