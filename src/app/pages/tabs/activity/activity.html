@@ -15,7 +15,7 @@
     <ion-list>
         <ion-item-group *ngIf="!loading && !error">
             <ion-card class="card card-place"
-                      *ngFor="let register of registers"
+                      *ngFor="let register of placeSortData(registers)"
                       [button]="true"
                       (click)="register.status !== STATUS.REJECTED ? showDetails(register) : register.showReason = !register.showReason">
                 <ion-card-header>

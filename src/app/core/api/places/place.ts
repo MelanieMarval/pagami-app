@@ -38,3 +38,10 @@ export interface Place {
     };
     // TODO, add another elements from this model
 }
+
+export interface PlaceStats {
+    accepted: number;
+    expired: number;
+    verified: number;
+    total: number;
+}

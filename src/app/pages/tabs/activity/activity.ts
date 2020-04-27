@@ -3,7 +3,6 @@ import { ResolveEnd, Router } from '@angular/router';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { ApiResponse } from '../../../core/api/api.response';
 import { Place } from '../../../core/api/places/place';
-
 // Providers
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
@@ -12,6 +11,7 @@ import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { isNumber } from 'util';
 import { PLACES } from '../../../utils/Const';
 import { PlaceUtils } from '../../../utils/place.utils';
+import { User } from '../../../core/api/users/user';
 
 @Component({
     selector: 'app-activity',
@@ -25,8 +25,10 @@ export class ActivityPage implements OnInit {
     registers: Place[];
     STATUS = PLACES.STATUS;
     indexOfPlaceToEdit: number = undefined;
+    user: User;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
     placeMessageStatus = PlaceUtils.getMessageStatus;
+    placeSortData = PlaceUtils.getSortData;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageProvider,
@@ -35,13 +37,14 @@ export class ActivityPage implements OnInit {
                 private storageInstance: UserIntentProvider) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.router.events.subscribe(next => {
             if (next instanceof ResolveEnd) {
                 this.verifyItemUpdated();
             }
         });
         this.getRegisters();
+        this.user = await this.storageService.getPagamiUser();
     }
 
     getRegisters() {
@@ -58,10 +61,10 @@ export class ActivityPage implements OnInit {
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
                 }
             }).catch(error => {
-                this.loading = false;
-                this.error = true;
-                this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
-            });
+            this.loading = false;
+            this.error = true;
+            this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
+        });
     }
 
     verifyItemUpdated() {
@@ -82,16 +85,17 @@ export class ActivityPage implements OnInit {
         if (place.status === this.STATUS.INCOMPLETE || place.status === this.STATUS.WAITING) {
             this.indexOfPlaceToEdit = this.registers.indexOf(place);
             this.storageInstance.placeToEdit = Object.assign({}, place);
-            this.router.navigate(['/app/business-details']).then();
+            this.router.navigate(['/app/business-details']);
             return;
         }
         if (place.status === this.STATUS.ACCEPTED || place.status === this.STATUS.VERIFIED) {
-            this.storageInstance.placeToShow = place;
-            this.router.navigate(['/app/shop']).then();
+            if (place.claim && place.claim.userId === this.user.id) {
+                this.router.navigate(['/app/tabs/my-business']);
+            } else {
+                this.storageInstance.placeToShow = place;
+                this.router.navigate(['/app/shop']);
+            }
         }
     }
 
-    showReason() {
-
-    }
 }

@@ -18,3 +18,9 @@ export interface User {
     type?: string;
     // TODO, add another elements from this model
 }
+
+export interface UserStats {
+    total: number;
+    active: number;
+    disabled: number;
+}

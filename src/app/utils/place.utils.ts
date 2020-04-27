@@ -61,4 +61,9 @@ export class PlaceUtils {
             return 'assets/marker-icons/store.png';
         }
     }
+
+    static getSortData(registers): any[] {
+        return registers.sort((a, b) => new Date(b.lastUpdate).getTime() as any - new Date(a.lastUpdate).getTime() as any);
+    }
+
 }

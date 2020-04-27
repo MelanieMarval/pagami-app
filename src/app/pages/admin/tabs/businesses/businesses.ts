@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResolveEnd, Router } from '@angular/router';
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { ApiResponse } from '../../../../core/api/api.response';
-import { Place } from '../../../../core/api/places/place';
+import { Place, PlaceStats } from '../../../../core/api/places/place';
 
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
@@ -22,9 +22,11 @@ export class BusinessesPage implements OnInit {
     error = false;
     empty = false;
     registers: Place[];
+    stats: PlaceStats;
     STATUS = PLACES.STATUS;
     indexOfPlaceToEdit: number = undefined;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
+    placeSortData = PlaceUtils.getSortData;
 
     constructor(private placesService: PlacesService,
                 private router: Router,
@@ -38,9 +40,14 @@ export class BusinessesPage implements OnInit {
                 this.verifyItemUpdated();
             }
         });
+        this.getStats();
+        this.getRegisters();
+    }
+
+    getRegisters() {
+        this.loading = true;
         this.placesService.getAllAvailable()
             .then(async (success: ApiResponse) => {
-                this.loading = false;
                 if (success.passed) {
                     this.registers = await success.response;
                     this.empty = this.registers.length === 0;
@@ -48,6 +55,17 @@ export class BusinessesPage implements OnInit {
                 } else {
                     this.error = true;
                     this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
+                }
+                this.loading = false;
+            });
+    }
+
+    getStats() {
+        this.loading = true;
+        this.placesService.getTotalPlaces()
+            .then((success: ApiResponse) => {
+                if (success.passed) {
+                    this.stats = success.response;
                 }
             });
     }
@@ -60,9 +78,4 @@ export class BusinessesPage implements OnInit {
         }
     }
 
-    filterRegisters(status: string): number {
-        let total;
-        total = this.registers.filter(place => place.status === status);
-        return total.length;
-    }
 }

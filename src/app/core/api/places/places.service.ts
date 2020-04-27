@@ -49,6 +49,19 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async getNearby(filter: any): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        options.params = new HttpParams({fromObject: filter});
+        const request = this.httpClient.get(`${this.URL}/nearby/search`, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async getPlaceByGeocode(lat: number, lng: number): Promise<any> {
+        // tslint:disable-next-line:max-line-length
+        const request = this.httpClient.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s`);
+        return request.toPromise();
+    }
+
     async findById(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/${id}`, options);
@@ -85,16 +98,10 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
-    async getNearby(filter: any): Promise<ApiResponse> {
+    async getTotalPlaces(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        options.params = new HttpParams({ fromObject: filter });
-        const request = this.httpClient.get(`${this.URL}/nearby/search`, options);
+        const request = this.httpClient.get(`${this.URL}/count`, options);
         return this.apiService.serverListener(request);
     }
 
-    async getPlaceByGeocode(lat: number, lng: number): Promise<any> {
-        // tslint:disable-next-line:max-line-length
-        const request = this.httpClient.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s`);
-        return request.toPromise();
-    }
 }

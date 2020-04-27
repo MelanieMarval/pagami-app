@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { USER } from '../../../../utils/Const';
-import { User } from '../../../../core/api/users/user';
+import { User, UserStats } from '../../../../core/api/users/user';
 import { UsersService } from '../../../../core/api/users/users.service';
 // Providers
 import { ToastProvider } from '../../../../providers/toast.provider';
-import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
+import { ApiResponse } from '../../../../core/api/api.response';
+import { UserUtils } from '../../../../utils/user.utils';
 
 @Component({
     selector: 'app-admin-users',
@@ -19,6 +20,7 @@ export class UsersPage implements OnInit {
     loading = true;
     empty = false;
     users: User[];
+    stats: UserStats;
     status = USER.STATUS;
 
     constructor(private userService: UsersService,
@@ -28,6 +30,21 @@ export class UsersPage implements OnInit {
     }
 
     ngOnInit(): void {
+        this.userService.getTotalUsers()
+            .then((success: ApiResponse) => {
+                if (success.passed) {
+                    this.stats = {
+                        active: success.response.active,
+                        disabled: success.response.disabled,
+                        total: success.response.active + success.response.disabled
+                    };
+                }
+            });
+        this.getUsers();
+    }
+
+    getUsers() {
+        this.loading = true;
         this.userService.getAll()
             .then(success => {
                 this.loading = false;
@@ -47,9 +64,4 @@ export class UsersPage implements OnInit {
         this.router.navigate(['admin/tabs/users/profile']);
     }
 
-    filterUsers(status: string): number {
-        let total: User[];
-        total = this.users.filter(user => user.status === status);
-        return total.length;
-    }
 }
