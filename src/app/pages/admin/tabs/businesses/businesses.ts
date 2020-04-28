@@ -78,4 +78,8 @@ export class BusinessesPage implements OnInit {
         }
     }
 
+    goToDetails(register: Place) {
+        this.intentProvider.placeToView = register;
+        this.router.navigate(['admin/tabs/records/claim/details']);
+    }
 }

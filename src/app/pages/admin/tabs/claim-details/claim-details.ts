@@ -139,6 +139,6 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
     }
 
     goToPlaceDetails() {
-        this.router.navigate(['admin/tabs/records/claim/details']);
+        this.router.navigate(['/admin/tabs/records/details']);
     }
 }

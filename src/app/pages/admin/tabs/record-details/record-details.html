@@ -1,29 +1,30 @@
 
-<ion-header class="header-image">
-    <ion-toolbar class="background-transparent">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/admin/tabs/records"></ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
-
-    <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
-
-    <div class="header-image--info">
-        <ion-item lines="none" class="info-category">
-            <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
-            &nbsp;&nbsp;
-            <ion-label>{{place.category?.name}} · {{placeTypeSpanish(place.type)}}</ion-label>
-        </ion-item>
-        <div class="info-title">
-            <ion-text color="light">
-                {{place.name}}
-            </ion-text>
-        </div>
-        <ion-label class="info-country">{{place.location?.country}}</ion-label>
-    </div>
-</ion-header>
-
 <ion-content>
+
+    <ion-header class="header-image">
+        <ion-toolbar class="background-transparent">
+            <ion-buttons slot="start">
+                <ion-back-button defaultHref="/admin/tabs/records"></ion-back-button>
+            </ion-buttons>
+        </ion-toolbar>
+
+        <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
+
+        <div class="header-image--info">
+            <ion-item lines="none" class="info-category">
+                <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
+                &nbsp;&nbsp;
+                <ion-label>{{place.category?.name}} · {{placeTypeSpanish(place.type)}}</ion-label>
+            </ion-item>
+            <div class="info-title">
+                <ion-text color="light">
+                    {{place.name}}
+                </ion-text>
+            </div>
+            <ion-label class="info-country">{{place.location?.country}}</ion-label>
+        </div>
+    </ion-header>
+
     <ion-list lines="none" class="inputs-container">
         <ion-item-group class="ion-margin-bottom">
             <ion-label class="group-label">Ubicacion</ion-label>
@@ -60,21 +61,22 @@
         </ion-item-group>
     </ion-list>
 
+    <ion-footer class="footer-button" *ngIf="!saved && !isView">
+        <ion-row>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()" [disabled]="saving || rejecting">
+                    <ion-spinner *ngIf="rejecting" class="spinner-energized"></ion-spinner>
+                    <span *ngIf="!rejecting">Rechazar</span>
+                </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
+                    <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+                    <span *ngIf="!saving">Aceptar</span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-footer>
+
 </ion-content>
 
-<ion-footer class="footer-button" *ngIf="!saved && !isView">
-    <ion-row>
-        <ion-col size="6">
-            <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()" [disabled]="saving || rejecting">
-                <ion-spinner *ngIf="rejecting" class="spinner-energized"></ion-spinner>
-                <span *ngIf="!rejecting">Rechazar</span>
-            </ion-button>
-        </ion-col>
-        <ion-col size="6">
-            <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
-                <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
-                <span *ngIf="!saving">Aceptar</span>
-            </ion-button>
-        </ion-col>
-    </ion-row>
-</ion-footer>

@@ -3,6 +3,7 @@ import { Place } from '../../core/api/places/place';
 import { PLACES, CLAIMS } from '../../utils/Const';
 import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { Router } from '@angular/router';
+import { AlertProvider } from '../../providers/alert.provider';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class ShopPage implements OnInit {
     CLAIMS = CLAIMS.STATUS;
 
     constructor(private intentProvider: UserIntentProvider,
+                private alert: AlertProvider,
                 private router: Router) {
     }
 

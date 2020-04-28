@@ -16,6 +16,7 @@ export interface User {
     createTime?: string;
     lastUpdate?: string;
     type?: string;
+    totalPlaces?: number;
     // TODO, add another elements from this model
 }
 

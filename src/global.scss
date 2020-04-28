@@ -38,6 +38,9 @@
 .footer-button {
     padding: 17px;
     background: var(--ion-background-color);
+    ion-col {
+        padding: 0;
+    }
 
     &.--without-pt {
         padding-top: 0;
@@ -52,7 +55,7 @@
 }
 .button-large, .button-small {
     height: 56px;
-    width: 100%;
+    width: 99%;
     font-size: 14px;
     font-weight: normal;
     border-radius: 5px;
@@ -62,6 +65,7 @@
 
 .button-small {
     height: 36px;
+    width: 97%;
 }
 /* END button */
 /*  ***********************  */
@@ -174,6 +178,9 @@ ion-bottom-drawer {
 }
 .with-overflow-y {
     overflow-y: scroll !important;
+}
+.auto-overflow-y {
+    overflow-y: auto !important;
 }
 .d-none {
     display: none !important;

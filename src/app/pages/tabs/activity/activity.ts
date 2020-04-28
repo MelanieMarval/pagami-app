@@ -22,6 +22,7 @@ export class ActivityPage implements OnInit {
 
     loading = true;
     error = false;
+    empty = false;
     registers: Place[];
     user: User;
     STATUS = PLACES.STATUS;
@@ -51,9 +52,10 @@ export class ActivityPage implements OnInit {
     getRegisters() {
         this.loading = true;
         this.placesService.myRegisters()
-            .then(async (success: ApiResponse) => {
+            .then((success: ApiResponse) => {
                 if (success.passed) {
-                    this.registers = await success.response.filter(place => place.status);
+                    this.registers = success.response;
+                    this.empty = this.registers.length === 0;
                     this.loading = false;
                     this.error = false;
                 } else {

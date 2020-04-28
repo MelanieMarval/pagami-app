@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-
 import { InputFilePage } from '../parent/InputFilePage';
+// Services
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../../core/api/auth/auth.service';
+import { User } from '../../core/api/users/user';
+// Providers
 import { ToastProvider } from '../../providers/toast.provider';
 import { StorageProvider } from '../../providers/storage.provider';
-import { User } from '../../core/api/users/user';
-import { AuthService } from '../../core/api/auth/auth.service';
+
 import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { ValidationUtils } from '../../utils/validation.utils';
-import { ApiResponse } from '../../core/api/api.response';
-import { PlacesService } from '../../core/api/places/places.service';
 
 
 @Component({
@@ -25,7 +25,6 @@ export class ProfilePage extends InputFilePage implements OnInit {
     isEditing = false;
     user: User = {location: {}};
     updating = false;
-    totalRegisters = 0;
 
     constructor(
         private router: Router,
@@ -36,7 +35,6 @@ export class ProfilePage extends InputFilePage implements OnInit {
         private googleAuthService: GoogleAuthService,
         protected geolocationService: GeolocationService,
         private authService: AuthService,
-        private placesService: PlacesService
     ) {
         super(geolocationService);
     }
@@ -44,16 +42,6 @@ export class ProfilePage extends InputFilePage implements OnInit {
     async ngOnInit() {
         this.user = await this.storageService.getPagamiUser();
         this.previewUrl = this.user.photoUrl;
-        this.placesService.myRegisters()
-            .then(async (success: ApiResponse) => {
-                if (success.passed) {
-                    this.totalRegisters = success.response.length;
-                } else {
-                    this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
-                }
-            }).catch(error => {
-            this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
-        });
     }
 
     setPlace(place) {

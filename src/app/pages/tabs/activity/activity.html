@@ -13,7 +13,7 @@
 <ion-content>
 
     <ion-list>
-        <ion-item-group *ngIf="!loading && !error">
+        <ion-item-group *ngIf="!loading && !error && !empty">
             <ion-card *ngFor="let register of placeSortData(registers)"
                       class="card card-place" button
                       [ngClass]="!showNotification ? '' : 'status-border status-border--'+register.status | lowercase"
@@ -40,11 +40,11 @@
                                 <ion-img [src]="placeThumbnailPhoto(register)"></ion-img>
                             </ion-avatar>
                         </ion-col>
-                        <ion-col size="7">
+                        <ion-col size="6">
                             <ion-card-title>{{register.status === STATUS.INCOMPLETE ? '' : register.name | capitalize}}</ion-card-title>
                         </ion-col>
-                        <ion-col size="3">
-                            <ion-text [class]="['status--'+register.status | lowercase]">
+                        <ion-col size="4" class="ion-justify-content-end">
+                            <ion-text [ngClass]="'status--'+register.status | lowercase">
                                 {{register.status === STATUS.VERIFIED ? '$0.00 USD' : ''}}
                             </ion-text>
                         </ion-col>
@@ -66,137 +66,7 @@
                     </ion-row>
                 </ion-card-content>
             </ion-card>
-            <!--            <ion-card class="card-place" button routerLink="/app/business-details/hola">-->
-            <!--                <ion-card-header>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="10">-->
-            <!--                            <ion-card-subtitle>-->
-            <!--                                12/05/2019 · 3:40 pm ·-->
-            <!--                                <span class="status&#45;&#45;verified">Verificado</span>-->
-            <!--                            </ion-card-subtitle>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="2">-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-header>-->
 
-            <!--                <ion-card-content>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="2">-->
-            <!--                            <ion-avatar class="border-white-1px">-->
-            <!--                                <img src="assets/img/avatar-business.jpg">-->
-            <!--                            </ion-avatar>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="7">-->
-            <!--                            <ion-card-title>White Sugar</ion-card-title>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="3">-->
-            <!--                            <ion-text class="status&#45;&#45;verified">-->
-            <!--                                $6.00 USD-->
-            <!--                            </ion-text>-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-content>-->
-            <!--            </ion-card>-->
-
-            <!--            <ion-card class="card-place" button routerLink="/app/business-details/hola">-->
-            <!--                <ion-card-header>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="10">-->
-            <!--                            <ion-card-subtitle>-->
-            <!--                                12/05/2019 · 3:40 pm ·-->
-            <!--                                <span class="status&#45;&#45;wait-verification">En espera de verificación</span>-->
-            <!--                            </ion-card-subtitle>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="2">-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-header>-->
-
-            <!--                <ion-card-content>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="2">-->
-            <!--                            <ion-avatar class="border-white-1px">-->
-            <!--                                <img src="assets/img/avatar-business.jpg">-->
-            <!--                            </ion-avatar>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="7">-->
-            <!--                            <ion-card-title>Think Coffee</ion-card-title>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="3">-->
-            <!--                            <ion-text class="status&#45;&#45;wait-verification">-->
-            <!--                                $6.00 USD-->
-            <!--                            </ion-text>-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-content>-->
-            <!--            </ion-card>-->
-
-            <!--            <ion-card class="card-place" button routerLink="/app/business-details/hola">-->
-            <!--                <ion-card-header>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="10">-->
-            <!--                            <ion-card-subtitle>-->
-            <!--                                12/05/2019 · 3:40 pm ·-->
-            <!--                                <span class="status&#45;&#45;rejected">Rechazado</span>-->
-            <!--                            </ion-card-subtitle>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="2">-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-header>-->
-
-            <!--                <ion-card-content>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="2">-->
-            <!--                            <ion-avatar class="border-white-1px">-->
-            <!--                                <img src="assets/img/avatar-business.jpg">-->
-            <!--                            </ion-avatar>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="7">-->
-            <!--                            <ion-card-title>Think Coffee</ion-card-title>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="3">-->
-            <!--                            <ion-text class="status&#45;&#45;rejected">-->
-            <!--                                $6.00 USD-->
-            <!--                            </ion-text>-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-content>-->
-            <!--            </ion-card>-->
-
-            <!--            <ion-card class="card-place" button routerLink="/app/business-details/hola">-->
-            <!--                <ion-card-header>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="10">-->
-            <!--                            <ion-card-subtitle>-->
-            <!--                                12/05/2019 · 3:40 pm ·-->
-            <!--                                <span class="status&#45;&#45;transfer">Transferencia</span>-->
-            <!--                            </ion-card-subtitle>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="2">-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-header>-->
-
-            <!--                <ion-card-content>-->
-            <!--                    <ion-row>-->
-            <!--                        <ion-col size="2">-->
-            <!--                            <ion-avatar class="border-white-1px">-->
-            <!--                                <img src="assets/img/avatar-business.jpg">-->
-            <!--                            </ion-avatar>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="7">-->
-            <!--                            <ion-card-title>Camila Gutierrez</ion-card-title>-->
-            <!--                        </ion-col>-->
-            <!--                        <ion-col size="3">-->
-            <!--                            <ion-text class="status&#45;&#45;transfer">-->
-            <!--                                $6.00 USD-->
-            <!--                            </ion-text>-->
-            <!--                        </ion-col>-->
-            <!--                    </ion-row>-->
-            <!--                </ion-card-content>-->
-            <!--            </ion-card>-->
         </ion-item-group>
 
         <ion-item-group *ngIf="loading || error">
@@ -230,7 +100,9 @@
                 </ion-card-content>
             </ion-card>
         </ion-item-group>
-
     </ion-list>
+
+    <app-background-empty *ngIf="empty" [title]="'Aun no hay actividad'" height="90"
+                          [text]="'Cuando hayas registrado empresas podras ver los detalles aqui'"></app-background-empty>
 
 </ion-content>

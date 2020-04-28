@@ -18,7 +18,7 @@
                 <ion-img [src]="user.photoUrl"></ion-img>
             </ion-avatar>
             <ion-text class="text-join">Se unio el {{user.createTime | date:'d'}} de {{user.createTime | date:'MMMM y'}}</ion-text>
-            <h3>456 Empresas registradas</h3>
+            <h3>{{user.totalPlaces | plural:'Empresa registrada'}}</h3>
         </ion-item-group>
 
         <ion-list lines="none" class="inputs-container">

@@ -4,6 +4,13 @@
 
 .text-gray {
     color: #A0AEC0;
+    font-size: 14px;
+}
+
+@media (max-width: 380px) {
+    .text-gray {
+        font-size: 12px;
+    }
 }
 
 /* *****STATUS CARDS***** */

@@ -1,38 +1,39 @@
 
-<ion-header class="header-image">
-    <ion-toolbar class="background-transparent">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/app/tabs/map/search"></ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
-
-    <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
-
-    <div class="header-image--info">
-        <ion-item lines="none" class="info-category">
-            <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
-            &nbsp;&nbsp;
-            <ion-label>{{place.category?.name | uppercase}}</ion-label>
-        </ion-item>
-        <div class="info-title">
-            <ion-text color="light">
-                {{place.name}}
-                <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success"></ion-icon>
-            </ion-text>
-        </div>
-        <ion-item lines="none" class="info-rating">
-            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
-            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
-            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
-            <ion-icon slot="start" name="star" color="pagami"></ion-icon>
-            <ion-icon slot="start" name="star-outline"></ion-icon>
-            &nbsp;
-            <ion-label>24 comentarios</ion-label>
-        </ion-item>
-    </div>
-</ion-header>
-
 <ion-content>
+
+    <ion-header class="header-image">
+        <ion-toolbar class="background-transparent">
+            <ion-buttons slot="start">
+                <ion-back-button defaultHref="/app/tabs/map/search"></ion-back-button>
+            </ion-buttons>
+        </ion-toolbar>
+
+        <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
+
+        <div class="header-image--info">
+            <ion-item lines="none" class="info-category">
+                <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
+                &nbsp;&nbsp;
+                <ion-label>{{place.category?.name | uppercase}}</ion-label>
+            </ion-item>
+            <div class="info-title">
+                <ion-text color="light">
+                    {{place.name}}
+                    <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success"></ion-icon>
+                </ion-text>
+            </div>
+            <ion-item lines="none" class="info-rating">
+                <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+                <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+                <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+                <ion-icon slot="start" name="star" color="pagami"></ion-icon>
+                <ion-icon slot="start" name="star-outline"></ion-icon>
+                &nbsp;
+                <ion-label>24 comentarios</ion-label>
+            </ion-item>
+        </div>
+    </ion-header>
+
     <ion-list lines="none" class="inputs-container">
         <ion-item color="pagami-surface" >
             <ion-label position="floating">WhatsApp</ion-label>
@@ -52,11 +53,13 @@
     </ion-list>
 
     <ion-list *ngIf="place.status === STATUS.VERIFIED" class="link-buttons-container" lines="none">
-        <ion-item button routerLink="/app/shop/products" color="pagami-surface">
+<!--        <ion-item button routerLink="/app/shop/products" color="pagami-surface">-->
+        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Productos</ion-label>
         </ion-item>
-        <ion-item button routerLink="/app/shop/services" color="pagami-surface">
+<!--        <ion-item button routerLink="/app/shop/services" color="pagami-surface">-->
+        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Servicios</ion-label>
         </ion-item>

@@ -9,6 +9,7 @@ import { ClaimService } from '../../../core/api/claim/claim.service';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { Router } from '@angular/router';
 import { Claim } from '../../../core/api/claim/claim';
+import { AlertProvider } from '../../../providers/alert.provider';
 
 @Component({
     selector: 'app-my-business',
@@ -28,6 +29,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     constructor(
         private claimService: ClaimService,
         private toast: ToastProvider,
+        private alert: AlertProvider,
         private placesService: PlacesService,
         private intentProvider: UserIntentProvider,
         private router: Router,
