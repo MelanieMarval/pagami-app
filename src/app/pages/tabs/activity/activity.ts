@@ -23,12 +23,13 @@ export class ActivityPage implements OnInit {
     loading = true;
     error = false;
     registers: Place[];
-    STATUS = PLACES.STATUS;
-    indexOfPlaceToEdit: number = undefined;
     user: User;
+    STATUS = PLACES.STATUS;
+    indexOfPlaceToEdit: number;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
     placeMessageStatus = PlaceUtils.getMessageStatus;
     placeSortData = PlaceUtils.getSortData;
+    showNotification = false;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageProvider,

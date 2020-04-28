@@ -30,39 +30,3 @@ ion-card-header {
     padding-bottom: 6px;
 }
 
-/* *****STATUS CARDS***** */
-.status{
-    &--verified {
-        color: #68D391;
-    }
-    &--accepted {
-        color: #FBD38D;
-    }
-    &--waiting {
-        color: #999;
-    }
-    &--rejected {
-        color: #E53E3E;
-    }
-    &--transfer {
-        color: #63B3ED;
-    }
-    &--incomplete{
-        color: #ffbe25;
-    }
-}
-
-ion-text.status--verified {
-    color: #FFFFFF;
-
-    &:before {
-        content: "+";
-    }
-}
-ion-text.status--transfer {
-    color: #FFFFFF;
-
-    &:before {
-        content: "-";
-    }
-}

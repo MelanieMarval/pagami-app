@@ -17,7 +17,10 @@
         </ion-tab-button>
 
         <ion-tab-button tab="wallet" class="tab-button">
-            <ion-icon src="assets/icon/wallet.svg" class="tab-button__icon"></ion-icon>
+            <div class="p-relative">
+                <ion-icon src="assets/icon/wallet.svg" class="tab-button__icon tab-button__icon--noti"></ion-icon>
+                <div *ngIf="true" class="red-notification"></div>
+            </div>
             <ion-label>Billetera</ion-label>
         </ion-tab-button>
     </ion-tab-bar>

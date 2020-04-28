@@ -93,5 +93,65 @@ ion-card-header {
         color: #A0AEC0;
     }
 }
+    /* *****STATUS BORDER***** */
+    .status-border {
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        &--verified {
+            box-shadow: 0 0 5px 1px #68D391;
+        }
+        &--accepted {
+            box-shadow: 0 0 5px 1px #FBD38D;
+        }
+        &--rejected {
+            box-shadow: 0 0 5px 1px #E53E3E;
+        }
+        &--transfer {
+            box-shadow: 0 0 5px 1px #63B3ED;
+        }
+    }
+    /* END Status border */
+    /*  ***********************  */
+
 /* END Cards User */
+/*  ***********************  */
+
+/* *****STATUS CARDS***** */
+.status{
+    &--verified {
+         color: #68D391;
+     }
+    &--accepted {
+        color: #FBD38D;
+    }
+    &--waiting {
+        color: #999;
+    }
+    &--rejected {
+        color: #E53E3E;
+    }
+    &--transfer {
+        color: #63B3ED;
+    }
+    &--incomplete {
+        color: #ffbe25;
+    }
+}
+
+ion-text.status--verified {
+    color: #FFFFFF;
+
+    &:before {
+        content: "+";
+    }
+}
+ion-text.status--transfer {
+    color: #FFFFFF;
+
+    &:before {
+        content: "-";
+    }
+}
+/* END Status */
 /*  ***********************  */
