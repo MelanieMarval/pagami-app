@@ -1,15 +1,19 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { InputFilePage } from '../../parent/InputFilePage';
-import { GeolocationService } from '../../../core/geolocation/geolocation.service';
-import { Place } from '../../../core/api/places/place';
-import { ValidationUtils } from '../../../utils/validation.utils';
+import { Router } from '@angular/router';
+// Providers
 import { ToastProvider } from '../../../providers/toast.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
+import { AlertProvider } from '../../../providers/alert.provider';
+import { StorageProvider } from '../../../providers/storage.provider';
+// Services
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PlacesService } from '../../../core/api/places/places.service';
 import { ClaimService } from '../../../core/api/claim/claim.service';
-import { UserIntentProvider } from '../../../providers/user-intent.provider';
-import { Router } from '@angular/router';
 import { Claim } from '../../../core/api/claim/claim';
-import { AlertProvider } from '../../../providers/alert.provider';
+import { Place } from '../../../core/api/places/place';
+
+import { InputFilePage } from '../../parent/InputFilePage';
+import { ValidationUtils } from '../../../utils/validation.utils';
 
 @Component({
     selector: 'app-my-business',
@@ -27,18 +31,39 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     claim: Claim;
 
     constructor(
-        private claimService: ClaimService,
+        private router: Router,
         private toast: ToastProvider,
         private alert: AlertProvider,
-        private placesService: PlacesService,
         private intentProvider: UserIntentProvider,
-        private router: Router,
+        private claimService: ClaimService,
+        private placesService: PlacesService,
+        private storageService: StorageProvider,
         protected geolocationService: GeolocationService
     ) {
         super(geolocationService);
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+        const myBusiness = await this.storageService.getBusinessVerifiedByUser();
+        if (myBusiness) {
+            this.loading = false;
+            this.isRegister = true;
+            this.place = myBusiness;
+            this.previewUrl = this.place.photoUrl;
+        } else {
+            this.getMyBusiness();
+        }
+
+    }
+
+    ngAfterViewChecked(): void {
+        if (this.intentProvider.placeToClaim) {
+            this.intentProvider.placeToClaim = undefined;
+            this.isClaim = true;
+        }
+    }
+
+    getMyBusiness() {
         this.claimService.getMyBusiness()
             .then(success => {
                 console.log(success);
@@ -50,6 +75,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                     } else {
                         this.isRegister = true;
                         this.place = success.response.place;
+                        this.storageService.setBusinessVerifiedByUser(success.response.place);
                         this.previewUrl = this.place.photoUrl;
                     }
                 } else {
@@ -60,16 +86,6 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                     this.loading = false;
                 }
             });
-    }
-    ngAfterViewChecked(): void {
-        if (this.intentProvider.placeToClaim) {
-            this.intentProvider.placeToClaim = undefined;
-            this.isClaim = true;
-        }
-    }
-
-    editBusiness() {
-        this.isEditing = !this.isEditing;
     }
 
     async saveBusiness() {
@@ -85,14 +101,15 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         this.updating = true;
         this.placesService.update(this.place)
             .then(async success => {
+                console.log('-> success', success);
                 if (success.passed === true) {
-                    console.log('-> success.response', success.response);
+                    this.storageService.setBusinessVerifiedByUser(success.response);
                     this.isEditing = false;
                     this.updating = false;
-                    await this.toast.messageSuccessWithoutTabs('Su empresa ha sido actulizada exitosamente!');
+                    await this.toast.messageSuccessWithoutTabs('Su empresa ha sido actualizada exitosamente!');
                 } else {
                     this.updating = false;
-                    await this.toast.messageErrorWithoutTabs('No se han podido actualizar su informacion. Intente de nuevo!');
+                    await this.toast.messageErrorWithoutTabs('No se ha podido actualizar su informacion. Intente de nuevo!');
                 }
             });
     }

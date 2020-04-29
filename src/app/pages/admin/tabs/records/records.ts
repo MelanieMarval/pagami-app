@@ -53,12 +53,14 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        this.intentProvider.showNotification = false;
         this.getRecordsToBeAccepted();
         this.getRecordsToBeVerified();
     }
 
     ngAfterViewChecked(): void {
+        if (this.intentProvider.showNotification) {
+            this.intentProvider.showNotification = false;
+        }
         this.intentProvider.placeToView = undefined;
         this.intentProvider.userToView = undefined;
         // Cuando vuelve luego de aceptar o verificar un place lo elimina de la lista
@@ -70,6 +72,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
             this.showNotification.accepted = this.totalToBeAccepted !== 0;
             this.empty.accepted = this.totalToBeAccepted === 0;
             this.intentProvider.returnPlaceToAccept = undefined;
+            this.intentProvider.needToUpdate = true;
             this.cdRef.detectChanges();
         }
         if (this.intentProvider.returnClaimToVerified) {
@@ -80,6 +83,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
             this.showNotification.verified = this.totalToBeVerified !== 0;
             this.empty.verified = this.totalToBeVerified === 0;
             this.intentProvider.returnClaimToVerified = undefined;
+            this.intentProvider.needToUpdate = true;
             this.cdRef.detectChanges();
         }
     }

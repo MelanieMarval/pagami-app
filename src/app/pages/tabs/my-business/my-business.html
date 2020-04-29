@@ -54,7 +54,7 @@
                     <ion-icon name="shield-checkmark" color="success"></ion-icon>
                 </ion-text>
                 <ion-fab horizontal="end" vertical="center" slot="fixed">
-                    <ion-fab-button color="pagami" size="small" (click)="editBusiness()">
+                    <ion-fab-button color="pagami" size="small" (click)="isEditing = !isEditing">
                         <ion-icon name="pencil"></ion-icon>
                     </ion-fab-button>
                 </ion-fab>
@@ -162,7 +162,7 @@
         <ion-row>
             <ion-col size="6">
                 <ion-button [disabled]="updating" class="button-small" expand="block" color="pagami-surface"
-                            (click)="editBusiness()">
+                            (click)="isEditing = false">
                     Cancelar
                 </ion-button>
             </ion-col>

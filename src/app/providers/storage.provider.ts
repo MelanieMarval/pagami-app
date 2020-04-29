@@ -12,6 +12,7 @@ const USER_UNREGISTERED = 'user_unregistered';
 const PLACE_UNREGISTERED = 'PLACE_unregistered';
 const LAST_COORS = 'last_pagami_coors';
 const LAST_USER_VERIFICATION = 'last_user_verification';
+const BUSINESS_VERIFIED_BY_USER = 'business_verified_by_user';
 
 @Injectable({
     providedIn: 'root'
@@ -126,6 +127,20 @@ export class StorageProvider {
     getLastUserVerification(): Promise<any> {
         return new Promise(resolve => {
             this.storage.get(LAST_USER_VERIFICATION)
+                .then(
+                    data => resolve(data),
+                    () => resolve(undefined)
+                );
+        });
+    }
+
+    setBusinessVerifiedByUser(place: Place): Promise<any> {
+        return this.storage.set(BUSINESS_VERIFIED_BY_USER, place);
+    }
+
+    getBusinessVerifiedByUser(): Promise<any> {
+        return new Promise(resolve => {
+            this.storage.get(BUSINESS_VERIFIED_BY_USER)
                 .then(
                     data => resolve(data),
                     () => resolve(undefined)

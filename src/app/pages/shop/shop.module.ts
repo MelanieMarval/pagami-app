@@ -8,6 +8,7 @@ import {ShopPage} from './shop';
 import {ServicesPage} from './services/services';
 import {ProductsPage} from './products/products';
 import {OrderSummaryPage} from './order-summary/order-summary';
+import { PipesModule } from '../../pipes/pipes.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {OrderSummaryPage} from './order-summary/order-summary';
         CommonModule,
         IonicModule,
         HttpClientModule,
-        ShopPageRoutingModule
+        ShopPageRoutingModule,
+        PipesModule
     ],
     declarations: [
         ShopPage,

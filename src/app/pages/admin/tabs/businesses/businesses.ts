@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { ResolveEnd, Router } from '@angular/router';
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { ApiResponse } from '../../../../core/api/api.response';
@@ -16,9 +16,10 @@ import { PlaceUtils } from '../../../../utils/place.utils';
     templateUrl: 'businesses.html',
     styleUrls: ['businesses.scss']
 })
-export class BusinessesPage implements OnInit {
+export class BusinessesPage implements OnInit, AfterViewChecked {
 
     loading = true;
+    reloading = false;
     error = false;
     empty = false;
     registers: Place[];
@@ -34,19 +35,31 @@ export class BusinessesPage implements OnInit {
                 private intentProvider: AdminIntentProvider) {
     }
 
-    ngOnInit() {
-        this.router.events.subscribe(next => {
-            if (next instanceof ResolveEnd) {
-                this.verifyItemUpdated();
-            }
-        });
-        this.getStats();
-        this.getRegisters();
+    ngOnInit(): void {
+        this.load();
     }
 
-    getRegisters() {
+    ngAfterViewChecked(): void {
+        if (this.intentProvider.needToUpdate) {
+            this.intentProvider.needToUpdate = false;
+            this.reload();
+        }
+    }
+
+    async load() {
         this.loading = true;
-        this.placesService.getAllAvailable()
+        await this.getStats();
+        await this.getRegisters();
+    }
+
+    async reload() {
+        this.reloading = true;
+        await this.getStats();
+        await this.getRegisters();
+    }
+
+    async getRegisters() {
+        await this.placesService.getAllAvailable()
             .then(async (success: ApiResponse) => {
                 if (success.passed) {
                     this.registers = await success.response;
@@ -57,12 +70,12 @@ export class BusinessesPage implements OnInit {
                     this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
                 }
                 this.loading = false;
+                this.reloading = false;
             });
     }
 
-    getStats() {
-        this.loading = true;
-        this.placesService.getTotalPlaces()
+    async getStats() {
+        await this.placesService.getTotalPlaces()
             .then((success: ApiResponse) => {
                 if (success.passed) {
                     this.stats = success.response;
@@ -78,8 +91,9 @@ export class BusinessesPage implements OnInit {
         }
     }
 
-    goToDetails(register: Place) {
+    goToDetails(register: Place): void {
         this.intentProvider.placeToView = register;
         this.router.navigate(['admin/tabs/records/claim/details']);
     }
+
 }

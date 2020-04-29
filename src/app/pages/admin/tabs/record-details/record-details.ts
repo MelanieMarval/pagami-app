@@ -71,6 +71,23 @@ export class RecordDetailsPage implements OnInit {
             });
     }
 
+    rejectPlace() {
+        this.rejecting = true;
+        this.placeService.changeStatus(this.place.id, this.STATUS.REJECTED, this.rejectReason)
+            .then(success => {
+                this.rejecting = false;
+                if (success.passed) {
+                    this.saved = true;
+                    this.intentProvider.placeToAccept = undefined;
+                    this.intentProvider.returnPlaceToAccept = success.response;
+                    this.toast.messageSuccessWithoutTabs('Mensaje enviado exitosamente');
+                } else {
+                    this.toast.messageErrorAboveButton('No se ha podido enviar su mensaje. Intente nuevamente!');
+                }
+            });
+
+    }
+
     async openConfirm() {
         const alert = await this.alert.create({
             header: 'Rechazo de Empresa',
@@ -103,21 +120,5 @@ export class RecordDetailsPage implements OnInit {
         await alert.present();
     }
 
-    rejectPlace() {
-        this.rejecting = true;
-        this.placeService.changeStatus(this.place.id, this.STATUS.REJECTED, this.rejectReason)
-            .then(success => {
-                this.rejecting = false;
-                if (success.passed) {
-                    this.saved = true;
-                    this.intentProvider.placeToAccept = undefined;
-                    this.intentProvider.returnPlaceToAccept = success.response;
-                    this.toast.messageSuccessWithoutTabs('Mensaje enviado exitosamente');
-                } else {
-                    this.toast.messageErrorAboveButton('No se ha podido enviar su mensaje. Intente nuevamente!');
-                }
-            });
-
-    }
 
 }
