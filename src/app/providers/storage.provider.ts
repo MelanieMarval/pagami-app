@@ -11,6 +11,7 @@ const GOOGLE_USER = 'google_user';
 const USER_UNREGISTERED = 'user_unregistered';
 const PLACE_UNREGISTERED = 'PLACE_unregistered';
 const LAST_COORS = 'last_pagami_coors';
+const LAST_USER_VERIFICATION = 'last_user_verification';
 
 @Injectable({
     providedIn: 'root'
@@ -111,6 +112,20 @@ export class StorageProvider {
     getPlaceUnregistered(): Promise<Place> {
         return new Promise(resolve => {
             this.storage.get(PLACE_UNREGISTERED)
+                .then(
+                    data => resolve(data),
+                    () => resolve(undefined)
+                );
+        });
+    }
+
+    setLastUserVerification(date: any): Promise<any> {
+        return this.storage.set(LAST_USER_VERIFICATION, date);
+    }
+
+    getLastUserVerification(): Promise<any> {
+        return new Promise(resolve => {
+            this.storage.get(LAST_USER_VERIFICATION)
                 .then(
                     data => resolve(data),
                     () => resolve(undefined)

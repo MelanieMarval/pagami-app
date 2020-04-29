@@ -32,8 +32,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         shouldBounce: true,
         disableDrag: false,
         distanceTop: 62,
-        dockedHeight: 504,
-        minimumHeight: 108,
+        dockedHeight: 494,
+        minimumHeight: 104,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false,
@@ -101,7 +101,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (this.bottomDrawer.drawerState === DrawerState.Bottom
             || this.bottomDrawer.drawerState === DrawerState.Top
             || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {
-            this.bottomHeightChange.emit(108);
+            this.bottomHeightChange.emit(104);
             this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
             this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
         }
