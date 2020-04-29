@@ -57,6 +57,8 @@ export class PlaceUtils {
             return 'assets/marker-icons/medical.png';
         } else if (place.category.subCategory === PLACES.CATEGORY.SERVICE) {
             return 'assets/marker-icons/service.png';
+        } else if (place.category.subCategory === PLACES.CATEGORY.BEAUTY) {
+            return 'assets/marker-icons/hairdressing.png';
         } else {
             return 'assets/marker-icons/store.png';
         }

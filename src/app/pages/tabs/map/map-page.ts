@@ -10,7 +10,7 @@ import { PlaceFilter } from '../../../core/api/places/place.filter';
 import { GoogleMapPage } from '../../parent/GoogleMapPage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PlacesService } from '../../../core/api/places/places.service';
-import { MAP_MODE } from '../../../utils/Const';
+import {MAP_MODE, PLACES} from '../../../utils/Const';
 // Providers
 import { MapProvider } from '../../../providers/map.provider';
 import { AlertProvider } from '../../../providers/alert.provider';
@@ -26,6 +26,9 @@ import { UserIntentProvider } from '../../../providers/user-intent.provider';
 export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     @ViewChild('fab', {static: false, read: ElementRef}) private ionFab: ElementRef;
+
+    placeTypeSelected = PLACES.TYPE.STORE;
+    searching = false;
 
     fabAttached = true;
     bottomDrawer = {
@@ -190,11 +193,13 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     async getNearPlaces() {
+        this.searching = true;
         const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
         const filter: PlaceFilter = {
             latitude: geo.latitude,
             longitude: geo.longitude,
-            radius: 1000
+            radius: 1000,
+            placeType: this.placeTypeSelected
         };
         this.placesService.getNearby(filter).then((success: ApiResponse) => {
             if (success.passed) {
@@ -202,7 +207,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.setupPlacesToDrawer(success.response);
                 this.setupPlaces(success.response);
             }
-        });
+        }).finally(() => this.searching = false );
     }
 
     async getAcceptedPlaces() {
@@ -225,6 +230,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 latlng
             );
         });
+        places.sort((a, b) => a.distance - b.distance);
+        console.log(places);
         this.nearPlaces = places;
     }
 
@@ -281,5 +288,12 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     onFocusExit() {
         this.bottomDrawer.disableDrag = false;
         this.isSearching = false;
+    }
+
+    onPlaceTypeChanged(selected: string) {
+        this.placeTypeSelected = selected;
+        if (this.mapReady && !this.searching) {
+            this.getNearPlaces();
+        }
     }
 }

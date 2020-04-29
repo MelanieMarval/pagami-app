@@ -148,7 +148,9 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
             }
         });
         this.bottomHeightChange.subscribe(height => {
-            this.changeBottomHeight(height);
+            this.ionContent.scrollToPoint(0, 0).then(() => {
+                this.changeBottomHeight(height);
+            });
         });
     }
 

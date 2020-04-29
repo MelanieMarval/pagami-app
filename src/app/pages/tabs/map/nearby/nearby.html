@@ -11,7 +11,7 @@
                 <ion-button class="button-large btn-category" expand="block"
                             color="{{selectedCategory === 0 ? 'pagami' : 'pagami-surface'}}"
                             [ngClass]="{'selected-category': selectedCategory === 0}"
-                            (click)="selectedCategory = 0">
+                            (click)="selectedCategory = 0; emitSelectedPlaceType()">
                     Tiendas
                     <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
                 </ion-button>
@@ -20,7 +20,7 @@
                 <ion-button class="button-large btn-category" expand="block"
                             color="{{selectedCategory === 1 ? 'pagami' : 'pagami-surface'}}"
                             [ngClass]="{'selected-category': selectedCategory === 1}"
-                            (click)="selectedCategory = 1">
+                            (click)="selectedCategory = 1; emitSelectedPlaceType()">
                     Servicios
                     <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
                 </ion-button>

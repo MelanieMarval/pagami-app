@@ -7,7 +7,7 @@ import {Place} from '../../core/api/places/place';
 import GoogleMaps = google.maps;
 // @ts-ignore
 import LatLng = google.maps.LatLng;
-import { MAP_MODE } from '../../utils/Const';
+import {MAP_MODE} from '../../utils/Const';
 import {PlaceUtils} from '../../utils/place.utils';
 // // @ts-ignore
 // import LatLngLiteral = google.maps.LatLngLiteral;
@@ -28,10 +28,14 @@ const removeDefaultMarkers = [
         featureType: 'poi',
         elementType: 'labels',
         stylers: [
-            { visibility: 'off' }
+            {visibility: 'off'}
         ]
     }
 ];
+
+function degreesToRadians(degrees) {
+    return degrees * Math.PI / 180;
+}
 
 export class GoogleMapPage {
 
@@ -45,12 +49,14 @@ export class GoogleMapPage {
     googleMaps: any;
     accuracy: number;
     currentUrl: string;
+    mapReady = false;
 
     constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService
     ) {
     }
 
     async loadMap() {
+        this.mapReady = false;
         try {
             this.googleMaps = await this.geolocationService.getGoogleMaps();
             const mapEle = this.mapElement.nativeElement;
@@ -61,8 +67,9 @@ export class GoogleMapPage {
                 this.onMapReady();
                 this.mapMoveSubscribe();
             });
+            this.mapReady = true;
         } catch (err) {
-            // return a error
+            this.mapReady = false;
         }
     }
 
@@ -151,7 +158,7 @@ export class GoogleMapPage {
             marker.addListener('click', event => {
                 const latlng = new GoogleMaps.LatLng(position.lat, position.lng);
                 this.onClickPlace(place);
-                if (this.currentUrl ===  MAP_MODE.SEARCH) {
+                if (this.currentUrl === MAP_MODE.SEARCH) {
                     this.map.setZoom(20);
                     this.offsetCenter(latlng, 0, 200);
                 }
@@ -213,8 +220,31 @@ export class GoogleMapPage {
     /**
      * return distance on meters
      */
-    calculateDistance(front: LatLng, to: LatLng): number {
-        return GoogleMaps.geometry.spherical.computeDistanceBetween(front, to);
+    // calculateDistance(front: LatLng, to: LatLng): number {
+    //     return GoogleMaps.geometry.spherical.computeDistanceBetween(front, to);
+    // }
+
+    calculateDistance(point1: GoogleMaps.LatLng, point2: GoogleMaps.LatLng) {
+        // The radius of the planet earth in meters
+        const R = 6378137;
+        const dLat = degreesToRadians(point2.lat() - point1.lat());
+        const dLong = degreesToRadians(point2.lng() - point1.lng());
+        const a = Math.sin(dLat / 2)
+            *
+            Math.sin(dLat / 2)
+            +
+            Math.cos(degreesToRadians(point1.lat()))
+            *
+            Math.cos(degreesToRadians(point1.lat()))
+            *
+            Math.sin(dLong / 2)
+            *
+            Math.sin(dLong / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+
+        return distance;
     }
 
     toLatLng(lat: number, lng: number): GoogleMaps.LatLng {
