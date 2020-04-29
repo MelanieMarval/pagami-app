@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
-import { StorageProvider } from './providers/storage.provider';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
+
+import { StorageProvider } from './providers/storage.provider';
+import { AlertProvider } from './providers/alert.provider';
+
 import { USER } from './utils/Const';
 import { User } from './core/api/users/user';
-import { AlertProvider } from './providers/alert.provider';
 
 const {SplashScreen} = Plugins;
 

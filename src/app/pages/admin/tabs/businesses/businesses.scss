@@ -13,31 +13,15 @@
     }
 }
 
-/* *****STATUS CARDS***** */
-.status{
-    position: relative;
-    top: 2px;
+.button-reload {
+    height: fit-content;
+    margin: 0;
 
-    &--verified {
-        color: #68D391;
-    }
-    &--accepted {
-        color: #FBD38D;
-    }
-    &--waiting {
-        color: #999;
-    }
-    &--rejected {
-        color: #E53E3E;
-    }
-    &--transfer {
-        color: #63B3ED;
-    }
-    &--incomplete{
-        color: #ffbe25;
+    .icon-reload {
+        color: #A0AEC0;
+        font-size: 20px;
     }
 }
-
 
 
 

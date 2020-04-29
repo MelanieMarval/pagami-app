@@ -19,9 +19,9 @@ export class AdminIntentProvider {
     private _userToEdit: User;
     private _userToView: User;
     private _showNotification: boolean;
+    private _needToUpdate = false;
 
     // Place
-
     get placeToView(): Place {
         return this._placeToView;
     }
@@ -96,11 +96,20 @@ export class AdminIntentProvider {
         this._userToEdit = value;
     }
 
+    // For Actions
     get showNotification(): boolean {
         return this._showNotification;
     }
 
     set showNotification(value: boolean) {
         this._showNotification = value;
+    }
+
+    get needToUpdate(): boolean {
+        return this._needToUpdate;
+    }
+
+    set needToUpdate(value: boolean) {
+        this._needToUpdate = value;
     }
 }
