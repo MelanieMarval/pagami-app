@@ -23,6 +23,7 @@ import { DrawerState } from './drawer-state';
 export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     @ViewChild('ionContent', { static: false}) private ionContent: IonContent;
+    @ViewChild('ionContent', { static: false, read: ElementRef}) private ionContentElementRef: ElementRef;
 
     @Input() dockedHeight = 50;
 
@@ -50,7 +51,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     @Output() disableScrollContent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    diasbleScroll = true;
+    disableScroll = true;
 
     private _lastDeltaY = 0;
 
@@ -62,6 +63,9 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     private readonly _BOUNCE_DELTA = 30;
 
     private contentPosition = 0;
+
+    private hammer;
+    private hammerContent;
 
     constructor(
         private _element: ElementRef,
@@ -76,9 +80,26 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
             'touch-action', 'none');
         this._setDrawerState(this.state);
 
-        const hammer = new Hammer(this._element.nativeElement);
-        hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
-        hammer.on('pan panstart panend', (ev: any) => {
+        this._element.nativeElement.addEventListener('transitionend', () => {
+            if (this.state === DrawerState.Top) {
+                this.disableScroll = false;
+                this.disableScrollContent.emit(false);
+            } else {
+                if (this.currentIonContentPosition > 0) {
+                    this.scrollContentToTop();
+                }
+            }
+        });
+
+        this.hammer = new Hammer(this._element.nativeElement);
+        this.hammerContent = new Hammer(this.ionContentElementRef.nativeElement);
+        this.hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
+        this.hammer.on('pan panstart panend', (ev: any) => {
+
+            const targetElement: Element = ev.target;
+            if (!targetElement.classList.contains('pan-active') && this.state === DrawerState.Top) {
+                return;
+            }
             this._setDrawerCurrentTopPosition(this._element.nativeElement.getBoundingClientRect().top);
             if (ev.type === 'panstart') {
                 this.currentIonContentPosition = this.contentPosition;
@@ -90,35 +111,21 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                 return;
             }
             if (ev.direction === Hammer.DIRECTION_DOWN) {
-                if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
-                    // if (this.state === DrawerState.Top) {
-                        // if (this.contentPosition === 0) {
-                        //     this.ionContent.scrollToPoint(undefined, 135, 200);
-                        // }
-                    // } else {
-                        // console.log('scroll content');
-                        // console.log(scrollY);
-                        this.currentIonContentPosition += scrollY;
-                        this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
-                            .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
-                    // }
+                this.hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
+                if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop && this.currentIonContentPosition > 0 && this.state !== DrawerState.Top) {
+                    this.currentIonContentPosition += scrollY;
+                    this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
+                        .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
                 }
             } else if (ev.direction === Hammer.DIRECTION_UP) {
-                // console.log('Hammer.DIRECTION_UP');
                 if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
-                    // console.log('this._element.nativeElement.getBoundingClientRect().top === this.distanceTop');
                     if (this.state === DrawerState.Top) {
-                        // console.log('scroll to x x')
-                        // console.log(this.contentPosition)
-                        if (this.diasbleScroll) {
+                        if (this.disableScroll) {
                             this.currentIonContentPosition += scrollY;
                             this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
                                 .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
                         }
                     } else {
-                        // console.log(this.state)
-                        // console.log('scroll content');
-                        // console.log(scrollY);
                         this.currentIonContentPosition += scrollY;
                         this.ionContent.scrollToPoint(undefined, this.currentIonContentPosition)
                             .then(() => { this.setupContentTopPosition(this.currentIonContentPosition); });
@@ -133,17 +140,9 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
                     this._handlePanStart();
                     break;
                 case 'panend':
-                    // console.log('pan end');
                     this._handlePanEnd(ev);
-                    if (this._element.nativeElement.getBoundingClientRect().top === this.distanceTop
-                        && this.state === DrawerState.Top && this.currentIonContentPosition > 0) {
-                        // this.disableDrag = true;, TODO
-                    }
                     break;
                 default:
-                    if (ev.direction === Hammer.DIRECTION_DOWN && this.contentPosition > 1) {
-                        return;
-                    }
                     this._handlePan(ev);
             }
         });
@@ -160,11 +159,16 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (!changes.state) {
-            return;
+        if (changes.state) {
+            this._setDrawerState(changes.state.currentValue);
         }
 
-        this._setDrawerState(changes.state.currentValue);
+        if (changes.minimumHeight) { // allow changes to minimum height after initialization
+            this._setDrawerState(this.state);
+        }
+        if (changes.dockedHeight) {
+            this._setDrawerState(this.state);
+        }
     }
 
     private _setDrawerState(state: DrawerState) {
@@ -206,9 +210,13 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         if (this.state !== DrawerState.Top && this.contentPosition !== 0) {
             this.ionContent.scrollToPoint(undefined, 0);
         }
-        if (this.state === DrawerState.Top && this.contentPosition > 0) {
-            this.diasbleScroll = false;
+        if (this.state === DrawerState.Top) {
+            this.disableScroll = false;
             this.disableScrollContent.emit(false);
+            // this.hammer.get('pan').set({enable: false, direction: Hammer.DIRECTION_VERTICAL});
+        } else {
+            this.disableScroll = true;
+            this.disableScrollContent.emit(true);
         }
         this.stateChange.emit(this.state);
     }
@@ -270,16 +278,23 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     }
 
     onScrollContent($event: CustomEvent) {
-        this.setupContentTopPosition($event.detail.scrollTop);
-    }
-
-    setupContentTopPosition(position: number) {
+        let position = $event.detail.scrollTop;
         if (position < 0) { position = 0; }
         this.contentPosition = position;
         this.scrollContent.emit(this.contentPosition);
-        if (position === 0) {
-            this.diasbleScroll = true;
-            this.disableScrollContent.emit(true);
+        this.setupContentTopPosition(position);
+    }
+
+    setupContentTopPosition(position: number) {
+        if (position === 0 && this.state === DrawerState.Top) {
+            // this.disableScroll = true;
+            // this.disableScrollContent.emit(true);
+            // this.hammer.get('pan').set({enable: false, direction: Hammer.DIRECTION_UP});
+            // this.hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_DOWN});
+        } else if (position > 0 && this.state === DrawerState.Top && this._element.nativeElement.getBoundingClientRect().top === this.distanceTop) {
+            // this.hammer.get('pan').set({enable: false, direction: Hammer.DIRECTION_VERTICAL});
+        } else {
+            // this.hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_DOWN});
         }
     }
 
@@ -293,7 +308,23 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
 
     onScrollContentEnd() {
         if (this._element.nativeElement.getBoundingClientRect().top !== this.distanceTop) {
-            this.ionContent.scrollToPoint(undefined, 0);
+
         }
+    }
+
+    scrollContentToTop() {
+        this.ionContent.scrollToPoint(undefined, 0)
+            .then(() => this.currentIonContentPosition = 0 );
+    }
+
+    putAtBottom() {
+        this.ionContent.scrollToPoint(undefined, 0)
+            .then(() => {
+                this.currentIonContentPosition = 0;
+                this.hammer.get('pan').set({enable: true, direction: Hammer.DIRECTION_VERTICAL});
+                this.disableScroll = true;
+                this.state = DrawerState.Bottom;
+                this.stateChange.emit(this.state);
+            });
     }
 }

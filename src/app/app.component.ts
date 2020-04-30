@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
+import { AppUrlOpen, Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
 import { StorageProvider } from './providers/storage.provider';
@@ -9,7 +9,9 @@ import { AlertProvider } from './providers/alert.provider';
 import { USER } from './utils/Const';
 import { User } from './core/api/users/user';
 
+
 const {SplashScreen} = Plugins;
+const {App} = Plugins;
 
 @Component({
     selector: 'app-root',
@@ -32,16 +34,21 @@ export class AppComponent {
             const user = await this.storageService.getPagamiUser();
             // const lastUserVerification = await this.storageService.getLastUserVerification();
             if (isLogged) {
-                // await this.verifyUser(user);
+                await this.verifyUser(user);
             } else {
                 await this.openTutorial();
             }
             await SplashScreen.hide();
         });
+        App.addListener('backButton', async (data: AppUrlOpen) => {
+            if (this.router.url.includes('tabs') && !this.router.url.includes('app/tabs/wallet/activity')) {
+                App.exitApp();
+            }
+        });
     }
 
     private async verifyUser(user: User) {
-        this.storageService.setLastUserVerification(new Date());
+        // this.storageService.setLastUserVerification(new Date());
         if (user.status !== USER.STATUS.DISABLED) {
             if (user.type && user.type === USER.TYPE.ADMIN) {
                 await this.openAdminPanel();
@@ -49,7 +56,6 @@ export class AppComponent {
                 await this.openHome();
             }
         } else {
-            console.log('no puede usar la app');
             await this.alert.alertUserDisabled();
         }
     }

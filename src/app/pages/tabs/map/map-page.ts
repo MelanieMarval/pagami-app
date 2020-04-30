@@ -48,7 +48,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     beforeSaveLocation = true;
     saving = false;
     placeToSave: any;
-    selectedPlace;
+    selectedPlace: Place;
     nearPlaces: Place[] = [];
     searchPlaces: Place[] = [];
     findBusinessPlaces: Place[] = [];
@@ -292,6 +292,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onPlaceTypeChanged(selected: string) {
         this.placeTypeSelected = selected;
+        this.selectedPlace = undefined;
         if (this.mapReady && !this.searching) {
             this.getNearPlaces();
         }

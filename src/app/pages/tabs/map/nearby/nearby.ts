@@ -17,6 +17,7 @@ export class NearbyPage implements OnInit {
     @Input() drawerState = 0;
     @Input() selectedPlace: Place = undefined;
     @Input() nearPlaces: Place[] = [];
+    @Input() searching = false;
 
     selectedCategory = 0;
     STATUS = PLACES.STATUS;
@@ -31,6 +32,7 @@ export class NearbyPage implements OnInit {
 
     async goToShopDetails(place: Place) {
         this.intentProvider.placeToShow = await place;
+        this.intentProvider.showingPlaceDetails = true;
         await this.router.navigate(['app/shop']);
     }
 

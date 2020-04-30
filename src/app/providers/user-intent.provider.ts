@@ -12,6 +12,7 @@ export class UserIntentProvider {
     private _placeEdited: Place;
     private _placeToShow: Place;
     private _placeToClaim: Place | Claim;
+    private _showingPlaceDetails = false;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -45,4 +46,11 @@ export class UserIntentProvider {
         this._placeToClaim = value;
     }
 
+    get showingPlaceDetails(): boolean {
+        return this._showingPlaceDetails;
+    }
+
+    set showingPlaceDetails(value: boolean) {
+        this._showingPlaceDetails = value;
+    }
 }

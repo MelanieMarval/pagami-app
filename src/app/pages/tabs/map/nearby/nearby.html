@@ -1,33 +1,36 @@
 <div class="ion-grid-places">
-    <ion-grid class="no-pb">
-        <ion-row class="scrollable-draw">
-            <div class="scrollable-draw-children" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
+    <ion-grid class="no-pb pan-active">
+        <ion-row class="scrollable-draw pan-active">
+            <div class="scrollable-draw-children pan-active" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
         </ion-row>
-        <h2 class="ion-text-center nearby-title">
+        <h2 class="ion-text-center nearby-title pan-active">
             Destacados en tu área
         </h2>
-        <ion-row class="footer-button">
-            <ion-col class="6">
-                <ion-button class="button-large btn-category" expand="block"
+        <ion-row class="footer-button pan-active">
+            <ion-col class="6 pan-active">
+                <ion-button class="button-large btn-category pan-active" expand="block"
                             color="{{selectedCategory === 0 ? 'pagami' : 'pagami-surface'}}"
                             [ngClass]="{'selected-category': selectedCategory === 0}"
                             (click)="selectedCategory = 0; emitSelectedPlaceType()">
                     Tiendas
-                    <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
+                    <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check pan-active"></ion-icon>
                 </ion-button>
             </ion-col>
             <ion-col class="6">
-                <ion-button class="button-large btn-category" expand="block"
+                <ion-button class="button-large btn-category pan-active" expand="block"
                             color="{{selectedCategory === 1 ? 'pagami' : 'pagami-surface'}}"
                             [ngClass]="{'selected-category': selectedCategory === 1}"
                             (click)="selectedCategory = 1; emitSelectedPlaceType()">
                     Servicios
-                    <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check"></ion-icon>
+                    <ion-icon src="assets/icon/check-circle-solid.svg" class="btn-category__check pan-active"></ion-icon>
                 </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid>
+    <ion-grid [ngClass]="{'with-overflow-y': drawerState == 2 }">
+        <div class="progress-bar-container">
+            <ion-progress-bar type="indeterminate" color="pagami" *ngIf="searching"></ion-progress-bar>
+        </div>
         <ion-row *ngIf="selectedPlace">
             <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(selectedPlace)">
                 <div class="card-img-contain">
