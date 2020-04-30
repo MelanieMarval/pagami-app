@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Ren
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
-import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { mapToLatLng, PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { Place } from '../../../core/api/places/place';
 import { ApiResponse } from '../../../core/api/api.response';
 import { PlaceFilter } from '../../../core/api/places/place.filter';
@@ -150,6 +150,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             this.setupMarkerCurrentPosition(coors);
             this.changeMapCenter(coors);
         }
+        if (this.currentUrl === MAP_MODE.SEARCH && this.intentProvider.lastUpdatedPoint) {
+            if (this.calculateDistance(mapToLatLng(coors), mapToLatLng(this.intentProvider.lastUpdatedPoint)) > 10) {
+                this.getNearPlaces();
+            }
+        }
     }
 
     onMapMoved() {
@@ -212,6 +217,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.searchPlaces = success.response;
                 this.setupPlacesToDrawer(success.response);
                 this.setupPlaces(success.response);
+                this.intentProvider.lastUpdatedPoint = geo;
             }
         }).finally(() => this.searching = false );
     }

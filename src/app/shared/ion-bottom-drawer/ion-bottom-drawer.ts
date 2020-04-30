@@ -296,16 +296,24 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    async changeBottomHeight(height) {
+    changeBottomHeight(height) {
         this.disableScroll = false;
+        // console.log(this.currentIonContentPosition);
         if (this.currentIonContentPosition > 0) {
-            await  this.ionContent.scrollToPoint(undefined, 0, 300);
+            this.ionContent.scrollToPoint(undefined, 0, 100).then(() => {
+                this.disableScroll = true;
+                this.minimumHeight = height;
+                this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
+                this.state = DrawerState.Bottom;
+                this.stateChange.emit(this.state);
+            });
+        } else {
+            this.disableScroll = true;
+            this.minimumHeight = height;
+            this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
+            this.state = DrawerState.Bottom;
+            this.stateChange.emit(this.state);
         }
-        this.disableScroll = true;
-        this.minimumHeight = height;
-        this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
-        this.state = DrawerState.Bottom;
-        this.stateChange.emit(this.state);
     }
 
     onScrollContentEnd() {
