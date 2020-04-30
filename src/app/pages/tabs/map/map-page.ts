@@ -18,6 +18,8 @@ import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 
+const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
+
 @Component({
     selector: 'app-map-page',
     templateUrl: 'map-page.html',
@@ -36,7 +38,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         disableDrag: false,
         distanceTop: 62,
         dockedHeight: 494,
-        minimumHeight: 104,
+        minimumHeight: DEFAULT_DRAWER_BOTTOM_HEIGHT,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false,
@@ -101,12 +103,16 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     modeSearch() {
         this.isRegistering = false;
-        if (this.bottomDrawer.drawerState === DrawerState.Bottom
+        if ((this.bottomDrawer.drawerState === DrawerState.Bottom
             || this.bottomDrawer.drawerState === DrawerState.Top
-            || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {
-            this.bottomHeightChange.emit(104);
+            || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search'))
+            && !this.storageInstance.showingPlaceDetails) {
+            this.bottomHeightChange.emit(DEFAULT_DRAWER_BOTTOM_HEIGHT);
             this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
             this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        }
+        if (this.storageInstance.showingPlaceDetails) {
+            this.storageInstance.showingPlaceDetails = false;
         }
     }
 
