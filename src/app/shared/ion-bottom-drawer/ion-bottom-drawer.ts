@@ -147,9 +147,7 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
             }
         });
         this.bottomHeightChange.subscribe(height => {
-            this.ionContent.scrollToPoint(0, 0).then(() => {
-                this.changeBottomHeight(height);
-            });
+            this.changeBottomHeight(height);
         });
     }
 
@@ -299,11 +297,23 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     }
 
     changeBottomHeight(height) {
-        this.ionContent.scrollToPoint(undefined, 0, 300);
-        this.minimumHeight = height;
-        this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
-        this.state = DrawerState.Bottom;
-        this.stateChange.emit(this.state);
+        this.disableScroll = false;
+        // console.log(this.currentIonContentPosition);
+        if (this.currentIonContentPosition > 0) {
+            this.ionContent.scrollToPoint(undefined, 0, 100).then(() => {
+                this.disableScroll = true;
+                this.minimumHeight = height;
+                this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
+                this.state = DrawerState.Bottom;
+                this.stateChange.emit(this.state);
+            });
+        } else {
+            this.disableScroll = true;
+            this.minimumHeight = height;
+            this._setTranslateY('calc(100vh - ' + this.minimumHeight + 'px)');
+            this.state = DrawerState.Bottom;
+            this.stateChange.emit(this.state);
+        }
     }
 
     onScrollContentEnd() {

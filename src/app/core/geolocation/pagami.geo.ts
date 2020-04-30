@@ -11,3 +11,10 @@ export function mapToGeoPoint(coors: Coordinates): PagamiGeo {
         longitude: coors.longitude,
     };
 }
+
+export function mapToLatLng(geo: PagamiGeo): any {
+    return {
+        lat: geo.latitude,
+        lng: geo.longitude,
+    };
+}

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
 import { Claim } from '../core/api/claim/claim';
+import { PagamiGeo } from '../core/geolocation/pagami.geo';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class UserIntentProvider {
     private _placeToShow: Place;
     private _placeToClaim: Place | Claim;
     private _showingPlaceDetails = false;
+    private _lastUpdatedPoint: PagamiGeo;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -52,5 +54,13 @@ export class UserIntentProvider {
 
     set showingPlaceDetails(value: boolean) {
         this._showingPlaceDetails = value;
+    }
+
+    get lastUpdatedPoint(): PagamiGeo {
+        return this._lastUpdatedPoint;
+    }
+
+    set lastUpdatedPoint(value: PagamiGeo) {
+        this._lastUpdatedPoint = value;
     }
 }

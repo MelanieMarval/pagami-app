@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Ren
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
-import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { mapToLatLng, PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { Place } from '../../../core/api/places/place';
 import { ApiResponse } from '../../../core/api/api.response';
 import { PlaceFilter } from '../../../core/api/places/place.filter';
@@ -17,6 +17,8 @@ import { AlertProvider } from '../../../providers/alert.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
+
+const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
 
 @Component({
     selector: 'app-map-page',
@@ -36,7 +38,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         disableDrag: false,
         distanceTop: 62,
         dockedHeight: 494,
-        minimumHeight: 104,
+        minimumHeight: DEFAULT_DRAWER_BOTTOM_HEIGHT,
         drawerState: DrawerState.Bottom,
         contentPosition: 0,
         hidden: false,
@@ -101,12 +103,16 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     modeSearch() {
         this.isRegistering = false;
-        if (this.bottomDrawer.drawerState === DrawerState.Bottom
+        if ((this.bottomDrawer.drawerState === DrawerState.Bottom
             || this.bottomDrawer.drawerState === DrawerState.Top
-            || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search')) {
-            this.bottomHeightChange.emit(104);
+            || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search'))
+            && !this.storageInstance.showingPlaceDetails) {
+            this.bottomHeightChange.emit(DEFAULT_DRAWER_BOTTOM_HEIGHT);
             this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
             this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        }
+        if (this.storageInstance.showingPlaceDetails) {
+            this.storageInstance.showingPlaceDetails = false;
         }
     }
 
@@ -143,6 +149,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (this.fabAttached || this.isRegistering) {
             this.setupMarkerCurrentPosition(coors);
             this.changeMapCenter(coors);
+        }
+        if (this.currentUrl === MAP_MODE.SEARCH && this.intentProvider.lastUpdatedPoint) {
+            if (this.calculateDistance(mapToLatLng(coors), mapToLatLng(this.intentProvider.lastUpdatedPoint)) > 10) {
+                this.getNearPlaces();
+            }
         }
     }
 
@@ -206,6 +217,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.searchPlaces = success.response;
                 this.setupPlacesToDrawer(success.response);
                 this.setupPlaces(success.response);
+                this.intentProvider.lastUpdatedPoint = geo;
             }
         }).finally(() => this.searching = false );
     }
