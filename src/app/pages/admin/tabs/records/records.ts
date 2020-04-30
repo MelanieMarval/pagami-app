@@ -108,7 +108,6 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     }
 
     getRecordsToBeVerified() {
-        console.log('hacer getRecordsToBeVerified');
         this.loading.verified = true;
         this.claimService.getWaiting()
             .then(success => {

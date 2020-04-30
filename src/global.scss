@@ -53,10 +53,11 @@
         padding-top: 0;
     }
     &--div {
-        position: absolute;
+        position: sticky;
         background: transparent;
         right: 0;
         left: 0;
+        top: 100%;
         bottom: 0;
     }
 }
@@ -214,6 +215,16 @@ ion-bottom-drawer {
 .btn-no-style {
     --box-shadow: unset;
     --background: transparent;
+}
+
+.button-reload {
+    height: fit-content;
+    margin: 0;
+
+    .icon-reload {
+        color: #A0AEC0;
+        font-size: 20px;
+    }
 }
 
 

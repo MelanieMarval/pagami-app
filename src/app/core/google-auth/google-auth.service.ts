@@ -39,6 +39,7 @@ export class GoogleAuthService {
         await this.angularFireAuth.auth.signOut();
         await this.googleAuth.signOut();
         await this.storageService.setPagamiUser(null);
+        await this.storageService.setBusinessVerifiedByUser(null);
         await this.storageService.setLogged(false);
         return true;
     }

@@ -58,7 +58,7 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
         await this.getRegisters();
     }
 
-    async getRegisters() {
+    private async getRegisters() {
         await this.placesService.getAllAvailable()
             .then(async (success: ApiResponse) => {
                 if (success.passed) {
@@ -74,7 +74,7 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
             });
     }
 
-    async getStats() {
+    private async getStats() {
         await this.placesService.getTotalPlaces()
             .then((success: ApiResponse) => {
                 if (success.passed) {

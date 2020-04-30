@@ -22,6 +22,7 @@ export class UsersPage implements OnInit {
     users: User[];
     stats: UserStats;
     status = USER.STATUS;
+    reloading = false;
 
     constructor(private userService: UsersService,
                 private intentProvider: AdminIntentProvider,
@@ -30,7 +31,23 @@ export class UsersPage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.getTotalUsers()
+        this.load();
+    }
+
+    async load() {
+        this.loading = true;
+        await this.getStats();
+        await this.getUsers();
+    }
+
+    async reload() {
+        this.reloading = true;
+        await this.getStats();
+        await this.getUsers();
+    }
+
+    private async getStats() {
+        await this.userService.getTotalUsers()
             .then((success: ApiResponse) => {
                 if (success.passed) {
                     this.stats = {
@@ -40,27 +57,25 @@ export class UsersPage implements OnInit {
                     };
                 }
             });
-        this.getUsers();
     }
 
-    getUsers() {
-        this.loading = true;
-        this.userService.getAll()
+    private async getUsers() {
+        await this.userService.getAll()
             .then(success => {
-                this.loading = false;
                 if (success.passed) {
                     this.users = success.response;
                     this.empty = this.users.length === 0;
                 } else {
                     this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 5000);
                 }
+                this.loading = false;
+                this.reloading = false;
             });
     }
 
     goToProfileUser(user: User) {
         this.intentProvider.userToView = undefined;
         this.intentProvider.userToEdit = user;
-        console.log(user);
         this.router.navigate(['admin/tabs/users/profile']);
     }
 

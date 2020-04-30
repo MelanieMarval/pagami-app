@@ -41,11 +41,11 @@
         </ion-item>
     </ion-list>
 
+    <footer class="footer-button footer-button--div">
+        <ion-button [disabled]="saving" class="button-large" expand="block" (click)="registerUser()" color="pagami">
+            <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+            <span *ngIf="!saving">Guardar mi Cuenta</span>
+        </ion-button>
+    </footer>
 </ion-content>
 
-<div class="footer-button">
-    <ion-button [disabled]="saving" class="button-large" expand="block" (click)="registerUser()" color="pagami">
-        <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
-        <span *ngIf="!saving">Guardar mi Cuenta</span>
-    </ion-button>
-</div>
