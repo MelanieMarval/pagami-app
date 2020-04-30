@@ -1,20 +1,24 @@
-export interface PagamiGeo {
-    accuracy: number;
-    latitude: number;
-    longitude: number;
+export class PagamiGeo {
+
+    public latitude: number;
+    public longitude: number;
+    public accuracy: number;
+
+    constructor(latitude: number, longitude: number, accuracy: number) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.accuracy = accuracy;
+    }
+
+    lat() {
+        return this.latitude;
+    }
+
+    lng() {
+        return this.longitude;
+    }
 }
 
 export function mapToGeoPoint(coors: Coordinates): PagamiGeo {
-    return {
-        accuracy: coors.accuracy,
-        latitude: coors.latitude,
-        longitude: coors.longitude,
-    };
-}
-
-export function mapToLatLng(geo: PagamiGeo): any {
-    return {
-        lat: geo.latitude,
-        lng: geo.longitude,
-    };
+    return new PagamiGeo(coors.latitude, coors.longitude, coors.accuracy);
 }
