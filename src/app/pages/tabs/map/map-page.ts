@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Ren
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
-import { mapToLatLng, PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { Place } from '../../../core/api/places/place';
 import { ApiResponse } from '../../../core/api/api.response';
 import { PlaceFilter } from '../../../core/api/places/place.filter';
@@ -17,8 +16,11 @@ import { AlertProvider } from '../../../providers/alert.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
+import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 
 const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
+const BASIC_RADIUS_KILOMETERS = 50;
+const BASIC_UPDATE_METERS = 10;
 
 @Component({
     selector: 'app-map-page',
@@ -151,7 +153,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             this.changeMapCenter(coors);
         }
         if (this.currentUrl === MAP_MODE.SEARCH && this.intentProvider.lastUpdatedPoint) {
-            if (this.calculateDistance(mapToLatLng(coors), mapToLatLng(this.intentProvider.lastUpdatedPoint)) > 10) {
+            if (this.calculateDistance(coors, this.intentProvider.lastUpdatedPoint) > BASIC_UPDATE_METERS) {
                 this.getNearPlaces();
             }
         }
@@ -209,7 +211,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         const filter: PlaceFilter = {
             latitude: geo.latitude,
             longitude: geo.longitude,
-            radius: 1000,
+            radius: BASIC_RADIUS_KILOMETERS,
             placeType: this.placeTypeSelected
         };
         this.placesService.getNearby(filter).then((success: ApiResponse) => {

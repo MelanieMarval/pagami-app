@@ -5,11 +5,7 @@ import GoogleMaps = google.maps;
 import { StorageProvider } from '../../providers/storage.provider';
 import { mapToGeoPoint, PagamiGeo } from './pagami.geo';
 
-const defaultCoors: PagamiGeo = {
-    accuracy: 30,
-    latitude: 10.4880104,
-    longitude: -66.8791885
-};
+const defaultCoors: PagamiGeo = new PagamiGeo(10.4880104, -66.8791885, 30);
 
 @Injectable({
     providedIn: 'root'

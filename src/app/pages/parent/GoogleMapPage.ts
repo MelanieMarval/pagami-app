@@ -224,7 +224,7 @@ export class GoogleMapPage {
     //     return GoogleMaps.geometry.spherical.computeDistanceBetween(front, to);
     // }
 
-    calculateDistance(point1: GoogleMaps.LatLng, point2: GoogleMaps.LatLng) {
+    calculateDistance(point1: GoogleMaps.LatLng | PagamiGeo, point2: GoogleMaps.LatLng | PagamiGeo) {
         // The radius of the planet earth in meters
         const R = 6378137;
         const dLat = degreesToRadians(point2.lat() - point1.lat());
