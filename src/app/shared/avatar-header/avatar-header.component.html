@@ -1,6 +1,6 @@
 
 <a routerLink="/app/profile" [ngClass]="addClass ? 'position-avatar' : ''">
     <ion-avatar class="toolbar-avatar" slot="end">
-        <ion-img [src]="getImage()" (ionError)="tryLoadImageLater()" alt="Image of profile"></ion-img>
+        <ion-img [src]="getImage() | noImage" (ionError)="tryLoadImageLater()" alt="Image of profile"></ion-img>
     </ion-avatar>
 </a>

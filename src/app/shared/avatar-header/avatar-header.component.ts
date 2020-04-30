@@ -28,7 +28,7 @@ export class AvatarHeaderComponent implements OnInit {
     }
 
     tryLoadImageLater() {
-        this.profileImage = 'assets/img/no-user-image.svg';
+        this.profileImage = 'assets/img/no-user-image.png';
         setTimeout(async () => {
             this.profileImage = this.userThumbnailPhoto(this.user);
         }, 15000);

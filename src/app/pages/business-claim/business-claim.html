@@ -18,7 +18,7 @@
         </ion-text>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="saveData()">
+    <form [formGroup]="form">
         <ion-list lines="none" class="inputs-container --with-formGroup">
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Rif de la empresa</ion-label>
@@ -60,13 +60,13 @@
             </div>
         </ion-list>
 
-        <div class="footer-button footer-button--div" slot="fixed">
-            <ion-button class="button-large" expand="block" color="pagami" type="submit" [disabled]="form.invalid">
-                Enviar datos
-            </ion-button>
-        </div>
     </form>
 
+    <ion-footer class="footer-button footer-button--div">
+        <ion-button class="button-large" expand="block" color="pagami" type="submit" [disabled]="form.invalid" (click)="saveData()">
+            Enviar datos
+        </ion-button>
+    </ion-footer>
 </ion-content>
 
 

@@ -9,6 +9,7 @@ import { StorageProvider } from '../../../providers/storage.provider';
 import { ToastProvider } from '../../../providers/toast.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { CATEGORY_ICONS } from '../../../utils/category.icons';
+import { PLACES } from '../../../utils/Const';
 
 @Component({
     selector: 'app-select-icon',
@@ -18,7 +19,7 @@ import { CATEGORY_ICONS } from '../../../utils/category.icons';
 export class SelectIconPage implements OnInit {
 
     selectedIcon: number;
-    categoryIcons = CATEGORY_ICONS;
+    listIcons: any[] = [];
     place: Place = {latitude: 0, longitude: 0};
     saving: boolean;
 
@@ -34,12 +35,17 @@ export class SelectIconPage implements OnInit {
 
     async ngOnInit() {
         this.place = this.storageInstance.placeToEdit;
-        this.selectedIcon = this.place.category ? this.categoryIcons.findIndex(icon => icon.route === this.place.category.icon) : 0;
+        for (const icon of CATEGORY_ICONS) {
+            if (icon.type === this.place.type) {
+                this.listIcons.push(icon);
+            }
+        }
+        this.selectedIcon = this.place.category ? this.listIcons.findIndex(icon => icon.route === this.place.category.icon) : 0;
         if (this.selectedIcon === 0) {
             this.place.category = {
-                name: this.categoryIcons[0].name,
-                icon: this.categoryIcons[0].route,
-                subCategory: this.categoryIcons[0].subCategory
+                name: this.listIcons[0].name,
+                icon: this.listIcons[0].route,
+                subCategory: this.listIcons[0].subCategory
             };
         }
     }

@@ -56,9 +56,9 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
 
     }
 
-    ngAfterViewChecked(): void {
+    async ngAfterViewChecked() {
         if (this.intentProvider.placeToClaim) {
-            this.intentProvider.placeToClaim = undefined;
+            this.intentProvider.placeToClaim = await undefined;
             this.isClaim = true;
         }
     }

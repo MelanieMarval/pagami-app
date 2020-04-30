@@ -9,7 +9,7 @@ export class NoImagePipe implements PipeTransform {
         if (image) {
             return image;
         }
-        return 'assets/img/no-user-image.svg';
+        return 'assets/img/no-user-image.png';
     }
 
 }
