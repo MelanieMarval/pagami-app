@@ -19,6 +19,7 @@ import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 
 const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
+const BASIC_RADIUS_KILOMETERS = 50;
 
 @Component({
     selector: 'app-map-page',
@@ -209,7 +210,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         const filter: PlaceFilter = {
             latitude: geo.latitude,
             longitude: geo.longitude,
-            radius: 1000,
+            radius: BASIC_RADIUS_KILOMETERS,
             placeType: this.placeTypeSelected
         };
         this.placesService.getNearby(filter).then((success: ApiResponse) => {
