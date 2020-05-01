@@ -102,10 +102,10 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
     validateForm() {
         const business = this.place;
-        if (!business.location.address || !business.name || !business.website || !this.place.type || !business.phone) {
+        if (!business.location.address || !business.name || !this.place.type || !business.phone) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
-        if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon'])) {
+        if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon', 'website'])) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
         if (!ValidationUtils.validatePhone(business.phone)) {
@@ -116,6 +116,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
             this.toast.messageErrorWithoutTabs('Su número de Whatsapp debe contener minimo 8 digitos y menos de 15');
             return;
         }
+        console.log(this.place.photoUrl, this.previewUrl);
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe agregar una fotografia');
         } else {
@@ -132,6 +133,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         const success = await this.fireStorage.saveBusinessImage(this.fileData);
         if (success) {
             this.place.photoUrl = success;
+            this.previewUrl = success;
             this.navigateToSelectIcon();
         } else {
             this.toast.messageErrorWithoutTabs('No se ha podido guardar su imagen. Intente de nuevo!');
@@ -139,10 +141,10 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         }
     }
 
-    async navigateToSelectIcon() {
+    navigateToSelectIcon() {
         this.saving = true;
         this.storageInstance.placeToEdit = this.place;
-        await this.route.navigate(['/app/business-details/select-icon']);
+        this.route.navigate(['/app/business-details/select-icon']);
         this.saving = false;
     }
 

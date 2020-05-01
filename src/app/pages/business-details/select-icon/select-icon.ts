@@ -64,15 +64,15 @@ export class SelectIconPage implements OnInit {
         this.saving = true;
         if (this.place.category.icon) {
             this.placesService.update(this.place)
-                .then(async success => {
+                .then(success => {
                     if (success.passed) {
                         this.storageInstance.placeEdited = success.response;
                         this.saving = false;
-                        await this.toast.messageSuccessWithoutTabs('Empresa registrada con exito!');
-                        await this.route.navigate(['/app/tabs/wallet/activity']);
+                        this.toast.messageSuccessWithoutTabs('Empresa registrada con exito!');
+                        this.route.navigate(['/app/tabs/wallet/activity']);
                     } else {
                         this.saving = false;
-                        await this.toast.messageErrorWithoutTabs('No se ha guardar su informacion. Intente de nuevo!');
+                        this.toast.messageErrorWithoutTabs('No se ha guardar su informacion. Intente de nuevo!');
                     }
                 });
         } else {

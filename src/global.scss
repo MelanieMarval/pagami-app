@@ -209,6 +209,12 @@ ion-bottom-drawer {
 .mt-0 {
     margin-top: 0 !important;
 }
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+.pb-0 {
+    padding-bottom: 0 !important;
+}
 .pagami-text-2nd{
     color: var(--ion-color-pagami-text-2nd);
 }
@@ -217,8 +223,8 @@ ion-bottom-drawer {
     --background: transparent;
     // new
     --border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .button-reload {

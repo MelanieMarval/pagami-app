@@ -12,7 +12,7 @@
     <div class="add-image">
         <div class="add-image-background">
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-input type="file" class="input-file" accept=".jpg, .png" name="image" (change)="fileProgress($event)"></ion-input>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">
                     <ion-icon name="camera"></ion-icon>
@@ -53,11 +53,14 @@
                 <ion-input type="tel" name="whatsapp" [(ngModel)]="place.whatsapp" maxlength="15"></ion-input>
                 <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
             </ion-item>
-            <ion-item color="pagami-surface">
+            <ion-item color="pagami-surface" class="mb-0">
                 <ion-label position="floating">Página Web</ion-label>
                 <ion-input type="text" name="website" [(ngModel)]="place.website"></ion-input>
                 <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>
             </ion-item>
+            <div class="info-text">
+                <small>*Opcional</small>
+            </div>
         </ion-list>
 
         <ion-list class="inputs-container item-group-flex">

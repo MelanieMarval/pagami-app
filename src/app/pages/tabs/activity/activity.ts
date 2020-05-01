@@ -32,6 +32,7 @@ export class ActivityPage implements OnInit {
     placeMessageStatus = PlaceUtils.getMessageStatus;
     placeSortData = PlaceUtils.getSortData;
     showNotification = false;
+    reloading: boolean;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageProvider,
@@ -106,6 +107,7 @@ export class ActivityPage implements OnInit {
     confirmDelete(register: Place) {
         this.alert.alertConfirmDelete()
             .then(() => {
+                this.reloading = true;
                 const index = this.registers.indexOf(register);
                 this.deleteRegister(register.id, index);
             });
@@ -116,6 +118,7 @@ export class ActivityPage implements OnInit {
             .then(success => {
                 if (success.passed) {
                     this.registers.splice(index, 1);
+                    this.reloading = false;
                 }
                 console.log(success);
             });
