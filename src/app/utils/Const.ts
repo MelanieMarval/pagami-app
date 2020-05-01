@@ -41,7 +41,8 @@ export const PLACES = {
         MEDICINE: 6,
         INDUSTRY: 7,
         SPORT: 8,
-        ENTERTAINMENT: 9
+        ENTERTAINMENT: 9,
+        STORE: 10
     },
     STATUS: {
         WAITING: 'WAITING',     // can edit

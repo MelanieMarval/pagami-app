@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import { MapPage } from './map-page';
+import {MapPage} from './map-page';
+import {ShopPage} from '../../shop/shop';
 
 const routes: Routes = [
     {
@@ -15,6 +16,10 @@ const routes: Routes = [
             },
             {
                 path: 'find-my-business'
+            },
+            {
+                path: 'search/business-details',
+                component: ShopPage
             }
         ],
     }
@@ -24,4 +29,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class MapRoutingModule { }
+export class MapRoutingModule {
+}

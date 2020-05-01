@@ -8,7 +8,7 @@ import {ShopPage} from './shop';
 import {ServicesPage} from './services/services';
 import {ProductsPage} from './products/products';
 import {OrderSummaryPage} from './order-summary/order-summary';
-import { PipesModule } from '../../pipes/pipes.module';
+import {SharedModule} from '../../shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { PipesModule } from '../../pipes/pipes.module';
         IonicModule,
         HttpClientModule,
         ShopPageRoutingModule,
-        PipesModule
+        SharedModule
     ],
     declarations: [
         ShopPage,

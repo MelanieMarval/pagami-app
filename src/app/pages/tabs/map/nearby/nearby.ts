@@ -33,7 +33,7 @@ export class NearbyPage implements OnInit {
     async goToShopDetails(place: Place) {
         this.intentProvider.placeToShow = await place;
         this.intentProvider.showingPlaceDetails = true;
-        await this.router.navigate(['app/shop']);
+        await this.router.navigate(['app/tab/search/business-details']);
     }
 
     emitSelectedPlaceType() {
