@@ -16,7 +16,8 @@
         <ion-item-group *ngIf="!loading && !error && !empty">
             <ion-card *ngFor="let register of placeSortData(registers)"
                       class="card card-place" button
-                      [ngClass]="!showNotification ? '' : 'status-border status-border--'+register.status | lowercase"
+                      [ngClass]="[register.selectedToDelete ? 'animated fadeOut fast': '',
+                                !showNotification ? '' : 'status-border status-border--'+register.status | lowercase]"
                       (click)="register.status !== STATUS.REJECTED ? showDetails(register) : register.showReason = !register.showReason">
                 <ion-card-header>
                     <ion-row>
@@ -29,6 +30,11 @@
                         <ion-col size="1">
                             <ion-icon *ngIf="register.status === STATUS.REJECTED" name="close-circle"></ion-icon>
                             <ion-icon *ngIf="register.status === STATUS.WAITING" name="time-outline"></ion-icon>
+                            <ion-button class="btn-no-style ion-no-padding ion-no-margin"
+                                        *ngIf="register.status === STATUS.INCOMPLETE"
+                                        (click)="confirmDelete(register); $event.stopPropagation(); registers.selectedToDelete = true">
+                                <ion-icon name="trash" slot="icon-only" color="danger" size="small"></ion-icon>
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-card-header>
@@ -40,10 +46,13 @@
                                 <ion-img [src]="placeThumbnailPhoto(register)"></ion-img>
                             </ion-avatar>
                         </ion-col>
-                        <ion-col size="6">
-                            <ion-card-title>{{register.status === STATUS.INCOMPLETE ? '' : register.name | capitalize}}</ion-card-title>
+                        <ion-col size="10" *ngIf="register.status === STATUS.INCOMPLETE">
+                            <ion-card-title>{{register.location?.addressLine}}</ion-card-title>
                         </ion-col>
-                        <ion-col size="4" class="ion-justify-content-end">
+                        <ion-col size="6" *ngIf="register.status !== STATUS.INCOMPLETE">
+                            <ion-card-title>{{register.name | capitalize}}</ion-card-title>
+                        </ion-col>
+                        <ion-col size="4" class="ion-justify-content-end" *ngIf="register.status !== STATUS.INCOMPLETE">
                             <ion-text [ngClass]="'status--'+register.status | lowercase">
                                 {{register.status === STATUS.VERIFIED ? '$0.00 USD' : ''}}
                             </ion-text>

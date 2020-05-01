@@ -9,7 +9,7 @@ import { PlaceFilter } from '../../../core/api/places/place.filter';
 import { GoogleMapPage } from '../../parent/GoogleMapPage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
 import { PlacesService } from '../../../core/api/places/places.service';
-import {MAP_MODE, PLACES} from '../../../utils/Const';
+import { MAP_MODE, PLACES } from '../../../utils/Const';
 // Providers
 import { MapProvider } from '../../../providers/map.provider';
 import { AlertProvider } from '../../../providers/alert.provider';
@@ -17,6 +17,7 @@ import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { AlertController } from '@ionic/angular';
 
 const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
 const BASIC_RADIUS_KILOMETERS = 50;
@@ -69,6 +70,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         private renderer: Renderer2,
         private appService: MapProvider,
         private storageInstance: UserIntentProvider,
+        private alertController: AlertController,
         @Inject(DOCUMENT) doc: Document,
         protected geolocationService: GeolocationService) {
         super(doc, geolocationService);
@@ -221,7 +223,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.setupPlaces(success.response);
                 this.intentProvider.lastUpdatedPoint = geo;
             }
-        }).finally(() => this.searching = false );
+        }).finally(() => this.searching = false);
     }
 
     async getAcceptedPlaces() {
@@ -264,13 +266,22 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     async saveLocation() {
         this.saving = true;
         const coors = await this.geolocationService.getCurrentLocation();
+        const location = await this.getAddress(coors.latitude, coors.longitude);
         const place: Place = {
             latitude: coors.latitude,
             longitude: coors.longitude,
             accuracy: coors.accuracy,
+            location: {
+                addressLine: location.addressLine,
+                postalCode: location.postalCode,
+                city: location.city,
+                state: location.state,
+                country: location.country,
+                acronym: location.acronym
+            }
         };
-        this.placesService.save(place).then(
-            async (success: any) => {
+        this.placesService.save(place)
+            .then(async (success: any) => {
                 if (success.passed === true) {
                     await this.toast.messageSuccessAboveButton('Ubicación guardada exitosamente');
                     this.placeToSave = success.response;
@@ -280,10 +291,28 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                     this.saving = false;
                     await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
                 }
-            }
-            , reason => {
+            }, reason => {
                 this.saving = false;
             });
+    }
+
+    getAddress(lat: number, lng: number): Promise<any> {
+        return new Promise( resolve => {
+            this.placesService.getPlaceByGeocode(lat, lng)
+                .then(async response => {
+                    console.log(response);
+                    const address = response.results;
+                    const infoPlace = address[0].address_components;
+                    resolve(await {
+                        addressLine: address[0].formatted_address,
+                        postalCode: infoPlace.slice(-1)[0].long_name,
+                        city: infoPlace.slice(-5)[0].long_name,
+                        state: infoPlace.slice(-3)[0].long_name,
+                        country: infoPlace.slice(-2)[0].long_name,
+                        acronym: infoPlace.slice(-2)[0].short_name,
+                    });
+                });
+        });
     }
 
     navigateToBusinessDetails() {

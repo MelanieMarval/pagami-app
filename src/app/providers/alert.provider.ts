@@ -11,7 +11,8 @@ export class AlertProvider {
     constructor(private alertController: AlertController,
                 private googleAuthService: GoogleAuthService,
                 private router: Router
-    ) {}
+    ) {
+    }
 
     async alertComingSoon() {
         const alert = await this.alertController.create({
@@ -23,7 +24,7 @@ export class AlertProvider {
         await alert.present();
     }
 
-    async alertUserDisabled(){
+    async alertUserDisabled() {
         const alert = await this.alertController.create({
             header: 'Su usuario ha sido deshabilitado',
             message: 'Lamentablemente ya no tiene permitido acceder a la aplicacion, por motivo de: blah blah',
@@ -38,5 +39,30 @@ export class AlertProvider {
             ]
         });
         await alert.present();
+    }
+
+    async alertConfirmDelete(header = 'Esta seguro de que desea elimarlo?',
+                             message = 'Esta opcion no podra ser regresada'): Promise<boolean> {
+        return new Promise(async (resolve) => {
+
+            const alert = await this.alertController.create({
+                header,
+                message,
+                buttons: [
+                    {
+                        text: 'Cancelar',
+                        role: 'cancel',
+                        cssClass: 'secondary'
+                    }, {
+                        text: 'Si, eliminar',
+                        handler: () => {
+                            resolve();
+                        }
+                    }
+                ]
+            });
+            await alert.present();
+        });
+
     }
 }

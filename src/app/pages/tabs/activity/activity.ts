@@ -12,6 +12,7 @@ import { isNumber } from 'util';
 import { PLACES } from '../../../utils/Const';
 import { PlaceUtils } from '../../../utils/place.utils';
 import { User } from '../../../core/api/users/user';
+import { AlertProvider } from '../../../providers/alert.provider';
 
 @Component({
     selector: 'app-activity',
@@ -36,6 +37,7 @@ export class ActivityPage implements OnInit {
                 private storageService: StorageProvider,
                 private router: Router,
                 private toast: ToastProvider,
+                private alert: AlertProvider,
                 private storageInstance: UserIntentProvider) {
     }
 
@@ -101,4 +103,21 @@ export class ActivityPage implements OnInit {
         }
     }
 
+    confirmDelete(register: Place) {
+        this.alert.alertConfirmDelete()
+            .then(() => {
+                const index = this.registers.indexOf(register);
+                this.deleteRegister(register.id, index);
+            });
+    }
+
+    deleteRegister(id: string, index: number) {
+        this.placesService.delete(id)
+            .then(success => {
+                if (success.passed) {
+                    this.registers.splice(index, 1);
+                }
+                console.log(success);
+            });
+    }
 }

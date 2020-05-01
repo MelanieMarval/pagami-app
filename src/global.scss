@@ -215,6 +215,10 @@ ion-bottom-drawer {
 .btn-no-style {
     --box-shadow: unset;
     --background: transparent;
+    // new
+    --border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }
 
 .button-reload {

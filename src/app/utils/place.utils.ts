@@ -5,7 +5,7 @@ export class PlaceUtils {
 
     static getThumbnailPhoto(register: Place) {
         if (register.status === 'INCOMPLETE' || !register.photoUrl) {
-            return undefined;
+            return'assets/img/no-business-image.png';
         } else {
             const arrayPhoto = register.photoUrl.split('?');
             return `${arrayPhoto[0]}_64x64?${arrayPhoto[1]}`;

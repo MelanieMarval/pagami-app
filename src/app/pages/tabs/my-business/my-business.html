@@ -12,13 +12,12 @@
     </div>
 
     <div class="no-register" *ngIf="!loading">
-        <ion-img src="assets/img/my-business-no-register.png"></ion-img>
+        <ion-img src="assets/img/my-business-no-register.svg"></ion-img>
         <ion-text class="ion-padding-horizontal ion-text-wrap">
             <span *ngIf="isClaim">
                 Se paciente <br>
                 Tu empresa (<ion-label>{{claim?.placeName}}</ion-label>
-                <img [src]="claim?.placePhoto" class="size-icon-default d-inline border-white-1px" alt=""/>
-                ) aún esta en verificación <br>
+                <img [src]="claim?.placePhoto" class="size-icon-default d-inline border-white-1px" alt=""/>) aún esta en verificación <br>
             </span>
             <span *ngIf="!isClaim">¡Oh no! <br></span>
             <span *ngIf="!isClaim && availableToClaim">Aún no has reclamado tu empresa</span>

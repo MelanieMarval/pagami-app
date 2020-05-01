@@ -79,14 +79,6 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
                 message: 'No se ha podido extraer correctamente la informacion, intente nuevamente',
                 buttons: [
                     {
-                        text: 'Cancelar',
-                        role: 'cancel',
-                        cssClass: 'secondary',
-                        handler: (blah) => {
-                            this.storageInstance.placeToEdit = undefined;
-                            this.route.navigate(['/app/tabs/wallet/activity']);
-                        }
-                    }, {
                         text: 'Reintentar',
                         handler: () => {
                             this.getAddress(this.place.latitude, this.place.longitude);
