@@ -9,22 +9,12 @@ const routes: Routes = [
         children: [
             {
                 path: 'search',
-                children: [
-                    {
-                        path: 'shop',
-                        loadChildren: () => import('../../../pages/shop/shop.module').then(m => m.ShopModule)
-                    }
-                ]
             },
             {
                 path: 'register-business'
             },
             {
                 path: 'find-my-business'
-            },
-            {
-                path: 'shop',
-                loadChildren: () => import('../../../pages/shop/shop.module').then(m => m.ShopModule)
             }
         ]
     }
