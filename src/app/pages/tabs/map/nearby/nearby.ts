@@ -27,13 +27,12 @@ export class NearbyPage implements OnInit {
                 private intentProvider: UserIntentProvider) {
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     async goToShopDetails(place: Place) {
         this.intentProvider.placeToShow = await place;
         this.intentProvider.showingPlaceDetails = true;
-        await this.router.navigate(['app/tab/search/business-details']);
+        await this.router.navigate(['app/tabs/map/shop']);
     }
 
     emitSelectedPlaceType() {

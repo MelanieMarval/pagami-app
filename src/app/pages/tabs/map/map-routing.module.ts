@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MapPage} from './map-page';
-import {ShopPage} from '../../shop/shop';
 
 const routes: Routes = [
     {
@@ -9,7 +8,13 @@ const routes: Routes = [
         component: MapPage,
         children: [
             {
-                path: 'search'
+                path: 'search',
+                children: [
+                    {
+                        path: 'shop',
+                        loadChildren: () => import('../../../pages/shop/shop.module').then(m => m.ShopModule)
+                    }
+                ]
             },
             {
                 path: 'register-business'
@@ -18,10 +23,10 @@ const routes: Routes = [
                 path: 'find-my-business'
             },
             {
-                path: 'search/business-details',
-                component: ShopPage
+                path: 'shop',
+                loadChildren: () => import('../../../pages/shop/shop.module').then(m => m.ShopModule)
             }
-        ],
+        ]
     }
 ];
 
