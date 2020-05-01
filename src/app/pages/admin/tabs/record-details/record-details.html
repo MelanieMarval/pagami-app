@@ -38,24 +38,30 @@
         <ion-item-group class="ion-margin-bottom">
             <ion-label class="group-label">Telefonos</ion-label>
             <ion-item class="item-admin ion-no-padding">
-                <ion-avatar slot="start" class="item-admin__avatar">
-                    <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
-                </ion-avatar>
+                <ion-button [href]="'tel:'+place.phone" class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                </ion-button>
                 <ion-label>{{place.phone}}</ion-label>
             </ion-item>
             <ion-item class="item-admin ion-no-padding">
-                <ion-avatar slot="start" class="item-admin__avatar">
-                    <ion-icon name="logo-whatsapp" class="size-icon-default"></ion-icon>
-                </ion-avatar>
+                <ion-button [href]="'https://api.whatsapp.com/send?phone='+place.samePhone ? place.phone : place.whatsapp" class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="logo-whatsapp" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                </ion-button>
                 <ion-label>{{place.samePhone ? place.phone : place.whatsapp}}</ion-label>
             </ion-item>
         </ion-item-group>
-        <ion-item-group class="ion-margin-bottom">
+        <ion-item-group class="ion-margin-bottom" *ngIf="place.website">
             <ion-label class="group-label">Pagina Web</ion-label>
             <ion-item class="item-admin ion-no-padding">
-                <ion-avatar slot="start" class="item-admin__avatar">
-                    <ion-icon src="assets/icon/web.svg" class="size-icon-default"></ion-icon>
-                </ion-avatar>
+                <ion-button [href]="place.website" target="_blank" class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon src="assets/icon/web.svg" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                </ion-button>
                 <ion-label>{{place.website}}</ion-label>
             </ion-item>
         </ion-item-group>

@@ -215,12 +215,18 @@ ion-bottom-drawer {
 .pb-0 {
     padding-bottom: 0 !important;
 }
+.circle-shape {
+    --border-radius: 50%;
+}
 .pagami-text-2nd{
     color: var(--ion-color-pagami-text-2nd);
 }
 .btn-no-style {
     --box-shadow: unset;
     --background: transparent;
+
+}
+.btn-focus-circle {
     // new
     --border-radius: 50%;
     width: 25px;

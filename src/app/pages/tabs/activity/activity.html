@@ -30,7 +30,7 @@
                         <ion-col size="1" [ngClass]="{'pb-0': register.status === STATUS.INCOMPLETE}">
                             <ion-icon *ngIf="register.status === STATUS.REJECTED" name="close-circle"></ion-icon>
                             <ion-icon *ngIf="register.status === STATUS.WAITING" name="time-outline"></ion-icon>
-                            <ion-button class="btn-no-style ion-no-padding ion-no-margin"
+                            <ion-button class="btn-no-style btn-focus-circle ion-no-padding ion-no-margin"
                                         *ngIf="register.status === STATUS.INCOMPLETE"
                                         (click)="confirmDelete(register); $event.stopPropagation(); registers.selectedToDelete = true">
                                 <ion-icon name="trash"  color="danger" size="small"></ion-icon>
