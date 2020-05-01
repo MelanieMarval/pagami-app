@@ -9,6 +9,7 @@ import { GoogleAuthService } from './google-auth/google-auth.service';
 import { FireStorage } from './fire-storage/fire.storage';
 import { PlansService } from './api/plans/plans.service';
 import { ClaimService } from './api/claim/claim.service';
+import { NotificationsService } from './api/notifications/notifications.service';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ClaimService } from './api/claim/claim.service';
         AuthService,
         PlacesService,
         PlansService,
-        ClaimService
+        ClaimService,
+        NotificationsService
     ]
 })
 export class CoreModule {

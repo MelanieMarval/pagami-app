@@ -36,4 +36,11 @@ export class AuthService {
         const request = this.httpClient.post(`${this.URL}/${method}`, user, options);
         return this.apiService.serverListener(request);
     }
+
+    async verify() {
+        const method = 'verify/user';
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/${method}`, options);
+        return this.apiService.serverListener(request);
+    }
 }
