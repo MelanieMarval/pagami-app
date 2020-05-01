@@ -32,7 +32,7 @@
             <ion-progress-bar type="indeterminate" color="pagami" *ngIf="searching"></ion-progress-bar>
         </div>
         <ion-row *ngIf="selectedPlace">
-            <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(selectedPlace)">
+            <ion-card button color="pagami-surface" (click)="savePlaceToShowDetails(selectedPlace)" class="card" routerLink="/app/shop">
                 <div class="card-img-contain">
                     <ion-skeleton-text
                         class="card-img-skeleton"
@@ -61,7 +61,7 @@
             </ion-card>
         </ion-row>
         <ion-row *ngFor="let place of nearPlaces;" [hidden]="selectedPlace && selectedPlace.id === place.id">
-            <ion-card button color="pagami-surface" class="card" (click)="goToShopDetails(place)">
+            <ion-card button color="pagami-surface" (click)="savePlaceToShowDetails(place)" class="card" routerLink="/app/shop">
                 <div class="card-img-contain">
                     <ion-skeleton-text
                         class="card-img-skeleton"

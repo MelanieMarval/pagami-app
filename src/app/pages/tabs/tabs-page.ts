@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MapProvider } from '../../providers/map.provider';
 import { NavigationEnd, Router } from '@angular/router';
-import { applySourceSpanToExpressionIfNeeded } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: 'app-tabs-page',

@@ -1,23 +1,23 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
-import { Place } from '../../../core/api/places/place';
-import { ApiResponse } from '../../../core/api/api.response';
-import { PlaceFilter } from '../../../core/api/places/place.filter';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {DrawerState} from '../../../shared/ion-bottom-drawer/drawer-state';
+import {Place} from '../../../core/api/places/place';
+import {ApiResponse} from '../../../core/api/api.response';
+import {PlaceFilter} from '../../../core/api/places/place.filter';
 // Services
-import { GoogleMapPage } from '../../parent/GoogleMapPage';
-import { GeolocationService } from '../../../core/geolocation/geolocation.service';
-import { PlacesService } from '../../../core/api/places/places.service';
-import { MAP_MODE, PLACES } from '../../../utils/Const';
+import {GoogleMapPage} from '../../parent/GoogleMapPage';
+import {GeolocationService} from '../../../core/geolocation/geolocation.service';
+import {PlacesService} from '../../../core/api/places/places.service';
+import {MAP_MODE, PLACES} from '../../../utils/Const';
 // Providers
-import { MapProvider } from '../../../providers/map.provider';
-import { AlertProvider } from '../../../providers/alert.provider';
-import { ToastProvider } from '../../../providers/toast.provider';
-import { StorageProvider } from '../../../providers/storage.provider';
-import { UserIntentProvider } from '../../../providers/user-intent.provider';
-import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
-import { AlertController } from '@ionic/angular';
+import {MapProvider} from '../../../providers/map.provider';
+import {AlertProvider} from '../../../providers/alert.provider';
+import {ToastProvider} from '../../../providers/toast.provider';
+import {StorageProvider} from '../../../providers/storage.provider';
+import {UserIntentProvider} from '../../../providers/user-intent.provider';
+import {PagamiGeo} from '../../../core/geolocation/pagami.geo';
+import {AlertController} from '@ionic/angular';
 
 const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
 const BASIC_RADIUS_KILOMETERS = 50;
@@ -58,6 +58,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     searchPlaces: Place[] = [];
     findBusinessPlaces: Place[] = [];
     isSearching = false;
+    isHiddenCloseToMe = false;
 
     constructor(
         private router: Router,
@@ -79,49 +80,49 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     ngOnInit() {
         this.router.events.subscribe(value => {
             if (value instanceof NavigationEnd) {
-                this.currentUrl = value.url.substring(value.url.lastIndexOf('/') + 1);
-                this.selectMode(this.currentUrl);
+                const url = value.url.substring(value.url.lastIndexOf('/') + 1);
+                this.selectNavigateMode(url);
+                this.currentUrl = url;
             }
         });
         this.appService.showNearby.subscribe(() => {
-            this.selectMode(this.currentUrl);
+            if (this.currentUrl === MAP_MODE.SEARCH) {
+                this.closeToMeToDefault();
+            }
         });
         this.appService.showRegister.subscribe(() => {
-            this.selectMode(this.currentUrl);
+            // this.selectMode(this.currentUrl);
         });
     }
 
-    selectMode(mode: string) {
+    selectNavigateMode(mode: string) {
         switch (mode) {
             case MAP_MODE.FIND_BUSINESS:
-                this.modeFindMyBusiness();
+                this.navigateToModeFindMyBusiness();
                 break;
             case MAP_MODE.REGISTER_BUSINESS:
-                this.modeRegister();
+                this.navigateToModeRegister();
                 break;
             case MAP_MODE.SEARCH:
-                this.modeSearch();
+                this.navigateToModeSearch();
                 break;
         }
     }
 
-    modeSearch() {
+    navigateToModeSearch() {
         this.isRegistering = false;
-        if ((this.bottomDrawer.drawerState === DrawerState.Bottom
-            || this.bottomDrawer.drawerState === DrawerState.Top
-            || (this.bottomDrawer.drawerState === DrawerState.Docked && this.router.url === '/app/tabs/map/search'))
-            && !this.storageInstance.showingPlaceDetails) {
-            this.bottomHeightChange.emit(DEFAULT_DRAWER_BOTTOM_HEIGHT);
-            this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
-            this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        if (this.isHiddenCloseToMe) {
+            this.closeToMeToDefault();
+            this.isHiddenCloseToMe = false;
         }
         if (this.storageInstance.showingPlaceDetails) {
             this.storageInstance.showingPlaceDetails = false;
         }
     }
 
-    modeRegister() {
+    navigateToModeRegister() {
         this.isRegistering = true;
+        this.isHiddenCloseToMe = true;
         this.onBottomSheetHide(true);
         this.bottomHeightChange.emit(0);
         this.beforeSaveLocation = true;
@@ -130,11 +131,18 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.map.setZoom(20);
     }
 
-    modeFindMyBusiness() {
+    navigateToModeFindMyBusiness() {
         this.isRegistering = false;
+        this.isHiddenCloseToMe = true;
         this.onBottomSheetHide(true);
         this.bottomHeightChange.emit(0);
         this.getAcceptedPlaces();
+    }
+
+    closeToMeToDefault() {
+        this.bottomHeightChange.emit(DEFAULT_DRAWER_BOTTOM_HEIGHT);
+        this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
+        this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
     }
 
     onClickPlace(place: Place) {
@@ -297,7 +305,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     getAddress(lat: number, lng: number): Promise<any> {
-        return new Promise( resolve => {
+        return new Promise(resolve => {
             this.placesService.getPlaceByGeocode(lat, lng)
                 .then(async response => {
                     console.log(response);

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Place } from '../../../../core/api/places/place';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 
 @Component({
@@ -24,15 +24,15 @@ export class NearbyPage implements OnInit {
     messageDistance = PlaceUtils.getMessageDistance;
 
     constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 private intentProvider: UserIntentProvider) {
     }
 
     ngOnInit() { }
 
-    async goToShopDetails(place: Place) {
-        this.intentProvider.placeToShow = await place;
+    savePlaceToShowDetails(place: Place) {
+        this.intentProvider.placeToShow = place;
         this.intentProvider.showingPlaceDetails = true;
-        await this.router.navigate(['app/tabs/map/shop']);
     }
 
     emitSelectedPlaceType() {
