@@ -41,6 +41,7 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     totalToBeVerified: number;
     STATUS = PLACES.STATUS;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
+    placeSortData = PlaceUtils.getSortData;
 
     constructor(private placesService: PlacesService,
                 private claimService: ClaimService,

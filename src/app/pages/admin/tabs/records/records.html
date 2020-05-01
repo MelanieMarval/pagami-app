@@ -27,7 +27,7 @@
 
             <ion-item-group class="">
                 <ion-card class="card card-records"
-                          *ngFor="let record of recordsToBeAccepted"
+                          *ngFor="let record of placeSortData(recordsToBeAccepted)"
                           [button]="true"
                           (click)="showPlace(record)">
                     <ion-card-header>
@@ -77,7 +77,7 @@
 
                 <ion-item-group class="">
                     <ion-card class="card card-records"
-                              *ngFor="let record of recordsToBeVerified"
+                              *ngFor="let record of placeSortData(recordsToBeVerified)"
                               [button]="true"
                               (click)="showClaim(record)">
                         <ion-card-header>
