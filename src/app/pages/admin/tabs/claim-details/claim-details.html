@@ -39,7 +39,7 @@
             <ion-label class="group-label">Rif de la empresa</ion-label>
             <ion-item class="item-admin ion-no-padding">
                 <ion-avatar slot="start" class="item-admin__avatar">
-                    <ion-icon src="assets/icon/location-on.svg" class="size-icon-default"></ion-icon>
+                    <ion-icon src="assets/icon/business.svg" class="size-icon-default"></ion-icon>
                 </ion-avatar>
                 <ion-label>{{claim.businessRuc}}</ion-label>
             </ion-item>
@@ -47,15 +47,19 @@
         <ion-item-group class="ion-margin-bottom">
             <ion-label class="group-label">Vias de Contacto</ion-label>
             <ion-item class="item-admin ion-no-padding">
-                <ion-avatar slot="start" class="item-admin__avatar">
-                    <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
-                </ion-avatar>
+                <ion-button [href]="'tel:'+claim.businessPhone" class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                </ion-button>
                 <ion-label>{{claim.businessPhone}}</ion-label>
             </ion-item>
             <ion-item class="item-admin ion-no-padding">
-                <ion-avatar slot="start" class="item-admin__avatar">
-                    <ion-icon src="assets/icon/email.svg" class="size-icon-default"></ion-icon>
-                </ion-avatar>
+                <ion-button [href]="'mailto:' + claim.businessEmail" class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon src="assets/icon/email.svg" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                </ion-button>
                 <ion-label>{{claim.businessEmail}}</ion-label>
             </ion-item>
         </ion-item-group>

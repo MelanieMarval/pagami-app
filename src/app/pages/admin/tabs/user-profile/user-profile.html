@@ -22,12 +22,12 @@
         </ion-item-group>
 
         <ion-list lines="none" class="inputs-container">
-            <ion-item color="pagami-surface">
+            <ion-item color="pagami-surface" [href]="'tel:'+user.phone">
                 <ion-label position="floating">Telefono</ion-label>
                 <ion-input type="tel" [(ngModel)]="user.phone" readonly></ion-input>
                 <ion-icon src="assets/icon/call.svg" slot="start"></ion-icon>
             </ion-item>
-            <ion-item color="pagami-surface">
+            <ion-item color="pagami-surface" [href]="'mailto:'+user.email">
                 <ion-label position="floating">Correo electronico</ion-label>
                 <ion-input type="email" [(ngModel)]="user.email" readonly></ion-input>
                 <ion-icon src="assets/icon/alternate-email.svg" slot="start"></ion-icon>

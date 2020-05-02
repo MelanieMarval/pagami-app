@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ApiResponse } from '../../../core/api/api.response';
 import { PlacesService } from '../../../core/api/places/places.service';
-// Providers
-import { ToastProvider } from '../../../providers/toast.provider';
-import { AdminIntentProvider } from '../../../providers/admin-intent.provider';
 
 @Component({
     selector: 'app-tabs-admin',
@@ -11,23 +8,21 @@ import { AdminIntentProvider } from '../../../providers/admin-intent.provider';
     styleUrls: ['tabs-admin.scss']
 })
 // tslint:disable-next-line:component-class-suffix
-export class TabsAdmin implements OnInit {
+export class TabsAdmin implements OnInit, AfterViewInit {
 
+    showNotification = false;
 
-    constructor(private placesService: PlacesService,
-                private intentProvider: AdminIntentProvider,
-                private toast: ToastProvider) {
+    constructor(private placesService: PlacesService) {
     }
 
-    async ngOnInit() {
-        await this.placesService.getAllWaiting()
+    ngOnInit() { }
+
+    ngAfterViewInit() {
+        this.placesService.getAllWaiting()
             .then((success: ApiResponse) => {
                 if (success.passed) {
-                    this.intentProvider.showNotification = success.response.length !== 0;
-                } else {
-                    this.toast.messageErrorAboveButton('Compruebe su conexion a internet', 5000);
+                    this.showNotification = success.response.length !== 0;
                 }
             });
     }
-
 }

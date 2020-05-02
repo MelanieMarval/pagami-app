@@ -104,4 +104,10 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async getDialCode(acronym: string): Promise<string> {
+        const countries: any = await this.httpClient.get('assets/countries.json').toPromise();
+        const country: any = countries.find(value => value.code === acronym);
+        return country.dial_code;
+    }
+
 }

@@ -41,7 +41,7 @@ export class AppComponent {
             await SplashScreen.hide();
         });
         App.addListener('backButton', async (data: AppUrlOpen) => {
-            if (this.router.url.includes('tabs') && !this.router.url.includes('app/tabs/wallet/activity')) {
+            if (this.verifyIfCanCloseApp(this.router.url)) {
                 App.exitApp();
             }
         });
@@ -72,4 +72,14 @@ export class AppComponent {
         return this.router.navigateByUrl('/admin/tabs/activity', {replaceUrl: true});
     }
 
+    private verifyIfCanCloseApp(currentUrl: string): boolean {
+        return currentUrl === '/admin/tabs/activity'
+            || currentUrl === '/admin/tabs/businesses'
+            || currentUrl === '/admin/tabs/records'
+            || currentUrl === '/admin/tabs/users'
+            || currentUrl === '/app/tabs/map/search'
+            || currentUrl === '/app/tabs/my-business'
+            || currentUrl === '/app/tabs/map/register-business'
+            || currentUrl === '/app/tabs/wallet';
+    }
 }

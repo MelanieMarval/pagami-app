@@ -50,7 +50,7 @@
                                 {{ register.createTime | date:'d/M/y'}} · {{ register.createTime | date:'shortTime'}}
                             </ion-card-subtitle>
                             <ion-card-title>
-                                {{register.name | capitalize}}
+                                {{register.name}}
                                 <span [ngSwitch]="register.status">
                                     <ion-icon *ngSwitchCase="STATUS.VERIFIED" name="shield-checkmark" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
                                     <ion-icon *ngSwitchCase="STATUS.REJECTED" name="close-circle" [classList]="['status status--'+register.status | lowercase]"></ion-icon>

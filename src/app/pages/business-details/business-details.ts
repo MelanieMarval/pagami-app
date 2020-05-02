@@ -25,6 +25,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     saving = false;
     isStore = false;
     isService = false;
+    dialCode = '';
 
     constructor(private storageService: StorageProvider,
                 private placeService: PlacesService,
@@ -41,7 +42,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         this.setupData(this.storageInstance.placeToEdit);
     }
 
-    setupData(place: Place) {
+    async setupData(place: Place) {
         this.place = place;
         if (!this.place.location) {
             this.getAddress(place.latitude, place.longitude);
@@ -52,6 +53,11 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         }
         if (this.place.type === PLACES.TYPE.SERVICE) {
             this.isService = true;
+        }
+        if (!this.place.phone) {
+            this.dialCode = await this.placeService.getDialCode(this.place.location.acronym);
+            this.place.phone = this.dialCode;
+            this.place.whatsapp = this.dialCode;
         }
     }
 
@@ -116,7 +122,6 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
             this.toast.messageErrorWithoutTabs('Su número de Whatsapp debe contener minimo 8 digitos y menos de 15');
             return;
         }
-        console.log(this.place.photoUrl, this.previewUrl);
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe agregar una fotografia');
         } else {

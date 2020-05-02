@@ -41,7 +41,7 @@ export class AlertProvider {
         await alert.present();
     }
 
-    async alertConfirmDelete(header = 'Esta seguro de que desea elimarlo?',
+    async alertConfirmDelete(header = '¿Esta seguro de que desea eliminarlo?',
                              message = 'Esta opcion no podra ser regresada'): Promise<boolean> {
         return new Promise(async (resolve) => {
 

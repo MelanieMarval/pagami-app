@@ -120,7 +120,6 @@ export class ActivityPage implements OnInit {
                     this.registers.splice(index, 1);
                     this.reloading = false;
                 }
-                console.log(success);
             });
     }
 }

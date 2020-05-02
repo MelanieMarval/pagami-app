@@ -45,7 +45,6 @@ export class ProfilePage extends InputFilePage implements OnInit {
     }
 
     setPlace(place) {
-        console.log('-> place', place);
         this.user.location.address = place.description;
         this.user.location.country = place.terms.slice(-1)[0].value;
         this.places = [];

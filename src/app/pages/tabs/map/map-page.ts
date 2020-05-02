@@ -147,7 +147,6 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onClickPlace(place: Place) {
         this.selectedPlace = place;
-        console.log(this.currentUrl);
         if (this.currentUrl === MAP_MODE.FIND_BUSINESS) {
             this.intentProvider.placeToShow = undefined;
             this.intentProvider.placeToClaim = place;
@@ -238,7 +237,6 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.placesService.getAllAccepted().then((success: ApiResponse) => {
             if (success.passed) {
                 this.findBusinessPlaces = success.response;
-                console.log(this.findBusinessPlaces);
             }
         });
     }
@@ -255,7 +253,6 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             );
         });
         places.sort((a, b) => a.distance - b.distance);
-        console.log(places);
         this.nearPlaces = places;
     }
 
@@ -307,11 +304,10 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     getAddress(lat: number, lng: number): Promise<any> {
         return new Promise(resolve => {
             this.placesService.getPlaceByGeocode(lat, lng)
-                .then(async response => {
-                    console.log(response);
+                .then(response => {
                     const address = response.results;
                     const infoPlace = address[0].address_components;
-                    resolve(await {
+                    resolve({
                         addressLine: address[0].formatted_address,
                         postalCode: infoPlace.slice(-1)[0].long_name,
                         city: infoPlace.slice(-5)[0].long_name,

@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { ResolveEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { ApiResponse } from '../../../../core/api/api.response';
 import { Place, PlaceStats } from '../../../../core/api/places/place';
@@ -46,23 +46,23 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
         }
     }
 
-    async load() {
+    load() {
         this.loading = true;
-        await this.getStats();
-        await this.getRegisters();
+        this.getStats();
+        this.getRegisters();
     }
 
-    async reload() {
+    reload() {
         this.reloading = true;
-        await this.getStats();
-        await this.getRegisters();
+        this.getStats();
+        this.getRegisters();
     }
 
-    private async getRegisters() {
-        await this.placesService.getAllAvailable()
+    getRegisters() {
+        this.placesService.getAllAvailable()
             .then(async (success: ApiResponse) => {
                 if (success.passed) {
-                    this.registers = await success.response;
+                    this.registers = success.response;
                     this.empty = this.registers.length === 0;
                     this.error = false;
                 } else {
@@ -74,8 +74,8 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
             });
     }
 
-    private async getStats() {
-        await this.placesService.getTotalPlaces()
+    getStats() {
+        this.placesService.getTotalPlaces()
             .then((success: ApiResponse) => {
                 if (success.passed) {
                     this.stats = success.response;

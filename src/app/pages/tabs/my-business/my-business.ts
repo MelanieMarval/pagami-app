@@ -97,11 +97,9 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             await this.toast.messageErrorAboveButton('Su número de teléfono debe contener entre 8 y 15 digitos');
             return;
         }
-        console.log(this.place);
         this.updating = true;
         this.placesService.update(this.place)
             .then(async success => {
-                console.log('-> success', success);
                 if (success.passed === true) {
                     this.storageService.setBusinessVerifiedByUser(success.response);
                     this.isEditing = false;

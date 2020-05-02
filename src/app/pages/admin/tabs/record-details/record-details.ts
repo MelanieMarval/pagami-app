@@ -10,6 +10,7 @@ import { AdminIntentProvider } from '../../../../providers/admin-intent.provider
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
+import { BrowserProvider } from '../../../../providers/browser.provider';
 
 @Component({
     selector: 'app-admin-record-details',
@@ -27,6 +28,7 @@ export class RecordDetailsPage implements OnInit {
     saved = false;
     rejecting = false;
     rejectReason = '';
+    browser = this.browserProvider;
 
     constructor(private intentProvider: AdminIntentProvider,
                 private placeService: PlacesService,
@@ -34,7 +36,8 @@ export class RecordDetailsPage implements OnInit {
                 private toast: ToastProvider,
                 private router: Router,
                 private route: ActivatedRoute,
-                private alert: AlertController) {
+                private alert: AlertController,
+                private browserProvider: BrowserProvider) {
     }
 
     ngOnInit() {
@@ -47,7 +50,6 @@ export class RecordDetailsPage implements OnInit {
             this.isView = false;
             this.place = this.intentProvider.placeToAccept;
         }
-        console.log(this.place);
     }
 
     acceptPlace() {
@@ -119,6 +121,4 @@ export class RecordDetailsPage implements OnInit {
         });
         await alert.present();
     }
-
-
 }

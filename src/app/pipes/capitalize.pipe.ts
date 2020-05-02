@@ -3,9 +3,9 @@ import {Pipe, PipeTransform} from '@angular/core';
 @Pipe({
     name: 'capitalize'
 })
+// TODO, revisar porque tiene un fallo con los acentos
 export class CapitalizePipe implements PipeTransform {
     transform(value: string, all: boolean = true): string {
-
         value = value.toLowerCase();
         const names = value.split(' ');
 

@@ -25,6 +25,7 @@ import { MapProvider } from './providers/map.provider';
 import { UserIntentProvider } from './providers/user-intent.provider';
 import { ToastProvider } from './providers/toast.provider';
 import { AdminIntentProvider } from './providers/admin-intent.provider';
+import { BrowserProvider } from './providers/browser.provider';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { AdminIntentProvider } from './providers/admin-intent.provider';
         ToastProvider,
         UserIntentProvider,
         AdminIntentProvider,
+        BrowserProvider,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     exports: [],
