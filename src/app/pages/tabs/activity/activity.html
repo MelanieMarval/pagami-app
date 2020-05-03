@@ -11,7 +11,9 @@
 </div>
 
 <ion-content>
-
+    <ion-refresher slot="fixed" (ionRefresh)="onRefreshToBeVerified($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-list>
         <ion-item-group *ngIf="!loading && !error && !empty">
             <ion-card *ngFor="let register of placeSortData(registers)"

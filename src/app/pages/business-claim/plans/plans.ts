@@ -52,9 +52,9 @@ export class PlansPage implements OnInit {
             this.claimService.claimBusiness(this.claim)
                 .then(success => {
                     this.loading = false;
-                    console.log(success);
                     if (success.passed) {
                         this.save = true;
+                        this.intentProvider.placeToClaim = undefined;
                         this.toast.messageSuccessBottom('Gracias por tu compra. <br>La verificacion de tu empresa esta en camino!', 3000);
                     } else {
                         this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');

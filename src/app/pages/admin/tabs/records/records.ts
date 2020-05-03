@@ -42,6 +42,8 @@ export class RecordsPage implements OnInit, AfterViewChecked {
     STATUS = PLACES.STATUS;
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
     placeSortData = PlaceUtils.getSortData;
+    targetRefreshToBeAccepted;
+    targetRefreshToToBeVerified;
 
     constructor(private placesService: PlacesService,
                 private claimService: ClaimService,
@@ -105,6 +107,9 @@ export class RecordsPage implements OnInit, AfterViewChecked {
                     this.error = true;
                     this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
                 }
+                if (this.targetRefreshToBeAccepted) {
+                    this.targetRefreshToBeAccepted.complete();
+                }
             });
     }
 
@@ -123,6 +128,9 @@ export class RecordsPage implements OnInit, AfterViewChecked {
                     this.error = true;
                     this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
                 }
+                if (this.targetRefreshToToBeVerified) {
+                    this.targetRefreshToToBeVerified.complete();
+                }
             });
     }
 
@@ -139,5 +147,15 @@ export class RecordsPage implements OnInit, AfterViewChecked {
 
     changeTab($event: CustomEvent) {
         this.tabView = $event.detail.value;
+    }
+
+    onRefreshToBeAccepted(event) {
+        this.targetRefreshToBeAccepted = event.target;
+        this.getRecordsToBeAccepted();
+    }
+
+    onRefreshToBeVerified(event) {
+        this.targetRefreshToToBeVerified = event.target;
+        this.getRecordsToBeVerified();
     }
 }

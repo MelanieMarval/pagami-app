@@ -18,6 +18,12 @@ export class FilterPlacePipe implements PipeTransform {
                 if (place.category && place.category.name && place.category.name.toLowerCase().includes(search.toLowerCase())) {
                     return place.category.name.toLowerCase().includes(search.toLowerCase());
                 }
+                if (place.location && place.location.address && place.location.address.toLowerCase().includes(search.toLowerCase())) {
+                    return place.location.address.toLowerCase().includes(search.toLowerCase());
+                }
+                if (place.location && place.location.addressLine && place.location.addressLine.toLowerCase().includes(search.toLowerCase())) {
+                    return place.location.addressLine.toLowerCase().includes(search.toLowerCase());
+                }
             });
         }
     }

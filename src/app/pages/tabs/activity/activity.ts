@@ -33,6 +33,7 @@ export class ActivityPage implements OnInit {
     placeSortData = PlaceUtils.getSortData;
     showNotification = false;
     reloading: boolean;
+    targetRefresh;
 
     constructor(private placesService: PlacesService,
                 private storageService: StorageProvider,
@@ -66,10 +67,16 @@ export class ActivityPage implements OnInit {
                     this.error = true;
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
                 }
+                if (this.targetRefresh) {
+                    this.targetRefresh.complete();
+                }
             }).catch(error => {
-            this.loading = false;
-            this.error = true;
-            this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
+                this.loading = false;
+                this.error = true;
+                this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
+                if (this.targetRefresh) {
+                    this.targetRefresh.complete();
+                }
         });
     }
 
@@ -108,18 +115,22 @@ export class ActivityPage implements OnInit {
         this.alert.alertConfirmDelete()
             .then(() => {
                 this.reloading = true;
-                const index = this.registers.indexOf(register);
-                this.deleteRegister(register.id, index);
+                this.deleteRegister(register);
             });
     }
 
-    deleteRegister(id: string, index: number) {
-        this.placesService.delete(id)
+    deleteRegister(place: Place) {
+        this.placesService.delete(place.id)
             .then(success => {
                 if (success.passed) {
-                    this.registers.splice(index, 1);
+                    this.registers.splice(this.registers.indexOf(place), 1);
                     this.reloading = false;
                 }
             });
+    }
+
+    onRefreshToBeVerified(event) {
+        this.targetRefresh = event.target;
+        this.getRegisters();
     }
 }

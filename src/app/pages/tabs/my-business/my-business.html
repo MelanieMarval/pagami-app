@@ -26,7 +26,7 @@
     </div>
 </ion-content>
 <ion-footer class="footer-button" *ngIf="!isRegister && !isClaim && availableToClaim">
-    <ion-button class="button-large" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
+    <ion-button class="button-large" (click)="searchBusiness()" expand="block" color="pagami" routerLink="/app/tabs/map/find-my-business">
         Buscar mi empresa
     </ion-button>
 </ion-footer>
@@ -177,4 +177,3 @@
 
 </ion-content>
 <!-- END EDITING -->
-<!-- END REGISTER -->

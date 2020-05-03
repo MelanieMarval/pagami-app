@@ -80,7 +80,7 @@ export class PlaceUtils {
         } else if (place.category.icon === 'odontologia') {
             return `assets/marker-icons/odontologia${PlaceUtils.getIconSuffix(place)}`;
         } else if (place.category.icon === 'pagami') {
-            return `assets/marker-icons/pagami_icono.svg`;
+            return `assets/marker-icons/pagami${PlaceUtils.getIconSuffix(place)}`;
         } else if (place.category.icon === 'panaderia') {
             return `assets/marker-icons/panaderia${PlaceUtils.getIconSuffix(place)}`;
         } else if (place.category.icon === 'perfumeria') {

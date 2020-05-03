@@ -21,6 +21,7 @@ import { ValidationUtils } from '../../../utils/validation.utils';
     styleUrls: ['my-business.scss']
 })
 export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewChecked {
+
     isRegister = false;
     availableToClaim = false;
     isClaim = false;
@@ -29,6 +30,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     loading = true;
     place: Place = {latitude: 0, longitude: 0};
     claim: Claim;
+    isSearching = false;
 
     constructor(
         private router: Router,
@@ -43,7 +45,11 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         super(geolocationService);
     }
 
-    async ngOnInit() {
+    ngOnInit() {
+        this.loadInfo();
+    }
+
+    async loadInfo() {
         const myBusiness = await this.storageService.getBusinessVerifiedByUser();
         if (myBusiness) {
             this.loading = false;
@@ -53,20 +59,18 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         } else {
             this.getMyBusiness();
         }
-
     }
 
     async ngAfterViewChecked() {
-        if (this.intentProvider.placeToClaim) {
-            this.intentProvider.placeToClaim = await undefined;
-            this.isClaim = true;
+        if (!this.intentProvider.placeToClaim && this.isSearching) {
+            this.isSearching = false;
+            this.ngOnInit();
         }
     }
 
     getMyBusiness() {
         this.claimService.getMyBusiness()
             .then(success => {
-                console.log(success);
                 if (success.passed) {
                     this.loading = false;
                     if (success.response.status === 'WAITING') {
@@ -110,6 +114,10 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                     await this.toast.messageErrorWithoutTabs('No se ha podido actualizar su informacion. Intente de nuevo!');
                 }
             });
+    }
+
+    searchBusiness() {
+        this.isSearching = true;
     }
 
 }
