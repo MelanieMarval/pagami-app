@@ -49,20 +49,78 @@ export class PlaceUtils {
     }
 
     static getMarker(place: Place): string {
-        if (place.category.subCategory === PLACES.CATEGORY.FOOD) {
-            return 'assets/marker-icons/food.png';
-        } else if (place.category.subCategory === PLACES.CATEGORY.HOTELERY) {
-            return 'assets/marker-icons/hotelery.png';
-        } else if (place.category.subCategory === PLACES.CATEGORY.MEDICINE) {
-            return 'assets/marker-icons/medical.png';
-        } else if (place.category.subCategory === PLACES.CATEGORY.SERVICE) {
-            return 'assets/marker-icons/service.png';
-        } else if (place.category.subCategory === PLACES.CATEGORY.BEAUTY) {
-            return 'assets/marker-icons/hairdressing.png';
-        } else if (place.category.subCategory === PLACES.CATEGORY.SHOP) {
-            return 'assets/marker-icons/shop.png';
+        if (place.category.icon === 'abasto') {
+            return `assets/marker-icons/abasto${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'barberia_y_peluqueria') {
+            return `assets/marker-icons/peluqueria${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'cafe') {
+            return `assets/marker-icons/cafe${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'comida_rapida') {
+            return `assets/marker-icons/comida_rapida${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'estacionamiento') {
+            return `assets/marker-icons/estacionamiento${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'fabrica') {
+            return `assets/marker-icons/fabrica${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'farmacia') {
+            return `assets/marker-icons/farmacia${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'fruteria') {
+            return `assets/marker-icons/fruteria${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'gimnasio') {
+            return `assets/marker-icons/gimnasio${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'heladeria') {
+            return `assets/marker-icons/heladeria${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'hotel') {
+            return `assets/marker-icons/hotel${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'hotel') {
+            return `assets/marker-icons/hotel${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'negocio_temporal') {
+            return `assets/marker-icons/negocio_temporal${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'odontologia') {
+            return `assets/marker-icons/odontologia${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'odontologia') {
+            return `assets/marker-icons/odontologia${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'pagami') {
+            return `assets/marker-icons/pagami_icono.svg`;
+        } else if (place.category.icon === 'panaderia') {
+            return `assets/marker-icons/panaderia${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'perfumeria') {
+            return `assets/marker-icons/perfumeria${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'piscina') {
+            return `assets/marker-icons/piscina${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'pizzeria') {
+            return `assets/marker-icons/pizzeria${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'restaurante') {
+            return `assets/marker-icons/restaurante${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'servicio_de_reparacion') {
+            return `assets/marker-icons/servicio_reparacion${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'servicios_medicos') {
+            return `assets/marker-icons/servicio_medico${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'servicio_tecnico') {
+            return `assets/marker-icons/servicio_tecnico${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'taller') {
+            return `assets/marker-icons/taller${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'taxi') {
+            return `assets/marker-icons/tienda_vehiculos${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'tienda_deporte') {
+            return `assets/marker-icons/tienda_deporte${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'tienda_motos') {
+            return `assets/marker-icons/tienda_motos${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'tienda_ropa') {
+            return `assets/marker-icons/tienda_ropa${PlaceUtils.getIconSuffix(place)}`;
+        } else if (place.category.icon === 'veterinario') {
+            return `assets/marker-icons/veterinario${PlaceUtils.getIconSuffix(place)}`;
         } else {
-            return 'assets/marker-icons/store.png';
+            return `assets/marker-icons/tienda${PlaceUtils.getIconSuffix(place)}`;
+        }
+    }
+
+    private static getIconSuffix(place: Place) {
+        if (place.status === PLACES.STATUS.VERIFIED) {
+            return '_verificado.svg';
+        } else if (place.status === PLACES.STATUS.ACCEPTED) {
+            return '_aceptado.svg';
+        } else {
+            return '_icono.svg';
         }
     }
 

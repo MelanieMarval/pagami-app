@@ -55,12 +55,13 @@
                         <ion-icon *ngIf="selectedPlace.status === STATUS.VERIFIED" name="shield-checkmark" color="success"></ion-icon>
                     </ion-card-title>
                     <ion-card-subtitle class="card-subtitle">
-                        Abierto · {{messageDistance(selectedPlace.distance)}}
+                        <!--Abierto · {{messageDistance(selectedPlace.distance)}}-->
+                        {{messageDistance(selectedPlace.distance)}}
                     </ion-card-subtitle>
                 </ion-card-header>
             </ion-card>
         </ion-row>
-        <ion-row *ngFor="let place of nearPlaces;" [hidden]="selectedPlace && selectedPlace.id === place.id">
+        <ion-row *ngFor="let place of nearPlaces | filterPlace: searchText" [hidden]="selectedPlace && selectedPlace.id === place.id || place.type !== getName(selectedCategory)">
             <ion-card button color="pagami-surface" (click)="savePlaceToShowDetails(place)" class="card" routerLink="/app/shop">
                 <div class="card-img-contain">
                     <ion-skeleton-text
@@ -85,7 +86,8 @@
                         <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
                     </ion-card-title>
                     <ion-card-subtitle class="card-subtitle">
-                        Abierto · {{messageDistance(place.distance)}}
+                        <!--Abierto · {{messageDistance(place.distance)}}-->
+                        {{messageDistance(place.distance)}}
                     </ion-card-subtitle>
                 </ion-card-header>
             </ion-card>

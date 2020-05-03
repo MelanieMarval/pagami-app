@@ -32,7 +32,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     @ViewChild('fab', {static: false, read: ElementRef}) private ionFab: ElementRef;
 
-    placeTypeSelected = PLACES.TYPE.STORE;
+    placeTypeSelected = PLACES.TYPE.ALL;
     searching = false;
 
     fabAttached = true;
@@ -59,6 +59,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     findBusinessPlaces: Place[] = [];
     isSearching = false;
     isHiddenCloseToMe = false;
+    searchText: '';
 
     constructor(
         private router: Router,
@@ -152,6 +153,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             this.intentProvider.placeToClaim = place;
             this.router.navigate(['app/shop']);
         } else if (this.currentUrl === MAP_MODE.SEARCH) {
+            this.fabAttached = false;
             this.bottomDrawer.drawerState = DrawerState.Docked;
         }
     }
@@ -161,8 +163,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (this.fabAttached || this.isRegistering) {
             this.changeMapCenter(coors);
         }
-        if (this.currentUrl === MAP_MODE.SEARCH && this.intentProvider.lastUpdatedPoint) {
-            if (this.calculateDistance(coors, this.intentProvider.lastUpdatedPoint) > BASIC_UPDATE_METERS) {
+        if (this.currentUrl === MAP_MODE.SEARCH && this.intentProvider.lastUpdatedPoint && this.intentProvider.lastUpdatedPoint.latitude) {
+            if (this.calculateDistance(this.geoToLatLng(coors), this.geoToLatLng(this.intentProvider.lastUpdatedPoint)) > BASIC_UPDATE_METERS) {
                 this.getNearPlaces();
             }
         }
@@ -220,9 +222,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         const filter: PlaceFilter = {
             latitude: geo.latitude,
             longitude: geo.longitude,
-            radius: BASIC_RADIUS_KILOMETERS,
-            placeType: this.placeTypeSelected
+            radius: BASIC_RADIUS_KILOMETERS
         };
+        if (this.placeTypeSelected !== PLACES.TYPE.ALL) {
+            filter.placeType = this.placeTypeSelected;
+        }
         this.placesService.getNearby(filter).then((success: ApiResponse) => {
             if (success.passed) {
                 this.searchPlaces = success.response;
@@ -343,5 +347,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (this.mapReady && !this.searching) {
             this.getNearPlaces();
         }
+    }
+
+    onSearch(event) {
+        this.searchText = event.target.value.toLowerCase();
     }
 }

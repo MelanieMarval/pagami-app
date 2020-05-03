@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Place } from '../../../../core/api/places/place';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
@@ -18,6 +18,7 @@ export class NearbyPage implements OnInit {
     @Input() selectedPlace: Place = undefined;
     @Input() nearPlaces: Place[] = [];
     @Input() searching = false;
+    @Input() searchText = '';
 
     selectedCategory = 0;
     STATUS = PLACES.STATUS;
@@ -36,6 +37,10 @@ export class NearbyPage implements OnInit {
     }
 
     emitSelectedPlaceType() {
-        this.changePlaceType.emit(this.selectedCategory === 0 ? PLACES.TYPE.STORE : PLACES.TYPE.SERVICE);
+        this.changePlaceType.emit(/*this.selectedCategory === 0 ? PLACES.TYPE.STORE : PLACES.TYPE.SERVICE*/PLACES.TYPE.ALL);
+    }
+
+    getName(select: number) {
+        return this.selectedCategory === 0 ? PLACES.TYPE.STORE : PLACES.TYPE.SERVICE;
     }
 }

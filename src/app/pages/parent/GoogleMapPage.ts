@@ -1,14 +1,14 @@
-import {ElementRef, Inject, ViewChild} from '@angular/core';
-import {DOCUMENT} from '@angular/common';
-import {GeolocationService} from '../../core/geolocation/geolocation.service';
-import {PagamiGeo} from '../../core/geolocation/pagami.geo';
-import {Place} from '../../core/api/places/place';
+import { ElementRef, Inject, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { GeolocationService } from '../../core/geolocation/geolocation.service';
+import { PagamiGeo } from '../../core/geolocation/pagami.geo';
+import { Place } from '../../core/api/places/place';
 // @ts-ignore
 import GoogleMaps = google.maps;
 // @ts-ignore
 import LatLng = google.maps.LatLng;
-import {MAP_MODE} from '../../utils/Const';
-import {PlaceUtils} from '../../utils/place.utils';
+import { MAP_MODE } from '../../utils/Const';
+import { PlaceUtils } from '../../utils/place.utils';
 // // @ts-ignore
 // import LatLngLiteral = google.maps.LatLngLiteral;
 // // @ts-ignore
@@ -22,6 +22,7 @@ import {PlaceUtils} from '../../utils/place.utils';
 // // @ts-ignore
 // import LatLng = google.maps.LatLng;
 
+declare var MarkerClusterer: any;
 
 const removeDefaultMarkers = [
     {
@@ -165,7 +166,10 @@ export class GoogleMapPage {
             });
             this.nearbyPlaces.push(marker);
         });
+        this.setCluster();
     }
+
+
 
     offsetCenter(latlng, offsetx, offsety) {
         const scale = Math.pow(2, this.map.getZoom());
@@ -178,11 +182,6 @@ export class GoogleMapPage {
         );
         const newCenter = this.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
         this.map.setCenter(newCenter);
-    }
-
-    aleatorio(inferior, superior) {
-        const resAleatorio = Math.floor((Math.random() * (superior - inferior + 1)) + inferior);
-        return resAleatorio;
     }
 
     getDefaultOptions(): any {
@@ -224,7 +223,7 @@ export class GoogleMapPage {
     //     return GoogleMaps.geometry.spherical.computeDistanceBetween(front, to);
     // }
 
-    calculateDistance(point1: GoogleMaps.LatLng | PagamiGeo, point2: GoogleMaps.LatLng | PagamiGeo) {
+    calculateDistance(point1: GoogleMaps.LatLng, point2: GoogleMaps.LatLng) {
         // The radius of the planet earth in meters
         const R = 6378137;
         const dLat = degreesToRadians(point2.lat() - point1.lat());
@@ -249,5 +248,38 @@ export class GoogleMapPage {
 
     toLatLng(lat: number, lng: number): GoogleMaps.LatLng {
         return new GoogleMaps.LatLng(lat, lng);
+    }
+
+    geoToLatLng(geo: PagamiGeo): GoogleMaps.LatLng {
+        return new GoogleMaps.LatLng(geo.latitude, geo.longitude);
+    }
+
+    setCluster() {
+        const clusterStyles = [
+            {
+                textColor: 'white',
+                url: 'assets/map_cluster.svg',
+                height: 36,
+                width: 36
+            },
+            {
+                textColor: 'white',
+                url: 'assets/map_cluster.svg',
+                height: 36,
+                width: 36
+            },
+            {
+                textColor: 'white',
+                url: 'assets/map_cluster.svg',
+                height: 36,
+                width: 36
+            }
+        ];
+        const mcOptions = {
+            gridSize: 50,
+            styles: clusterStyles,
+            maxZoom: 15,
+        };
+        const markerCluster = new MarkerClusterer(this.map, this.nearbyPlaces, mcOptions);
     }
 }

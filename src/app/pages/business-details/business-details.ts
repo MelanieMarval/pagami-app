@@ -54,9 +54,11 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         if (this.place.type === PLACES.TYPE.SERVICE) {
             this.isService = true;
         }
+        this.dialCode = await this.placeService.getDialCode(this.place.location.acronym);
         if (!this.place.phone) {
-            this.dialCode = await this.placeService.getDialCode(this.place.location.acronym);
             this.place.phone = this.dialCode;
+        }
+        if (!this.place.whatsapp) {
             this.place.whatsapp = this.dialCode;
         }
     }
@@ -118,8 +120,8 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
             this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener minimo 8 digitos y menos de 15');
             return;
         }
-        if (!this.place.samePhone && business.whatsapp.trim().length > 0 && !ValidationUtils.validatePhone(business.whatsapp)) {
-            this.toast.messageErrorWithoutTabs('Su número de Whatsapp debe contener minimo 8 digitos y menos de 15');
+        if (!this.place.samePhone && business.whatsapp.trim().length > 0 && !ValidationUtils.validatePhone(business.whatsapp) && business.whatsapp !== this.dialCode) {
+            this.toast.messageErrorWithoutTabs('Su número de Whatsapp es incorrecto');
             return;
         }
         if (!this.previewUrl) {
@@ -148,6 +150,9 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
     navigateToSelectIcon() {
         this.saving = true;
+        if (this.place.whatsapp === this.dialCode) {
+            this.place.whatsapp = undefined;
+        }
         this.storageInstance.placeToEdit = this.place;
         this.route.navigate(['/app/business-details/select-icon']);
         this.saving = false;

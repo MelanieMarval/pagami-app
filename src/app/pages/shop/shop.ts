@@ -4,6 +4,7 @@ import { PLACES, CLAIMS } from '../../utils/Const';
 import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { Router } from '@angular/router';
 import { AlertProvider } from '../../providers/alert.provider';
+import { BrowserProvider } from '../../providers/browser.provider';
 
 
 @Component({
@@ -40,9 +41,11 @@ export class ShopPage implements OnInit {
         whatsapp: '024147848885'
     };
     CLAIMS = CLAIMS.STATUS;
+    browser = this.browserProvider;
 
     constructor(private intentProvider: UserIntentProvider,
                 private alert: AlertProvider,
+                private browserProvider: BrowserProvider,
                 private router: Router) {
     }
 

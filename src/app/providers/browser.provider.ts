@@ -11,6 +11,9 @@ export class BrowserProvider {
     constructor(private toastProvider: ToastProvider) { }
 
     open(url: string) {
+        if (!url.includes('http')) {
+            url = `http://${url}`;
+        }
         Browser.open({ url })
             .catch(() => this.toastProvider.messageErrorWithoutTabs('Esta pagina web es incorrecta'));
     }

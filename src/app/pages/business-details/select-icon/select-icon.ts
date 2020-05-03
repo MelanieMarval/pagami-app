@@ -29,7 +29,7 @@ export class SelectIconPage implements OnInit {
         private http: HttpClient,
         private storageService: StorageProvider,
         private storageInstance: UserIntentProvider,
-        private placesService: PlacesService,
+        private placesService: PlacesService
     ) {
     }
 
@@ -37,7 +37,9 @@ export class SelectIconPage implements OnInit {
         this.place = this.storageInstance.placeToEdit;
         for (const icon of CATEGORY_ICONS) {
             if (icon.type === this.place.type) {
-                this.listIcons.push(icon);
+                if (icon.subCategory !== PLACES.CATEGORY.PAGAMI) {
+                    this.listIcons.push(icon);
+                }
             }
         }
         this.selectedIcon = this.place.category ? this.listIcons.findIndex(icon => icon.route === this.place.category.icon) : 0;

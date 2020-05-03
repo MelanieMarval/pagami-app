@@ -30,9 +30,11 @@ export const USER = {
 export const PLACES = {
     TYPE: {
         STORE: 'STORE',
-        SERVICE: 'SERVICE'
+        SERVICE: 'SERVICE',
+        ALL: 'ALL'
     },
     CATEGORY: {
+        PAGAMI: 0,
         FOOD: 1,
         SHOP: 2,
         HOTELERY: 3,

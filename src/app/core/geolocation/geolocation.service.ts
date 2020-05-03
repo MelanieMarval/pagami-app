@@ -5,7 +5,11 @@ import GoogleMaps = google.maps;
 import { StorageProvider } from '../../providers/storage.provider';
 import { mapToGeoPoint, PagamiGeo } from './pagami.geo';
 
-const defaultCoors: PagamiGeo = new PagamiGeo(10.4880104, -66.8791885, 30);
+const defaultCoors = {
+    latitude: 10.4880104,
+    longitude: -66.8791885,
+    accuracy: 30
+};
 
 @Injectable({
     providedIn: 'root'
@@ -42,8 +46,8 @@ export class GeolocationService {
 
     private setCoors(coors: PagamiGeo) {
         this.coords = coors;
-        this.storageService.setCurrentCoors(coors);
-        this.locationChanged.emit(this.coords);
+        this.storageService.setCurrentCoors(coors)
+            .then(() => this.locationChanged.emit(this.coords));
     }
 
     enableLocation() {

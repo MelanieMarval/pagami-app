@@ -1,6 +1,7 @@
 import { PLACES } from './Const';
 
 export const CATEGORY_ICONS = [
+    { name: 'Pagami',                   route: 'pagami',                    type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.PAGAMI},
     { name: 'Tienda',                   route: 'tienda',                    type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.STORE},
     { name: 'Abasto',                   route: 'abasto',                    type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.STORE},
     { name: 'Barbería y Peluquería',    route: 'barberia_y_peluqueria',     type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.BEAUTY},
@@ -16,7 +17,8 @@ export const CATEGORY_ICONS = [
     { name: 'Heladería',                route: 'heladeria',                 type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
     { name: 'Hotel',                    route: 'hotel',                     type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.HOTELERY},
     { name: 'Negocio de Bebidas',       route: 'negocio_de_bebidas',        type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
-    { name: 'Odontología',              route: 'odontologia',               type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.MEDICINE},
+    { name: 'Negocio Temporal',         route: 'negocio_temporal',          type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
+    { name: 'Odontología',              route: 'odontologia',               type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.STORE},
     { name: 'Panadería',                route: 'panaderia',                 type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
     { name: 'Perfumería',               route: 'perfumeria',                type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Piscina',                  route: 'piscina',                   type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SPORT},
@@ -28,6 +30,7 @@ export const CATEGORY_ICONS = [
     { name: 'Servicio Técnico',         route: 'servicio_tecnico',          type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
     { name: 'Servicios Medicos',        route: 'servicios_medicos',         type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.MEDICINE},
     { name: 'Taller',                   route: 'taller',                    type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
+    { name: 'Taxi',                     route: 'taxi',                      type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
     { name: 'Tienda de Deportes',       route: 'tienda_deporte',            type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Tienda de Motos',          route: 'tienda_motos',              type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Tienda de Pinturas',       route: 'tienda_pinturas',           type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
