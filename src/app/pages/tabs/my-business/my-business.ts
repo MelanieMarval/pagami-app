@@ -14,6 +14,7 @@ import { Place } from '../../../core/api/places/place';
 
 import { InputFilePage } from '../../parent/InputFilePage';
 import { ValidationUtils } from '../../../utils/validation.utils';
+import { FireStorage } from '../../../core/fire-storage/fire.storage';
 
 @Component({
     selector: 'app-my-business',
@@ -39,6 +40,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         private intentProvider: UserIntentProvider,
         private claimService: ClaimService,
         private placesService: PlacesService,
+        private fireStorage: FireStorage,
         private storageService: StorageProvider,
         protected geolocationService: GeolocationService
     ) {
@@ -92,27 +94,51 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             });
     }
 
-    async saveBusiness() {
-        if (!ValidationUtils.validateEmpty(this.place, ['registeredBy'])) {
-            await this.toast.messageErrorAboveButton('Todos los campos deben estar llenos para poder guardar');
+    validateBusiness() {
+        if (!ValidationUtils.validateEmpty(this.place, ['website', 'whatsapp'])) {
+            this.toast.messageErrorAboveButton('Todos los campos deben estar llenos para poder guardar');
             return;
         }
         if (!ValidationUtils.validatePhone(this.place.phone)) {
-            await this.toast.messageErrorAboveButton('Su número de teléfono debe contener entre 8 y 15 digitos');
+            this.toast.messageErrorAboveButton('Su número de teléfono debe contener entre 8 y 15 digitos');
             return;
         }
+        if (this.previewUrl !== this.place.photoUrl) {
+            this.saveImage();
+        } else {
+            this.saveBusiness();
+        }
+    }
+
+    async saveImage() {
+        this.updating = true;
+        const success = await this.fireStorage.saveBusinessImage(this.fileData);
+        if (success) {
+            this.place.photoUrl = success;
+            this.previewUrl = success;
+            this.saveBusiness();
+        } else {
+            this.toast.messageErrorWithoutTabs('No se ha podido guardar su imagen. Intente de nuevo!');
+            this.updating = false;
+        }
+    }
+
+    saveBusiness() {
         this.updating = true;
         this.placesService.update(this.place)
-            .then(async success => {
+            .then( success => {
                 if (success.passed === true) {
                     this.storageService.setBusinessVerifiedByUser(success.response);
                     this.isEditing = false;
                     this.updating = false;
-                    await this.toast.messageSuccessWithoutTabs('Su empresa ha sido actualizada exitosamente!');
+                    this.toast.messageSuccessWithoutTabs('Su empresa ha sido actualizada exitosamente!');
                 } else {
                     this.updating = false;
-                    await this.toast.messageErrorWithoutTabs('No se ha podido actualizar su informacion. Intente de nuevo!');
+                    this.toast.messageErrorWithoutTabs('Puede que este experimentando problemas de conexión. Intente de nuevo!');
                 }
+            }).catch(error => {
+                this.updating = false;
+                this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al procesar su solicitud. Intente mas tarde');
             });
     }
 

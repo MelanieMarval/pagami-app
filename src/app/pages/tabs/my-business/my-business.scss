@@ -26,7 +26,7 @@ ion-col.md {
 
         ion-item {
             --background: transparent;
-            height: 40px;
+            height: 35px;
             ion-icon {
                 margin-right: 4px;
                 color: #FFF
@@ -42,21 +42,24 @@ ion-col.md {
         ion-text {
             font-size: 20px;
             margin-left: 15px;
+            display: inline-block;
         }
 
         .info-title {
-            position: relative;
-            max-width: 184px;
-            ion-fab {
-                //right: 15px;
-                top: 18px;
-                right: 20px;
-                ion-fab-button {
-                    width: 24px;
-                    height: 24px;
-                    ion-icon {
-                        width: 14px;
-                    }
+            display: flex;
+            align-items: center;
+            .icon-verified {
+                position: relative;
+                top: 2px;
+            }
+            .button-edit {
+                --border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                margin-left: 6px;
+                margin-top: 3px;
+                ion-icon {
+                    font-size: 16px;
                 }
             }
         }
@@ -64,6 +67,7 @@ ion-col.md {
             font-size: 12px;
             ion-icon {
                 width: 10px;
+                margin-bottom: 10px;
             }
         }
 

@@ -8,7 +8,7 @@ import { Place, PlaceStats } from '../../../../core/api/places/place';
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
 // Utils
-import { PLACES } from '../../../../utils/Const';
+import { PLACES, STATUS } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
 
 @Component({
@@ -93,7 +93,19 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
 
     goToDetails(register: Place): void {
         this.intentProvider.placeToView = register;
-        this.router.navigate(['admin/tabs/records/claim/details']);
+        this.router.navigate(['admin/tabs/records/details']);
     }
 
+    getStatusSpanish(status: string) {
+        switch (status) {
+            case this.STATUS.VERIFIED:
+                return 'ACTIVO';
+            case this.STATUS.CLAIM:
+                return 'ESPERANDO VERIFICACION';
+            case this.STATUS.ACCEPTED:
+                return 'NO RECLAMADO';
+            case this.STATUS.DISABLED:
+                return 'PLAN VENCIDO';
+        }
+    }
 }

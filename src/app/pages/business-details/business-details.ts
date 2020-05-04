@@ -120,7 +120,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
             this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener minimo 8 digitos y menos de 15');
             return;
         }
-        if (!this.place.samePhone && business.whatsapp.trim().length > 0 && !ValidationUtils.validatePhone(business.whatsapp) && business.whatsapp !== this.dialCode) {
+        if (!this.place.samePhone && business.whatsapp.length > 15 && business.whatsapp !== this.dialCode) {
             this.toast.messageErrorWithoutTabs('Su número de Whatsapp es incorrecto');
             return;
         }

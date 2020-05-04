@@ -125,7 +125,8 @@ export class PlaceUtils {
     }
 
     static getSortData(registers): any[] {
-        return registers.sort((a, b) => new Date(b.lastUpdate).getTime() as any - new Date(a.lastUpdate).getTime() as any);
+        // console.log(registers.sort((a, b) => b.lastUpdate - a.lastUpdate));
+        return registers.sort((a, b) => new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime());
     }
 
 }

@@ -48,14 +48,17 @@
         </ion-list>
 
         <ion-list class="inputs-container --without-mt">
-            <ion-item color="pagami-surface" *ngIf="!place.samePhone">
+            <ion-item color="pagami-surface" *ngIf="!place.samePhone" class="mb-0">
                 <ion-label position="floating">Número Telefónico de WhatsApp</ion-label>
                 <ion-input type="tel" name="whatsapp" [(ngModel)]="place.whatsapp" maxlength="15"></ion-input>
                 <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
             </ion-item>
+            <div class="info-text">
+                <small>*Opcional</small>
+            </div>
             <ion-item color="pagami-surface" class="mb-0">
                 <ion-label position="floating">Página Web</ion-label>
-                <ion-input type="text" name="website" [(ngModel)]="place.website"></ion-input>
+                <ion-input type="url" name="website" [(ngModel)]="place.website"></ion-input>
                 <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>
             </ion-item>
             <div class="info-text">
