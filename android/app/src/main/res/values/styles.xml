@@ -17,6 +17,6 @@
     </style>
 
     <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
-        <item name="android:background">@color/splashColor</item>
+<!--  ocaciones un error en el curso en los inputs  <item name="android:background">@color/splashColor</item>-->
     </style>
 </resources>
