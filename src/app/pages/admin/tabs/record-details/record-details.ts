@@ -61,7 +61,7 @@ export class RecordDetailsPage implements OnInit {
                     this.saved = true;
                     this.intentProvider.placeToAccept = undefined;
                     this.intentProvider.returnPlaceToAccept = success.response;
-                    this.toast.messageSuccessWithoutTabs('Aceptacion exitosa');
+                    this.toast.messageSuccessWithoutTabs('La empresa ha sido aceptada con exito');
                 } else {
                     this.toast.messageErrorAboveButton('Aceptacion Fallida. Intente nuevamente!');
                 }
@@ -82,9 +82,9 @@ export class RecordDetailsPage implements OnInit {
                     this.saved = true;
                     this.intentProvider.placeToAccept = undefined;
                     this.intentProvider.returnPlaceToAccept = success.response;
-                    this.toast.messageSuccessWithoutTabs('Mensaje enviado exitosamente');
+                    this.toast.messageSuccessWithoutTabs('Esta empresa ha sido rechazada exitosamente');
                 } else {
-                    this.toast.messageErrorAboveButton('No se ha podido enviar su mensaje. Intente nuevamente!');
+                    this.toast.messageErrorAboveButton('No se ha rechazar la empresa. Intente nuevamente!');
                 }
             });
 

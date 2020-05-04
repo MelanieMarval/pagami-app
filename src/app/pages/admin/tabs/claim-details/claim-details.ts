@@ -58,7 +58,7 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
                     this.saved = true;
                     this.intentProvider.claimToVerified = undefined;
                     this.intentProvider.returnClaimToVerified = success.response;
-                    this.toast.messageSuccessWithoutTabs('Verificacion exitosa');
+                    this.toast.messageSuccessWithoutTabs('La empresa ha sido verificada con exito');
                 } else {
                     this.toast.messageErrorAboveButton('Verificacion Fallida. Intente nuevamente!');
                 }
@@ -99,11 +99,11 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
                 this.rejecting = false;
                 if (success.passed) {
                     this.saved = true;
-                    this.intentProvider.placeToAccept = undefined;
-                    this.intentProvider.returnPlaceToAccept = success.response;
-                    this.toast.messageSuccessWithoutTabs('Mensaje enviado exitosamente');
+                    this.intentProvider.claimToVerified = undefined;
+                    this.intentProvider.returnClaimToVerified = success.response;
+                    this.toast.messageSuccessWithoutTabs('Esta empresa ha sido rechazada exitosamente');
                 } else {
-                    this.toast.messageErrorAboveButton('No se ha podido enviar su mensaje. Intente nuevamente!');
+                    this.toast.messageErrorAboveButton('No se ha rechazar la empresa. Intente nuevamente!');
                 }
             });
     }

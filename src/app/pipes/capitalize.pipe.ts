@@ -11,7 +11,9 @@ export class CapitalizePipe implements PipeTransform {
 
         if (all) {
             for (let i = 0; i < names.length; i++) {
-                names[i] = names[i][0].toUpperCase() + names[i].substr(1);
+                if (names[i].trim() !== '' && names[i].length > 1) {
+                    names[i] = names[i][0].toUpperCase() + names[i].substr(1);
+                }
             }
         } else {
             names[0] = names[0][0].toUpperCase() + names[0].substr(1);

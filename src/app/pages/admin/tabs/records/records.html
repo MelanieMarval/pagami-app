@@ -56,7 +56,7 @@
                                 </ion-avatar>
                             </ion-col>
                             <ion-col size="10">
-                                <ion-card-title>{{record.name}}</ion-card-title>
+                                <ion-card-title>{{record.name | capitalize}}</ion-card-title>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>
@@ -78,7 +78,7 @@
     <ion-list class="ion-padding" [ngClass]="empty.verified ? 'h-100' : ''">
         <app-skeleton-records *ngIf="loading.verified"></app-skeleton-records>
 
-        <div *ngIf="!loading.verified" class="h-100">
+        <div *ngIf="!loading.verified && !error" class="h-100">
             <ion-item-group class="ion-padding-bottom" *ngIf="showNotification.verified">
                 <ion-item button (click)="showNotification.verified = false" detailIcon="" lines="none"
                           color="pagami-surface" class="notification">
@@ -115,7 +115,7 @@
                                 </ion-avatar>
                             </ion-col>
                             <ion-col size="10">
-                                <ion-card-title>{{record.placeName}}</ion-card-title>
+                                <ion-card-title>{{record.placeName | capitalize}}</ion-card-title>
                             </ion-col>
                         </ion-row>
                     </ion-card-content>

@@ -47,13 +47,14 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
             });
     }
 
-    async setPlace(place) {
-        this.user.location.address = await place.description;
-        this.user.location.country = await place.terms.slice(-1)[0].value;
+    setPlace(place) {
+        console.log(place);
+        this.user.location.address = place.description;
+        this.user.location.country = place.terms.slice(-1)[0].value;
         this.places = [];
     }
 
-    async registerUser() {
+    registerUser() {
         const user = this.user;
         if (!user.location || !user.phone) {
             return this.toast.messageErrorWithoutTabs('No puede dejar datos vacios');
@@ -61,9 +62,6 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
         if (!ValidationUtils.validateEmpty(user)) {
             return this.toast.messageErrorWithoutTabs('Todos su información debe estar rellenada');
         }
-        // if (user.name.trim() === '' || user.lastname.trim() === '' || user.location.trim() === '' || user.phone.trim() === '' || user.email.trim() === '') {
-        //     return this.toast.messageErrorWithoutTabs('Todos su información debe estar rellenada');
-        // }
         if (!ValidationUtils.validatePhone(user.phone)) {
             return this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener entre 8 y 15 dígitos', 2500);
         }
@@ -71,7 +69,7 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
         user.fillOrders = true;
         user.notifications = true;
 
-        await this.getBase64Image(user.photoUrl, async (base64image) => {
+        this.getBase64Image(user.photoUrl, async (base64image) => {
             const success = await this.fireStorage.saveProfileImage(base64image);
             if (success) {
                 this.user.photoUrl = success;

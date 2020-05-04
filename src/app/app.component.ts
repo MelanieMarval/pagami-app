@@ -34,7 +34,7 @@ export class AppComponent {
             const user = await this.storageService.getPagamiUser();
             // const lastUserVerification = await this.storageService.getLastUserVerification();
             if (isLogged) {
-                await this.verifyUser(user);
+                // await this.verifyUser(user);
             } else {
                 await this.openTutorial();
             }

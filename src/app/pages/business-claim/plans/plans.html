@@ -19,6 +19,7 @@
         <ion-item-group>
             <ion-card class="card-plan"
                       *ngFor="let plan of plans; let i = index"
+                      [disabled]="plan.amount !== 0"
                       (click)="this.selectedPlan = plan.id"
                       [button]="plan.amount === 0"
                       [color]="this.selectedPlan === plan.id ? 'pagami' : 'pagami-surface'"

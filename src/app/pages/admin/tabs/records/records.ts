@@ -64,8 +64,10 @@ export class RecordsPage implements OnInit, AfterViewChecked {
         if (this.intentProvider.showNotification) {
             this.intentProvider.showNotification = false;
         }
-        this.intentProvider.placeToView = undefined;
-        this.intentProvider.userToView = undefined;
+        if (this.intentProvider.placeToView || this.intentProvider.userToView) {
+            this.intentProvider.placeToView = undefined;
+            this.intentProvider.userToView = undefined;
+        }
         // Cuando vuelve luego de aceptar o verificar un place lo elimina de la lista
         if (this.intentProvider.returnPlaceToAccept) {
             const index = this.recordsToBeAccepted.indexOf(this.recordsToBeAccepted
