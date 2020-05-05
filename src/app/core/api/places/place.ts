@@ -12,13 +12,13 @@ export interface Place {
       subCategory?: number;
     };
     location?: {
-        address?: string        // escrito por el usuario
-        addressLine?: string,   // extraido de google
-        postalCode?: string,
-        acronym?: string,
-        country?: string,
-        state?: string,
-        city?: string,
+        address?: string;        // escrito por el usuario
+        addressLine?: string;   // extraido de google
+        postalCode?: string;
+        acronym?: string;
+        country?: string;
+        state?: string;
+        city?: string;
     };
     phone?: string;
     samePhone?: boolean;
