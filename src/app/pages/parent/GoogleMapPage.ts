@@ -135,6 +135,42 @@ export class GoogleMapPage {
         }
     }
 
+    addMarkerNewPlace() {
+        const map = this.map;
+        if (this.currentPositionMarker) {
+            const latLng = this.currentPositionMarker.getPosition();
+            const icon = {
+                url: 'assets/marker-icons/pagami_icono.svg',
+                scaledSize: new this.googleMaps.Size(30, 32)
+            };
+            const newPlaceMarker = new this.googleMaps.Marker({
+                latLng,
+                title: 'Nuevo registro',
+                draggable: true,
+                icon,
+                map
+            });
+            newPlaceMarker.setPosition(latLng);
+            console.log('adding newPlaceMarker');
+            // var lastPosition = latLng;
+            newPlaceMarker.addListener('drag', event => {
+                // var position = newPlaceMarker.getPosition();
+                // const bounds = map.getBounds();
+                // bounds.contains(position) ? lastPosition = position : newPlaceMarker.setPosition(lastPosition);
+                console.log(this.arePointsNear(newPlaceMarker.getPosition(), this.currentPositionMarker.getPosition(), 1));
+            });
+            // newPlaceMarker.addListener()
+        }
+    }
+
+    arePointsNear(checkPoint: LatLng, centerPoint: LatLng, km: number) {
+        const ky = 40000 / 360;
+        const kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
+        const dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
+        const dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
+        return Math.sqrt(dx * dx + dy * dy) <= km;
+    }
+
     onClickPlace(place: Place) {
     }
 
@@ -168,8 +204,6 @@ export class GoogleMapPage {
         });
         this.setCluster();
     }
-
-
 
     offsetCenter(latlng, offsetx, offsety) {
         const scale = Math.pow(2, this.map.getZoom());

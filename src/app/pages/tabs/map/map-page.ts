@@ -130,6 +130,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.placeToSave = undefined;
         this.map.panTo(this.currentPositionMarker.getPosition());
         this.map.setZoom(20);
+        this.addMarkerNewPlace();
     }
 
     navigateToModeFindMyBusiness() {
