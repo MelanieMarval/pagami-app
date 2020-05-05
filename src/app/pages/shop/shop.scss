@@ -7,6 +7,7 @@ ion-col.md {
     &--info {
         position: absolute;
         bottom: 0;
+        width: 100%;
         .info-category {
             font-size: 13px;
             text-transform: uppercase;
@@ -34,8 +35,13 @@ ion-col.md {
         .info-rating {
             font-size: 12px;
             --background: transparent;
+            width: 100%;
             height: 40px;
 
+            .label-flex {
+                display: flex;
+                justify-content: space-between;
+            }
             ion-icon {
                 width: 10px;
                 margin-right: 4px;
