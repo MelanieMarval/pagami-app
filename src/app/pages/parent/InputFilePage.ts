@@ -1,6 +1,7 @@
 import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { IonContent } from '@ionic/angular';
+import { CompressImageProvider } from '../../providers/compress-image.provider';
 
 export class InputFilePage implements AfterViewInit {
 
@@ -48,24 +49,35 @@ export class InputFilePage implements AfterViewInit {
         }
     }
 
-    private preview() {
-        const mimeType = this.fileData.type;
-        if (mimeType.match(/image\/*/) == null) {
-            return;
-        }
 
+    async chargeImage(event: any) {
+        const imageBlob = await CompressImageProvider.handleImageUpload(event);
         const reader = new FileReader();
-        reader.readAsDataURL(this.fileData);
-        // tslint:disable-next-line:variable-name
-        reader.onload = (_event) => {
+        reader.readAsDataURL(imageBlob);
+        reader.onloadend = () => {
+            this.fileData = imageBlob;
             this.previewUrl = reader.result;
         };
-
     }
 
-    fileProgress(fileInput: any) {
-        this.fileData = fileInput.target.files[0] as File;
-        this.preview();
-    }
+    // preview() {
+    //     const mimeType = this.fileData.type;
+    //     if (mimeType.match(/image\/*/) == null) {
+    //         return;
+    //     }
+    //
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(this.fileData);
+    //     // tslint:disable-next-line:variable-name
+    //     reader.onload = (_event) => {
+    //         this.previewUrl = reader.result;
+    //     };
+    //
+    // }
+    //
+    // fileProgress(fileInput: any) {
+    //     this.fileData = fileInput.target.files[0] as File;
+    //     this.preview();
+    // }
 
 }

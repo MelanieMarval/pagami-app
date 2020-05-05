@@ -96,16 +96,21 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
         this.router.navigate(['admin/tabs/records/details']);
     }
 
-    getStatusSpanish(status: string) {
-        switch (status) {
+    getStatusSpanish(register: Place) {
+        switch (register.status) {
             case this.STATUS.VERIFIED:
                 return 'ACTIVO';
-            case this.STATUS.CLAIM:
-                return 'ESPERANDO VERIFICACION';
-            case this.STATUS.ACCEPTED:
-                return 'NO RECLAMADO';
             case this.STATUS.DISABLED:
                 return 'PLAN VENCIDO';
+            case this.STATUS.ACCEPTED:
+                if (!register.claim) {
+                    return 'NO RECLAMADO';
+                } else {
+                    if (register.claim.status === this.STATUS.WAITING) {
+                        return 'ESPERANDO VERIFICACION';
+                    }
+                }
+                break;
         }
     }
 }

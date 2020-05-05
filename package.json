@@ -31,6 +31,7 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/storage": "^2.2.0",
     "@types/hammerjs": "^2.0.36",
+    "browser-image-compression": "^1.0.9",
     "cordova-plugin-geolocation": "^4.0.2",
     "core-js": "^2.5.4",
     "firebase": "^7.12.0",
