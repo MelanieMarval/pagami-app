@@ -145,13 +145,15 @@ export class GoogleMapPage {
                 url: 'assets/marker-icons/pagami_dark_icono.svg',
                 scaledSize: new this.googleMaps.Size(30, 32)
             };
+            if (this.newPlaceMarker) {
+                this.newPlaceMarker.setMap(null);
+            }
             this.newPlaceMarker = new this.googleMaps.Marker({
                 latLng,
                 draggable: true,
                 icon,
                 map
             });
-            // this.currentPositionMarker.setMap(null);
             this.newPlaceMarker.setPosition(latLng);
             this.lastPosition = latLng;
             this.newPlaceMarker.addListener('drag', event => {
