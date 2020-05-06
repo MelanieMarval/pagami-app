@@ -7,6 +7,7 @@ ion-tab-bar {
     .tab-button {
         --color: #a0aec0;
         --color-selected: #fff;
+        --background-focused: var(--background);
 
         &__icon {
             margin-top: 5px;

@@ -34,6 +34,13 @@
 /* Cards and lists containers */
 @import "assets/css/cards";
 
+//input:-internal-autofill-selected {
+//    -webkit-appearance: menulist-button;
+//    background-color: rgb(232, 240, 254) !important;
+//    background-image: none !important;
+//    color: -internal-light-dark-color(black, white) !important;
+//}
+
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button {
     padding: 17px;

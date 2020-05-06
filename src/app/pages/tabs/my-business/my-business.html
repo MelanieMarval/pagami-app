@@ -79,7 +79,7 @@
     <ion-list class="inputs-container">
         <ion-item color="pagami-surface">
             <ion-label position="floating">WhatsApp</ion-label>
-            <ion-input type="text" readonly [value]="place.samePhone ? place.phone : place.whatsapp"></ion-input>
+            <ion-input type="tel" readonly [value]="place.samePhone ? place.phone : place.whatsapp"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
@@ -154,7 +154,7 @@
         </ion-item>
         <ion-item color="pagami-surface"  class="mb-0">
             <ion-label position="floating">WhatsApp</ion-label>
-            <ion-input type="text" name="whatsapp" [(ngModel)]="place.samePhone ? place.phone : place.whatsapp" maxlength="15" [readonly]="updating"></ion-input>
+            <ion-input type="tel" name="whatsapp" [(ngModel)]="place.samePhone ? place.phone : place.whatsapp" maxlength="15" [readonly]="updating"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
         </ion-item>
             <div class="info-text">
