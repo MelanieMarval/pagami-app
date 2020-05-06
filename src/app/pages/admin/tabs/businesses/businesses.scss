@@ -13,6 +13,13 @@
     }
 }
 
+.status {
+    font-size: 11px;
+    &--rejected, &--accepted {
+        position: relative;
+        bottom: -1.2px;
+    }
+}
 
 
 

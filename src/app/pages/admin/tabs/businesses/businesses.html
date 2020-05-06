@@ -47,15 +47,13 @@
                         </ion-col>
                         <ion-col size="10" class="">
                             <ion-card-subtitle>
-                                {{getStatusSpanish(register.status)}}
+                                {{getStatusSpanish(register)}}
                             </ion-card-subtitle>
                             <ion-card-title>
                                 {{register.name | capitalize}}
-                                <span [ngSwitch]="register.status">
-                                    <ion-icon *ngSwitchCase="STATUS.VERIFIED" name="shield-checkmark" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
-                                    <ion-icon *ngSwitchCase="STATUS.REJECTED" name="close-circle" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
-                                    <ion-icon *ngSwitchCase="STATUS.ACCEPTED" name="time-outline" [classList]="['status status--'+register.status | lowercase]"></ion-icon>
-                                </span>
+                                <ion-icon *ngIf="register.status === STATUS.VERIFIED || register.status === STATUS.DISABLED" name="shield-checkmark" class="status status--verified"></ion-icon>
+                                <ion-icon *ngIf="register.status === STATUS.ACCEPTED && !register.claim" name="close-circle" class="status status--rejected"></ion-icon>
+                                <ion-icon *ngIf="register.status === STATUS.ACCEPTED && register?.claim?.status === STATUS.WAITING" name="time-outline" class="status status--accepted"></ion-icon>
                             </ion-card-title>
                             <ion-card-subtitle>
                                 Se unio el {{ register.createTime | date:'d MMMM'}} de {{ register.createTime | date:'y'}}

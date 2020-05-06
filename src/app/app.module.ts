@@ -26,7 +26,7 @@ import { UserIntentProvider } from './providers/user-intent.provider';
 import { ToastProvider } from './providers/toast.provider';
 import { AdminIntentProvider } from './providers/admin-intent.provider';
 import { BrowserProvider } from './providers/browser.provider';
-
+import { CompressImageProvider } from './providers/compress-image.provider';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage],
@@ -54,6 +54,7 @@ import { BrowserProvider } from './providers/browser.provider';
         UserIntentProvider,
         AdminIntentProvider,
         BrowserProvider,
+        CompressImageProvider,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     exports: [],
