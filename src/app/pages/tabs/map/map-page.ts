@@ -119,6 +119,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (this.storageInstance.showingPlaceDetails) {
             this.storageInstance.showingPlaceDetails = false;
         }
+        if (this.newPlaceMarker) {
+            this.newPlaceMarker.setMap(null);
+        }
     }
 
     navigateToModeRegister() {
@@ -131,6 +134,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.map.panTo(this.currentPositionMarker.getPosition());
         this.map.setZoom(20);
         this.addMarkerNewPlace();
+        this.toast.messageSuccessAboveButton('Puedes mover un poco el marcador si lo necesitas', 3000);
     }
 
     navigateToModeFindMyBusiness() {
@@ -275,12 +279,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     async saveLocation() {
         this.saving = true;
-        const coors = await this.geolocationService.getCurrentLocation();
-        const location = await this.getAddress(coors.latitude, coors.longitude);
+        const latLng = this.newPlaceMarker.getPosition();
+        const location = await this.getAddress(latLng.lat(), latLng.lng());
         const place: Place = {
-            latitude: coors.latitude,
-            longitude: coors.longitude,
-            accuracy: coors.accuracy,
+            latitude: latLng.lat(),
+            longitude: latLng.lng(),
             location: {
                 addressLine: location.addressLine,
                 postalCode: location.postalCode,

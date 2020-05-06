@@ -51,6 +51,8 @@ export class GoogleMapPage {
     accuracy: number;
     currentUrl: string;
     mapReady = false;
+    newPlaceMarker: any;
+    lastPosition: any;
 
     constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService
     ) {
@@ -140,35 +142,33 @@ export class GoogleMapPage {
         if (this.currentPositionMarker) {
             const latLng = this.currentPositionMarker.getPosition();
             const icon = {
-                url: 'assets/marker-icons/pagami_icono.svg',
+                url: 'assets/marker-icons/pagami_dark_icono.svg',
                 scaledSize: new this.googleMaps.Size(30, 32)
             };
-            const newPlaceMarker = new this.googleMaps.Marker({
+            this.newPlaceMarker = new this.googleMaps.Marker({
                 latLng,
-                title: 'Nuevo registro',
                 draggable: true,
                 icon,
                 map
             });
-            newPlaceMarker.setPosition(latLng);
-            console.log('adding newPlaceMarker');
-            // var lastPosition = latLng;
-            newPlaceMarker.addListener('drag', event => {
-                // var position = newPlaceMarker.getPosition();
-                // const bounds = map.getBounds();
-                // bounds.contains(position) ? lastPosition = position : newPlaceMarker.setPosition(lastPosition);
-                console.log(this.arePointsNear(newPlaceMarker.getPosition(), this.currentPositionMarker.getPosition(), 1));
+            // this.currentPositionMarker.setMap(null);
+            this.newPlaceMarker.setPosition(latLng);
+            this.lastPosition = latLng;
+            this.newPlaceMarker.addListener('drag', event => {
+                this.onDragPlaceEvents();
             });
-            // newPlaceMarker.addListener()
+            this.newPlaceMarker.addListener('dragend', event => {
+                this.onDragPlaceEvents();
+            });
         }
     }
 
-    arePointsNear(checkPoint: LatLng, centerPoint: LatLng, km: number) {
-        const ky = 40000 / 360;
-        const kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
-        const dx = Math.abs(centerPoint.lng - checkPoint.lng) * kx;
-        const dy = Math.abs(centerPoint.lat - checkPoint.lat) * ky;
-        return Math.sqrt(dx * dx + dy * dy) <= km;
+    onDragPlaceEvents() {
+        if (this.calculateDistance(this.newPlaceMarker.getPosition(), this.currentPositionMarker.getPosition()) > 30) {
+            this.newPlaceMarker.setPosition(this.lastPosition);
+        } else {
+            this.lastPosition = this.newPlaceMarker.getPosition();
+        }
     }
 
     onClickPlace(place: Place) {
