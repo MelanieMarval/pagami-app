@@ -16,7 +16,8 @@
         </ion-item-group>
 
         <ion-item-group>
-            <ion-item button routerLink="/app/tabs/wallet/activity" detailIcon="" lines="none" class="item-activity">
+            <ion-item button routerLink="/app/tabs/wallet/activity"
+                      detailIcon="" lines="none" class="item-activity" [ngClass]="{'status-border status-border--accepted animated flash': hasNotification}">
                 <ion-icon slot="end" name="arrow-forward"></ion-icon>
                 <ion-label>Actividad</ion-label>
             </ion-item>

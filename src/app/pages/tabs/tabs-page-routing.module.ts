@@ -8,6 +8,11 @@ const routes: Routes = [
         component: TabsPage,
         children: [
             {
+                path: '',
+                redirectTo: 'map',
+                pathMatch: 'full'
+            },
+            {
                 path: 'map',
                 loadChildren: () => import('./map/map.module').then(m => m.MapModule)
             },
@@ -23,11 +28,6 @@ const routes: Routes = [
                 path: 'wallet/activity',
                 loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
             },
-            {
-                path: '**',
-                redirectTo: 'map/search',
-                pathMatch: 'full'
-            }
         ],
     }
 ];

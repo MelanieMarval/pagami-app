@@ -13,6 +13,7 @@ import { PLACES } from '../../../utils/Const';
 import { PlaceUtils } from '../../../utils/place.utils';
 import { User } from '../../../core/api/users/user';
 import { AlertProvider } from '../../../providers/alert.provider';
+import { NotificationsProvider } from '../../../providers/notifications.provider';
 
 @Component({
     selector: 'app-activity',
@@ -24,6 +25,7 @@ export class ActivityPage implements OnInit {
     loading = true;
     error = false;
     empty = false;
+    hasNotification = false;
     registers: Place[];
     user: User;
     STATUS = PLACES.STATUS;
@@ -31,7 +33,6 @@ export class ActivityPage implements OnInit {
     placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
     placeMessageStatus = PlaceUtils.getMessageStatus;
     placeSortData = PlaceUtils.getSortData;
-    showNotification = false;
     reloading: boolean;
     targetRefresh;
 
@@ -40,6 +41,7 @@ export class ActivityPage implements OnInit {
                 private router: Router,
                 private toast: ToastProvider,
                 private alert: AlertProvider,
+                private notificationsProvider: NotificationsProvider,
                 private storageInstance: UserIntentProvider) {
     }
 
@@ -51,6 +53,10 @@ export class ActivityPage implements OnInit {
         });
         this.getRegisters();
         this.user = await this.storageService.getPagamiUser();
+        this.hasNotification = this.notificationsProvider.hasWalletNotification;
+        if (this.hasNotification) {
+            this.notificationsProvider.setNotificationState(false);
+        }
     }
 
     getRegisters() {

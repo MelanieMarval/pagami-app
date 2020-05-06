@@ -19,7 +19,7 @@
             <ion-card *ngFor="let register of placeSortData(registers)"
                       class="card card-place" button
                       [ngClass]="[register.selectedToDelete ? 'animated fadeOut fast': '',
-                                !showNotification ? '' : 'status-border status-border--'+register.status | lowercase]"
+                                !hasNotification ? '' : 'status-border status-border--'+register.status | lowercase]"
                       (click)="register.status !== STATUS.REJECTED ? showDetails(register) : register.showReason = !register.showReason">
                 <ion-card-header>
                     <ion-row>

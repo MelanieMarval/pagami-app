@@ -27,6 +27,7 @@ import { ToastProvider } from './providers/toast.provider';
 import { AdminIntentProvider } from './providers/admin-intent.provider';
 import { BrowserProvider } from './providers/browser.provider';
 import { CompressImageProvider } from './providers/compress-image.provider';
+import { NotificationsProvider } from './providers/notifications.provider';
 
 @NgModule({
     declarations: [AppComponent, OrdersPage],
@@ -54,6 +55,7 @@ import { CompressImageProvider } from './providers/compress-image.provider';
         UserIntentProvider,
         AdminIntentProvider,
         BrowserProvider,
+        NotificationsProvider,
         CompressImageProvider,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
