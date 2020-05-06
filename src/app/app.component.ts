@@ -8,6 +8,8 @@ import { AlertProvider } from './providers/alert.provider';
 
 import { USER } from './utils/Const';
 import { User } from './core/api/users/user';
+import { AuthService } from './core/api/auth/auth.service';
+import { GoogleAuthService } from './core/google-auth/google-auth.service';
 
 
 const {SplashScreen} = Plugins;
@@ -22,8 +24,11 @@ export class AppComponent {
     constructor(
         private router: Router,
         private platform: Platform,
+        private authService: AuthService,
+        private googleAuthService: GoogleAuthService,
         private storageService: StorageProvider,
-        private alert: AlertProvider
+        private alert: AlertProvider,
+
     ) {
         this.initializeApp();
     }
@@ -34,7 +39,14 @@ export class AppComponent {
             const user = await this.storageService.getPagamiUser();
             // const lastUserVerification = await this.storageService.getLastUserVerification();
             if (isLogged) {
-                await this.verifyUser(user);
+                if (user.type && user.type === USER.TYPE.ADMIN) {
+                    this.openAdminPanel();
+                } else {
+                    this.openHome();
+                }
+                setTimeout(() => {
+                    this.verifyUser(user);
+                }, 5000);
             } else {
                 await this.openTutorial();
             }
@@ -47,17 +59,31 @@ export class AppComponent {
         });
     }
 
-    private async verifyUser(user: User) {
-        // this.storageService.setLastUserVerification(new Date());
-        if (user.status !== USER.STATUS.DISABLED) {
-            if (user.type && user.type === USER.TYPE.ADMIN) {
-                await this.openAdminPanel();
-            } else {
-                await this.openHome();
-            }
-        } else {
-            await this.alert.alertUserDisabled();
-        }
+    private verifyUser(lastUser: User) {
+        let user: User;
+        this.authService.verify()
+            .then(success => {
+                user = success.response;
+                this.storageService.setPagamiUser(user);
+                this.storageService.setLastUserVerification(new Date());
+                if (user.status !== USER.STATUS.DISABLED) {
+                    if (lastUser.type === USER.TYPE.NORMAL) {
+                        if (user.type === USER.TYPE.ADMIN) {
+                            this.alert.alertChangedUserStatus('ascendido');
+                            this.openAdminPanel();
+                        }
+                    } else {
+                        if (user.type === USER.TYPE.NORMAL) {
+                            this.alert.alertChangedUserStatus('descendido');
+                            this.openHome();
+                        }
+                    }
+                } else {
+                    this.googleAuthService.singOut();
+                    this.alert.alertChangedUserStatus('deshabilitado');
+                    this.router.navigateByUrl('/tutorial');
+                }
+            });
     }
 
     private openTutorial(): Promise<boolean> {

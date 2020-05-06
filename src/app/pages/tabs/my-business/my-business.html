@@ -94,6 +94,13 @@
         </ion-item>
     </ion-list>
 
+    <ion-item-group class="toggles-container">
+        <ion-item lines="none">
+            <ion-label>Habilitar Domicilio</ion-label>
+            <ion-toggle slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="place.allowHome" (ngModelChange)="saveBusiness()"></ion-toggle>
+        </ion-item>
+    </ion-item-group>
+
     <ion-list class="link-buttons-container" lines="none">
 <!--        <ion-item button routerLink="/app/my-products" color="pagami-surface">-->
         <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">

@@ -170,3 +170,18 @@ ion-checkbox {
 }
 /* END inputs */
 /*  ***********************  */
+
+
+.toggles-container{
+    margin: 20px 10px;
+
+    ion-item {
+        margin: 16px 0;
+
+        ion-label {
+            color: var(--ion-color-pagami-text-2nd);
+            font-size: 14px;
+        }
+    }
+
+}

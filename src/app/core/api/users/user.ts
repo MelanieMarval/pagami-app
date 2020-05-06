@@ -10,7 +10,6 @@ export interface User {
         address?: string;
     };
     notifications?: boolean;
-    fillOrders?: boolean;
     terms?: boolean;
     status?: string;
     createTime?: string;

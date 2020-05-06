@@ -8,10 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AlertProvider {
 
-    constructor(private alertController: AlertController,
-                private googleAuthService: GoogleAuthService,
-                private router: Router
-    ) {
+    constructor(private alertController: AlertController) {
     }
 
     async alertComingSoon() {
@@ -24,19 +21,14 @@ export class AlertProvider {
         await alert.present();
     }
 
-    async alertUserDisabled() {
+    async alertChangedUserStatus(status) {
+
         const alert = await this.alertController.create({
-            header: 'Su usuario ha sido deshabilitado',
-            message: 'Lamentablemente ya no tiene permitido acceder a la aplicacion, por motivo de: blah blah',
-            buttons: [
-                {
-                    text: 'Aceptar',
-                    handler: async () => {
-                        await this.googleAuthService.singOut();
-                        await this.router.navigateByUrl('/tutorial');
-                    }
-                }
-            ]
+            header: 'Su usuario ha sido ' + status,
+            message: status === 'deshabilitado' ? 'Lamentablemente ya no tiene permitido acceder a la aplicacion. Lamentamos las molestias.' :
+                    status === 'ascendido' ? 'Ahora tendra acceso al panel administrativo y tendra control sobre los diferentes lugares y usuario registrados' :
+                    'Ya no tendra acceso al panel administrativo, ni a las estadisticas mostradas en este. Ahora es un usuario normal',
+            buttons: ['Aceptar']
         });
         await alert.present();
     }

@@ -150,6 +150,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
     navigateToSelectIcon() {
         this.saving = true;
+        this.place.allowHome = false;
         if (this.place.whatsapp === this.dialCode) {
             this.place.whatsapp = undefined;
         }

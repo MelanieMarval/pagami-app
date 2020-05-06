@@ -66,7 +66,6 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
             return this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener entre 8 y 15 dígitos', 2500);
         }
         this.saving = true;
-        user.fillOrders = true;
         user.notifications = true;
 
         this.getBase64Image(user.photoUrl, async (base64image) => {

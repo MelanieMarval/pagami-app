@@ -22,6 +22,7 @@ export interface Place {
     };
     phone?: string;
     samePhone?: boolean;
+    allowHome?: boolean;
     whatsapp?: string;
     website?: string;
     type?: string;

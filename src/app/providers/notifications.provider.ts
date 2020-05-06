@@ -17,10 +17,8 @@ export class NotificationsProvider {
     getNotifications() {
 
         setTimeout(() => {
-            console.log('notification called');
             this.notificationsService.getNotifications()
                 .then((success: ApiResponse) => {
-                    console.log(success);
                     if (success.passed) {
                         const notifications: [] = success.response;
                         this.activityNotifications = notifications;

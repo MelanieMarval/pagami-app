@@ -17,29 +17,7 @@ export class ShopPage implements OnInit {
     STATUS = PLACES.STATUS;
     claiming = false;
     isClaimed = true;
-    place: Place = {
-        accuracy: 0,
-        createTime: String(new Date()),
-        category: {
-            name: 'Abasto',
-            icon: 'abasto'
-        },
-        id: 'nkjhniohnil4',
-        lastUpdate: '54545',
-        latitude: 0,
-        location: { address: 'Ubicado en un lugar del mundo'},
-        longitude: 0,
-        name: 'Una Tienda',
-        phone: '04154545445',
-        // tslint:disable-next-line:max-line-length
-        photoUrl: 'https://firebasestorage.googleapis.com/v0/b/pagami-4dd5e.appspot.com/o/images%2Fplace%2F1iqzzd8jlga?alt=media&token=76c2ffa6-e178-4f58-8247-6b6a2c175340',
-        registeredBy: '4654ds56fdf456hdmyew',
-        samePhone: false,
-        status: this.STATUS.VERIFIED,
-        type: 'STORE',
-        website: 'tiendita.com.ve',
-        whatsapp: '024147848885'
-    };
+    place: Place = {latitude: 0, longitude: 0};
     CLAIMS = CLAIMS.STATUS;
     browser = this.browserProvider;
 
