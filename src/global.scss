@@ -39,7 +39,25 @@
 //    background-color: rgb(232, 240, 254) !important;
 //    background-image: none !important;
 //    color: -internal-light-dark-color(black, white) !important;
+//}]
+//input:-internal-autofill-selected {
+//    background-color: transparent;
 //}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border:none !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--ion-background-color) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
 
 /* ***BUTTON IN TUTORIAL AND TERMS*** */
 .footer-button {
