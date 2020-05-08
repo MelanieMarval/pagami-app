@@ -166,4 +166,12 @@ export class ProfilePage extends InputFilePage implements OnInit {
         await this.router.navigateByUrl('/tutorial');
     }
 
+
+    validateImage($event: Event) {
+        if (!ValidationUtils.validateImage($event)) {
+            this.toast.messageErrorWithoutTabs('Formato de imágen no válido, por favor seleccione otra.', 3000);
+        } else {
+            this.chargeImage($event);
+        }
+    }
 }

@@ -2,6 +2,7 @@ import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { IonContent } from '@ionic/angular';
 import { CompressImageProvider } from '../../providers/compress-image.provider';
+import { ToastProvider } from '../../providers/toast.provider';
 
 export class InputFilePage implements AfterViewInit {
 
