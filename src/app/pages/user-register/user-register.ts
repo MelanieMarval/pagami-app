@@ -104,7 +104,7 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
                     await this.storageService.setLogged(true);
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
                     this.saving = false;
-                    await this.route.navigate(['/app/tabs/map']);
+                    await this.route.navigate(['/app/tabs/map/search']);
                 } else {
                     this.saving = false;
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);

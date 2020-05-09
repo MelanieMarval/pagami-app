@@ -49,7 +49,6 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         disableScrollContent: true
     };
     bottomHeightChange: EventEmitter<number> = new EventEmitter<number>();
-    isRegistering = false;
     beforeSaveLocation = true;
     saving = false;
     placeToSave: any;
@@ -112,6 +111,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     navigateToModeSearch() {
         this.isRegistering = false;
+        this.isFindMyBusiness = false;
         if (this.isHiddenCloseToMe) {
             this.closeToMeToDefault();
             this.isHiddenCloseToMe = false;
@@ -126,6 +126,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     navigateToModeRegister() {
         this.isRegistering = true;
+        this.isFindMyBusiness = false;
         this.isHiddenCloseToMe = true;
         this.onBottomSheetHide(true);
         this.bottomHeightChange.emit(0);
@@ -139,13 +140,15 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     navigateToModeFindMyBusiness() {
         this.isRegistering = false;
+        this.isFindMyBusiness = true;
         this.isHiddenCloseToMe = true;
         this.onBottomSheetHide(true);
         this.bottomHeightChange.emit(0);
-        this.getAcceptedPlaces();
+        // this.getAcceptedPlaces();
         if (this.newPlaceMarker) {
             this.newPlaceMarker.setMap(null);
         }
+        this.enableFindMyBusiness();
     }
 
     closeToMeToDefault() {
@@ -157,9 +160,13 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     onClickPlace(place: Place) {
         this.selectedPlace = place;
         if (this.currentUrl === MAP_MODE.FIND_BUSINESS) {
-            this.intentProvider.placeToShow = undefined;
-            this.intentProvider.placeToClaim = place;
-            this.router.navigate(['app/shop']);
+            if (place.status === PLACES.STATUS.ACCEPTED) {
+                this.intentProvider.placeToShow = undefined;
+                this.intentProvider.placeToClaim = place;
+                this.router.navigate(['app/shop']);
+            } else {
+                this.toast.messageSuccessAboveButton('No puede reclamar esta empresa');
+            }
         } else if (this.currentUrl === MAP_MODE.SEARCH) {
             this.fabAttached = false;
             this.bottomDrawer.drawerState = DrawerState.Docked;
@@ -171,10 +178,12 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         if (this.fabAttached || this.isRegistering) {
             this.changeMapCenter(coors);
         }
-        if (this.currentUrl === MAP_MODE.SEARCH && this.intentProvider.lastUpdatedPoint && this.intentProvider.lastUpdatedPoint.latitude) {
+        if (this.intentProvider.lastUpdatedPoint && this.intentProvider.lastUpdatedPoint.latitude) {
             if (this.calculateDistance(this.geoToLatLng(coors), this.geoToLatLng(this.intentProvider.lastUpdatedPoint)) > BASIC_UPDATE_METERS) {
                 this.getNearPlaces();
             }
+        } else {
+            this.getNearPlaces();
         }
     }
 
@@ -225,6 +234,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     async getNearPlaces() {
+        if (this.searching) {
+            return;
+        }
         this.searching = true;
         const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
         const filter: PlaceFilter = {
@@ -238,8 +250,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.placesService.getNearby(filter).then((success: ApiResponse) => {
             if (success.passed) {
                 this.searchPlaces = success.response;
-                this.setupPlacesToDrawer(success.response);
-                this.setupPlaces(success.response);
+                this.setupPlacesToDrawer(this.searchPlaces);
+                this.setupPlacesToMap(this.searchPlaces);
                 this.intentProvider.lastUpdatedPoint = geo;
             }
         }).finally(() => this.searching = false);
@@ -278,6 +290,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onDrawerStateChange($event: DrawerState) {
         this.bottomDrawer.drawerState = $event;
+        if (this.bottomDrawer.drawerState === DrawerState.Bottom) {
+            this.selectedPlace = undefined;
+        }
     }
 
     async saveLocation() {

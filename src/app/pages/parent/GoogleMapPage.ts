@@ -46,6 +46,8 @@ export class GoogleMapPage {
     currentPositionMarker: any;
     currentPositionCircle: any;
     private nearbyPlaces: any[];
+    private acceptPlaces: any[];
+    private markerCluster: any;
     // @ts-ignore
     googleMaps: any;
     accuracy: number;
@@ -53,10 +55,10 @@ export class GoogleMapPage {
     mapReady = false;
     newPlaceMarker: any;
     lastPosition: any;
+    isRegistering = false;
+    isFindMyBusiness = false;
 
-    constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService
-    ) {
-    }
+    constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService) { }
 
     async loadMap() {
         this.mapReady = false;
@@ -94,6 +96,10 @@ export class GoogleMapPage {
             lng: coords.longitude
         };
         this.map.panTo(position);
+    }
+
+    enableFindMyBusiness() {
+
     }
 
     setupMarkerCurrentPosition(coords: PagamiGeo) {
@@ -176,10 +182,9 @@ export class GoogleMapPage {
     onClickPlace(place: Place) {
     }
 
-    setupPlaces(places: Place[]) {
-        this.nearbyPlaces = [];
-        const map = this.map;
-        places.forEach((place: Place) => {
+    setupPlacesToMap(places: Place[]) {
+        this.clearMarkerPlaces();
+        for (const place of places) {
             const position: any = {
                 lat: place.latitude,
                 lng: place.longitude
@@ -191,7 +196,6 @@ export class GoogleMapPage {
 
             const marker = new this.googleMaps.Marker({
                 position,
-                map,
                 icon
             });
             marker.addListener('click', event => {
@@ -203,8 +207,20 @@ export class GoogleMapPage {
                 }
             });
             this.nearbyPlaces.push(marker);
-        });
+        }
         this.setCluster();
+    }
+
+    clearMarkerPlaces() {
+        if (this.nearbyPlaces) {
+            for (const marker of this.nearbyPlaces) {
+                marker.setMap(null);
+            }
+        }
+        if (this.markerCluster) {
+            this.markerCluster.clearMarkers();
+        }
+        this.nearbyPlaces = [];
     }
 
     offsetCenter(latlng, offsetx, offsety) {
@@ -291,6 +307,10 @@ export class GoogleMapPage {
     }
 
     setCluster() {
+        this.markerCluster = new MarkerClusterer(this.map, this.nearbyPlaces, this.getClusterOptions());
+    }
+
+    getClusterOptions(): any {
         const clusterStyles = [
             {
                 textColor: 'white',
@@ -316,6 +336,6 @@ export class GoogleMapPage {
             styles: clusterStyles,
             maxZoom: 15,
         };
-        const markerCluster = new MarkerClusterer(this.map, this.nearbyPlaces, mcOptions);
+        return mcOptions;
     }
 }
