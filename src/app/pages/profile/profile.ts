@@ -91,7 +91,6 @@ export class ProfilePage extends InputFilePage implements OnInit {
         this.authService.update(this.user)
             .then(async success => {
                 if (success.passed === true) {
-                    console.log('-> success.response', success.response);
                     await this.storageService.setPagamiUser(success.response);
                     this.user = await this.storageService.getPagamiUser();
                     this.updating = false;
@@ -125,7 +124,15 @@ export class ProfilePage extends InputFilePage implements OnInit {
                     text: 'Eliminar de todas formas',
                     cssClass: 'alert-confirm',
                     handler: () => {
-                        console.log('Confirm Okay');
+                        this.updating = true;
+                        this.authService.delete()
+                            .then(success => {
+                                if (success.passed) {
+                                    this.toast.messageSuccessWithoutTabs('Su cuenta ha sido eliminada. Ya no podra acceder a la aplicacion', 3500);
+                                    this.closeSession();
+                                }
+                                this.updating = false;
+                            });
                     }
                 }
             ],

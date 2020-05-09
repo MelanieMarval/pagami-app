@@ -48,7 +48,6 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
     }
 
     setPlace(place) {
-        console.log(place);
         this.user.location.address = place.description;
         this.user.location.country = place.terms.slice(-1)[0].value;
         this.places = [];

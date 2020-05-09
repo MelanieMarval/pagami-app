@@ -33,7 +33,6 @@ export class PlansPage implements OnInit {
         this.claim = this.intentProvider.placeToClaim;
         this.plansService.getAll()
             .then((success: ApiResponse) => {
-                console.log(success.response);
                 this.loading = false;
                 if (success.passed) {
                     this.selectedPlan = success.response.filter(plan => plan.amount === 0)[0].id;

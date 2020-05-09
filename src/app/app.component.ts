@@ -38,7 +38,7 @@ export class AppComponent {
             const isLogged = await this.storageService.isLogged();
             const user = await this.storageService.getPagamiUser();
             // const lastUserVerification = await this.storageService.getLastUserVerification();
-            if (isLogged) {
+            if (isLogged && user) {
                 if (user.type && user.type === USER.TYPE.ADMIN) {
                     this.openAdminPanel();
                 } else {

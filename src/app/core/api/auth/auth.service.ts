@@ -43,4 +43,11 @@ export class AuthService {
         const request = this.httpClient.get(`${this.URL}/${method}`, options);
         return this.apiService.serverListener(request);
     }
+
+    async delete() {
+        const method = 'delete/user';
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.delete(`${this.URL}/${method}`, options);
+        return this.apiService.serverListener(request);
+    }
 }

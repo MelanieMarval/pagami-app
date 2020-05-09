@@ -26,7 +26,6 @@ export class BusinessClaimPage implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.intentProvider.placeToClaim);
         this.form = new FormGroup({
             // @ts-ignore
             placeId: new FormControl(this.intentProvider.placeToClaim.id),
