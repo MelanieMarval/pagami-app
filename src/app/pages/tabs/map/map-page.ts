@@ -308,11 +308,12 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                     if (success.code === 31) {
                         await this.toast.messageErrorAboveButton('Ha excedido el numero de registros por este dia.');
                     } else {
-                        await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
+                        await this.toast.messageErrorAboveButton('No se ha guardar la ubicacion. Intente de nuevo!');
                     }
                 }
             }, reason => {
                 this.saving = false;
+                this.toast.messageErrorAboveButton('No se ha guardar la ubicacion por problemas internos. Intente mas tarde!');
             });
     }
 

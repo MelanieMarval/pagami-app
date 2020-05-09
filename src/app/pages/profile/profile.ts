@@ -132,6 +132,9 @@ export class ProfilePage extends InputFilePage implements OnInit {
                                     this.closeSession();
                                 }
                                 this.updating = false;
+                            }).catch(() => {
+                                this.toast.messageErrorWithoutTabs('El proceso no pudo completarse');
+                                this.updating = false;
                             });
                     }
                 }
