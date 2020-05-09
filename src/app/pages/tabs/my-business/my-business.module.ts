@@ -12,9 +12,7 @@ import { AvatarHeaderModule } from '../../../shared/avatar-header/avatar-header.
         CommonModule,
         FormsModule,
         AvatarHeaderModule,
-        RouterModule.forChild([{
-            path: '', component: MyBusinessPage
-        }])
+        RouterModule.forChild([{path: '', component: MyBusinessPage}])
     ],
     declarations: [ MyBusinessPage ]
 })

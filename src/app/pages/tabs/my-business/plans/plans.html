@@ -17,13 +17,10 @@
     <ion-list class="card-container">
 
         <ion-item-group>
-            <ion-card class="card-plan"
+            <ion-card class="card-plan" button
                       *ngFor="let plan of plans; let i = index"
-                      [disabled]="plan.amount !== 0"
                       (click)="this.selectedPlan = plan.id"
-                      [button]="plan.amount === 0"
-                      [color]="this.selectedPlan === plan.id ? 'pagami' : 'pagami-surface'"
-                      [style.opacity]="plan.amount === 0 ? 1 : .5">
+                      [color]="this.selectedPlan === plan.id ? 'pagami' : 'pagami-surface'">
                 <ion-card-header>
                     <ion-row>
                         <ion-col size="10">
@@ -39,7 +36,7 @@
                 <ion-card-content>
                     <ion-row>
                         <ion-col size="6">
-                            <ion-card-title class="card-plan__price" [ngClass]="plan.amount === 0 ? '' : 'cross-out'">
+                            <ion-card-title class="card-plan__price">
                                 ${{plan.amount}} USD
                             </ion-card-title>
                         </ion-col>

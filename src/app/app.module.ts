@@ -28,9 +28,10 @@ import { AdminIntentProvider } from './providers/admin-intent.provider';
 import { BrowserProvider } from './providers/browser.provider';
 import { CompressImageProvider } from './providers/compress-image.provider';
 import { NotificationsProvider } from './providers/notifications.provider';
+import { PlansPage } from './pages/tabs/my-business/plans/plans';
 
 @NgModule({
-    declarations: [AppComponent, OrdersPage],
+    declarations: [AppComponent, OrdersPage, PlansPage],
     entryComponents: [],
     imports: [
         BrowserModule,

@@ -143,6 +143,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.onBottomSheetHide(true);
         this.bottomHeightChange.emit(0);
         this.getAcceptedPlaces();
+        if (this.newPlaceMarker) {
+            this.newPlaceMarker.setMap(null);
+        }
     }
 
     closeToMeToDefault() {
@@ -302,7 +305,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                     this.saving = false;
                 } else {
                     this.saving = false;
-                    await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
+                    if (success.code === 31) {
+                        await this.toast.messageErrorAboveButton('Ha excedido el numero de registros por este dia.');
+                    } else {
+                        await this.toast.messageErrorWithoutTabs('No se ha guardar la ubicacion. Intente de nuevo!');
+                    }
                 }
             }, reason => {
                 this.saving = false;

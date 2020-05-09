@@ -39,14 +39,14 @@ export class AppComponent {
             const user = await this.storageService.getPagamiUser();
             // const lastUserVerification = await this.storageService.getLastUserVerification();
             if (isLogged) {
-                // if (user.type && user.type === USER.TYPE.ADMIN) {
-                //     this.openAdminPanel();
-                // } else {
-                //     this.openHome();
-                // }
-                // setTimeout(() => {
-                //     this.verifyUser(user);
-                // }, 5000);
+                if (user.type && user.type === USER.TYPE.ADMIN) {
+                    this.openAdminPanel();
+                } else {
+                    this.openHome();
+                }
+                setTimeout(() => {
+                    this.verifyUser(user);
+                }, 5000);
             } else {
                 await this.openTutorial();
             }

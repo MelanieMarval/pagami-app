@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BusinessClaimRoutingModule } from './business-claim-routing.module';
 import { BusinessClaimPage } from './business-claim';
-import { PlansPage } from './plans/plans';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -13,11 +12,10 @@ import { PlansPage } from './plans/plans';
         IonicModule,
         FormsModule,
         ReactiveFormsModule,
-        BusinessClaimRoutingModule
+        RouterModule.forChild([{path: '', component: BusinessClaimPage}])
     ],
     declarations: [
-        BusinessClaimPage,
-        PlansPage
+        BusinessClaimPage
     ],
     providers: []
 })

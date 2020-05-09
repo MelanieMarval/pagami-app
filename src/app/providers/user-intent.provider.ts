@@ -12,7 +12,7 @@ export class UserIntentProvider {
     private _placeToEdit: Place;
     private _placeEdited: Place;
     private _placeToShow: Place;
-    private _placeToClaim: Place | Claim;
+    private _placeToClaim: Place;
     private _showingPlaceDetails = false;
     private _lastUpdatedPoint: PagamiGeo;
 
@@ -40,11 +40,11 @@ export class UserIntentProvider {
         this._placeToShow = value;
     }
 
-    get placeToClaim(): Place | Claim {
+    get placeToClaim(): Place {
         return this._placeToClaim;
     }
 
-    set placeToClaim(value: Place | Claim) {
+    set placeToClaim(value: Place) {
         this._placeToClaim = value;
     }
 

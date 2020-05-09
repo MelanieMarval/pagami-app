@@ -28,6 +28,7 @@ export class ShopPage implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log(this.intentProvider.placeToClaim);
         if (this.intentProvider.placeToShow) {
             this.claiming = false;
             this.place = this.intentProvider.placeToShow;

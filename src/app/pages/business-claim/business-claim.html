@@ -1,7 +1,10 @@
 <ion-header>
     <ion-toolbar class="toolbar-simple">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/app/shop"></ion-back-button>
+            <ion-button slot="start" routerLink="/app/tabs/my-business" *ngIf="saved">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+            <ion-back-button *ngIf="!saved"></ion-back-button>
         </ion-buttons>
         <ion-title class="without-right">Datos de la Empresa</ion-title>
     </ion-toolbar>
@@ -18,11 +21,11 @@
         </ion-text>
     </div>
 
-    <form [formGroup]="form">
+    <form *ngIf="form" [formGroup]="form">
         <ion-list lines="none" class="inputs-container --with-formGroup">
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Rif de la empresa</ion-label>
-                <ion-input formControlName="businessRuc" type="text" maxlength="20"></ion-input>
+                <ion-input formControlName="businessRuc" type="text" maxlength="20" [disabled]="saved"></ion-input>
                 <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
             </ion-item>
             <div class="error-text">
@@ -32,7 +35,7 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Teléfono de contacto</ion-label>
-                <ion-input formControlName="businessPhone" type="text" maxlength="15"></ion-input>
+                <ion-input formControlName="businessPhone" type="text" maxlength="15" [disabled]="saved"></ion-input>
                 <ion-icon slot="start" src="assets/icon/call.svg"></ion-icon>
             </ion-item>
             <div class="error-text">
@@ -43,7 +46,7 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Correo de contacto</ion-label>
-                <ion-input formControlName="businessEmail" type="text"></ion-input>
+                <ion-input formControlName="businessEmail" type="text" [disabled]="saved"></ion-input>
                 <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
             </ion-item>
             <div class="error-text">
@@ -53,7 +56,7 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Notas o comentarios (opcional)</ion-label>
-                <ion-textarea rows="6" maxlength="300" formControlName="businessComment"></ion-textarea>
+                <ion-textarea rows="6" maxlength="300" formControlName="businessComment" [disabled]="saved"></ion-textarea>
             </ion-item>
             <div class="error-text">
                 <small *ngIf="form.get('businessComment').errors?.minlength && form.get('businessComment').touched">Mínimo 5 carácteres y máximo 300</small>
@@ -62,7 +65,7 @@
 
     </form>
 
-    <ion-footer class="footer-button footer-button--div">
+    <ion-footer *ngIf="!saved" class="footer-button footer-button--div">
         <ion-button class="button-large" expand="block" color="pagami" type="submit" [disabled]="form.invalid" (click)="saveData()">
             Enviar datos
         </ion-button>
