@@ -93,6 +93,12 @@
             <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>
         </ion-item>
     </ion-list>
+    <ion-list class="link-buttons-container mt-0 pt-0" lines="none">
+        <ion-item (click)="intentProvider.placeToChangeLocation = place" routerLink="/app/tabs/map/edit-business" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Cambiar ubicación</ion-label>
+        </ion-item>
+    </ion-list>
 
     <ion-item-group class="toggles-container">
         <ion-item lines="none" disabled>
@@ -116,10 +122,6 @@
         <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Pedidos</ion-label>
-        </ion-item>
-        <ion-item (click)="intentProvider.placeToChangeLocation = place" routerLink="/app/tabs/map/edit-business" color="pagami-surface">
-            <ion-icon name="arrow-forward" slot="end"></ion-icon>
-            <ion-label>Cambiar ubicación</ion-label>
         </ion-item>
     </ion-list>
 
