@@ -36,7 +36,7 @@
 
     <div #mapCanvas class="map-canvas"></div>
 
-    <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed" [hidden]="isRegistering">
+    <ion-fab #fab class="fab-corner-lr" horizontal="end" vertical="bottom" slot="fixed" [hidden]="isRegistering || isEditingBusiness">
         <ion-fab-button color="{{ fabAttached ? 'map':'light'}}" (click)="attachedPosition()">
             <ion-icon src="assets/icon/my_location.svg"></ion-icon>
         </ion-fab-button>
@@ -49,6 +49,13 @@
         </ion-button>
         <ion-button class="button-large" expand="block" (click)="navigateToBusinessDetails()" routerLink="/app/business-details" color="pagami" *ngIf="!beforeSaveLocation">
             Continuar
+        </ion-button>
+    </div>
+
+    <div class="footer-button footer-button--div" *ngIf="isEditingBusiness">
+        <ion-button [disabled]="saving" class="button-large" expand="block" (click)="saveNewLocation()" color="pagami">
+            <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+            <span *ngIf="!saving">Guardar nueva ubicacion</span>
         </ion-button>
     </div>
 

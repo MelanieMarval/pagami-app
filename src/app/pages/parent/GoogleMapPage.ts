@@ -54,9 +54,11 @@ export class GoogleMapPage {
     currentUrl: string;
     mapReady = false;
     newPlaceMarker: any;
+    editPlaceMarker: any;
     lastPosition: any;
     isRegistering = false;
     isFindMyBusiness = false;
+    isEditingBusiness = false;
 
     constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService) { }
 
@@ -171,6 +173,28 @@ export class GoogleMapPage {
         }
     }
 
+    addMarkerEditPlace(place: Place) {
+        const map = this.map;
+        if (this.currentPositionMarker) {
+            const latLng = this.toLatLng(place.latitude, place.longitude);
+            const icon = {
+                url: PlaceUtils.getMarker(place, false),
+                scaledSize: new this.googleMaps.Size(30, 32)
+            };
+            if (this.editPlaceMarker) {
+                this.editPlaceMarker.setMap(null);
+            }
+            this.editPlaceMarker = new this.googleMaps.Marker({
+                latLng,
+                draggable: true,
+                icon,
+                map,
+                zIndex: 50
+            });
+            this.editPlaceMarker.setPosition(latLng);
+        }
+    }
+
     onDragPlaceEvents() {
         if (this.calculateDistance(this.newPlaceMarker.getPosition(), this.currentPositionMarker.getPosition()) > 30) {
             this.newPlaceMarker.setPosition(this.lastPosition);
@@ -209,6 +233,10 @@ export class GoogleMapPage {
             this.nearbyPlaces.push(marker);
         }
         this.setCluster();
+        if (this.isEditingBusiness && this.editPlaceMarker) {
+            this.editPlaceMarker.setMap(null);
+            this.editPlaceMarker.setMap(this.map);
+        }
     }
 
     clearMarkerPlaces() {

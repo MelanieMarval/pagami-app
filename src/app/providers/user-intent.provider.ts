@@ -13,6 +13,7 @@ export class UserIntentProvider {
     private _placeEdited: Place;
     private _placeToShow: Place;
     private _placeToClaim: Place;
+    private _placeToChangeLocation: Place;
     private _showingPlaceDetails = false;
     private _lastUpdatedPoint: PagamiGeo;
 
@@ -62,5 +63,14 @@ export class UserIntentProvider {
 
     set lastUpdatedPoint(value: PagamiGeo) {
         this._lastUpdatedPoint = value;
+    }
+
+
+    get placeToChangeLocation(): Place {
+        return this._placeToChangeLocation;
+    }
+
+    set placeToChangeLocation(value: Place) {
+        this._placeToChangeLocation = value;
     }
 }

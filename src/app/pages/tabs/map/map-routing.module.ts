@@ -15,7 +15,10 @@ const routes: Routes = [
             },
             {
                 path: 'find-my-business'
-            }
+            },
+            {
+                path: 'edit-business'
+            },
         ]
     }
 ];

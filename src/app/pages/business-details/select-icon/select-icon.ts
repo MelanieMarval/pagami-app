@@ -25,7 +25,7 @@ export class SelectIconPage implements OnInit {
 
     constructor(
         public toast: ToastProvider,
-        private route: Router,
+        private router: Router,
         private http: HttpClient,
         private storageService: StorageProvider,
         private storageInstance: UserIntentProvider,
@@ -71,7 +71,7 @@ export class SelectIconPage implements OnInit {
                         this.storageInstance.placeEdited = success.response;
                         this.saving = false;
                         this.toast.messageSuccessWithoutTabs('Empresa registrada con exito!');
-                        this.route.navigate(['/app/tabs/wallet/activity']);
+                        this.router.navigate(['/app/tabs/wallet/activity']);
                     } else {
                         this.saving = false;
                         this.toast.messageErrorWithoutTabs('No se ha guardar su informacion. Intente de nuevo!');

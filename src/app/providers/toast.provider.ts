@@ -20,11 +20,11 @@ export class ToastProvider {
         await toast.present();
     }
 
-    async messageSuccessWithoutTabs(message: string, duration = 2000) {
+    async messageSuccessWithoutTabs(message: string, duration = 2000, color = 'pagami-surface') {
         const toast = await this.toastController.create({
             message,
             duration,
-            color: 'pagami-surface',
+            color,
             cssClass: 'toast-bottom-custom-without-tabs',
             position: 'bottom',
         });
@@ -32,11 +32,11 @@ export class ToastProvider {
         await toast.present();
     }
 
-    async messageSuccessAboveButton(message: string, duration = 2000) {
+    async messageSuccessAboveButton(message: string, duration = 2000, color = 'pagami-surface') {
         const toast = await this.toastController.create({
             message,
             duration,
-            color: 'pagami-surface',
+            color,
             cssClass: 'toast-bottom-custom',
             position: 'bottom',
         });

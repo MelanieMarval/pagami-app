@@ -52,6 +52,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     async loadInfo() {
+        this.intentProvider.placeToChangeLocation = undefined;
         const myBusiness = await this.storageService.getBusinessVerifiedByUser();
         if (myBusiness) {
             this.loading = false;
@@ -64,7 +65,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     async ngAfterViewChecked() {
-        if (!this.intentProvider.placeToClaim && this.isSearching) {
+        if (this.intentProvider.placeToChangeLocation || (!this.intentProvider.placeToClaim && this.isSearching)) {
             this.isSearching = false;
             this.ngOnInit();
         }

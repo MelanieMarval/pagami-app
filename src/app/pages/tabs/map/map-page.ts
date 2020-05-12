@@ -106,12 +106,16 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             case MAP_MODE.SEARCH:
                 this.navigateToModeSearch();
                 break;
+            case MAP_MODE.EDIT_BUSINESS:
+                this.navigateToModeEditBusiness();
+                break;
         }
     }
 
     navigateToModeSearch() {
         this.isRegistering = false;
         this.isFindMyBusiness = false;
+        this.isEditingBusiness = false;
         if (this.isHiddenCloseToMe) {
             this.closeToMeToDefault();
             this.isHiddenCloseToMe = false;
@@ -121,6 +125,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         }
         if (this.newPlaceMarker) {
             this.newPlaceMarker.setMap(null);
+        }
+        if (this.editPlaceMarker) {
+            this.editPlaceMarker.setMap(null);
         }
     }
 
@@ -136,6 +143,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.map.setZoom(20);
         this.addMarkerNewPlace();
         this.toast.messageSuccessAboveButton('Puedes mover un poco el marcador si lo necesitas', 3000);
+        if (this.editPlaceMarker) {
+            this.editPlaceMarker.setMap(null);
+        }
     }
 
     navigateToModeFindMyBusiness() {
@@ -144,14 +154,37 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.isHiddenCloseToMe = true;
         this.onBottomSheetHide(true);
         this.bottomHeightChange.emit(0);
-        // this.getAcceptedPlaces();
         if (this.newPlaceMarker) {
             this.newPlaceMarker.setMap(null);
+        }
+        if (this.editPlaceMarker) {
+            this.editPlaceMarker.setMap(null);
         }
         this.enableFindMyBusiness();
     }
 
+    navigateToModeEditBusiness() {
+        const place = this.intentProvider.placeToChangeLocation;
+        this.isRegistering = false;
+        this.isFindMyBusiness = false;
+        this.isHiddenCloseToMe = true;
+        this.isEditingBusiness = true;
+        this.onBottomSheetHide(true);
+        this.bottomHeightChange.emit(0);
+        if (this.newPlaceMarker) {
+            this.newPlaceMarker.setMap(null);
+        }
+        this.map.panTo(this.toLatLng(place.latitude, place.longitude));
+        this.map.setZoom(20);
+        this.addMarkerEditPlace(place);
+        this.toast.messageSuccessAboveButton('Arrastra tu empresa a su nueva ubicación', 3000);
+    }
+
     closeToMeToDefault() {
+        this.isRegistering = false;
+        this.isHiddenCloseToMe = false;
+        this.isSearching = false;
+        this.isFindMyBusiness = false;
         this.bottomHeightChange.emit(DEFAULT_DRAWER_BOTTOM_HEIGHT);
         this.renderer.setStyle(this.ionFab.nativeElement, 'transition', '0.25s ease-in-out');
         this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
@@ -378,5 +411,47 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onSearch(event) {
         this.searchText = event.target.value.toLowerCase();
+    }
+
+    async saveNewLocation() {
+        this.saving = true;
+        const latLng = this.editPlaceMarker.getPosition();
+        const location = await this.getAddress(latLng.lat(), latLng.lng());
+        const newPlaceLocation: Place = {
+            id: this.intentProvider.placeToChangeLocation.id,
+            latitude: latLng.lat(),
+            longitude: latLng.lng(),
+            location: {
+                address: this.intentProvider.placeToChangeLocation.location.address,
+                addressLine: location.addressLine,
+                postalCode: location.postalCode,
+                city: location.city,
+                state: location.state,
+                country: location.country,
+                acronym: location.acronym
+            }
+        };
+        this.placesService.changeLocation(newPlaceLocation)
+            .then((success: any) => {
+                if (success.passed === true) {
+                    this.toast.messageSuccessWithoutTabs('Ubicación actualizada exitosamente', 3000, 'success');
+                    this.saving = false;
+                    this.storageService.setBusinessVerifiedByUser(success.response.place).then(() => {
+                        this.isRegistering = false;
+                        this.isEditingBusiness = false;
+                        this.isSearching = false;
+                        this.isFindMyBusiness = false;
+                        this.router.navigate(['/app/tabs/my-business']).then(() => {
+                            this.getNearPlaces();
+                        });
+                    });
+                } else {
+                    this.saving = false;
+                    this.toast.messageErrorAboveButton('No se ha guardar la ubicacion. Intente de nuevo!');
+                }
+            }, reason => {
+                this.saving = false;
+                this.toast.messageErrorAboveButton('No se ha guardar la ubicacion por problemas de conexion. Intente mas tarde!');
+            });
     }
 }
