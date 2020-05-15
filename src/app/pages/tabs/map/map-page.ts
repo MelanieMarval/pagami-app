@@ -208,7 +208,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onCurrentPositionChanged(coors: PagamiGeo) {
         this.setupMarkerCurrentPosition(coors);
-        if (this.fabAttached || this.isRegistering) {
+        if ((this.fabAttached || this.isRegistering) && !this.isEditingBusiness) {
             this.changeMapCenter(coors);
         }
         if (this.intentProvider.lastUpdatedPoint && this.intentProvider.lastUpdatedPoint.latitude) {

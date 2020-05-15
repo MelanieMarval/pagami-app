@@ -2,6 +2,6 @@
 <bitmap
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/splash"
-    android:scaleType="centerCrop"
-    android:adjustViewBounds="true"
+    android:scaleType="centerInside"
+    android:adjustViewBounds="false"
     />

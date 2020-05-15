@@ -7,7 +7,8 @@
     "cordova": {},
     "plugins": {
         "SplashScreen": {
-            "launchAutoHide": false
+            "launchAutoHide": false,
+            "backgroundColor": "#1A202C"
         },
         "showSpinner": true,
         "androidSplashResourceName": "splash",

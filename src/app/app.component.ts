@@ -50,7 +50,9 @@ export class AppComponent {
             } else {
                 await this.openTutorial();
             }
-            await SplashScreen.hide();
+            await setTimeout(async () => {
+                await SplashScreen.hide();
+            }, 1000);
         });
         App.addListener('backButton', async (data: AppUrlOpen) => {
             if (this.verifyIfCanCloseApp(this.router.url)) {
