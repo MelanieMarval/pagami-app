@@ -68,13 +68,14 @@
             <ion-label>Servicios</ion-label>
         </ion-item>
     </ion-list>
+
+    <ion-footer class="footer-button footer-button--div" *ngIf="claiming">
+        <ion-button *ngIf="!isClaimed" class="button-large" expand="block" color="pagami" routerLink="/app/business-claim">
+            Reclamar esta empresa
+        </ion-button>
+        <div *ngIf="isClaimed" class="ion-text-center">
+            <ion-text color="light">Esta empresa ya ha sido reclamada por alguien mas, vuelve e intenta con otra!</ion-text>
+        </div>
+    </ion-footer>
 </ion-content>
 
-<ion-footer class="footer-button background-transparent" slot="fixed" *ngIf="claiming">
-    <ion-button *ngIf="!isClaimed" class="button-large" expand="block" color="pagami" routerLink="/app/business-claim">
-        Reclamar esta empresa
-    </ion-button>
-    <div *ngIf="isClaimed" class="ion-text-center">
-        <ion-text color="light">Esta empresa ya ha sido reclamada por alguien mas, vuelve e intenta con otra!</ion-text>
-    </div>
-</ion-footer>
