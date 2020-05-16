@@ -12,9 +12,10 @@ import { BackgroundEmptyModule } from '../../../../shared/background-empty/backg
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild([{
-            path: '', component: BusinessesPage
-        }]),
+        RouterModule.forChild([
+            {path: '', component: BusinessesPage},
+            {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)},
+            ]),
         PipesModule,
         BackgroundEmptyModule
     ],

@@ -25,8 +25,10 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
     googleMaps: any;
     autocompleteService: any;
     places: any = [];
+    locationSearch: string;
     user: User = {};
     saving = false;
+    buttonDisabled = true;
 
     constructor(private storageService: StorageProvider,
                 private authService: AuthService,
@@ -47,9 +49,16 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
             });
     }
 
+    locationChanged(target: EventTarget) {
+        this.buttonDisabled = this.locationSearch !== this.user.location.address;
+        this.searchPlace(target, true);
+    }
+
     setPlace(place) {
+        this.locationSearch = place.description;
         this.user.location.address = place.description;
         this.user.location.country = place.terms.slice(-1)[0].value;
+        this.buttonDisabled = false;
         this.places = [];
     }
 
@@ -63,6 +72,9 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
         }
         if (!ValidationUtils.validatePhone(user.phone)) {
             return this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener entre 8 y 15 dígitos', 2500);
+        }
+        if (!this.user.location.country || this.user.location.country.trim() === '') {
+            return this.toast.messageErrorWithoutTabs('Debe seleccionar la direccion similar a la suya de la lista de sugerencias');
         }
         this.saving = true;
         user.notifications = true;

@@ -93,7 +93,7 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
 
     goToDetails(register: Place): void {
         this.intentProvider.placeToView = register;
-        this.router.navigate(['admin/tabs/records/details']);
+        this.router.navigate(['admin/tabs/businesses/details']);
     }
 
     getStatusSpanish(register: Place) {
