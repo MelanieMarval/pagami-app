@@ -1,45 +1,42 @@
-import {Component} from '@angular/core';
-import {AlertController} from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { ProductsService } from '../../core/api/products/products.service';
+import { UserIntentProvider } from '../../providers/user-intent.provider';
+import { Product } from '../../core/api/products/product';
+import { ToastProvider } from '../../providers/toast.provider';
 
 @Component({
     selector: 'app-products',
     templateUrl: 'products.html',
     styleUrls: ['products.scss']
 })
-export class ProductsPage {
-    constructor( public alertController: AlertController ) {}
+export class ProductsPage implements OnInit {
 
-    async selectProduct() {
-        const alert = await this.alertController.create({
-            header: 'Leche south 1 L!',
-            inputs: [
-                {
-                    name: 'productQuantity',
-                    type: 'number',
-                    placeholder: 'Cantidad',
-                    min: 1,
-                    max: 10
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        console.log('Confirm Cancel');
-                    }
-                }, {
-                    text: 'Anadir al carrito',
-                    cssClass: 'pagami',
-                    handler: () => {
-                        console.log('Confirm Ok');
-                    }
-                }
-            ],
-            cssClass: 'ion-color-pagami-surface'
-        });
+    products: Product[] = [];
+    loading = false;
 
-        await alert.present();
+    constructor(private alertController: AlertController,
+                private toast: ToastProvider,
+                private intentProvider: UserIntentProvider,
+                private productsService: ProductsService) {
     }
+
+    ngOnInit(): void {
+        this.loading = true;
+        this.productsService.getByPlaceId(this.intentProvider.myBusinessId)
+            .then(success => {
+                if (success.passed) {
+                    this.products = success.response;
+                    this.loading = false;
+                } else {
+                    this.toast.messageErrorWithoutTabs('No hemos podido cargar sus productos, compruebe su conexion');
+                    this.loading = false;
+                }
+            }).catch(error => {
+                this.toast.messageErrorWithoutTabs('No hemos podido cargar sus productos, compruebe su conexion');
+                this.loading = false;
+            });
+    }
+
+
 }

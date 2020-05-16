@@ -10,6 +10,10 @@ export class FireStorage {
     constructor(private storageFire: AngularFireStorage) {
     }
 
+    saveProductImage(image) {
+        return this.uploadImage(image, 'product');
+    }
+
     saveProfileImage(image) {
         return this.uploadImage(image, 'profile');
     }

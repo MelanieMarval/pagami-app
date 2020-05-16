@@ -18,7 +18,7 @@
 
     <div class="add-image add-image-margin">
         <div class="add-image-background">
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="fileProgress($event)"></ion-input>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage($event)"></ion-input>
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">
@@ -28,24 +28,52 @@
         </div>
     </div>
 
-    <ion-list lines="none" class="inputs-container">
-        <ion-item color="pagami-surface">
-            <ion-label position="floating">Nombre del producto</ion-label>
-            <ion-input type="text" name="name" [(ngModel)]="product.name"></ion-input>
-        </ion-item>
-        <ion-item color="pagami-surface">
-            <ion-label position="floating">Precio del producto</ion-label>
-            <ion-input type="text" name="price" [(ngModel)]="product.price"></ion-input>
-        </ion-item>
-        <ion-item color="pagami-surface">
-            <ion-label position="floating">Cantidad disponible</ion-label>
-            <ion-input type="number" name="stock" [(ngModel)]="product.stock"></ion-input>
-        </ion-item>
-    </ion-list>
+    <form *ngIf="form" [formGroup]="form">
+        <ion-list lines="none" class="inputs-container --with-formGroup">
+
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Nombre del producto</ion-label>
+                <ion-input type="text" formControlName="name"></ion-input>
+            </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('name').errors?.required && form.get('name').touched">*Este campo es requerido</small>
+                <small *ngIf="form.get('name').errors?.minlength">Máximo 5 carácteres</small>
+                <small *ngIf="form.get('name').errors?.maxlength">Máximo 50 carácteres</small>
+            </div>
+
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Precio del producto</ion-label>
+                <ion-input type="number" formControlName="price">$ &nbsp;</ion-input>
+            </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('price').errors?.min && form.get('price').touched">Minimo 1 $</small>
+                <small *ngIf="form.get('price').errors?.max">Máximo 1000000 $</small>
+            </div>
+
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Cantidad disponible</ion-label>
+                <ion-input type="number" formControlName="stock"></ion-input>
+            </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('stock').errors?.required && form.get('stock').touched">*Este campo es requerido</small>
+                <small *ngIf="form.get('stock').errors?.max">Máximo 500 unidades</small>
+            </div>
+
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Notas o comentarios (opcional)</ion-label>
+                <ion-textarea rows="6" maxlength="300" formControlName="description"></ion-textarea>
+            </ion-item>
+            <div class="error-text">
+                <small *ngIf="form.get('description').errors?.maxlength">Máximo 300 carácteres</small>
+            </div>
+
+        </ion-list>
+    </form>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-corner-lr">
-        <ion-fab-button color="pagami" (click)="onSubmit()">
-            <ion-icon name="save"></ion-icon>
+        <ion-fab-button [disabled]="form.invalid || updating" color="pagami" (click)="saveProduct()">
+            <ion-icon *ngIf="!updating" name="save"></ion-icon>
+            <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
         </ion-fab-button>
     </ion-fab>
 

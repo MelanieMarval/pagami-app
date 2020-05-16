@@ -1,58 +1,107 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { InputFilePage } from '../../parent/InputFilePage';
 import { GeolocationService } from '../../../core/geolocation/geolocation.service';
-import { ValidationUtils } from '../../../utils/validation.utils';
 import { ToastProvider } from '../../../providers/toast.provider';
+import { FireStorage } from '../../../core/fire-storage/fire.storage';
+import { Product } from '../../../core/api/products/product';
+import { ProductsService } from '../../../core/api/products/products.service';
+import { StorageProvider } from '../../../providers/storage.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
 
 @Component({
     selector: 'app-add-product',
     templateUrl: 'add-product.html',
     styleUrls: ['add-product.scss']
 })
-export class AddProductPage extends InputFilePage {
+export class AddProductPage extends InputFilePage implements OnInit {
 
-    product = {
-        name: '',
-        price: 0,
-        stock: 0,
-    };
+    form: FormGroup;
+    product: Product;
+    updating = false;
 
     constructor(
         private http: HttpClient,
         private alertController: AlertController,
         private route: Router,
         private toast: ToastProvider,
-        protected geolocationService: GeolocationService
-    ) {
+        private fireStorage: FireStorage,
+        private userIntent: UserIntentProvider,
+        private productsService: ProductsService,
+        protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
 
-    onSubmit() {
-        if (!ValidationUtils.validateEmpty(this.product)) {
-            this.toast.messageErrorWithoutTabs('Todos los campos deben estar llenos').then();
-        }
-        // const formData = new FormData();
-        // formData.append('file', this.fileData);
-        // this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', formData, {
-        //     reportProgress: true,
-        //     observe: 'events'
-        // })
-        //     .subscribe(events => {
-        //         if (events.type === HttpEventType.UploadProgress) {
-        //             this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-        //             console.log(this.fileUploadProgress);
-        //         } else if (events.type === HttpEventType.Response) {
-        //             this.fileUploadProgress = '';
-        //             console.log(events.body);
-        //             alert('SUCCESS !!');
-        //         }
-        //
-        //     });
+    get data() {
+        return this.form.controls;
+    }
 
-        this.route.navigate(['/app/my-products']).then();
+    ngOnInit(): void {
+        this.form = new FormGroup({
+            name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
+            price: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(10000000)]),
+            stock: new FormControl(0, [Validators.required, Validators.max(500)]),
+            description: new FormControl('', Validators.maxLength(300))
+        });
+    }
+
+    saveProduct() {
+        if (!this.previewUrl) {
+            return this.toast.messageErrorWithoutTabs('Debe seleccionar una imagen para representar su producto');
+        }
+        const placeId = this.userIntent.myBusinessId;
+        this.product = {
+            placeId,
+            name: this.data.name.value,
+            price: this.data.price.value,
+            stock: this.data.stock.value,
+            description: this.data.description.value,
+            available: true
+        };
+        if (!this.product.photoUrl) {
+            this.saveImage();
+        } else {
+            if (this.previewUrl !== this.product.photoUrl) {
+                this.saveImage();
+            } else {
+                this.updateProduct();
+            }
+        }
+    }
+
+    async saveImage() {
+        this.updating = true;
+        const success = await this.fireStorage.saveProfileImage(this.fileData);
+        if (success) {
+            this.product.photoUrl = success;
+            this.previewUrl = success;
+            this.updateProduct();
+        } else {
+            this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargarndo la imagen. Intente de nuevo');
+            this.updating = false;
+        }
+    }
+
+    updateProduct() {
+        this.updating = true;
+        this.productsService.save(this.product)
+            .then(success => {
+                if (success.passed) {
+                    this.toast.messageSuccessWithoutTabs('Su producto ha sido guardado con exito!');
+                    this.route.navigate(['/app/my-products']);
+                    this.updating = false;
+                } else {
+                    this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargarndo la imagen. Intente de nuevo');
+                    this.updating = false;
+                }
+            }).catch(error => {
+                this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargarndo la imagen. Intente de nuevo');
+                this.updating = false;
+            });
     }
 
     async confirmDeleteProduct() {
