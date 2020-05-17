@@ -25,7 +25,9 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     isEditing = false;
     user: User = {location: {}};
+    userEdit: User = {location: {}};
     updating = false;
+    locationSelected = true;
 
     constructor(
         private router: Router,
@@ -50,6 +52,9 @@ export class ProfilePage extends InputFilePage implements OnInit {
         this.user.location.address = place.description;
         this.user.location.country = place.terms.slice(-1)[0].value;
         this.places = [];
+        setTimeout(() => {
+            this.locationSelected = true;
+        }, 500);
     }
 
     editProfile() {
@@ -58,14 +63,23 @@ export class ProfilePage extends InputFilePage implements OnInit {
             this.updating = false;
         } else {
             this.isEditing = true;
+            this.userEdit = Object.assign({}, this.user);
+            setTimeout(() => {
+                this.locationSelected = true;
+            }, 500);
         }
     }
 
+    locationChanged(target: EventTarget) {
+        this.locationSelected = false;
+        this.searchPlace(target, true);
+    }
+
     validateForm() {
-        if (!ValidationUtils.validateEmpty(this.user)) {
+        if (!ValidationUtils.validateEmpty(this.userEdit)) {
             return this.toast.messageErrorWithoutTabs('Todos su informacion debe estar rellenada');
         }
-        if (!ValidationUtils.validatePhone(this.user.phone)) {
+        if (!ValidationUtils.validatePhone(this.userEdit.phone)) {
             return this.toast.messageErrorWithoutTabs('Su numero de telefono debe contener minimo 8 digitos y menos de 15', 2500);
         }
         if (this.previewUrl !== this.user.photoUrl) {
@@ -79,7 +93,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
         this.updating = true;
         const success = await this.fireStorage.saveProfileImage(this.fileData);
         if (success) {
-            this.user.photoUrl = success;
+            this.userEdit.photoUrl = success;
             this.updateUser();
         } else {
             this.errorUpdating();
@@ -88,7 +102,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     updateUser() {
         this.updating = true;
-        this.authService.update(this.user)
+        this.authService.update(this.userEdit)
             .then(async success => {
                 if (success.passed === true) {
                     await this.storageService.setPagamiUser(success.response);
