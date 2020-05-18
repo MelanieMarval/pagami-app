@@ -103,7 +103,7 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
                     this.intentProvider.returnClaimToVerified = success.response;
                     this.toast.messageSuccessWithoutTabs('Esta empresa ha sido rechazada exitosamente');
                 } else {
-                    this.toast.messageErrorAboveButton('No se ha rechazar la empresa. Intente nuevamente!');
+                    this.toast.messageErrorAboveButton('No se ha podido rechazar la empresa. Intente nuevamente!');
                 }
             });
     }
@@ -117,8 +117,8 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
                     this.toast.messageErrorAboveButton('Hemos tenido problemas compruebe su conexion a internet');
                 }
             }).catch(error => {
-            this.toast.messageErrorAboveButton('Hemos tenido problemas compruebe su conexion a internet');
-        });
+                this.toast.messageErrorAboveButton('Hemos tenido problemas internos. Intente mas tarde');
+            });
     }
 
     viewPlace() {
@@ -130,8 +130,8 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
                     this.toast.messageErrorAboveButton('Hemos tenido problemas compruebe su conexion a internet');
                 }
             }).catch(error => {
-            this.toast.messageErrorAboveButton('Hemos tenido problemas compruebe su conexion a internet');
-        });
+                this.toast.messageErrorAboveButton('Hemos tenido problemas internos. Intente mas tarde');
+            });
     }
 
     goToUserDetails() {

@@ -144,6 +144,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     searchBusiness() {
+        this.toast.messageInfoForMap('Busca tu empresa en el mapa y seleccionala para continuar');
         this.isSearching = true;
     }
 

@@ -147,6 +147,10 @@ select:-webkit-autofill:focus {
     width: 95%;
     transform: translateY(-80px) translateX(3%);
 }
+.toast-bottom-custom-for-map {
+    width: 78%;
+    transform: translateY(-50px) translateX(3%);
+}
 /* END toast */
 /*  ***********************  */
 
@@ -177,6 +181,9 @@ ion-bottom-drawer {
 }
 
 /* ****EXTRAS***** */
+.swiper-pagination-bullet {
+    display: none;
+}
 .swiper-pagination-bullet-active {
     --bullet-background-active: #f6ad55;
 }

@@ -18,30 +18,37 @@ export class BusinessClaimPage implements OnInit {
     claim: Claim;
     loading: false;
     saved: boolean;
+    st = 'njkdniudhiuHYHY';
 
     constructor(private router: Router,
                 private intentProvider: UserIntentProvider,
                 private toast: ToastProvider,
                 private claimService: ClaimService) {
     }
+    get data() {
+        return this.form.controls;
+    }
 
     ngOnInit(): void {
         this.form = new FormGroup({
-            // @ts-ignore
-            placeId: new FormControl(this.intentProvider.placeToClaim.id),
-            businessRuc: new FormControl('', [Validators.required, Validators.maxLength(20)]),
             businessPhone: new FormControl('', [Validators.required,
                 Validators.minLength(8),
                 Validators.maxLength(15),
-                Validators.pattern('^(\\+[1-9][0-9]*(\\([0-9]*\\)|-[0-9]*-))?[0]?[1-9][0-9\\- ]*$')]),
+                Validators.pattern('^\\+?[0-9]{1,3}[0-9]{4,14}(?:x.+)?$')]),
             businessEmail: new FormControl('', [Validators.required,
-                Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$')]),
+                Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$')]),
             businessComment: new FormControl('', [Validators.minLength(5), Validators.maxLength(300)])
         });
     }
 
     saveData() {
-        this.claim = this.form.value;
+        const businessEmail = this.data.businessEmail.value.toLowerCase().trim();
+        this.claim = {
+            placeId: this.intentProvider.placeToClaim.id,
+            businessPhone: this.data.businessPhone.value,
+            businessEmail,
+            businessComment: this.data.businessComment.value
+        };
 
         this.claimService.claimBusiness(this.claim)
             .then(success => {
@@ -53,6 +60,8 @@ export class BusinessClaimPage implements OnInit {
                 } else {
                     this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');
                 }
+            }).catch(error => {
+                this.toast.messageErrorWithoutTabs('Estamos experimentando problemas. Intente mas tarde!');
             });
     }
 }

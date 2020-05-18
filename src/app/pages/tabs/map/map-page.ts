@@ -198,7 +198,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.intentProvider.placeToClaim = place;
                 this.router.navigate(['app/shop']);
             } else {
-                this.toast.messageSuccessAboveButton('No puede reclamar esta empresa');
+                this.toast.messageInfoForMap('No puede reclamar esta empresa <br>Ya ha sido reclamada.', 2000);
             }
         } else if (this.currentUrl === MAP_MODE.SEARCH) {
             this.fabAttached = false;

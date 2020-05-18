@@ -20,6 +20,18 @@ export class ToastProvider {
         await toast.present();
     }
 
+    async messageInfoForMap(message: string, duration = 5000) {
+        const toast = await this.toastController.create({
+            message,
+            duration,
+            cssClass: 'toast-bottom-custom-for-map',
+            color: 'pagami-surface',
+            position: 'bottom',
+        });
+
+        await toast.present();
+    }
+
     async messageSuccessWithoutTabs(message: string, duration = 2000, color = 'pagami-surface') {
         const toast = await this.toastController.create({
             message,
