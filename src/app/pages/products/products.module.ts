@@ -7,6 +7,7 @@ import {ProductsPageRoutingModule} from './products-routing.module';
 import {ProductsPage} from './products';
 import {AddProductPage} from './add-product/add-product';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from '../../pipes/pipes.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         HttpClientModule,
         ProductsPageRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        PipesModule
     ],
     declarations: [
         ProductsPage,

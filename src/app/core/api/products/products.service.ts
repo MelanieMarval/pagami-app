@@ -27,9 +27,21 @@ export class ProductsService {
         return this.apiService.serverListener(request);
     }
 
+    async update(product: Product, id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}`, product, options);
+        return this.apiService.serverListener(request);
+    }
+
     async getByPlaceId(placeId: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}/place/${placeId}`, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async delete(id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.delete(`${this.URL}/${id}`, options );
         return this.apiService.serverListener(request);
     }
 

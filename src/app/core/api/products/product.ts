@@ -4,6 +4,8 @@ export interface Product {
     name: string;
     stock: number;
     price: number;
+    localPrice?: number;
+    localCurrency?: string;
     description?: string;
     photoUrl?: string;
     available?: boolean;

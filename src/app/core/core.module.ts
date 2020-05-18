@@ -10,6 +10,8 @@ import { FireStorage } from './fire-storage/fire.storage';
 import { PlansService } from './api/plans/plans.service';
 import { ClaimService } from './api/claim/claim.service';
 import { NotificationsService } from './api/notifications/notifications.service';
+import { ProductsService } from './api/products/products.service';
+import { CurrenciesService } from './api/currencies/currencies.service';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { NotificationsService } from './api/notifications/notifications.service'
         PlacesService,
         PlansService,
         ClaimService,
-        NotificationsService
+        NotificationsService,
+        ProductsService,
+        CurrenciesService
     ]
 })
 export class CoreModule {

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 // Services
@@ -17,7 +17,7 @@ import { UsersService } from '../../../../core/api/users/users.service';
     templateUrl: 'claim-details.html',
     styleUrls: ['claim-details.scss']
 })
-export class ClaimDetailsPage implements OnInit, AfterViewChecked {
+export class ClaimDetailsPage implements OnInit {
 
     STATUS = PLACES.STATUS;
     claim: Claim;
@@ -42,11 +42,6 @@ export class ClaimDetailsPage implements OnInit, AfterViewChecked {
         this.claim = this.intentProvider.claimToVerified;
         this.viewUser();
         this.viewPlace();
-    }
-
-    ngAfterViewChecked(): void {
-        // this.viewUser();
-        // this.viewPlace();
     }
 
     verifyClaim() {

@@ -7,9 +7,9 @@ import { ApiResponse } from '../api.response';
 @Injectable({
     providedIn: 'root'
 })
-export class NotificationsService {
+export class CurrenciesService {
 
-    private URL = `${environment.API_URL}/notifications`;
+    private URL = `${environment.API_URL}/currencies`;
     private httpClient: HttpClient;
 
     constructor(private apiService: ApiService) {
@@ -17,21 +17,13 @@ export class NotificationsService {
     }
 
     /**
-     * this method get all user notifications unread
+     * this method get all currencies in database
      */
-    async getNotifications(): Promise<ApiResponse> {
+    async getCurrencies(): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.get(`${this.URL}`, options);
         return this.apiService.serverListener(request);
     }
 
-    /**
-     * this method put all notifications from places accepted and rejected to unread
-     */
-    async putReadAllAcceptedAndRejected(): Promise<ApiResponse> {
-        const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.put(`${this.URL}/read/all-accepted-rejected`, {}, options);
-        return this.apiService.serverListener(request);
-    }
 
 }

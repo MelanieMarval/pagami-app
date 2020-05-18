@@ -4,7 +4,7 @@
             <ion-back-button defaultHref="/app/my-products"></ion-back-button>
         </ion-buttons>
         <ion-title class="without-right">Agrega Producto</ion-title>
-        <ion-buttons slot="end" class="right-button">
+        <ion-buttons slot="end" class="right-button button-hover-circle">
             <ion-button (click)="confirmDeleteProduct()">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
@@ -31,7 +31,7 @@
     <form *ngIf="form" [formGroup]="form">
         <ion-list lines="none" class="inputs-container --with-formGroup">
 
-            <ion-item color="pagami-surface">
+            <ion-item color="pagami-surface" [disabled]="updating">
                 <ion-label position="floating">Nombre del producto</ion-label>
                 <ion-input type="text" formControlName="name"></ion-input>
             </ion-item>
@@ -41,17 +41,34 @@
                 <small *ngIf="form.get('name').errors?.maxlength">Máximo 50 carácteres</small>
             </div>
 
-            <ion-item color="pagami-surface">
-                <ion-label position="floating">Precio del producto</ion-label>
+            <ion-item-group class="group-flex">
+                <ion-item color="pagami-surface" [disabled]="updating">
+                    <ion-label position="floating">Moneda</ion-label>
+                    <ion-select okText="Aceptar" cancelText="Cancelar" formControlName="localCurrency" [value]="currency?.code">
+                        <ion-select-option *ngFor="let currency of currencies" [value]="currency.code" >{{currency.code}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item color="pagami-surface" [disabled]="updating">
+                    <ion-label position="floating">Precio del producto</ion-label>
+                    <ion-input type="number" formControlName="localPrice"></ion-input>
+                </ion-item>
+            </ion-item-group>
+            <div class="error-text">
+<!--                <small >Minimo 1 </small>-->
+<!--                <small *ngIf="form.get('localPrice').errors?.max">Máximo 1000000 $</small>-->
+            </div>
+
+            <ion-item color="pagami-surface" [disabled]="updating">
+                <ion-label position="floating">Equivalente en dolares</ion-label>
                 <ion-input type="number" formControlName="price"></ion-input>
-                <ion-icon name="logo-usd" slot="start" class="ion-margin-end"></ion-icon>
+                <ion-icon slot="start" name="logo-usd"></ion-icon>
             </ion-item>
             <div class="error-text">
                 <small *ngIf="form.get('price').errors?.min && form.get('price').touched">Minimo 1 $</small>
                 <small *ngIf="form.get('price').errors?.max">Máximo 1000000 $</small>
             </div>
 
-            <ion-item color="pagami-surface">
+            <ion-item color="pagami-surface" [disabled]="updating">
                 <ion-label position="floating">Cantidad disponible</ion-label>
                 <ion-input type="number" formControlName="stock"></ion-input>
             </ion-item>
@@ -59,8 +76,17 @@
                 <small *ngIf="form.get('stock').errors?.required && form.get('stock').touched">*Este campo es requerido</small>
                 <small *ngIf="form.get('stock').errors?.max">Máximo 500 unidades</small>
             </div>
+        </ion-list>
 
-            <ion-item color="pagami-surface">
+        <ion-item-group class="toggles-container mt-0">
+            <ion-item lines="none" class=" mt-0" [disabled]="updating">
+                <ion-label>Activo</ion-label>
+                <ion-toggle slot="end" color="pagami" formControlName="available"></ion-toggle>
+            </ion-item>
+        </ion-item-group>
+
+        <ion-list lines="none" class="inputs-container --with-formGroup">
+            <ion-item color="pagami-surface" [disabled]="updating">
                 <ion-label position="floating">Notas o comentarios (opcional)</ion-label>
                 <ion-textarea rows="6" maxlength="300" formControlName="description"></ion-textarea>
             </ion-item>

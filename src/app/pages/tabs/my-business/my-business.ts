@@ -57,7 +57,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         if (myBusiness) {
             this.loading = false;
             this.isRegister = true;
-            this.intentProvider.myBusinessId = myBusiness.id;
+            this.intentProvider.myBusinessDetails = {id: myBusiness.id, name: myBusiness.name, acronym: myBusiness.location.acronym};
             this.place = myBusiness;
             this.previewUrl = this.place.photoUrl;
         } else {
