@@ -10,7 +10,6 @@ import { ToastProvider } from '../../../providers/toast.provider';
 import { FireStorage } from '../../../core/fire-storage/fire.storage';
 import { Product } from '../../../core/api/products/product';
 import { ProductsService } from '../../../core/api/products/products.service';
-import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 
 @Component({
@@ -30,7 +29,7 @@ export class AddProductPage extends InputFilePage implements OnInit {
         private route: Router,
         private toast: ToastProvider,
         private fireStorage: FireStorage,
-        private userIntent: UserIntentProvider,
+        private intentProvider: UserIntentProvider,
         private productsService: ProductsService,
         protected geolocationService: GeolocationService) {
         super(geolocationService);
@@ -43,17 +42,39 @@ export class AddProductPage extends InputFilePage implements OnInit {
     ngOnInit(): void {
         this.form = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
-            price: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(10000000)]),
-            stock: new FormControl(0, [Validators.required, Validators.max(500)]),
+            price: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10000000)]),
+            stock: new FormControl('', [Validators.required, Validators.max(500)]),
             description: new FormControl('', Validators.maxLength(300))
         });
+        if (this.intentProvider.productToEdit) {
+            this.loadForm('edit');
+        } else {
+            this.loadForm('add');
+        }
+    }
+
+    loadForm(action: string, product?: Product) {
+        if ('add') {
+            this.form.reset();
+        } else {
+            const productValues = {
+                name: product.name,
+                stock: product.stock,
+                price: product.price,
+                description: product.description,
+                // description: product.description ? product.description : '',
+                available: product.available
+            };
+            this.previewUrl = product.photoUrl;
+            this.form.setValue(productValues);
+        }
     }
 
     saveProduct() {
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe seleccionar una imagen para representar su producto');
         }
-        const placeId = this.userIntent.myBusinessId;
+        const placeId = this.intentProvider.myBusinessId;
         this.product = {
             placeId,
             name: this.data.name.value,
@@ -99,9 +120,9 @@ export class AddProductPage extends InputFilePage implements OnInit {
                     this.updating = false;
                 }
             }).catch(error => {
-                this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargarndo la imagen. Intente de nuevo');
-                this.updating = false;
-            });
+            this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargarndo la imagen. Intente de nuevo');
+            this.updating = false;
+        });
     }
 
     async confirmDeleteProduct() {

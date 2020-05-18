@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
 import { Claim } from '../core/api/claim/claim';
 import { PagamiGeo } from '../core/geolocation/pagami.geo';
+import { Product } from '../core/api/products/product';
 
 
 @Injectable({
@@ -17,6 +18,8 @@ export class UserIntentProvider {
     private _showingPlaceDetails = false;
     private _lastUpdatedPoint: PagamiGeo;
     private _myBusinessId: string;
+    private _productToEdit: Product;
+    private _productEdited: Product;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -82,5 +85,22 @@ export class UserIntentProvider {
 
     set myBusinessId(value: string) {
         this._myBusinessId = value;
+    }
+
+
+    get productToEdit(): Product {
+        return this._productToEdit;
+    }
+
+    set productToEdit(value: Product) {
+        this._productToEdit = value;
+    }
+
+    get productEdited(): Product {
+        return this._productEdited;
+    }
+
+    set productEdited(value: Product) {
+        this._productEdited = value;
     }
 }

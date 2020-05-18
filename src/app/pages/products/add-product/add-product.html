@@ -43,7 +43,8 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Precio del producto</ion-label>
-                <ion-input type="number" formControlName="price">$ &nbsp;</ion-input>
+                <ion-input type="number" formControlName="price"></ion-input>
+                <ion-icon name="logo-usd" slot="start" class="ion-margin-end"></ion-icon>
             </ion-item>
             <div class="error-text">
                 <small *ngIf="form.get('price').errors?.min && form.get('price').touched">Minimo 1 $</small>

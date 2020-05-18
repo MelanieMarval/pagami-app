@@ -13,6 +13,10 @@ const routes: Routes = [
     {
         path: 'add-product',
         component: AddProductPage
+    },
+    {
+        path: 'edit-product',
+        component: AddProductPage
     }
 ];
 

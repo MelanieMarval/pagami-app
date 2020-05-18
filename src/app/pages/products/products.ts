@@ -4,6 +4,7 @@ import { ProductsService } from '../../core/api/products/products.service';
 import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { Product } from '../../core/api/products/product';
 import { ToastProvider } from '../../providers/toast.provider';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-products',
@@ -16,6 +17,7 @@ export class ProductsPage implements OnInit {
     loading = false;
 
     constructor(private alertController: AlertController,
+                private router: Router,
                 private toast: ToastProvider,
                 private intentProvider: UserIntentProvider,
                 private productsService: ProductsService) {
@@ -39,4 +41,8 @@ export class ProductsPage implements OnInit {
     }
 
 
+    openProduct(product: Product) {
+        this.intentProvider.productToEdit = product;
+        this.router.navigateByUrl('/app/my/products/edit-product');
+    }
 }
