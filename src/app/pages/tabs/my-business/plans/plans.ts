@@ -54,7 +54,7 @@ export class PlansPage implements OnInit {
             //         if (success.passed) {
             this.save = true;
             this.intentProvider.placeToClaim = undefined;
-            this.toast.messageSuccessBottom('Gracias por tu compra. <br>La verificacion de tu empresa esta en camino!', 3000);
+            this.toast.messageDefault('Gracias por tu compra. <br>La verificacion de tu empresa esta en camino!', 'bottom', 3000);
                 //     } else {
                 //         this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');
                 //     }
