@@ -56,7 +56,8 @@ export class BusinessClaimPage implements OnInit {
                 if (success.passed) {
                     this.saved = true;
                     this.intentProvider.placeToClaim = undefined;
-                    this.toast.messageSuccessBottom('Gracias por tu solicitud. <br>La verificacion de tu empresa esta en camino!', 3000);
+                    this.toast.messageDefault('Gracias por tu solicitud. <br>La verificacion de tu empresa esta en camino!', 'middle', 3500);
+                    this.router.navigateByUrl('/app/tabs/map/search');
                 } else {
                     this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');
                 }
