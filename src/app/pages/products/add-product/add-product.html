@@ -44,7 +44,7 @@
             <ion-item-group class="group-flex">
                 <ion-item color="pagami-surface" [disabled]="updating">
                     <ion-label position="floating">Moneda</ion-label>
-                    <ion-select okText="Aceptar" cancelText="Cancelar" formControlName="localCurrency" [value]="currency?.code">
+                    <ion-select okText="Aceptar" cancelText="Cancelar"  [value]="currency?.code" formControlName="localCurrency">
                         <ion-select-option *ngFor="let currency of currencies" [value]="currency.code" >{{currency.code}}</ion-select-option>
                     </ion-select>
                 </ion-item>
