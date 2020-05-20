@@ -97,14 +97,18 @@ export class PlaceUtils {
             return `assets/marker-icons/servicio_medico${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'servicio_tecnico') {
             return `assets/marker-icons/servicio_tecnico${PlaceUtils.getIconSuffix(place, suffix)}`;
-        } else if (place.category.icon === 'taller') {
-            return `assets/marker-icons/taller${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'taller_motos') {
+            return `assets/marker-icons/taller_motos${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'taller_vehiculos') {
+            return `assets/marker-icons/taller_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'taxi') {
-            return `assets/marker-icons/tienda_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
+            return `assets/marker-icons/taxi${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'tienda_deporte') {
             return `assets/marker-icons/tienda_deporte${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'tienda_motos') {
             return `assets/marker-icons/tienda_motos${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'tienda_vehiculos') {
+            return `assets/marker-icons/tienda_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'tienda_ropa') {
             return `assets/marker-icons/tienda_ropa${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'veterinario') {

@@ -25,7 +25,7 @@
         <ion-list lines="none" class="inputs-container --with-formGroup">
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Teléfono de contacto</ion-label>
-                <ion-input formControlName="businessPhone" type="text" maxlength="15" [disabled]="saved"></ion-input>
+                <ion-input formControlName="businessPhone" type="text" maxlength="15" [attr.disabled]="saved"></ion-input>
                 <ion-icon slot="start" src="assets/icon/call.svg"></ion-icon>
             </ion-item>
             <div class="info-text" *ngIf="form.get('businessPhone').untouched || form.get('businessPhone').valid">
@@ -39,7 +39,7 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Correo de contacto</ion-label>
-                <ion-input formControlName="businessEmail" type="text" [disabled]="saved"></ion-input>
+                <ion-input formControlName="businessEmail" type="text" [attr.disabled]="saved"></ion-input>
                 <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
             </ion-item>
             <div class="error-text">
@@ -49,7 +49,7 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Notas o comentarios (opcional)</ion-label>
-                <ion-textarea rows="6" maxlength="300" formControlName="businessComment" [disabled]="saved"></ion-textarea>
+                <ion-textarea rows="6" maxlength="300" formControlName="businessComment" [attr.disabled]="saved"></ion-textarea>
             </ion-item>
             <div class="error-text">
                 <small *ngIf="form.get('businessComment').errors?.minlength && form.get('businessComment').touched">Mínimo 5 carácteres y máximo 300</small>
@@ -59,8 +59,9 @@
     </form>
 
     <ion-footer *ngIf="!saved" class="footer-button footer-button--div">
-        <ion-button class="button-large" expand="block" color="pagami" type="submit" [disabled]="form.invalid" (click)="saveData()">
-            Enviar datos
+        <ion-button class="button-large" expand="block" color="pagami" type="submit" [disabled]="form.invalid || loading" (click)="saveData()">
+            <span *ngIf="!loading">Enviar datos</span>
+            <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
         </ion-button>
     </ion-footer>
 </ion-content>

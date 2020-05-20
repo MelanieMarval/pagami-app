@@ -39,7 +39,7 @@
     </ion-header>
 
     <ion-list lines="none" class="inputs-container">
-        <ion-item color="pagami-surface" [href]="'https://wa.me/' + (place.samePhone ? place.phone : place.whatsapp)">
+        <ion-item *ngIf="place.whatsapp || place.samePhone" color="pagami-surface" [href]="'https://wa.me/' + (place.samePhone ? place.phone : place.whatsapp)">
             <ion-label position="floating">WhatsApp</ion-label>
             <ion-input readonly [value]="place.samePhone ? place.phone : place.whatsapp"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
@@ -49,7 +49,7 @@
             <ion-input readonly [value]="place.phone"></ion-input>
             <ion-icon src="assets/icon/call.svg" slot="start"></ion-icon>
         </ion-item>
-        <ion-item color="pagami-surface" (click)="browser.open(place.website)">
+        <ion-item *ngIf="place.website" color="pagami-surface" (click)="browser.open(place.website)">
             <ion-label position="floating">Pagina Web</ion-label>
             <ion-input readonly [value]="place.website"></ion-input>
             <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>

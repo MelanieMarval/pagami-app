@@ -16,7 +16,7 @@ export class BusinessClaimPage implements OnInit {
 
     form: FormGroup;
     claim: Claim;
-    loading: false;
+    loading = false;
     saved: boolean;
     st = 'njkdniudhiuHYHY';
 
@@ -25,11 +25,12 @@ export class BusinessClaimPage implements OnInit {
                 private toast: ToastProvider,
                 private claimService: ClaimService) {
     }
+
     get data() {
         return this.form.controls;
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.form = new FormGroup({
             businessPhone: new FormControl('', [Validators.required,
                 Validators.minLength(8),
@@ -42,6 +43,7 @@ export class BusinessClaimPage implements OnInit {
     }
 
     saveData() {
+        this.loading = true;
         const businessEmail = this.data.businessEmail.value.toLowerCase().trim();
         this.claim = {
             placeId: this.intentProvider.placeToClaim.id,
@@ -49,7 +51,6 @@ export class BusinessClaimPage implements OnInit {
             businessEmail,
             businessComment: this.data.businessComment.value
         };
-
         this.claimService.claimBusiness(this.claim)
             .then(success => {
                 this.loading = false;

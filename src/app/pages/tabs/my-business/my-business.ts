@@ -96,6 +96,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     validateBusiness() {
+        console.log(this.place);
         if (!ValidationUtils.validateEmpty(this.place, ['website', 'whatsapp'])) {
             this.toast.messageErrorAboveButton('Todos los campos deben estar llenos para poder guardar');
             return;
