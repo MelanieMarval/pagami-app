@@ -28,7 +28,7 @@
                 <ion-input formControlName="businessPhone" type="text" maxlength="15" [attr.disabled]="saved"></ion-input>
                 <ion-icon slot="start" src="assets/icon/call.svg"></ion-icon>
             </ion-item>
-            <div class="info-text" *ngIf="form.get('businessPhone').untouched || form.get('businessPhone').valid">
+            <div class="info-text business-phone" *ngIf="form.get('businessPhone').untouched || form.get('businessPhone').valid">
                 <small>Recuerda incluir el codigo de tu pais (Ej: +5700000000)<br></small>
             </div>
             <div class="error-text" *ngIf="form.get('businessPhone').touched && form.get('businessPhone').invalid">

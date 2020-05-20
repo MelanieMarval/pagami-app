@@ -271,28 +271,12 @@ export class GoogleMapPage {
                 lng: -66.8791885
             },
             zoom: 18,
+            minZoom: 2,
             mapTypeControl: false,
             zoomControl: false,
             streetViewControl: false,
             fullscreenControl: false,
             styles: removeDefaultMarkers
-        };
-    }
-
-    getDefaultOptionsLocked(): any {
-        return {
-            center: {
-                lat: 10.4880104,
-                lng: -66.8791885
-            },
-            zoom: 18,
-            minZoom: 18,
-            maxZoom: 18,
-            mapTypeControl: false,
-            zoomControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            draggable: false
         };
     }
 
