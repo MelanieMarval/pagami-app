@@ -124,7 +124,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     async deleteAccountConfirm() {
         const alert = await this.alertController.create({
-            header: 'Eliminacion de cuenta',
+            header: 'Eliminación de cuenta',
             message: 'Si eliminas tu cuenta toda tu información se perderá y no podrás recuperla',
             buttons: [
                 {

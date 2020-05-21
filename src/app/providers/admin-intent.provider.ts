@@ -10,6 +10,7 @@ import { Claim } from '../core/api/claim/claim';
 export class AdminIntentProvider {
 
     private _placeToView: Place;
+    private _placeToViewDeleted: Place;
     private _placeToAccept: Place;
     private _placeToEdit: Place;
     private _placeEdited: Place;
@@ -111,5 +112,13 @@ export class AdminIntentProvider {
 
     set needToUpdate(value: boolean) {
         this._needToUpdate = value;
+    }
+
+    get placeToViewDeleted(): Place {
+        return this._placeToViewDeleted;
+    }
+
+    set placeToViewDeleted(value: Place) {
+        this._placeToViewDeleted = value;
     }
 }
