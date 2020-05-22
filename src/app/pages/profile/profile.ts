@@ -14,7 +14,9 @@ import { StorageProvider } from '../../providers/storage.provider';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { ValidationUtils } from '../../utils/validation.utils';
 import { CompressImageProvider } from '../../providers/compress-image.provider';
+import { Plugins } from '@capacitor/core';
 
+const {SplashScreen} = Plugins;
 
 @Component({
     selector: 'app-profile',
@@ -187,7 +189,8 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     async closeSession() {
         await this.googleAuthService.singOut();
-        await this.router.navigateByUrl('/tutorial');
+        SplashScreen.show();
+        location.reload();
     }
 
 

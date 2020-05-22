@@ -110,6 +110,10 @@ export class PlacesService {
         return country.dial_code;
     }
 
+    async getAllCountries(): Promise<any> {
+        return this.httpClient.get('assets/countries.json').toPromise();
+    }
+
     async changeLocation(place: Place): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.put(`${this.URL}/update/location`, place, options);

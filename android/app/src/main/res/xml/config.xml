@@ -6,5 +6,9 @@
     <param name="android-package" value="org.apache.cordova.geolocation.Geolocation"/>
   </feature>
 
+  <feature name="Sim">
+    <param name="android-package" value="com.pbakondy.Sim"/>
+  </feature>
+
   
 </widget>

@@ -34,6 +34,8 @@ import { PlansPage } from './pages/tabs/my-business/plans/plans';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { IonicSelectableModule } from 'ionic-selectable';
+
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -53,6 +55,7 @@ registerLocaleData(localeEs, 'es');
         IonicStorageModule.forRoot(),
         CoreModule,
         PipesModule,
+        IonicSelectableModule
     ],
     providers: [
         StatusBar,
