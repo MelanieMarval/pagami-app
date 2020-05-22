@@ -15,6 +15,9 @@ import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { ValidationUtils } from '../../utils/validation.utils';
 import { CompressImageProvider } from '../../providers/compress-image.provider';
 import { Plugins } from '@capacitor/core';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { PlacesService } from '../../core/api/places/places.service';
+import { Country } from '../../core/api/places/country';
 
 const {SplashScreen} = Plugins;
 
@@ -29,7 +32,9 @@ export class ProfilePage extends InputFilePage implements OnInit {
     user: User = {location: {}};
     userEdit: User = {location: {}};
     updating = false;
-    locationSelected = true;
+    countries: Country[];
+    country: Country;
+    address: string;
 
     constructor(
         private router: Router,
@@ -40,7 +45,8 @@ export class ProfilePage extends InputFilePage implements OnInit {
         private fireStorage: FireStorage,
         private googleAuthService: GoogleAuthService,
         private authService: AuthService,
-        protected geolocationService: GeolocationService,
+        private placesService: PlacesService,
+        protected geolocationService: GeolocationService
     ) {
         super(geolocationService);
     }
@@ -48,15 +54,11 @@ export class ProfilePage extends InputFilePage implements OnInit {
     async ngOnInit() {
         this.user = await this.storageService.getPagamiUser();
         this.previewUrl = this.user.photoUrl;
-    }
-
-    setPlace(place) {
-        this.user.location.address = place.description;
-        this.user.location.country = place.terms.slice(-1)[0].value;
-        this.places = [];
-        setTimeout(() => {
-            this.locationSelected = true;
-        }, 500);
+        await this.placesService.getAllCountries().then(value => {
+            this.countries = value;
+            this.country = this.countries.find(cc => cc.code === 'CO');
+            this.user.phoneCode = this.country.dial_code;
+        });
     }
 
     editProfile() {
@@ -67,14 +69,9 @@ export class ProfilePage extends InputFilePage implements OnInit {
             this.isEditing = true;
             this.userEdit = Object.assign({}, this.user);
             setTimeout(() => {
-                this.locationSelected = true;
+                //this.locationSelected = true;
             }, 500);
         }
-    }
-
-    locationChanged(target: EventTarget) {
-        this.locationSelected = false;
-        this.searchPlace(target, true);
     }
 
     validateForm() {
@@ -189,8 +186,8 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     async closeSession() {
         await this.googleAuthService.singOut();
-        SplashScreen.show();
         location.reload();
+        SplashScreen.show();
     }
 
 
@@ -200,5 +197,9 @@ export class ProfilePage extends InputFilePage implements OnInit {
         } else {
             this.chargeImage($event);
         }
+    }
+
+    countryChange($event: { component: IonicSelectableComponent; value: any }) {
+        this.user.phoneCode = this.country.dial_code;
     }
 }
