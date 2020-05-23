@@ -69,18 +69,28 @@ export class ProfilePage extends InputFilePage implements OnInit {
             this.isEditing = true;
             this.userEdit = Object.assign({}, this.user);
             setTimeout(() => {
-                //this.locationSelected = true;
+                // this.locationSelected = true;
             }, 500);
         }
     }
 
     validateForm() {
-        if (!ValidationUtils.validateEmpty(this.userEdit)) {
-            return this.toast.messageErrorWithoutTabs('Todos su informacion debe estar rellenada');
+        if (!this.userEdit.name) {
+            return this.toast.messageErrorWithoutTabs('Por favor ingrese su nombre');
+        }
+        if (!this.userEdit.lastname) {
+            return this.toast.messageErrorWithoutTabs('Por favor ingrese su apellido');
+        }
+        if (!this.userEdit.location.country) {
+            return this.toast.messageErrorWithoutTabs('Por favor seleccione su pais');
         }
         if (!ValidationUtils.validatePhone(this.userEdit.phone)) {
             return this.toast.messageErrorWithoutTabs('Su numero de telefono debe contener minimo 8 digitos y menos de 15', 2500);
         }
+        if (!this.userEdit.phoneCode) {
+            return this.toast.messageErrorWithoutTabs('Por favor seleccione su pais para que se autocomplete el codigo');
+        }
+
         if (this.previewUrl !== this.user.photoUrl) {
             this.saveImage();
         } else {
@@ -200,6 +210,6 @@ export class ProfilePage extends InputFilePage implements OnInit {
     }
 
     countryChange($event: { component: IonicSelectableComponent; value: any }) {
-        this.user.phoneCode = this.country.dial_code;
+        this.userEdit.phoneCode = this.country.dial_code;
     }
 }

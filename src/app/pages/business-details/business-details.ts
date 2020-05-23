@@ -55,11 +55,8 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
             this.isService = true;
         }
         this.dialCode = await this.placeService.getDialCode(this.place.location.acronym);
-        if (!this.place.phone) {
-            this.place.phone = this.dialCode;
-        }
         if (!this.place.whatsapp) {
-            this.place.whatsapp = this.dialCode;
+            this.place.dialCode = this.dialCode;
         }
     }
 
@@ -113,14 +110,14 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         if (!business.location.address || !business.name || !this.place.type || !business.phone) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
-        if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon', 'website'])) {
+        if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon', 'website', 'whatsapp'])) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
         if (!ValidationUtils.validatePhone(business.phone)) {
             this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener minimo 8 digitos y menos de 15');
             return;
         }
-        if (!this.place.samePhone && business.whatsapp.length > 15 && business.whatsapp !== this.dialCode) {
+        if (!!business.whatsapp && !ValidationUtils.validatePhone(business.whatsapp)) {
             this.toast.messageErrorWithoutTabs('Su número de Whatsapp es incorrecto');
             return;
         }

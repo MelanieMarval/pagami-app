@@ -38,6 +38,9 @@ export class AppComponent {
             const isLogged = await this.storageService.isLogged();
             const user = await this.storageService.getPagamiUser();
 
+            // this.router.navigateByUrl('/user-register', {replaceUrl: true});
+            // return
+
             // const lastUserVerification = await this.storageService.getLastUserVerification();
             if (isLogged && user) {
                 if (user.type && user.type === USER.TYPE.ADMIN) {
