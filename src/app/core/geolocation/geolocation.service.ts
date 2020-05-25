@@ -6,8 +6,8 @@ import { StorageProvider } from '../../providers/storage.provider';
 import { mapToGeoPoint, PagamiGeo } from './pagami.geo';
 
 const defaultCoors = {
-    latitude: 10.4880104,
-    longitude: -66.8791885,
+    latitude: 6.286155564435256,
+    longitude: -75.6074854019129,
     accuracy: 30
 };
 

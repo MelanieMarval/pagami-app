@@ -150,8 +150,8 @@ export class GoogleMapPage {
         if (this.currentPositionMarker) {
             const latLng = this.currentPositionMarker.getPosition();
             const icon = {
-                url: 'assets/marker-icons/pagami_dark_icono.svg',
-                scaledSize: new this.googleMaps.Size(30, 32)
+                url: 'assets/marker-icons/point_marker.svg',
+                scaledSize: new this.googleMaps.Size(64, 64)
             };
             if (this.newPlaceMarker) {
                 this.newPlaceMarker.setMap(null);
@@ -178,8 +178,8 @@ export class GoogleMapPage {
         if (this.currentPositionMarker) {
             const latLng = this.toLatLng(place.latitude, place.longitude);
             const icon = {
-                url: PlaceUtils.getMarker(place, false),
-                scaledSize: new this.googleMaps.Size(30, 32)
+                url: 'assets/marker-icons/point_marker.svg',
+                scaledSize: new this.googleMaps.Size(64, 64)
             };
             if (this.editPlaceMarker) {
                 this.editPlaceMarker.setMap(null);
@@ -267,8 +267,8 @@ export class GoogleMapPage {
     getDefaultOptions(): any {
         return {
             center: {
-                lat: 10.4880104,
-                lng: -66.8791885
+                lat: 6.286155564435256,
+                lng: -75.6074854019129
             },
             zoom: 18,
             minZoom: 2,
