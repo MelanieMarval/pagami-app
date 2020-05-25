@@ -77,9 +77,9 @@
     <app-avatar-header [addClass]="true"></app-avatar-header>
 
     <ion-list class="inputs-container">
-        <ion-item color="pagami-surface">
-            <ion-label position="floating">WhatsApp</ion-label>
-            <ion-input type="tel" readonly [value]="place.samePhone ? place.phone : place.whatsapp"></ion-input>
+        <ion-item color="pagami-surface" *ngIf="place.whatsapp">
+            <ion-label position="floating" >WhatsApp</ion-label>
+            <ion-input type="tel" readonly [value]="place.whatsapp"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
@@ -160,15 +160,16 @@
             <ion-input type="tel" name="phone" [(ngModel)]="place.phone" maxlength="15" [readonly]="updating" required></ion-input>
             <ion-icon name="call" slot="start"></ion-icon>
         </ion-item>
-        <ion-item lines="none" class="checkbox-container checkbox-container--special">
-            <ion-checkbox color="pagami" slot="start" [(ngModel)]="place.samePhone" name="checkShowWhatsapp"></ion-checkbox>
-            <ion-label class="text-wrap">Mi número de WhatsApp es el mismo de arriba</ion-label>
-        </ion-item>
-        <ion-item color="pagami-surface"  class="mb-0">
-            <ion-label position="floating">WhatsApp</ion-label>
-            <ion-input type="tel" name="whatsapp" [(ngModel)]="place.samePhone ? place.phone : place.whatsapp" maxlength="15" [readonly]="updating" [disabled]="place.samePhone"></ion-input>
-            <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-        </ion-item>
+        <ion-item-group class="group-flex">
+            <ion-item color="pagami-surface" class="mb-0">
+                <ion-label position="floating">Código</ion-label>
+                <ion-input [(ngModel)]="place.dialCode" disabled [ngModelOptions]="{standalone: true}"></ion-input>
+            </ion-item>
+            <ion-item color="pagami-surface" class="mb-0">
+                <ion-label position="floating">Número de WhatsApp</ion-label>
+                <ion-input type="tel" [(ngModel)]="place.whatsapp" maxlength="15" [ngModelOptions]="{standalone: true}"></ion-input>
+            </ion-item>
+        </ion-item-group>
             <div class="info-text">
                 <small>*Opcional</small>
             </div>

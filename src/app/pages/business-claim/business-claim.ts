@@ -66,4 +66,8 @@ export class BusinessClaimPage implements OnInit {
                 this.toast.messageErrorWithoutTabs('Estamos experimentando problemas. Intente mas tarde!');
             });
     }
+
+    onWriteEmail() {
+        this.data.businessEmail.setValue(this.data.businessEmail.value.toLowerCase().trim());
+    }
 }

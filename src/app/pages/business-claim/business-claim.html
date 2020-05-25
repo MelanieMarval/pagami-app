@@ -39,7 +39,7 @@
 
             <ion-item color="pagami-surface">
                 <ion-label position="floating">Correo de contacto</ion-label>
-                <ion-input formControlName="businessEmail" type="text" [attr.disabled]="saved"></ion-input>
+                <ion-input formControlName="businessEmail" type="text" [attr.disabled]="saved" (ionChange)="onWriteEmail()"></ion-input>
                 <ion-icon slot="start" src="assets/icon/email.svg"></ion-icon>
             </ion-item>
             <div class="error-text">

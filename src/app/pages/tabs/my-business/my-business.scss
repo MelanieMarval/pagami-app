@@ -107,4 +107,16 @@ img {
     white-space: pre-wrap !important;
 }
 
+.group-flex {
+    display: flex;
+    ion-item:nth-child(1) {
+        width: 130px;
+        border-radius: 5px 0 0 0;
+    }
+    ion-item:nth-child(2) {
+        width: 100%;
+        border-radius: 0 5px 0 0;
+    }
+}
+
 

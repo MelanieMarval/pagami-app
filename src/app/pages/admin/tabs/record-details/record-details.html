@@ -45,14 +45,14 @@
                 </ion-button>
                 <ion-label>{{place.phone}}</ion-label>
             </ion-item>
-            <ion-item class="item-admin ion-no-padding" *ngIf="place.whatsapp || place.samePhone">
-                <ion-button [href]="'https://wa.me/' + (place.samePhone ? place.phone : place.whatsapp)"
+            <ion-item class="item-admin ion-no-padding" *ngIf="place.whatsapp">
+                <ion-button [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp"
                             class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
                     <ion-avatar slot="start" class="item-admin__avatar">
                         <ion-icon name="logo-whatsapp" class="size-icon-default"></ion-icon>
                     </ion-avatar>
                 </ion-button>
-                <ion-label>{{place.samePhone ? place.phone : place.whatsapp}}</ion-label>
+                <ion-label>{{place.whatsapp}}</ion-label>
             </ion-item>
         </ion-item-group>
         <ion-item-group class="ion-margin-bottom" *ngIf="place.website">
