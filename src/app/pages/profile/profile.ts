@@ -196,8 +196,8 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     async closeSession() {
         await this.googleAuthService.singOut();
-        location.reload();
-        SplashScreen.show();
+        await this.router.navigateByUrl('/tutorial');
+        await SplashScreen.show();
     }
 
 
