@@ -1,5 +1,5 @@
 <div class="ion-grid-places">
-    <ion-grid class="no-pb pan-active">
+    <ion-grid class="no-pb pan-active" (click)="onBarClick()">
         <ion-row class="scrollable-draw pan-active">
             <div class="scrollable-draw-children pan-active" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
         </ion-row>

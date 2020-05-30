@@ -68,7 +68,7 @@
     <div class="drawer-content nearby-expanded">
         <div>
             <app-nearby [drawerState]="bottomDrawer.drawerState" [selectedPlace]="selectedPlace" [nearPlaces]="nearPlaces" (changePlaceType)="onPlaceTypeChanged($event)"
-            [searching]="searching" [searchText]="searchText"></app-nearby>
+            [searching]="searching" [searchText]="searchText" (changeDrawerState)="clickOnNearbyBar()"></app-nearby>
         </div>
     </div>
 </ion-bottom-drawer>

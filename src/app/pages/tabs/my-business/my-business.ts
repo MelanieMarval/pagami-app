@@ -59,11 +59,11 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             this.isRegister = true;
             this.place = myBusiness;
             this.previewUrl = this.place.photoUrl;
+            if (this.place.dialCode === undefined) {
+                this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
+            }
         } else {
             this.getMyBusiness();
-        }
-        if (this.place.dialCode === undefined) {
-            this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
         }
     }
 
