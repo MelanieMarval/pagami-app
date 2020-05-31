@@ -9,10 +9,12 @@ import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { StorageProvider } from '../../providers/storage.provider';
 import { ToastProvider } from '../../providers/toast.provider';
 import { UserIntentProvider } from '../../providers/user-intent.provider';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PlacesService } from '../../core/api/places/places.service';
 import { Place } from '../../core/api/places/place';
 import { PLACES } from '../../utils/Const';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-business-details',
@@ -26,6 +28,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     isStore = false;
     isService = false;
     dialCode = '';
+    photo: SafeResourceUrl;
 
     constructor(private storageService: StorageProvider,
                 private placeService: PlacesService,
@@ -34,7 +37,9 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
                 private fireStorage: FireStorage,
                 private storageInstance: UserIntentProvider,
                 protected geolocationService: GeolocationService,
-                private alertController: AlertController) {
+                private alertController: AlertController,
+                private actionSheetController: ActionSheetController,
+                private sanitizer: DomSanitizer) {
         super(geolocationService);
     }
 
@@ -156,4 +161,36 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         this.saving = false;
     }
 
+    async takeImage() {
+        const self = this;
+        const actionSheet = await this.actionSheetController.create({
+            cssClass: 'action-sheet-custom-class',
+            header: 'Seleccione una opción:',
+            buttons: [{
+                text: 'Buscar en la Galeria',
+                icon: 'image',
+                handler: () => {
+                    console.log('Share clicked');
+                }
+            }, {
+                text: 'Tomar una Foto',
+                icon: 'camera',
+                handler: () => {
+                    self.takeCamera();
+                }
+            }]
+        });
+        await actionSheet.present();
+    }
+
+    async takeCamera() {
+        const image = await Plugins.Camera.getPhoto({
+            quality: 100,
+            allowEditing: false,
+            resultType: CameraResultType.DataUrl,
+            source: CameraSource.Camera
+        });
+
+        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+    }
 }

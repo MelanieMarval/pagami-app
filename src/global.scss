@@ -368,3 +368,8 @@ ion-item[button] {
         padding: 6px 55px !important;
     }
 }
+
+.action-sheet-custom-class .action-sheet-button-inner {
+    color: white !important;
+    --color: white;
+}
