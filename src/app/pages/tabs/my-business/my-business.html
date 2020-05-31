@@ -134,8 +134,8 @@
     <div class="add-image">
         <div class="add-image-background">
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage($event)"
-                       [readonly]="updating"></ion-input>
+            <ion-button *ngIf="!isTest" (click)="takeImage()" class="input-file" [disabled]="updating"></ion-button>
+            <ion-input *ngIf="isTest" type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage($event)" [readonly]="updating"></ion-input>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">
                     <ion-icon name="camera"></ion-icon>

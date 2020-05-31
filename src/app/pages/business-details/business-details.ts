@@ -14,7 +14,7 @@ import { PlacesService } from '../../core/api/places/places.service';
 import { Place } from '../../core/api/places/place';
 import { PLACES } from '../../utils/Const';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+const { Device } = Plugins;
 
 @Component({
     selector: 'app-business-details',
@@ -28,7 +28,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     isStore = false;
     isService = false;
     dialCode = '';
-    photo: SafeResourceUrl;
+    isTest = false;
 
     constructor(private storageService: StorageProvider,
                 private placeService: PlacesService,
@@ -38,13 +38,14 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
                 private storageInstance: UserIntentProvider,
                 protected geolocationService: GeolocationService,
                 private alertController: AlertController,
-                private actionSheetController: ActionSheetController,
-                private sanitizer: DomSanitizer) {
+                private actionSheetController: ActionSheetController) {
         super(geolocationService);
     }
 
-    ngOnInit() {
-        this.setupData(this.storageInstance.placeToEdit);
+    async ngOnInit() {
+        await this.setupData(this.storageInstance.placeToEdit);
+        const info = await Device.getInfo();
+        this.isTest = info.platform === 'web';
     }
 
     async setupData(place: Place) {
@@ -167,30 +168,32 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
             cssClass: 'action-sheet-custom-class',
             header: 'Seleccione una opción:',
             buttons: [{
-                text: 'Buscar en la Galeria',
-                icon: 'image',
-                handler: () => {
-                    console.log('Share clicked');
-                }
-            }, {
                 text: 'Tomar una Foto',
                 icon: 'camera',
                 handler: () => {
-                    self.takeCamera();
+                    self.captureImage(true);
+                }
+            }, {
+                text: 'Buscar Foto en la Galeria',
+                icon: 'image',
+                handler: () => {
+                    self.captureImage(false);
                 }
             }]
         });
         await actionSheet.present();
     }
 
-    async takeCamera() {
-        const image = await Plugins.Camera.getPhoto({
+    async captureImage(fromCamera: boolean) {
+        const options = {
             quality: 100,
             allowEditing: false,
             resultType: CameraResultType.DataUrl,
-            source: CameraSource.Camera
-        });
+            source: fromCamera ? CameraSource.Camera : CameraSource.Photos,
+        };
 
-        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+        const image = await Plugins.Camera.getPhoto(options);
+
+        await this.chargeImageFile(image.dataUrl);
     }
 }

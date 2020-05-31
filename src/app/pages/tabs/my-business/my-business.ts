@@ -15,6 +15,8 @@ import { Place } from '../../../core/api/places/place';
 import { InputFilePage } from '../../parent/InputFilePage';
 import { ValidationUtils } from '../../../utils/validation.utils';
 import { FireStorage } from '../../../core/fire-storage/fire.storage';
+import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
     selector: 'app-my-business',
@@ -32,6 +34,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     place: Place = {latitude: 0, longitude: 0};
     claim: Claim;
     isSearching = false;
+    isTest = false;
 
     constructor(
         private router: Router,
@@ -42,13 +45,17 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         private placesService: PlacesService,
         private fireStorage: FireStorage,
         private storageService: StorageProvider,
-        protected geolocationService: GeolocationService
+        protected geolocationService: GeolocationService,
+        private actionSheetController: ActionSheetController
     ) {
         super(geolocationService);
     }
 
-    ngOnInit() {
-        this.loadInfo();
+    async ngOnInit() {
+        await this.loadInfo();
+        const info = await Device.getInfo();
+        console.log(info);
+        this.isTest = info.platform === 'web';
     }
 
     async loadInfo() {
@@ -59,7 +66,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             this.isRegister = true;
             this.place = myBusiness;
             this.previewUrl = this.place.photoUrl;
-            if (this.place.dialCode === undefined) {
+            if (!this.place.dialCode) {
                 this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
             }
         } else {
@@ -150,6 +157,41 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     searchBusiness() {
         this.toast.messageInfoForMap('Busca tu empresa en el mapa y seleccionala para continuar');
         this.isSearching = true;
+    }
+
+    async takeImage() {
+        const self = this;
+        const actionSheet = await this.actionSheetController.create({
+            cssClass: 'action-sheet-custom-class',
+            header: 'Seleccione una opción:',
+            buttons: [{
+                text: 'Tomar una Foto',
+                icon: 'camera',
+                handler: () => {
+                    self.captureImage(true);
+                }
+            }, {
+                text: 'Buscar Foto en la Galeria',
+                icon: 'image',
+                handler: () => {
+                    self.captureImage(false);
+                }
+            }]
+        });
+        await actionSheet.present();
+    }
+
+    async captureImage(fromCamera: boolean) {
+        const options = {
+            quality: 100,
+            allowEditing: false,
+            resultType: CameraResultType.DataUrl,
+            source: fromCamera ? CameraSource.Camera : CameraSource.Photos,
+        };
+
+        const image = await Plugins.Camera.getPhoto(options);
+
+        await this.chargeImageFile(image.dataUrl);
     }
 
 }

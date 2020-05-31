@@ -25,5 +25,20 @@ export class CompressImageProvider {
 
     }
 
+    static async handleImageUploadFile(image: string, name: string) {
+        const imageFile = await imageCompression.getFilefromDataUrl(image, name);
+        const options = {
+            maxSizeMB: 0.100,
+            maxWidthOrHeight: 1020,
+            onProgress: undefined,
+        };
+        try {
+            return await imageCompression(imageFile, options);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
 }
 

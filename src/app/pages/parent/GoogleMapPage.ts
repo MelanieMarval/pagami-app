@@ -346,7 +346,7 @@ export class GoogleMapPage {
         const mcOptions = {
             gridSize: 50,
             styles: clusterStyles,
-            maxZoom: 15,
+            maxZoom: 18,
         };
         return mcOptions;
     }
