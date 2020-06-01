@@ -33,7 +33,7 @@ export class SelectIconPage implements OnInit {
     ) {
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         this.place = this.storageInstance.placeToEdit;
         for (const icon of CATEGORY_ICONS) {
             if (icon.type === this.place.type) {
@@ -52,7 +52,7 @@ export class SelectIconPage implements OnInit {
         }
     }
 
-    async selectIcon(index, icon) {
+    selectIcon(index, icon) {
         this.selectedIcon = index;
         this.place.category = {
             name: icon.name,

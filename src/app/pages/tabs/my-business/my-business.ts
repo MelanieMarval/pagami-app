@@ -83,6 +83,11 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             this.isSearching = false;
             this.ngOnInit();
         }
+        if (this.intentProvider.updateMyBusiness) {
+            this.loadInfo();
+            this.intentProvider.updateMyBusiness = false;
+            console.log('-> here');
+        }
     }
 
     getMyBusiness() {
@@ -140,7 +145,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     saveBusiness() {
         this.updating = true;
         this.placesService.update(this.place)
-            .then( success => {
+            .then(success => {
                 if (success.passed === true) {
                     this.storageService.setBusinessVerifiedByUser(success.response);
                     this.isEditing = false;
@@ -151,9 +156,9 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                     this.toast.messageErrorWithoutTabs('Puede que este experimentando problemas de conexión. Intente de nuevo!');
                 }
             }).catch(error => {
-                this.updating = false;
-                this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al procesar su solicitud. Intente mas tarde');
-            });
+            this.updating = false;
+            this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al procesar su solicitud. Intente mas tarde');
+        });
     }
 
     searchBusiness() {

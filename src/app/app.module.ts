@@ -28,7 +28,6 @@ import { AdminIntentProvider } from './providers/admin-intent.provider';
 import { BrowserProvider } from './providers/browser.provider';
 import { CompressImageProvider } from './providers/compress-image.provider';
 import { NotificationsProvider } from './providers/notifications.provider';
-import { PlansPage } from './pages/tabs/my-business/plans/plans';
 
 // importar locales para cambiar a espanol el pipe date
 import { LOCALE_ID } from '@angular/core';
@@ -39,7 +38,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
-    declarations: [AppComponent, OrdersPage, PlansPage],
+    declarations: [AppComponent, OrdersPage],
     entryComponents: [],
     imports: [
         BrowserModule,

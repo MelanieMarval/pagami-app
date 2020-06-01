@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs-page';
+import { ChangeCategoryPage } from './my-business/change-category/change-category';
+import { PlansPage } from './my-business/plans/plans';
 
 const routes: Routes = [
     {
@@ -29,6 +31,12 @@ const routes: Routes = [
                 loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
             },
         ],
+    },
+    {
+        path: 'my-business/plans', component: PlansPage
+    },
+    {
+        path: 'my-business/change-category', component: ChangeCategoryPage
     }
 ];
 

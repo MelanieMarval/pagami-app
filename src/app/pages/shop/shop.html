@@ -39,6 +39,11 @@
     </ion-header>
 
     <ion-list lines="none" class="inputs-container">
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input readonly [value]="place.location.address"></ion-input>
+            <ion-icon src="assets/icon/locate-checkmark.svg" slot="start"></ion-icon>
+        </ion-item>
         <ion-item *ngIf="place.whatsapp" color="pagami-surface" [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp">
             <ion-label position="floating">WhatsApp</ion-label>
             <ion-input readonly [value]="place.whatsapp"></ion-input>

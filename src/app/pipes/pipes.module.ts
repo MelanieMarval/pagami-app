@@ -3,15 +3,23 @@ import { CapitalizePipe } from './capitalize.pipe';
 import { NoImagePipe } from './no-image.pipe';
 import { PluralPipe } from './plural.pipe';
 import { FilterPlacePipe } from './filter-place.pipe';
+import { FilterCategoryPipe } from './filter-category.pipe';
 
 @NgModule({
-    declarations: [CapitalizePipe, NoImagePipe, PluralPipe, FilterPlacePipe],
+    declarations: [
+        CapitalizePipe,
+        NoImagePipe,
+        PluralPipe,
+        FilterPlacePipe,
+        FilterCategoryPipe
+    ],
     imports: [],
     exports: [
         CapitalizePipe,
         NoImagePipe,
         PluralPipe,
-        FilterPlacePipe
+        FilterPlacePipe,
+        FilterCategoryPipe
     ],
     providers: []
 })
