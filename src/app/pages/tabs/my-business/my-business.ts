@@ -63,14 +63,18 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         const myBusiness = await this.storageService.getBusinessVerifiedByUser();
         if (myBusiness) {
             this.loading = false;
-            this.isRegister = true;
-            this.place = myBusiness;
-            this.previewUrl = this.place.photoUrl;
-            if (!this.place.dialCode) {
-                this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
-            }
+            this.setupBusiness(myBusiness);
         } else {
             this.getMyBusiness();
+        }
+    }
+
+    async setupBusiness(myBusiness) {
+        this.isRegister = true;
+        this.place = myBusiness;
+        this.previewUrl = this.place.photoUrl;
+        if (!this.place.dialCode) {
+            this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
         }
     }
 
@@ -83,17 +87,15 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
 
     getMyBusiness() {
         this.claimService.getMyBusiness()
-            .then(success => {
+            .then(async success => {
                 if (success.passed) {
                     this.loading = false;
                     if (success.response.status === 'WAITING') {
                         this.isClaim = true;
                         this.claim = success.response;
                     } else {
-                        this.isRegister = true;
-                        this.place = success.response.place;
-                        this.storageService.setBusinessVerifiedByUser(success.response.place);
-                        this.previewUrl = this.place.photoUrl;
+                        await this.storageService.setBusinessVerifiedByUser(success.response.place);
+                        await this.setupBusiness(success.response.place);
                     }
                 } else {
                     this.isClaim = false;
