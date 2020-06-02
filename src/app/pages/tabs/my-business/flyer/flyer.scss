@@ -1,0 +1,16 @@
+img {
+    border-radius: 5px;
+}
+
+.inputs-word {
+    display: flex;
+    align-items: center;
+    ion-item {
+        width: 100%;
+        --highlight-background: var(--ion-color-pagami);
+    }
+    ion-button {
+        width: 30px;
+        margin-left: 10px;
+    }
+}

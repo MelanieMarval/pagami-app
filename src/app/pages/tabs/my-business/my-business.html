@@ -40,12 +40,19 @@
     <ion-header class="header-image">
         <ion-img [src]="previewUrl" alt="Background Image"></ion-img>
 
+        <div class="flyer">
+            <ion-button class="flyer-button ion-no-padding" routerLink="flyer">
+                <ion-icon name="flame" slot="icon-only" size="small"></ion-icon>
+            </ion-button>
+        </div>
+
         <div class="header-image--info">
             <ion-item lines="none" class="info-category">
                 <ion-icon slot="start" [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>
                 &nbsp;&nbsp;
                 <ion-label>{{place.category.name}}</ion-label>
             </ion-item>
+
 
             <div class="info-title">
                 <ion-text color="light">

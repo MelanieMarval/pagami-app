@@ -72,6 +72,18 @@ ion-col.md {
         }
 
     }
+
+    .flyer {
+        position: absolute;
+        right: 0;
+        bottom: 40%;
+        &-button {
+            height: 36px;
+            width: 42px;
+            margin: 0;
+            --border-radius: 50% 0 0 50%;
+        }
+    }
 }
 
 img {

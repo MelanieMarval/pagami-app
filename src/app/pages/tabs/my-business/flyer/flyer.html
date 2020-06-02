@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/tabs/my-business"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Volante Digital</ion-title>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
+
+<ion-content>
+
+    <div class="add-image add-image-margin">
+        <div class="add-image-background">
+            <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
+            <ion-button *ngIf="!isTest" (click)="takeImage()" class="input-file" [disabled]="updating"></ion-button>
+            <ion-input *ngIf="isTest" type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage($event)" [readonly]="updating"></ion-input>
+            <ion-fab vertical="center" horizontal="center">
+                <ion-fab-button color="pagami">
+                    <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </div>
+    </div>
+
+    <div class="ion-margin ion-padding-vertical ion-text-center">
+        <ion-text class="ion-text-center">
+            A continuacion coloque las palabaras (max 8) que mejor describen lo que realiza tu empresa.
+            (Ej: Reparacion, vehiculos, alineaciones, etc)
+        </ion-text>
+    </div>
+
+    <ion-list class="ion-padding-horizontal">
+        <div class="inputs-word" *ngFor="let word of words; let i = index; trackBy: trackByIdx">
+            <ion-item class="ion-margin-bottom">
+                <ion-label position="stacked">Palabra {{i+1}}</ion-label>
+                <ion-input type="text" maxlength="30" [(ngModel)]="words[i]"></ion-input>
+            </ion-item>
+            <ion-button class="ion-no-padding btn-no-style btn-focus-circle" (click)="deleteWord(i)">
+                <ion-icon name="trash" slot="icon-only" size="small" color="light"></ion-icon>
+            </ion-button>
+        </div>
+        <ion-button class="button-small ion-margin-bottom" color="pagami-surface" [hidden]="isHiddenAddButton" (click)="addWord()">
+            <ion-icon name="add"></ion-icon> palabra
+        </ion-button>
+    </ion-list>
+    <div class="footer-button footer-button--div">
+        <ion-button class="button-large" color="pagami" (click)="saveFlyer()">
+            <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
+            <span *ngIf="!updating">Guardar</span>
+        </ion-button>
+    </div>
+</ion-content>
