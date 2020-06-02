@@ -49,4 +49,10 @@ export const CATEGORY_ICONS = [
     { name: 'Tienda Naturista',             route: 'naturista',                 type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Turismo',                      route: 'turismo',                   type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.ENTERTAINMENT},
     { name: 'Vivero',                       route: 'vivero',                    type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Relojería',                    route: 'relojeria',                 type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Tienda de Muebles',            route: 'muebles',                   type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Joyería',                      route: 'joyeria',                   type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Tienda de Bolsos',             route: 'tienda_bolsos',             type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Case de Cambio',               route: 'casa_cambio',               type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
+    { name: 'Optica',                       route: 'optica',                    type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SHOP},
 ];

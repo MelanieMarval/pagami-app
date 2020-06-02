@@ -135,6 +135,18 @@ export class PlaceUtils {
             return `assets/marker-icons/turismo${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'vivero') {
             return `assets/marker-icons/vivero${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'joyeria') {
+            return `assets/marker-icons/joyeria${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'relojeria') {
+            return `assets/marker-icons/relojeria${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'muebles') {
+            return `assets/marker-icons/muebles${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'casa_cambio') {
+            return `assets/marker-icons/casa_cambio${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'optica') {
+            return `assets/marker-icons/optica${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'tienda_bolsos') {
+            return `assets/marker-icons/tienda_bolsos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else {
             return `assets/marker-icons/tienda${PlaceUtils.getIconSuffix(place, suffix)}`;
         }
