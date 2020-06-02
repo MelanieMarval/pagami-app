@@ -18,8 +18,9 @@ import { PLACES } from '../../../utils/Const';
 })
 export class SelectIconPage implements OnInit {
 
-    selectedIcon: number;
+    selectedIcon: string;
     listIcons: any[] = [];
+    type = PLACES.TYPE;
     place: Place = {latitude: 0, longitude: 0};
     saving: boolean;
 
@@ -36,30 +37,38 @@ export class SelectIconPage implements OnInit {
     ngOnInit() {
         this.place = this.storageInstance.placeToEdit;
         for (const icon of CATEGORY_ICONS) {
-            if (icon.type === this.place.type) {
-                if (icon.subCategory !== PLACES.CATEGORY.PAGAMI) {
-                    this.listIcons.push(icon);
-                }
+            if (icon.subCategory !== PLACES.CATEGORY.PAGAMI) {
+                this.listIcons.push(icon);
             }
         }
-        this.selectedIcon = this.place.category ? this.listIcons.findIndex(icon => icon.route === this.place.category.icon) : 0;
-        if (this.selectedIcon === 0) {
+        this.setCurrentCategory();
+    }
+
+    setCurrentCategory() {
+        const arrayToSearch = this.place.category ? this.listIcons.filter(icon => icon.type === this.place.type) : 0;
+        if (arrayToSearch === 0) {
             this.place.category = {
                 name: this.listIcons[0].name,
                 icon: this.listIcons[0].route,
                 subCategory: this.listIcons[0].subCategory
             };
+            this.selectedIcon = '0' + this.type.STORE;
+        } else {
+            const current = arrayToSearch.findIndex(icon => icon.route === this.place.category.icon);
+            this.selectedIcon = String(current) + this.place.type;
         }
+        console.log('-> this.selectedIcon', this.selectedIcon);
     }
 
-    selectIcon(index, icon) {
-        this.selectedIcon = index;
+    selectIcon(index, icon, type: string) {
+        this.selectedIcon = String(index) + type;
+        console.log('-> this.selectedIcon', this.selectedIcon);
         this.place.category = {
             name: icon.name,
             icon: icon.route,
             subCategory: icon.subCategory
         };
-        this.storageInstance.placeToEdit = this.place;
+        this.place.type = icon.type;
     }
 
     saveIconBusiness() {

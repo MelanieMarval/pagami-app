@@ -21,7 +21,6 @@ export class ChangeCategoryPage implements OnInit {
     place: Place = {latitude: 0, longitude: 0};
     listIcons: any[] = [];
     selectedIcon: string;
-    placeCategory: any;
 
     constructor(private storage: StorageProvider,
                 private toast: ToastProvider,
@@ -38,9 +37,14 @@ export class ChangeCategoryPage implements OnInit {
             }
         }
         this.place = await this.storage.getBusinessVerifiedByUser();
-        const currency = this.place.category ? this.listIcons.findIndex(icon => icon.route === this.place.category.icon) : 0;
-        this.selectedIcon = String(currency) + this.place.category;
-        if (currency === 0) {
+        this.setCurrentCategory();
+    }
+
+    setCurrentCategory() {
+        const arrayToSearch = this.listIcons.filter(icon => icon.type === this.place.type);
+        const current = this.place.category ? arrayToSearch.findIndex(icon => icon.route === this.place.category.icon) : 0;
+        this.selectedIcon = String(current) + this.place.type;
+        if (current === 0) {
             this.place.category = {
                 name: this.listIcons[0].name,
                 icon: this.listIcons[0].route,
@@ -51,19 +55,17 @@ export class ChangeCategoryPage implements OnInit {
 
     selectIcon(index, icon, type: string) {
         this.selectedIcon = String(index) + type;
-        this.placeCategory = {
-            category: {
-                name: icon.name,
-                icon: icon.route,
-                subCategory: icon.subCategory
-            },
-            type: icon.type
+        this.place.category = {
+            name: icon.name,
+            icon: icon.route,
+            subCategory: icon.subCategory
         };
+        this.place.type = icon.type;
     }
 
     saveCategory() {
         this.loading = true;
-        this.placesService.changeCategory(this.place.id, this.placeCategory)
+        this.placesService.changeCategory(this.place.id, this.place)
             .then(async success => {
                 if (success.passed === true) {
                     await this.storage.setBusinessVerifiedByUser(success.response);

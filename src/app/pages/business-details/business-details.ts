@@ -57,9 +57,6 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         if (this.place.type === PLACES.TYPE.STORE) {
             this.isStore = true;
         }
-        if (this.place.type === PLACES.TYPE.SERVICE) {
-            this.isService = true;
-        }
         this.dialCode = await this.placeService.getDialCode(this.place.location.acronym);
         if (!this.place.whatsapp) {
             this.place.dialCode = this.dialCode;
@@ -101,19 +98,9 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         }
     }
 
-    selectTypeStore() {
-        this.place.type = PLACES.TYPE.STORE;
-        this.isService = false;
-    }
-
-    selectTypeService() {
-        this.place.type = PLACES.TYPE.SERVICE;
-        this.isStore = false;
-    }
-
     validateForm() {
         const business = this.place;
-        if (!business.location.address || !business.name || !this.place.type || !business.phone) {
+        if (!business.location.address || !business.name || !business.phone) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
         if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon', 'website', 'whatsapp'])) {

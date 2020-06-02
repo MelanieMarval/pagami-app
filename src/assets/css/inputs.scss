@@ -126,7 +126,7 @@ ion-checkbox {
         ion-img {
             height: 100%;
             width: 100%;
-            opacity: .5;
+            filter: brightness(0.8);
             object-fit: cover;
         }
         .input-file,

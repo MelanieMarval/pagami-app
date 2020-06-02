@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { BusinessDetailsPage } from './business-details';
 import { SelectIconPage } from './select-icon/select-icon';
 import { ImageTooltipsModule } from '../../shared/image-tooltips/image-tooltips.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 const routes: Routes = [
     {
@@ -22,7 +23,8 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes),
-        ImageTooltipsModule
+        ImageTooltipsModule,
+        PipesModule
     ],
     declarations: [BusinessDetailsPage, SelectIconPage]
 })

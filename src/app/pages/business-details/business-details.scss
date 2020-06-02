@@ -37,3 +37,12 @@
         border-radius: 0 5px 0 0;
     }
 }
+
+
+.add-image-background {
+    position: relative;
+    background-image: url("/assets/img/background-place.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
