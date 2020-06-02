@@ -87,8 +87,10 @@ export class FlyerPage extends InputFilePage implements OnInit {
     saveFlyer() {
         for (const word of this.words) {
             if (word.trim().length <= 1) {
-                console.log(word, this.words);
                 return this.toast.messageErrorWithoutTabs('Debe rellenar todos los campos o eliminar el no deseado');
+            }
+            if (word.trim().length > 36) {
+                return this.toast.messageErrorWithoutTabs('Las palabras no pueden exceder los 36 caracteres');
             }
         }
     }

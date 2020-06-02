@@ -8,6 +8,9 @@ img {
     ion-item {
         width: 100%;
         --highlight-background: var(--ion-color-pagami);
+        &.ion-touched.ion-invalid{
+            --highlight-background: var(--ion-color-danger);
+        }
     }
     ion-button {
         width: 30px;
