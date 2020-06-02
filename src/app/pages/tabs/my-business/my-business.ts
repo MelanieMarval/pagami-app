@@ -15,8 +15,9 @@ import { Place } from '../../../core/api/places/place';
 import { InputFilePage } from '../../parent/InputFilePage';
 import { ValidationUtils } from '../../../utils/validation.utils';
 import { FireStorage } from '../../../core/fire-storage/fire.storage';
-import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
+import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { ActionSheetController } from '@ionic/angular';
+const { Device } = Plugins;
 
 @Component({
     selector: 'app-my-business',
@@ -54,7 +55,6 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     async ngOnInit() {
         await this.loadInfo();
         const info = await Device.getInfo();
-        console.log(info);
         this.isTest = info.platform === 'web';
     }
 

@@ -21,6 +21,7 @@ export class ChangeCategoryPage implements OnInit {
     place: Place = {latitude: 0, longitude: 0};
     listIcons: any[] = [];
     selectedIcon: string;
+    placeCategory: any;
 
     constructor(private storage: StorageProvider,
                 private toast: ToastProvider,
@@ -50,20 +51,22 @@ export class ChangeCategoryPage implements OnInit {
 
     selectIcon(index, icon, type: string) {
         this.selectedIcon = String(index) + type;
-        this.place.category = {
-            name: icon.name,
-            icon: icon.route,
-            subCategory: icon.subCategory
+        this.placeCategory = {
+            category: {
+                name: icon.name,
+                icon: icon.route,
+                subCategory: icon.subCategory
+            },
+            type: icon.type
         };
-        this.place.type = icon.type;
     }
 
     saveCategory() {
         this.loading = true;
-        this.placesService.update(this.place)
+        this.placesService.changeCategory(this.place.id, this.placeCategory)
             .then(async success => {
                 if (success.passed === true) {
-                    await this.storage.setBusinessVerifiedByUser(this.place);
+                    await this.storage.setBusinessVerifiedByUser(success.response);
                     this.loading = false;
                     this.toast.messageSuccessWithoutTabs('Su empresa ha sido actualizada exitosamente!');
                     this.router.navigateByUrl('app/tabs/my-business');

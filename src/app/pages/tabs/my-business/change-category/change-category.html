@@ -41,7 +41,7 @@
     <div *ngIf="place?.category" class="small-category">
         <small class="pagami-text-2nd small-category">Categoria: {{place.category?.name}}</small>
     </div>
-    <ion-button [disabled]="loading" class="button-large" expand="block" color="pagami" (click)="saveCategory()">
+    <ion-button [disabled]="loading || !this.placeCategory" class="button-large" expand="block" color="pagami" (click)="saveCategory()">
         <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
         <span *ngIf="!loading">Guardar categoria</span>
     </ion-button>
