@@ -4,6 +4,7 @@ import {ShopPage} from './shop';
 import {ProductsPage} from './products/products';
 import {ServicesPage} from './services/services';
 import {OrderSummaryPage} from './order-summary/order-summary';
+import { FlyerPage } from './flyer/flyer';
 
 
 
@@ -11,6 +12,10 @@ const routes: Routes = [
     {
         path: '',
         component: ShopPage
+    },
+    {
+        path: 'flyer',
+        component: FlyerPage
     },
     {
         path: 'products',

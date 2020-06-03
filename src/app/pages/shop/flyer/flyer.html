@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/tabs/shop"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Volante Digital</ion-title>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
+
+<ion-content>
+
+    <div class="add-image">
+        <div class="add-image-background">
+            <ion-img [src]="flyer.photoUrl" *ngIf="flyer.photoUrl" class="img-preview"></ion-img>
+        </div>
+    </div>
+
+    <ion-list class="ion-padding-horizontal" lines="none">
+        <ion-item class="" *ngFor="let word of flyer.words; let i = index">
+            <ion-input type="text" readonly [value]="word"><b>&#8226;</b>&nbsp;&nbsp;</ion-input>
+        </ion-item>
+    </ion-list>
+
+</ion-content>

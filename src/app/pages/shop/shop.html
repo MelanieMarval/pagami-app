@@ -10,6 +10,12 @@
 
         <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
 
+        <div class="flyer" *ngIf="place.status === STATUS.VERIFIED">
+            <ion-button class="flyer-button ion-no-padding" routerLink="flyer">
+                <ion-icon name="newspaper" slot="icon-only" size="small"></ion-icon>
+            </ion-button>
+        </div>
+
         <div class="header-image--info">
             <ion-item lines="none" class="info-category">
                 <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>

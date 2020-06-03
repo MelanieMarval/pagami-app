@@ -40,12 +40,6 @@
     <ion-header class="header-image">
         <ion-img [src]="previewUrl" alt="Background Image"></ion-img>
 
-        <div class="flyer">
-            <ion-button class="flyer-button ion-no-padding" routerLink="flyer">
-                <ion-icon name="newspaper" slot="icon-only" size="small"></ion-icon>
-            </ion-button>
-        </div>
-
         <div class="header-image--info">
             <ion-item lines="none" class="info-category">
                 <ion-icon slot="start" [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>
@@ -110,9 +104,13 @@
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Cambiar ubicación</ion-label>
         </ion-item>
-        <ion-item routerLink="/app/tabs/my-business/change-category" color="pagami-surface">
+        <ion-item routerLink="change-category" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Cambiar categoría</ion-label>
+        </ion-item>
+        <ion-item routerLink="flyer" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Volante Digital</ion-label>
         </ion-item>
     </ion-list>
 
