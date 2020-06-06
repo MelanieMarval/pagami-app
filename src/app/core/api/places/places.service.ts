@@ -5,7 +5,6 @@ import { ApiService } from '../api.service';
 import { Place } from './place';
 import { ApiResponse } from '../api.response';
 import { PLACES } from '../../../utils/Const';
-import { PlaceFilter } from './place.filter';
 
 @Injectable({
     providedIn: 'root'
@@ -138,9 +137,4 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
-    async changeCategory(id: string, category: any): Promise<ApiResponse> {
-        const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.put(`${this.URL}/${id}/category`, category, options);
-        return this.apiService.serverListener(request);
-    }
 }
