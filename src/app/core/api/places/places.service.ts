@@ -92,6 +92,18 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async changeCategory(id: string, category: any): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/category`, category, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async addFlyer(id: string, flyer: any): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/flyer`, flyer, options);
+        return this.apiService.serverListener(request);
+    }
+
     async delete(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.delete(`${this.URL}/${id}`, options);

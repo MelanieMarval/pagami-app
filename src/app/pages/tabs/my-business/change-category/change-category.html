@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar class="toolbar-simple">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/app/business-claim"></ion-back-button>
+            <ion-back-button defaultHref="/app/tabs/my-business"></ion-back-button>
         </ion-buttons>
         <ion-title class="without-right">Seleccione su icono</ion-title>
     </ion-toolbar>
@@ -35,9 +35,10 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+
 </ion-content>
 
-<ion-footer class="footer-button background-transparent" slot="fixed">
+<ion-footer class="footer-button">
     <div *ngIf="place?.category" class="small-category">
         <small class="pagami-text-2nd small-category">Categoria: {{place.category?.name}}</small>
     </div>
@@ -46,3 +47,4 @@
         <span *ngIf="!loading">Guardar categoria</span>
     </ion-button>
 </ion-footer>
+

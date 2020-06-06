@@ -47,6 +47,7 @@
                 <ion-label>{{place.category.name}}</ion-label>
             </ion-item>
 
+
             <div class="info-title">
                 <ion-text color="light">
                     {{place.name}}
@@ -103,9 +104,13 @@
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Cambiar ubicación</ion-label>
         </ion-item>
-        <ion-item routerLink="/app/tabs/my-business/change-category" color="pagami-surface">
+        <ion-item routerLink="change-category" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Cambiar categoría</ion-label>
+        </ion-item>
+        <ion-item routerLink="flyer" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Volante Digital</ion-label>
         </ion-item>
     </ion-list>
 
@@ -145,7 +150,7 @@
             <app-image-tooltips></app-image-tooltips>
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
             <ion-button *ngIf="!isTest" (click)="takeImage()" class="input-file" [disabled]="updating"></ion-button>
-            <ion-input *ngIf="isTest" type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage($event)" [readonly]="updating"></ion-input>
+            <ion-input *ngIf="isTest" type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage(isTest, $event)" [readonly]="updating"></ion-input>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">
                     <ion-icon name="camera"></ion-icon>

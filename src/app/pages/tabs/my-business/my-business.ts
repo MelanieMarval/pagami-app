@@ -198,7 +198,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
 
         const image = await Plugins.Camera.getPhoto(options);
 
-        await this.chargeImageFile(image.dataUrl);
+        await this.chargeImage(this.isTest, image.dataUrl);
     }
 
 }
