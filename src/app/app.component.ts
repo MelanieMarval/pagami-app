@@ -49,19 +49,19 @@ export class AppComponent {
         // this.router.navigateByUrl('/user-register', {replaceUrl: true});
         // return
 
-        // const lastUserVerification = await this.storageService.getLastUserVerification();
-        // if (isLogged && user) {
-        //     if (user.type && user.type === USER.TYPE.ADMIN) {
-        //         this.openAdminPanel();
-        //     } else {
-        //         this.openHome();
-        //     }
-        //     setTimeout(() => {
-        //         this.verifyUser(user);
-        //     }, 5000);
-        // } else {
-        //     await this.openTutorial();
-        // }
+        const lastUserVerification = await this.storageService.getLastUserVerification();
+        if (isLogged && user) {
+            if (user.type && user.type === USER.TYPE.ADMIN) {
+                this.openAdminPanel();
+            } else {
+                this.openHome();
+            }
+            setTimeout(() => {
+                this.verifyUser(user);
+            }, 5000);
+        } else {
+            await this.openTutorial();
+        }
         await setTimeout(async () => {
             await SplashScreen.hide();
         }, 1000);
