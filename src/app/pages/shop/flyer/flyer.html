@@ -19,7 +19,8 @@
     </div>
 
     <ion-list class="ion-padding-horizontal" lines="none">
-        <ion-item class="" *ngFor="let word of flyer.words; let i = index">
+        <ion-list-header class="flyer-title">{{flyer.title}}</ion-list-header>
+        <ion-item class="" *ngFor="let word of flyer.textList; let i = index">
             <ion-input type="text" readonly [value]="word"><b>&#8226;</b>&nbsp;&nbsp;</ion-input>
         </ion-item>
     </ion-list>

@@ -8,6 +8,7 @@ import { FireStorage } from '../../../../core/fire-storage/fire.storage';
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { StorageProvider } from '../../../../providers/storage.provider';
 import { Place } from '../../../../core/api/places/place';
+import { Flyer } from '../../../../core/api/places/flyer';
 
 @Component({
     selector: 'page-flyer',
@@ -22,11 +23,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
     isHiddenAddButton = false;
     updating: boolean;
     isTest: boolean;
-    flyer: any = {
-        textList: [''],
-        title: '',
-        photoUrl: ''
-    };
+    flyer: Flyer = {title: '', textList: ['']};
 
     constructor(private toast: ToastProvider,
                 private actionSheetController: ActionSheetController,
@@ -56,7 +53,6 @@ export class FlyerPage extends InputFilePage implements OnInit {
             this.isHiddenAddButton = true;
         }
     }
-
 
     deleteWord(i: number) {
         this.flyer.textList.splice(i, 1);
@@ -101,6 +97,9 @@ export class FlyerPage extends InputFilePage implements OnInit {
         if (this.flyer.title.trim().length <= 2) {
             return this.toast.messageErrorWithoutTabs('Debe agregar un titulo al volante');
         }
+        if (this.flyer.textList.length === 0) {
+            return this.toast.messageErrorWithoutTabs('Debe tener al menos una palabra clave');
+        }
         for (const word of this.flyer.textList) {
             if (word.trim().length <= 1) {
                 return this.toast.messageErrorWithoutTabs('Debe rellenar todos los campos o eliminar el no deseado');
@@ -112,18 +111,22 @@ export class FlyerPage extends InputFilePage implements OnInit {
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe colocar una imagen');
         }
+        this.updating = true;
         const success = await this.fireStorage.saveFlyerImage(this.fileData);
         if (success) {
             this.flyer.photoUrl = success;
-            this.updateFlyer();
+            this.saveFlyer();
         } else {
+            this.updating = false;
             return this.toast.messageErrorWithoutTabs('Su imagen no ha podido cargarse');
         }
     }
 
-    updateFlyer() {
-        this.placesService.addFlyer(this.place.id, this.flyer)
+    saveFlyer() {
+        this.updating = true;
+        this.placesService.changeFlyer(this.place.id, this.flyer)
             .then(success => {
+                this.updating = false;
                 console.log('-> success', success);
             });
     }
@@ -152,6 +155,12 @@ export class FlyerPage extends InputFilePage implements OnInit {
 
     deleteFlyer() {
         console.log('Eliminar flyer');
+        this.loading = true;
+        this.placesService.deleteFlyer(this.place.id)
+            .then(success => {
+                this.loading = false;
+                console.log('-> success', success);
+            });
     }
 
     trackByIdx(index: number, obj: any): any {

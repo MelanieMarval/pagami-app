@@ -59,7 +59,7 @@
         </ion-button>
     </ion-list>
     <div class="footer-button footer-button--div">
-        <ion-button class="button-large" color="pagami" (click)="validateFlyer()">
+        <ion-button class="button-large" color="pagami" [disabled]="updating" (click)="validateFlyer()">
             <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
             <span *ngIf="!updating">Guardar</span>
         </ion-button>
