@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BusinessDetailsPage } from './business-details';
 import { SelectIconPage } from './select-icon/select-icon';
+import { ImageTooltipsModule } from '../../shared/image-tooltips/image-tooltips.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 const routes: Routes = [
     {
@@ -20,7 +22,9 @@ const routes: Routes = [
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        ImageTooltipsModule,
+        PipesModule
     ],
     declarations: [BusinessDetailsPage, SelectIconPage]
 })

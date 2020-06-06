@@ -38,8 +38,8 @@
 
 .button-logout {
     --border-radius: 50% !important;
-    width: 42px;
-    height: 42px;
+    width: 45px;
+    height: 45px;
 }
 
 /* ***Alert*** */
@@ -53,6 +53,18 @@ div#alert-1-msg {
 
 .alert-confirm {
     color: #FFFFFF !important;
+}
+
+.group-flex {
+    display: flex;
+    ion-item:nth-child(1) {
+        width: 130px;
+        border-radius: 5px 0 0 0;
+    }
+    ion-item:nth-child(2) {
+        width: 100%;
+        border-radius: 0 5px 0 0;
+    }
 }
 
 

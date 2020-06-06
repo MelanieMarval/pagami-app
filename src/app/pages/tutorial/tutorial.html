@@ -1,37 +1,37 @@
 
 <ion-content fullscreen class="ion-padding" scroll-y="false">
     <ion-slides #slides pager="true" (ionSlideDidChange)="slideDidChange();">
-        <ion-slide>
-            <img src="assets/img/tutorial/slide-img-1.svg" class="slide-image"/>
-            <h2 class="slide-title">
-                Empresas
-            </h2>
-            <p class="slide-text">
-                Haz crecer tu empresa y date a conocer en tu comunidad local
-            </p>
-        </ion-slide>
+<!--        <ion-slide>-->
+<!--            <img src="assets/img/tutorial/slide-img-1.svg" class="slide-image"/>-->
+<!--            <h2 class="slide-title">-->
+<!--                Empresas-->
+<!--            </h2>-->
+<!--            <p class="slide-text">-->
+<!--                Haz crecer tu empresa y date a conocer en tu comunidad local-->
+<!--            </p>-->
+<!--        </ion-slide>-->
 
         <ion-slide>
             <img src="assets/img/tutorial/slide-img-2.svg" class="slide-image"/>
             <h2 class="slide-title">Tiendas y Servicios</h2>
             <p class="slide-text">
-                Encuentra tiendas y servicios verificados por Pagami alrededor
+                Encuentra tiendas y servicios verificados por Pagami
             </p>
         </ion-slide>
 
-        <ion-slide>
-            <img src="assets/img/tutorial/slide-img-3.svg" class="slide-image"/>
-            <h2 class="slide-title">Asociados</h2>
-            <p class="slide-text">
-                Unete al programa de asociados y gana dinero registrando empresas alrededor
-            </p>
-        </ion-slide>
+<!--        <ion-slide>-->
+<!--            <img src="assets/img/tutorial/slide-img-3.svg" class="slide-image"/>-->
+<!--            <h2 class="slide-title">Asociados</h2>-->
+<!--            <p class="slide-text">-->
+<!--                Unete al programa de asociados y gana dinero registrando empresas alrededor-->
+<!--            </p>-->
+<!--        </ion-slide>-->
 
     </ion-slides>
 </ion-content>
 
 <ion-footer class="footer-button">
-    <ion-button [disabled]="currentIndex !== 2 || loading" class="button-large" expand="block" color="secondary" (click)="googleSignIn()">
+    <ion-button [disabled]="loading" class="button-large" expand="block" color="secondary" (click)="googleSignIn()">
         <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
         <ion-icon *ngIf="!loading" name="logo-google"></ion-icon>
         <span *ngIf="!loading">&nbsp; Registrate con Google</span>

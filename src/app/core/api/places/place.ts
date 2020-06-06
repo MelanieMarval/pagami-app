@@ -21,8 +21,8 @@ export interface Place {
         city?: string;
     };
     phone?: string;
-    samePhone?: boolean;
     allowHome?: boolean;
+    dialCode?: string;
     whatsapp?: string;
     website?: string;
     type?: string;

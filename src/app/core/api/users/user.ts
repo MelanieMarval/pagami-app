@@ -5,9 +5,11 @@ export interface User {
     photoUrl?: string;
     email?: string;
     phone?: string;
+    phoneCode?: string;
     location?: {
         country?: string;
         address?: string;
+        code?: string;
     };
     notifications?: boolean;
     terms?: boolean;

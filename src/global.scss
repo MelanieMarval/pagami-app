@@ -147,6 +147,10 @@ select:-webkit-autofill:focus {
     width: 95%;
     transform: translateY(-80px) translateX(3%);
 }
+.toast-bottom-custom-for-map {
+    width: 78%;
+    transform: translateY(-50px) translateX(3%);
+}
 /* END toast */
 /*  ***********************  */
 
@@ -177,6 +181,9 @@ ion-bottom-drawer {
 }
 
 /* ****EXTRAS***** */
+.swiper-pagination-bullet {
+    display: none;
+}
 .swiper-pagination-bullet-active {
     --bullet-background-active: #f6ad55;
 }
@@ -307,4 +314,66 @@ a[rel='noopener'] div img, .gmnoprint {
     display: none;
 }
 
+ion-item[button] {
+    pointer-events: initial !important;
+}
 
+.ion-page.ionic-selectable-modal {
+    ion-title {
+        margin-right: 77px;
+    }
+    ion-searchbar {
+        --color: white;
+    }
+}
+
+.info-text.multi-lines {
+    height: auto;
+    line-height: 1;
+}
+
+.ionic-selectable-documentation-configuration {
+    .modal-wrapper {
+        ionic-selectable-modal {
+            ion-header {
+                ion-toolbar {
+                    --background: var(--ion-background-color);
+                }
+            }
+            ion-searchbar {
+                margin-left: 10px;
+                --background: var(--ion-color-dark);
+                .searchbar-input {
+                    background: transparent;
+                    color: #fff;
+                    box-shadow: unset;
+                }
+                .searchbar-search-icon {
+                    color: #9d9fa6;
+                }
+                .searchbar-clear-button {
+                    color: #fff;
+                }
+            }
+            ion-footer {
+                background: var(--ion-color-dark);
+                ion-toolbar {
+                    --background: var(--ion-color-dark);
+                    ion-button {
+                        display: inline-block !important;
+                        --background: var(--ion-color-warning);
+                    }
+                }
+            }
+        }
+    }
+
+    ion-searchbar > div > input {
+        padding: 6px 55px !important;
+    }
+}
+
+.action-sheet-custom-class .action-sheet-button-inner {
+    color: white !important;
+    --color: white;
+}

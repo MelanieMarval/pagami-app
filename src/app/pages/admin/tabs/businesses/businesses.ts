@@ -44,6 +44,15 @@ export class BusinessesPage implements OnInit, AfterViewChecked {
             this.intentProvider.needToUpdate = false;
             this.reload();
         }
+        if (this.intentProvider.placeToViewDeleted) {
+            const placeToRemove = this.intentProvider.placeToViewDeleted;
+            this.intentProvider.placeToViewDeleted = undefined;
+            setTimeout(() => {
+                const index = this.registers.indexOf(this.registers
+                    .filter(place => place.id === placeToRemove.id)[0]);
+                this.registers.splice(index, 1);
+            }, 500);
+        }
     }
 
     load() {

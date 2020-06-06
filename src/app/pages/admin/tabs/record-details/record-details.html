@@ -1,4 +1,3 @@
-
 <ion-content>
 
     <ion-header class="header-image">
@@ -46,20 +45,21 @@
                 </ion-button>
                 <ion-label>{{place.phone}}</ion-label>
             </ion-item>
-            <ion-item class="item-admin ion-no-padding" *ngIf="place.whatsapp || place.samePhone">
-                <ion-button [href]="'https://wa.me/' + (place.samePhone ? place.phone : place.whatsapp)"
+            <ion-item class="item-admin ion-no-padding" *ngIf="place.whatsapp">
+                <ion-button [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp"
                             class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
                     <ion-avatar slot="start" class="item-admin__avatar">
                         <ion-icon name="logo-whatsapp" class="size-icon-default"></ion-icon>
                     </ion-avatar>
                 </ion-button>
-                <ion-label>{{place.samePhone ? place.phone : place.whatsapp}}</ion-label>
+                <ion-label>{{place.whatsapp}}</ion-label>
             </ion-item>
         </ion-item-group>
         <ion-item-group class="ion-margin-bottom" *ngIf="place.website">
             <ion-label class="group-label">Pagina Web</ion-label>
             <ion-item class="item-admin ion-no-padding">
-                <ion-button (click)="browser.open(place.website)" class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                <ion-button (click)="browser.open(place.website)"
+                            class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
                     <ion-avatar slot="start" class="item-admin__avatar">
                         <ion-icon src="assets/icon/web.svg" class="size-icon-default"></ion-icon>
                     </ion-avatar>
@@ -71,19 +71,31 @@
 
 </ion-content>
 
-    <ion-footer class="footer-button" *ngIf="!saved && !isView">
-        <ion-row>
-            <ion-col size="6">
-                <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()" [disabled]="saving || rejecting">
-                    <ion-spinner *ngIf="rejecting" class="spinner-energized"></ion-spinner>
-                    <span *ngIf="!rejecting">Rechazar</span>
-                </ion-button>
-            </ion-col>
-            <ion-col size="6">
-                <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
-                    <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
-                    <span *ngIf="!saving">Aceptar</span>
-                </ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-footer>
+<ion-footer class="footer-button" *ngIf="!saved && !isView">
+    <ion-row>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()"
+                        [disabled]="saving || rejecting">
+                <ion-spinner *ngIf="rejecting" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!rejecting">Rechazar</span>
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" (click)="acceptPlace()" [disabled]="saving || rejecting">
+                <ion-spinner *ngIf="saving" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!saving">Aceptar</span>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>
+
+<ion-footer class="footer-button" *ngIf="!(!saved && !isView)">
+    <ion-row>
+        <ion-col size="12">
+            <ion-button class="button-large" expand="block" color="danger" [disabled]="deleteing" (click)="deleteBusinessConfirm()">
+                <span *ngIf="!deleteing">Eliminar Empresa</span>
+                <ion-spinner *ngIf="deleteing" class="spinner-energized"></ion-spinner>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

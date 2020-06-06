@@ -50,9 +50,8 @@ export class InputFilePage implements AfterViewInit {
         }
     }
 
-
-    async chargeImage(event: any) {
-        const imageBlob = await CompressImageProvider.handleImageUpload(event);
+    async chargeImage(isTest: boolean, file: any) {
+        const imageBlob = await CompressImageProvider.handleImageUpload(isTest, file);
         const reader = new FileReader();
         reader.readAsDataURL(imageBlob);
         reader.onloadend = () => {

@@ -15,6 +15,9 @@ import { Place } from '../../../core/api/places/place';
 import { InputFilePage } from '../../parent/InputFilePage';
 import { ValidationUtils } from '../../../utils/validation.utils';
 import { FireStorage } from '../../../core/fire-storage/fire.storage';
+import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
+import { ActionSheetController } from '@ionic/angular';
+const { Device } = Plugins;
 
 @Component({
     selector: 'app-my-business',
@@ -32,6 +35,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     place: Place = {latitude: 0, longitude: 0};
     claim: Claim;
     isSearching = false;
+    isTest = false;
 
     constructor(
         private router: Router,
@@ -42,13 +46,16 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         private placesService: PlacesService,
         private fireStorage: FireStorage,
         private storageService: StorageProvider,
-        protected geolocationService: GeolocationService
+        protected geolocationService: GeolocationService,
+        private actionSheetController: ActionSheetController
     ) {
         super(geolocationService);
     }
 
-    ngOnInit() {
-        this.loadInfo();
+    async ngOnInit() {
+        await this.loadInfo();
+        const info = await Device.getInfo();
+        this.isTest = info.platform === 'web';
     }
 
     async loadInfo() {
@@ -56,12 +63,18 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         const myBusiness = await this.storageService.getBusinessVerifiedByUser();
         if (myBusiness) {
             this.loading = false;
-            this.isRegister = true;
-            this.intentProvider.myBusinessDetails = {id: myBusiness.id, name: myBusiness.name, acronym: myBusiness.location.acronym};
-            this.place = myBusiness;
-            this.previewUrl = this.place.photoUrl;
+            this.setupBusiness(myBusiness);
         } else {
             this.getMyBusiness();
+        }
+    }
+
+    async setupBusiness(myBusiness) {
+        this.isRegister = true;
+        this.place = myBusiness;
+        this.previewUrl = this.place.photoUrl;
+        if (!this.place.dialCode) {
+            this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
         }
     }
 
@@ -70,21 +83,24 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             this.isSearching = false;
             this.ngOnInit();
         }
+        if (this.intentProvider.updateMyBusiness) {
+            this.loadInfo();
+            this.intentProvider.updateMyBusiness = false;
+            console.log('-> here');
+        }
     }
 
     getMyBusiness() {
         this.claimService.getMyBusiness()
-            .then(success => {
+            .then(async success => {
                 if (success.passed) {
                     this.loading = false;
                     if (success.response.status === 'WAITING') {
                         this.isClaim = true;
                         this.claim = success.response;
                     } else {
-                        this.isRegister = true;
-                        this.place = success.response.place;
-                        this.storageService.setBusinessVerifiedByUser(success.response.place);
-                        this.previewUrl = this.place.photoUrl;
+                        await this.storageService.setBusinessVerifiedByUser(success.response.place);
+                        await this.setupBusiness(success.response.place);
                     }
                 } else {
                     this.isClaim = false;
@@ -97,6 +113,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     validateBusiness() {
+        console.log(this.place);
         if (!ValidationUtils.validateEmpty(this.place, ['website', 'whatsapp'])) {
             this.toast.messageErrorAboveButton('Todos los campos deben estar llenos para poder guardar');
             return;
@@ -128,7 +145,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     saveBusiness() {
         this.updating = true;
         this.placesService.update(this.place)
-            .then( success => {
+            .then(success => {
                 if (success.passed === true) {
                     this.storageService.setBusinessVerifiedByUser(success.response);
                     this.isEditing = false;
@@ -139,13 +156,49 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                     this.toast.messageErrorWithoutTabs('Puede que este experimentando problemas de conexión. Intente de nuevo!');
                 }
             }).catch(error => {
-                this.updating = false;
-                this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al procesar su solicitud. Intente mas tarde');
-            });
+            this.updating = false;
+            this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al procesar su solicitud. Intente mas tarde');
+        });
     }
 
     searchBusiness() {
+        this.toast.messageInfoForMap('Busca tu empresa en el mapa y seleccionala para continuar');
         this.isSearching = true;
+    }
+
+    async takeImage() {
+        const self = this;
+        const actionSheet = await this.actionSheetController.create({
+            cssClass: 'action-sheet-custom-class',
+            header: 'Seleccione una opción:',
+            buttons: [{
+                text: 'Tomar una Foto',
+                icon: 'camera',
+                handler: () => {
+                    self.captureImage(true);
+                }
+            }, {
+                text: 'Buscar Foto en la Galeria',
+                icon: 'image',
+                handler: () => {
+                    self.captureImage(false);
+                }
+            }]
+        });
+        await actionSheet.present();
+    }
+
+    async captureImage(fromCamera: boolean) {
+        const options = {
+            quality: 100,
+            allowEditing: false,
+            resultType: CameraResultType.DataUrl,
+            source: fromCamera ? CameraSource.Camera : CameraSource.Photos,
+        };
+
+        const image = await Plugins.Camera.getPhoto(options);
+
+        await this.chargeImage(this.isTest, image.dataUrl);
     }
 
 }

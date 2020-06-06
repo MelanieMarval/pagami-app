@@ -1,17 +1,19 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../core/api/users/user';
-import { InputFilePage } from '../parent/InputFilePage';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
+import { Sim } from '@ionic-native/sim/ngx';
 
 // Services
-import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { ValidationUtils } from '../../utils/validation.utils';
 
 // Providers
 import { ToastProvider } from '../../providers/toast.provider';
 import { StorageProvider } from '../../providers/storage.provider';
+import { PlacesService } from '../../core/api/places/places.service';
+import { Country } from '../../core/api/places/country';
+import { IonicSelectableComponent } from 'ionic-selectable';
 
 
 @Component({
@@ -20,75 +22,89 @@ import { StorageProvider } from '../../providers/storage.provider';
     styleUrls: ['./user-register.scss'],
 })
 
-export class UserRegisterPage extends InputFilePage implements OnInit, AfterViewInit {
+export class UserRegisterPage implements OnInit {
 
-    googleMaps: any;
-    autocompleteService: any;
     places: any = [];
-    locationSearch: string;
     user: User = {};
     saving = false;
-    buttonDisabled = true;
+    buttonDisabled = false;
+    countries: Country[];
+    country: Country;
+    address: string;
 
     constructor(private storageService: StorageProvider,
                 private authService: AuthService,
                 private toast: ToastProvider,
-                protected geolocationService: GeolocationService,
                 private route: Router,
-                private fireStorage: FireStorage) {
-        super(geolocationService);
+                private fireStorage: FireStorage,
+                private placesService: PlacesService,
+                private sim: Sim) {
     }
 
-    ngOnInit() {
-        this.storageService.getUserUnregistered()
+    async ngOnInit() {
+        await this.storageService.getUserUnregistered()
             .then(user => {
                 if (user) {
                     this.user = user;
                     this.user.location = {};
                 }
             });
+        await this.placesService.getAllCountries().then(value => {
+            this.countries = value;
+            this.country = this.countries.find(cc => cc.code === 'CO');
+            this.user.phoneCode = this.country.dial_code;
+        });
+        await this.sim.getSimInfo().then((value: any) => {
+            if (value.countryCode) {
+                const simCountry = this.countries.find(cc => cc.code === value.countryCode.toUpperCase());
+                if (simCountry) {
+                    this.country = simCountry;
+                    this.user.phoneCode = this.country.dial_code;
+                }
+            }
+        });
     }
 
-    locationChanged(target: EventTarget) {
-        this.buttonDisabled = this.locationSearch !== this.user.location.address;
-        this.searchPlace(target, true);
-    }
-
-    setPlace(place) {
-        this.locationSearch = place.description;
-        this.user.location.address = place.description;
-        this.user.location.country = place.terms.slice(-1)[0].value;
-        this.buttonDisabled = false;
-        this.places = [];
-    }
-
-    registerUser() {
+    async registerUser() {
         const user = this.user;
-        if (!user.location || !user.phone) {
+        if (!user.phone) {
             return this.toast.messageErrorWithoutTabs('No puede dejar datos vacios');
         }
-        if (!ValidationUtils.validateEmpty(user)) {
+        if (!ValidationUtils.validateEmpty(user, ['location'])) {
             return this.toast.messageErrorWithoutTabs('Todos su información debe estar rellenada');
         }
         if (!ValidationUtils.validatePhone(user.phone)) {
             return this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener entre 8 y 15 dígitos', 2500);
         }
-        if (!this.user.location.country || this.user.location.country.trim() === '') {
-            return this.toast.messageErrorWithoutTabs('Debe seleccionar la direccion similar a la suya de la lista de sugerencias');
+        if (!this.country) {
+            return this.toast.messageErrorWithoutTabs('Debe seleccionar su pais');
         }
         this.saving = true;
         user.notifications = true;
+        user.location.country = this.country.name;
+        user.location.code = this.country.code;
+        if (this.address && this.address.length > 0) {
+            user.location.address = this.address;
+        }
 
-        this.getBase64Image(user.photoUrl, async (base64image) => {
-            const success = await this.fireStorage.saveProfileImage(base64image);
-            if (success) {
-                this.user.photoUrl = success;
-                this.addUser(this.user);
-            } else {
-                this.saving = false;
-                this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
-                return;
-            }
+        const base64image = await this.convertToBase64(user.photoUrl);
+        const success = await this.fireStorage.saveProfileImage(base64image);
+        if (success) {
+            this.user.photoUrl = success;
+            this.addUser(this.user);
+        } else {
+            this.saving = false;
+            this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
+            return;
+        }
+    }
+
+    convertToBase64(photoUrl): Promise<any> {
+        const self = this;
+        return new Promise(resolve => {
+            self.getBase64Image(photoUrl, async (base64image) => {
+                resolve(base64image);
+            });
         });
     }
 
@@ -102,25 +118,29 @@ export class UserRegisterPage extends InputFilePage implements OnInit, AfterView
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0);
             canvas.toBlob(callback, 'image/png');
-
         });
         img.setAttribute('crossOrigin', 'anonymous'); //
         img.src = URL;
     }
 
-    private addUser(user: User) {
+    addUser(user: User) {
+        const self = this;
         this.authService.create(user)
             .then(async response => {
                 if (response.passed === true) {
                     await this.storageService.setPagamiUser(response.response);
                     await this.storageService.setLogged(true);
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
-                    this.saving = false;
                     await this.route.navigate(['/app/tabs/map/search']);
                 } else {
-                    this.saving = false;
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
                 }
+            }).finally(() => {
+                self.saving = false;
             });
+    }
+
+    countryChange($event: { component: IonicSelectableComponent; value: any }) {
+        this.user.phoneCode = this.country.dial_code;
     }
 }

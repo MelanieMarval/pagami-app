@@ -5,7 +5,6 @@ import { ApiService } from '../api.service';
 import { Place } from './place';
 import { ApiResponse } from '../api.response';
 import { PLACES } from '../../../utils/Const';
-import { PlaceFilter } from './place.filter';
 
 @Injectable({
     providedIn: 'root'
@@ -92,9 +91,27 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async changeCategory(id: string, category: any): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/category`, category, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async changeFlyer(id: string, flyer: any): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/flyer`, flyer, options);
+        return this.apiService.serverListener(request);
+    }
+
     async delete(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.delete(`${this.URL}/${id}`, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async deleteFlyer(id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.delete(`${this.URL}/${id}/flyer`, options);
         return this.apiService.serverListener(request);
     }
 
@@ -110,9 +127,19 @@ export class PlacesService {
         return country.dial_code;
     }
 
+    async getAllCountries(): Promise<any> {
+        return this.httpClient.get('assets/countries.json').toPromise();
+    }
+
     async changeLocation(place: Place): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.put(`${this.URL}/update/location`, place, options);
+        return this.apiService.serverListener(request);
+    }
+
+    async deleteFull(id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.delete(`${this.URL}/${id}/full`, options);
         return this.apiService.serverListener(request);
     }
 

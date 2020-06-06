@@ -9,6 +9,7 @@ import {ServicesPage} from './services/services';
 import {ProductsPage} from './products/products';
 import {OrderSummaryPage} from './order-summary/order-summary';
 import { PipesModule } from '../../pipes/pipes.module';
+import { FlyerPage } from './flyer/flyer';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     ],
     declarations: [
         ShopPage,
+        FlyerPage,
         ProductsPage,
         ServicesPage,
         OrderSummaryPage,

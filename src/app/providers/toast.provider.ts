@@ -9,10 +9,22 @@ export class ToastProvider {
     constructor(private toastController: ToastController) {
     }
 
-    async messageSuccessBottom(message: string, duration = 2000) {
+    async messageDefault(message: string, position: 'top' | 'bottom' | 'middle' = 'bottom', duration = 2000) {
         const toast = await this.toastController.create({
             message,
             duration,
+            color: 'pagami-surface',
+            position,
+        });
+
+        await toast.present();
+    }
+
+    async messageInfoForMap(message: string, duration = 5000) {
+        const toast = await this.toastController.create({
+            message,
+            duration,
+            cssClass: 'toast-bottom-custom-for-map',
             color: 'pagami-surface',
             position: 'bottom',
         });

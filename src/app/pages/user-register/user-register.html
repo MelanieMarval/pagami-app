@@ -11,34 +11,50 @@
     <ion-list lines="none" class="inputs-container" *ngIf="user">
         <ion-item color="pagami-surface">
             <ion-label position="floating">Nombre</ion-label>
-            <ion-input type="text" [(ngModel)]="user.name" maxlength="30"></ion-input>
+            <ion-input type="text" [(ngModel)]="user.name" maxlength="30" [disabled]="saving"></ion-input>
             <ion-icon name="person" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
             <ion-label position="floating">Apellido</ion-label>
-            <ion-input type="text" [(ngModel)]="user.lastname" maxlength="30"></ion-input>
+            <ion-input type="text" [(ngModel)]="user.lastname" maxlength="30" [disabled]="saving"></ion-input>
             <ion-icon name="people" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
-            <ion-label position="floating">Correo Electronico</ion-label>
-            <ion-input type="text" [value]="user.email" readonly="true"></ion-input>
+            <ion-label position="floating">Correo Electrónico</ion-label>
+            <ion-input type="text" [value]="user.email" readonly="true" [disabled]="saving"></ion-input>
             <ion-icon name="mail" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface">
-            <ion-label position="floating">Telefono</ion-label>
-            <ion-input type="tel" [(ngModel)]="user.phone" maxlength="15"></ion-input>
-            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-label position="floating">País</ion-label>
+            <ionic-selectable modalCssClass='ionic-selectable-documentation-configuration'
+                              [(ngModel)]="country"
+                              [items]="countries"
+                              itemValueField="code"
+                              itemTextField="name"
+                              [canSearch]="true"
+                              (onChange)="countryChange($event)"
+                              [disabled]="saving">
+            </ionic-selectable>
+            <ion-icon name="globe" slot="start"></ion-icon>
         </ion-item>
-        <ion-item #itemLocation color="pagami-surface" *ngIf="user.location">
-            <ion-label position="floating">Ubicacion</ion-label>
-            <ion-input type="text" [(ngModel)]="locationSearch" (ionChange)="locationChanged($event.target)"></ion-input>
+        <ion-item-group class="group-flex">
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Código</ion-label>
+                <ion-input [(ngModel)]="user.phoneCode" disabled></ion-input>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Teléfono</ion-label>
+                <ion-input type="tel" [(ngModel)]="user.phone" maxlength="15" [disabled]="saving"></ion-input>
+            </ion-item>
+        </ion-item-group>
+        <ion-item #itemLocation color="pagami-surface" class="mb-0">
+            <ion-label position="floating">Ubicación</ion-label>
+            <ion-input type="text" [(ngModel)]="address" [disabled]="saving"></ion-input>
             <ion-icon name="location" slot="start"></ion-icon>
         </ion-item>
-    </ion-list>
-    <ion-list *ngIf="places.length > 0" class="w-100 results-search" lines="none">
-        <ion-item *ngFor="let place of places; let i = index" (click)="setPlace(place)" color="pagami-surface" [ngClass]="i === 4 ? 'border-radius-bottom' : ''">
-            <ion-label>{{place.description}}</ion-label>
-        </ion-item>
+        <div class="info-text multi-lines">
+            <small>* Esta ubicación solo se mostrara a las empresas que solicites domicilio (Opcional).</small>
+        </div>
     </ion-list>
 
     <footer class="footer-button footer-button--div">

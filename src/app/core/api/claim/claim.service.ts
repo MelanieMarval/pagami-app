@@ -50,4 +50,9 @@ export class ClaimService {
         return this.apiService.serverListener(request);
     }
 
+    async findById(id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.get(`${this.URL}/${id}`, options);
+        return this.apiService.serverListener(request);
+    }
 }

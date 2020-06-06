@@ -4,24 +4,10 @@ export class ValidationUtils {
 
     static validateEmpty(object, exceptions?: string[]): boolean {
         const names = Object.getOwnPropertyNames(object);
-        if (!exceptions || exceptions.length === 0) {
-            for (const name of names) {
-                if (String(object[name]).trim() === '') {
-                    return false;
-                }
-            }
-        } else {
-            for (const name of names) {
-                for (const exc of exceptions) {
-                    if (exc !== name) {
-                        if (String(object[name]).trim() === '') {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
+        return !names.find(name => {
+            const value = String(object[name]).trim();
+            return value === '' && exceptions && !exceptions.find(nameE => nameE === name);
+        });
     }
 
     static validatePhone(phone): boolean {

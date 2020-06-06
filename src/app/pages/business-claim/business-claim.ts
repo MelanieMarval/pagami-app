@@ -16,8 +16,9 @@ export class BusinessClaimPage implements OnInit {
 
     form: FormGroup;
     claim: Claim;
-    loading: false;
+    loading = false;
     saved: boolean;
+    st = 'njkdniudhiuHYHY';
 
     constructor(private router: Router,
                 private intentProvider: UserIntentProvider,
@@ -25,34 +26,48 @@ export class BusinessClaimPage implements OnInit {
                 private claimService: ClaimService) {
     }
 
-    ngOnInit(): void {
+    get data() {
+        return this.form.controls;
+    }
+
+    ngOnInit() {
         this.form = new FormGroup({
-            // @ts-ignore
-            placeId: new FormControl(this.intentProvider.placeToClaim.id),
-            businessRuc: new FormControl('', [Validators.required, Validators.maxLength(20)]),
             businessPhone: new FormControl('', [Validators.required,
                 Validators.minLength(8),
                 Validators.maxLength(15),
-                Validators.pattern('^(\\+[1-9][0-9]*(\\([0-9]*\\)|-[0-9]*-))?[0]?[1-9][0-9\\- ]*$')]),
+                Validators.pattern('^\\+?[0-9]{1,3}[0-9]{4,14}(?:x.+)?$')]),
             businessEmail: new FormControl('', [Validators.required,
-                Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$')]),
+                Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$')]),
             businessComment: new FormControl('', [Validators.minLength(5), Validators.maxLength(300)])
         });
     }
 
     saveData() {
-        this.claim = this.form.value;
-
+        this.loading = true;
+        const businessEmail = this.data.businessEmail.value.toLowerCase().trim();
+        this.claim = {
+            placeId: this.intentProvider.placeToClaim.id,
+            businessPhone: this.data.businessPhone.value,
+            businessEmail,
+            businessComment: this.data.businessComment.value
+        };
         this.claimService.claimBusiness(this.claim)
             .then(success => {
                 this.loading = false;
                 if (success.passed) {
                     this.saved = true;
                     this.intentProvider.placeToClaim = undefined;
-                    this.toast.messageSuccessBottom('Gracias por tu solicitud. <br>La verificacion de tu empresa esta en camino!', 3000);
+                    this.toast.messageDefault('Gracias por tu solicitud. <br>La verificacion de tu empresa esta en camino!', 'middle', 3500);
+                    this.router.navigateByUrl('/app/tabs/map/search');
                 } else {
                     this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');
                 }
+            }).catch(error => {
+                this.toast.messageErrorWithoutTabs('Estamos experimentando problemas. Intente mas tarde!');
             });
+    }
+
+    onWriteEmail() {
+        this.data.businessEmail.setValue(this.data.businessEmail.value.toLowerCase().trim());
     }
 }

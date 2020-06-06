@@ -34,31 +34,37 @@ export class AppComponent {
     }
 
     initializeApp() {
-        this.platform.ready().then(async () => {
-            const isLogged = await this.storageService.isLogged();
-            const user = await this.storageService.getPagamiUser();
-            // const lastUserVerification = await this.storageService.getLastUserVerification();
-            if (isLogged && user) {
-                if (user.type && user.type === USER.TYPE.ADMIN) {
-                    this.openAdminPanel();
-                } else {
-                    this.openHome();
-                }
-                setTimeout(() => {
-                    this.verifyUser(user);
-                }, 5000);
-            } else {
-                await this.openTutorial();
-            }
-            await setTimeout(async () => {
-                await SplashScreen.hide();
-            }, 1000);
-        });
-        App.addListener('backButton', async (data: AppUrlOpen) => {
+        this.platform.ready().then(async () => this.start());
+        App.addListener('backButton', () => {
             if (this.verifyIfCanCloseApp(this.router.url)) {
                 App.exitApp();
             }
         });
+    }
+
+    private async start() {
+        const isLogged = await this.storageService.isLogged();
+        const user = await this.storageService.getPagamiUser();
+
+        // this.router.navigateByUrl('/user-register', {replaceUrl: true});
+        // return
+
+        // const lastUserVerification = await this.storageService.getLastUserVerification();
+        // if (isLogged && user) {
+        //     if (user.type && user.type === USER.TYPE.ADMIN) {
+        //         this.openAdminPanel();
+        //     } else {
+        //         this.openHome();
+        //     }
+        //     setTimeout(() => {
+        //         this.verifyUser(user);
+        //     }, 5000);
+        // } else {
+        //     await this.openTutorial();
+        // }
+        await setTimeout(async () => {
+            await SplashScreen.hide();
+        }, 1000);
     }
 
     private verifyUser(lastUser: User) {

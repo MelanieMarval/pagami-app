@@ -1,5 +1,5 @@
 <div class="ion-grid-places">
-    <ion-grid class="no-pb pan-active">
+    <ion-grid class="no-pb pan-active" (click)="onBarClick()">
         <ion-row class="scrollable-draw pan-active">
             <div class="scrollable-draw-children pan-active" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
         </ion-row>
@@ -27,7 +27,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid [ngClass]="{'with-overflow-y': drawerState == 2 }">
+    <ion-list [ngClass]="{'with-overflow-y': drawerState == 2 }">
         <div class="progress-bar-container">
             <ion-progress-bar type="indeterminate" color="pagami" *ngIf="searching"></ion-progress-bar>
         </div>
@@ -40,8 +40,8 @@
                         animated>
                     </ion-skeleton-text>
                     <ion-img
-                        [style.opacity]="selectedPlace.loaded ? 1 : 0"
-                        [src]="selectedPlace.photoUrl" class="card-img"
+                        [src]="selectedPlace.photoUrl"
+                        class="card-img"
                         (ionImgDidLoad)="selectedPlace.loaded = true">
                     </ion-img>
                 </div>
@@ -61,36 +61,38 @@
                 </ion-card-header>
             </ion-card>
         </ion-row>
-        <ion-row *ngFor="let place of nearPlaces | filterPlace: searchText" [hidden]="selectedPlace && selectedPlace.id === place.id || place.type !== getName(selectedCategory)">
-            <ion-card button color="pagami-surface" (click)="savePlaceToShowDetails(place)" class="card" routerLink="/app/shop">
-                <div class="card-img-contain">
-                    <ion-skeleton-text
-                        class="card-img-skeleton"
-                        [hidden]="place.loaded"
-                        animated>
-                    </ion-skeleton-text>
-                    <ion-img
-                        [style.opacity]="place.loaded ? 1 : 0"
-                        [src]="place.photoUrl"
-                        class="card-img"
-                        (ionImgDidLoad)="place.loaded = true">
-                    </ion-img>
-                </div>
-                <ion-card-header class="card-header">
-                    <ion-card-subtitle class="card-subtitle">
-                        <ion-icon [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>&nbsp;
-                        <ion-label>{{place.category.name | uppercase}}</ion-label>
-                    </ion-card-subtitle>
-                    <ion-card-title class="nearby-title">
-                        {{place.name}}
-                        <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
-                    </ion-card-title>
-                    <ion-card-subtitle class="card-subtitle">
-                        <!--Abierto · {{messageDistance(place.distance)}}-->
-                        {{messageDistance(place.distance)}}
-                    </ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>
-        </ion-row>
-    </ion-grid>
+        <ion-virtual-scroll [items]="nearPlaces | filterPlace: searchText" approxItemHeight="322px">
+            <ion-row  *virtualItem="let place;" [hidden]="selectedPlace && selectedPlace.id === place.id || place.type !== getName(selectedCategory)">
+                <ion-card button color="pagami-surface" (click)="savePlaceToShowDetails(place)" class="card" routerLink="/app/shop">
+                    <div class="card-img-contain">
+                        <ion-skeleton-text
+                            class="card-img-skeleton"
+                            [hidden]="place.loaded"
+                            animated>
+                        </ion-skeleton-text>
+                        <ion-img
+                            [src]="place.photoUrl"
+                            class="card-img"
+                            (ionImgDidLoad)="place.loaded = true">
+                        </ion-img>
+                    </div>
+                    <ion-card-header class="card-header">
+                        <ion-card-subtitle class="card-subtitle">
+                            <ion-icon [src]="'assets/category-icons/'+place.category.icon+'.svg'"></ion-icon>&nbsp;
+                            <ion-label>{{place.category.name | uppercase}}</ion-label>
+                        </ion-card-subtitle>
+                        <ion-card-title class="nearby-title">
+                            {{place.name}}
+                            <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success" class="size-icon-mini"></ion-icon>
+                        </ion-card-title>
+                        <ion-card-subtitle class="card-subtitle">
+                            <!--Abierto · {{messageDistance(place.distance)}}-->
+                            {{messageDistance(place.distance)}}
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                </ion-card>
+            </ion-row>
+        </ion-virtual-scroll>
+
+    </ion-list>
 </div>

@@ -55,9 +55,6 @@ const routes: Routes = [
                 path: 'orders', component: OrdersPage
             },
             {
-                path: 'tabs/my-business/plans', component: PlansPage
-            },
-            {
                 path: 'my-products',
                 loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule)
             },

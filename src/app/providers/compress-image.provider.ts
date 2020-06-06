@@ -10,8 +10,8 @@ export class CompressImageProvider {
     constructor() {
     }
 
-    static async handleImageUpload(event) {
-        const imageFile = event.target.files[0];
+    static async handleImageUpload(isTest: boolean, image: any, name = 'pagami') {
+        const imageFile = isTest ? image.target.files[0] : await imageCompression.getFilefromDataUrl(image, name);
         const options = {
             maxSizeMB: 0.100,
             maxWidthOrHeight: 1020,
@@ -24,6 +24,7 @@ export class CompressImageProvider {
         }
 
     }
+
 
 }
 

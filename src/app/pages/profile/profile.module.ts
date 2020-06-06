@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilePage } from './profile';
 import { PipesModule } from '../../pipes/pipes.module';
+import { Sim } from '@ionic-native/sim/ngx';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
     imports: [
@@ -12,9 +14,13 @@ import { PipesModule } from '../../pipes/pipes.module';
         CommonModule,
         FormsModule,
         RouterModule.forChild([{path: '', component: ProfilePage}]),
-        PipesModule
+        PipesModule,
+        IonicSelectableModule
     ],
-    declarations: [ProfilePage]
+    declarations: [ProfilePage],
+    providers: [
+        Sim
+    ]
 })
 export class ProfileModule {
 }

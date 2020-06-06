@@ -93,7 +93,8 @@ export class TutorialPage {
         const userToRegister = await this.storageService.getGoogleUser();
         await this.storageService.setUserUnregistered(userToRegister);
         this.loading = false;
-        this.presentModal().then();
+        // this.presentModal().then();
+        this.route.navigate(['/terms']);
     }
 
     async onUnknownError() {

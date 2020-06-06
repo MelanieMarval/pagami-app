@@ -10,6 +10,12 @@
 
         <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
 
+        <div class="flyer" *ngIf="place.status === STATUS.VERIFIED">
+            <ion-button class="flyer-button ion-no-padding" routerLink="flyer">
+                <ion-icon name="newspaper" slot="icon-only" size="small"></ion-icon>
+            </ion-button>
+        </div>
+
         <div class="header-image--info">
             <ion-item lines="none" class="info-category">
                 <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
@@ -32,16 +38,21 @@
                 &nbsp;
                 <ion-label class="label-flex">
                     <div>{{0 | plural:'comentarios'}}</div>
-                    <div>No verificada</div>
+                    <div *ngIf="place.status === STATUS.ACCEPTED">No verificada</div>
                 </ion-label>
             </ion-item>
         </div>
     </ion-header>
 
     <ion-list lines="none" class="inputs-container">
-        <ion-item color="pagami-surface" [href]="'https://wa.me/' + (place.samePhone ? place.phone : place.whatsapp)">
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input readonly [value]="place.location.address"></ion-input>
+            <ion-icon src="assets/icon/locate-checkmark.svg" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="place.whatsapp" color="pagami-surface" [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp">
             <ion-label position="floating">WhatsApp</ion-label>
-            <ion-input readonly [value]="place.samePhone ? place.phone : place.whatsapp"></ion-input>
+            <ion-input readonly [value]="place.whatsapp"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
         </ion-item>
         <ion-item color="pagami-surface" [href]="'tel:'+place.phone">
@@ -49,7 +60,7 @@
             <ion-input readonly [value]="place.phone"></ion-input>
             <ion-icon src="assets/icon/call.svg" slot="start"></ion-icon>
         </ion-item>
-        <ion-item color="pagami-surface" (click)="browser.open(place.website)">
+        <ion-item *ngIf="place.website" color="pagami-surface" (click)="browser.open(place.website)">
             <ion-label position="floating">Pagina Web</ion-label>
             <ion-input readonly [value]="place.website"></ion-input>
             <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>

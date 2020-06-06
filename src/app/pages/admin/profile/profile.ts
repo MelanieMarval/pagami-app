@@ -51,7 +51,7 @@ export class ProfileAdminPage extends InputFilePage implements OnInit {
                     this.user = await this.storageService.getPagamiUser();
                     this.updating = false;
                     this.isEditing = false;
-                    this.toast.messageSuccessBottom('Informacion actualizada con exito');
+                    this.toast.messageDefault('Informacion actualizada con exito');
                 } else {
                     this.updating = false;
                     this.isEditing = false;

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs-page';
+import { ChangeCategoryPage } from './my-business/change-category/change-category';
+import { PlansPage } from './my-business/plans/plans';
+import { FlyerPage } from './my-business/flyer/flyer';
 
 const routes: Routes = [
     {
@@ -29,7 +32,11 @@ const routes: Routes = [
                 loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
             },
         ],
-    }
+    },
+    // For sub-page my business
+    { path: 'my-business/plans',            component: PlansPage },
+    { path: 'my-business/change-category',  component: ChangeCategoryPage },
+    { path: 'my-business/flyer',            component: FlyerPage }
 ];
 
 @NgModule({

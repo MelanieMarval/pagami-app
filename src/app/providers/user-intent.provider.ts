@@ -17,6 +17,7 @@ export class UserIntentProvider {
     private _showingPlaceDetails = false;
     private _lastUpdatedPoint: PagamiGeo;
     private _myBusinessDetails: any; // contain id and name
+    private _updateMyBusiness = false;
 
     get placeToEdit(): Place {
         return this._placeToEdit;
@@ -66,6 +67,13 @@ export class UserIntentProvider {
         this._lastUpdatedPoint = value;
     }
 
+    get updateMyBusiness(): boolean {
+        return this._updateMyBusiness;
+    }
+
+    set updateMyBusiness(value: boolean) {
+        this._updateMyBusiness = value;
+    }
 
     get placeToChangeLocation(): Place {
         return this._placeToChangeLocation;

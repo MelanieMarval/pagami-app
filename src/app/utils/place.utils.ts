@@ -40,7 +40,7 @@ export class PlaceUtils {
 
     static getMessageDistance(distance: number): string {
         if (distance === 0) {
-           return `Esta aqui.`;
+           return `Estas aqui.`;
         } else if (distance > 2000) {
             return `A ${Math.trunc(distance / 1000)} kilometros de ti.`;
         } else {
@@ -55,10 +55,10 @@ export class PlaceUtils {
             return `assets/marker-icons/peluqueria${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'cafe') {
             return `assets/marker-icons/cafe${PlaceUtils.getIconSuffix(place, suffix)}`;
-        } else if (place.category.icon === 'comida_rapida') {
-            return `assets/marker-icons/comida_rapida${PlaceUtils.getIconSuffix(place, suffix)}`;
-        } else if (place.category.icon === 'estacionamiento') {
-            return `assets/marker-icons/estacionamiento${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'estacionamiento_motos') {
+            return `assets/marker-icons/estacionamiento_motos${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'estacionamiento_vehiculos') {
+            return `assets/marker-icons/estacionamiento_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'fabrica') {
             return `assets/marker-icons/fabrica${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'farmacia') {
@@ -97,18 +97,56 @@ export class PlaceUtils {
             return `assets/marker-icons/servicio_medico${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'servicio_tecnico') {
             return `assets/marker-icons/servicio_tecnico${PlaceUtils.getIconSuffix(place, suffix)}`;
-        } else if (place.category.icon === 'taller') {
-            return `assets/marker-icons/taller${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'taller_motos') {
+            return `assets/marker-icons/taller_motos${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'taller_vehiculos') {
+            return `assets/marker-icons/taller_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'taxi') {
-            return `assets/marker-icons/tienda_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
+            return `assets/marker-icons/taxi${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'tienda_deporte') {
             return `assets/marker-icons/tienda_deporte${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'tienda_motos') {
             return `assets/marker-icons/tienda_motos${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'tienda_vehiculos') {
+            return `assets/marker-icons/tienda_vehiculos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'tienda_ropa') {
             return `assets/marker-icons/tienda_ropa${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'veterinario') {
             return `assets/marker-icons/veterinario${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'servicios') {
+            return `assets/marker-icons/servicios${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === '3dcorte') {
+            return `assets/marker-icons/3dcorte${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'calzado') {
+            return `assets/marker-icons/calzado${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'carniceria') {
+            return `assets/marker-icons/carniceria${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'cerrajeria') {
+            return `assets/marker-icons/cerrajeria${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'diseno_programacion') {
+            return `assets/marker-icons/diseno_programacion${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'naturista') {
+            return `assets/marker-icons/naturista${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'reparacion_llantas') {
+            return `assets/marker-icons/reparacion_llantas${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'solucionesempr') {
+            return `assets/marker-icons/solucionesempr${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'turismo') {
+            return `assets/marker-icons/turismo${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'vivero') {
+            return `assets/marker-icons/vivero${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'joyeria') {
+            return `assets/marker-icons/joyeria${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'relojeria') {
+            return `assets/marker-icons/relojeria${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'muebles') {
+            return `assets/marker-icons/muebles${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'casa_cambio') {
+            return `assets/marker-icons/casa_cambio${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'optica') {
+            return `assets/marker-icons/optica${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'tienda_bolsos') {
+            return `assets/marker-icons/tienda_bolsos${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else {
             return `assets/marker-icons/tienda${PlaceUtils.getIconSuffix(place, suffix)}`;
         }
@@ -125,7 +163,6 @@ export class PlaceUtils {
     }
 
     static getSortData(registers): any[] {
-        // console.log(registers.sort((a, b) => b.lastUpdate - a.lastUpdate));
         return registers.sort((a, b) => new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime());
     }
 

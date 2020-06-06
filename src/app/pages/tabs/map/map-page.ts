@@ -1,23 +1,32 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {DOCUMENT} from '@angular/common';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {DrawerState} from '../../../shared/ion-bottom-drawer/drawer-state';
-import {Place} from '../../../core/api/places/place';
-import {ApiResponse} from '../../../core/api/api.response';
-import {PlaceFilter} from '../../../core/api/places/place.filter';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    OnInit,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { DrawerState } from '../../../shared/ion-bottom-drawer/drawer-state';
+import { Place } from '../../../core/api/places/place';
+import { ApiResponse } from '../../../core/api/api.response';
+import { PlaceFilter } from '../../../core/api/places/place.filter';
 // Services
-import {GoogleMapPage} from '../../parent/GoogleMapPage';
-import {GeolocationService} from '../../../core/geolocation/geolocation.service';
-import {PlacesService} from '../../../core/api/places/places.service';
-import {MAP_MODE, PLACES} from '../../../utils/Const';
+import { GoogleMapPage } from '../../parent/GoogleMapPage';
+import { GeolocationService } from '../../../core/geolocation/geolocation.service';
+import { PlacesService } from '../../../core/api/places/places.service';
+import { MAP_MODE, PLACES } from '../../../utils/Const';
 // Providers
-import {MapProvider} from '../../../providers/map.provider';
-import {AlertProvider} from '../../../providers/alert.provider';
-import {ToastProvider} from '../../../providers/toast.provider';
-import {StorageProvider} from '../../../providers/storage.provider';
-import {UserIntentProvider} from '../../../providers/user-intent.provider';
-import {PagamiGeo} from '../../../core/geolocation/pagami.geo';
-import {AlertController} from '@ionic/angular';
+import { MapProvider } from '../../../providers/map.provider';
+import { AlertProvider } from '../../../providers/alert.provider';
+import { ToastProvider } from '../../../providers/toast.provider';
+import { StorageProvider } from '../../../providers/storage.provider';
+import { UserIntentProvider } from '../../../providers/user-intent.provider';
+import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
+import { AlertController } from '@ionic/angular';
 
 const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
 const BASIC_RADIUS_KILOMETERS = 50;
@@ -198,7 +207,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.intentProvider.placeToClaim = place;
                 this.router.navigate(['app/shop']);
             } else {
-                this.toast.messageSuccessAboveButton('No puede reclamar esta empresa');
+                this.toast.messageInfoForMap('No puede reclamar esta empresa <br>Ya ha sido reclamada.', 2000);
             }
         } else if (this.currentUrl === MAP_MODE.SEARCH) {
             this.fabAttached = false;
@@ -453,5 +462,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.saving = false;
                 this.toast.messageErrorAboveButton('No se ha guardar la ubicacion por problemas de conexion. Intente mas tarde!');
             });
+    }
+
+    clickOnNearbyBar() {
+        this.bottomDrawer.drawerState = DrawerState.Top;
     }
 }

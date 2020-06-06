@@ -4,6 +4,7 @@ import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
 import {ActivatedRoute, Router} from '@angular/router';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
+import { DrawerState } from "../../../../shared/ion-bottom-drawer/drawer-state";
 
 @Component({
     selector: 'app-nearby',
@@ -19,6 +20,7 @@ export class NearbyPage implements OnInit {
     @Input() nearPlaces: Place[] = [];
     @Input() searching = false;
     @Input() searchText = '';
+    @Output() changeDrawerState: EventEmitter<number> = new EventEmitter<number>();
 
     selectedCategory = 0;
     STATUS = PLACES.STATUS;
@@ -42,5 +44,11 @@ export class NearbyPage implements OnInit {
 
     getName(select: number) {
         return this.selectedCategory === 0 ? PLACES.TYPE.STORE : PLACES.TYPE.SERVICE;
+    }
+
+    onBarClick() {
+        if (this.drawerState === DrawerState.Bottom) {
+            this.changeDrawerState.emit(DrawerState.Top);
+        }
     }
 }

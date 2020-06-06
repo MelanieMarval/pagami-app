@@ -11,24 +11,25 @@ ion-slides {
     display: flex;
     flex-direction: column;
 }
+.slide {
+    &-img {
+        max-height: 50%;
+        max-width: 80%;
+        margin: 60px 0 40px;
+        pointer-events: none;
+    }
 
-.slide-img {
-    max-height: 50%;
-    max-width: 80%;
-    margin: 60px 0 40px;
-    pointer-events: none;
-}
+    &-title {
+        margin-top: 2.8rem;
+        font-size: 32px;
+        color: #ffffff;
+    }
 
-.slide-title {
-    margin-top: 2.8rem;
-    font-size: 32px;
-    color: #ffffff;
-}
-
-.slide-text {
-    font-size: 16px;
-    color: #718096;
-    line-height: 28px;
+    &-text {
+        font-size: 16px;
+        color: #718096;
+        line-height: 28px;
+    }
 }
 
 

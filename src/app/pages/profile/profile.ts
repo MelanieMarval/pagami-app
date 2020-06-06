@@ -14,7 +14,12 @@ import { StorageProvider } from '../../providers/storage.provider';
 import { FireStorage } from '../../core/fire-storage/fire.storage';
 import { ValidationUtils } from '../../utils/validation.utils';
 import { CompressImageProvider } from '../../providers/compress-image.provider';
+import { Plugins } from '@capacitor/core';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { PlacesService } from '../../core/api/places/places.service';
+import { Country } from '../../core/api/places/country';
 
+const {SplashScreen} = Plugins;
 
 @Component({
     selector: 'app-profile',
@@ -25,7 +30,11 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     isEditing = false;
     user: User = {location: {}};
+    userEdit: User = {location: {}};
     updating = false;
+    countries: Country[];
+    country: Country;
+    address: string;
 
     constructor(
         private router: Router,
@@ -36,7 +45,8 @@ export class ProfilePage extends InputFilePage implements OnInit {
         private fireStorage: FireStorage,
         private googleAuthService: GoogleAuthService,
         private authService: AuthService,
-        protected geolocationService: GeolocationService,
+        private placesService: PlacesService,
+        protected geolocationService: GeolocationService
     ) {
         super(geolocationService);
     }
@@ -44,12 +54,11 @@ export class ProfilePage extends InputFilePage implements OnInit {
     async ngOnInit() {
         this.user = await this.storageService.getPagamiUser();
         this.previewUrl = this.user.photoUrl;
-    }
-
-    setPlace(place) {
-        this.user.location.address = place.description;
-        this.user.location.country = place.terms.slice(-1)[0].value;
-        this.places = [];
+        await this.placesService.getAllCountries().then(value => {
+            this.countries = value;
+            this.country = this.countries.find(cc => cc.code === 'CO');
+            this.user.phoneCode = this.country.dial_code;
+        });
     }
 
     editProfile() {
@@ -58,16 +67,30 @@ export class ProfilePage extends InputFilePage implements OnInit {
             this.updating = false;
         } else {
             this.isEditing = true;
+            this.userEdit = Object.assign({}, this.user);
+            setTimeout(() => {
+                // this.locationSelected = true;
+            }, 500);
         }
     }
 
     validateForm() {
-        if (!ValidationUtils.validateEmpty(this.user)) {
-            return this.toast.messageErrorWithoutTabs('Todos su informacion debe estar rellenada');
+        if (!this.userEdit.name) {
+            return this.toast.messageErrorWithoutTabs('Por favor ingrese su nombre');
         }
-        if (!ValidationUtils.validatePhone(this.user.phone)) {
+        if (!this.userEdit.lastname) {
+            return this.toast.messageErrorWithoutTabs('Por favor ingrese su apellido');
+        }
+        if (!this.userEdit.location.country) {
+            return this.toast.messageErrorWithoutTabs('Por favor seleccione su pais');
+        }
+        if (!ValidationUtils.validatePhone(this.userEdit.phone)) {
             return this.toast.messageErrorWithoutTabs('Su numero de telefono debe contener minimo 8 digitos y menos de 15', 2500);
         }
+        if (!this.userEdit.phoneCode) {
+            return this.toast.messageErrorWithoutTabs('Por favor seleccione su pais para que se autocomplete el codigo');
+        }
+
         if (this.previewUrl !== this.user.photoUrl) {
             this.saveImage();
         } else {
@@ -79,7 +102,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
         this.updating = true;
         const success = await this.fireStorage.saveProfileImage(this.fileData);
         if (success) {
-            this.user.photoUrl = success;
+            this.userEdit.photoUrl = success;
             this.updateUser();
         } else {
             this.errorUpdating();
@@ -88,7 +111,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     updateUser() {
         this.updating = true;
-        this.authService.update(this.user)
+        this.authService.update(this.userEdit)
             .then(async success => {
                 if (success.passed === true) {
                     await this.storageService.setPagamiUser(success.response);
@@ -110,7 +133,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
 
     async deleteAccountConfirm() {
         const alert = await this.alertController.create({
-            header: 'Eliminacion de cuenta',
+            header: 'Eliminación de cuenta',
             message: 'Si eliminas tu cuenta toda tu información se perderá y no podrás recuperla',
             buttons: [
                 {
@@ -174,6 +197,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
     async closeSession() {
         await this.googleAuthService.singOut();
         await this.router.navigateByUrl('/tutorial');
+        await SplashScreen.show();
     }
 
 
@@ -181,7 +205,11 @@ export class ProfilePage extends InputFilePage implements OnInit {
         if (!ValidationUtils.validateImage($event)) {
             this.toast.messageErrorWithoutTabs('Formato de imágen no válido, por favor seleccione otra.', 3000);
         } else {
-            this.chargeImage($event);
+            this.chargeImage(true, $event);
         }
+    }
+
+    countryChange($event: { component: IonicSelectableComponent; value: any }) {
+        this.userEdit.phoneCode = this.country.dial_code;
     }
 }

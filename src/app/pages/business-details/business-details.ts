@@ -9,10 +9,12 @@ import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { StorageProvider } from '../../providers/storage.provider';
 import { ToastProvider } from '../../providers/toast.provider';
 import { UserIntentProvider } from '../../providers/user-intent.provider';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PlacesService } from '../../core/api/places/places.service';
 import { Place } from '../../core/api/places/place';
 import { PLACES } from '../../utils/Const';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+const { Device } = Plugins;
 
 @Component({
     selector: 'app-business-details',
@@ -26,6 +28,7 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
     isStore = false;
     isService = false;
     dialCode = '';
+    isTest = false;
 
     constructor(private storageService: StorageProvider,
                 private placeService: PlacesService,
@@ -34,12 +37,15 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
                 private fireStorage: FireStorage,
                 private storageInstance: UserIntentProvider,
                 protected geolocationService: GeolocationService,
-                private alertController: AlertController) {
+                private alertController: AlertController,
+                private actionSheetController: ActionSheetController) {
         super(geolocationService);
     }
 
-    ngOnInit() {
-        this.setupData(this.storageInstance.placeToEdit);
+    async ngOnInit() {
+        await this.setupData(this.storageInstance.placeToEdit);
+        const info = await Device.getInfo();
+        this.isTest = info.platform === 'web';
     }
 
     async setupData(place: Place) {
@@ -51,15 +57,9 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         if (this.place.type === PLACES.TYPE.STORE) {
             this.isStore = true;
         }
-        if (this.place.type === PLACES.TYPE.SERVICE) {
-            this.isService = true;
-        }
         this.dialCode = await this.placeService.getDialCode(this.place.location.acronym);
-        if (!this.place.phone) {
-            this.place.phone = this.dialCode;
-        }
         if (!this.place.whatsapp) {
-            this.place.whatsapp = this.dialCode;
+            this.place.dialCode = this.dialCode;
         }
     }
 
@@ -98,29 +98,19 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         }
     }
 
-    selectTypeStore() {
-        this.place.type = PLACES.TYPE.STORE;
-        this.isService = false;
-    }
-
-    selectTypeService() {
-        this.place.type = PLACES.TYPE.SERVICE;
-        this.isStore = false;
-    }
-
     validateForm() {
         const business = this.place;
-        if (!business.location.address || !business.name || !this.place.type || !business.phone) {
+        if (!business.location.address || !business.name || !business.phone) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
-        if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon', 'website'])) {
+        if (!ValidationUtils.validateEmpty(this.place, ['photoURL', 'icon', 'website', 'whatsapp'])) {
             return this.toast.messageErrorWithoutTabs('Toda su informacion debe estar rellenada');
         }
         if (!ValidationUtils.validatePhone(business.phone)) {
             this.toast.messageErrorWithoutTabs('Su número de teléfono debe contener minimo 8 digitos y menos de 15');
             return;
         }
-        if (!this.place.samePhone && business.whatsapp.length > 15 && business.whatsapp !== this.dialCode) {
+        if (!!business.whatsapp && !ValidationUtils.validatePhone(business.whatsapp)) {
             this.toast.messageErrorWithoutTabs('Su número de Whatsapp es incorrecto');
             return;
         }
@@ -159,4 +149,38 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
         this.saving = false;
     }
 
+    async takeImage() {
+        const self = this;
+        const actionSheet = await this.actionSheetController.create({
+            cssClass: 'action-sheet-custom-class',
+            header: 'Seleccione una opción:',
+            buttons: [{
+                text: 'Tomar una Foto',
+                icon: 'camera',
+                handler: () => {
+                    self.captureImage(true);
+                }
+            }, {
+                text: 'Buscar Foto en la Galeria',
+                icon: 'image',
+                handler: () => {
+                    self.captureImage(false);
+                }
+            }]
+        });
+        await actionSheet.present();
+    }
+
+    async captureImage(fromCamera: boolean) {
+        const options = {
+            quality: 100,
+            allowEditing: false,
+            resultType: CameraResultType.DataUrl,
+            source: fromCamera ? CameraSource.Camera : CameraSource.Photos,
+        };
+
+        const image = await Plugins.Camera.getPhoto(options);
+
+        await this.chargeImage(this.isTest, image.dataUrl);
+    }
 }
