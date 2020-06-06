@@ -1,10 +1,10 @@
 <ion-header>
-    <ion-toolbar class="toolbar-dual">
+    <ion-toolbar [class]="action === 'add' ? 'toolbar-simple' : 'toolbar-dual'">
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/my-products"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Agrega Producto</ion-title>
-        <ion-buttons slot="end" class="right-button button-hover-circle">
+        <ion-title class="without-right">{{action === 'add' ? 'Agregar' : 'Editar'}} Producto</ion-title>
+        <ion-buttons slot="end" class="right-button button-hover-circle" *ngIf="action === 'edit'">
             <ion-button (click)="confirmDeleteProduct()">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
@@ -18,7 +18,7 @@
 
     <div class="add-image add-image-margin">
         <div class="add-image-background">
-            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage($event)"></ion-input>
+            <ion-input type="file" class="input-file" accept="image/*" name="image" (change)="chargeImage(true, $event)"></ion-input>
             <ion-img [src]="previewUrl" *ngIf="previewUrl" class="img-preview"></ion-img>
             <ion-fab vertical="center" horizontal="center">
                 <ion-fab-button color="pagami">

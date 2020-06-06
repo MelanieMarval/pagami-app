@@ -12,14 +12,8 @@ import { FilterCategoryPipe } from './filter-category.pipe';
         NoImagePipe,
         PluralPipe,
         FilterPlacePipe,
+        FilterCategoryPipe,
         FilterByNamePipe
-    ],
-    declarations: [
-        CapitalizePipe,
-        NoImagePipe,
-        PluralPipe,
-        FilterPlacePipe,
-        FilterCategoryPipe
     ],
     imports: [],
     exports: [
@@ -27,7 +21,7 @@ import { FilterCategoryPipe } from './filter-category.pipe';
         NoImagePipe,
         PluralPipe,
         FilterPlacePipe,
-        FilterByNamePipe
+        FilterByNamePipe,
         FilterPlacePipe,
         FilterCategoryPipe
     ],

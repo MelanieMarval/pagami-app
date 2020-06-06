@@ -34,8 +34,8 @@ const routes: Routes = [
         ],
     },
     // For sub-page my business
-    { path: 'my-business/plans',            component: PlansPage },
     { path: 'my-business/change-category',  component: ChangeCategoryPage },
+    { path: 'my-business/plans',            component: PlansPage },
     { path: 'my-business/flyer',            component: FlyerPage }
 ];
 
