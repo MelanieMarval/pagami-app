@@ -21,7 +21,7 @@ export class FlyerPage implements OnInit {
         this.flyer = {
             id: 'dasidsagdyua',
             photoUrl: 'assets/img/flyer-pizza.jpg',
-            words: ['Comida Rapida', 'Restaurante', 'Pizza', 'Salsa', 'Queso', 'Pizzeria', 'Ingrediente']
+            textList: ['Comida Rapida', 'Restaurante', 'Pizza', 'Salsa', 'Queso', 'Pizzeria', 'Ingrediente']
         };
         this.shop = this.intentProvider.placeToShow;
     }

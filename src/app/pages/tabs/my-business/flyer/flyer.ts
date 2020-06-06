@@ -4,6 +4,10 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 import { GeolocationService } from '../../../../core/geolocation/geolocation.service';
 import { InputFilePage } from '../../../parent/InputFilePage';
 import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
+import { FireStorage } from '../../../../core/fire-storage/fire.storage';
+import { PlacesService } from '../../../../core/api/places/places.service';
+import { StorageProvider } from '../../../../providers/storage.provider';
+import { Place } from '../../../../core/api/places/place';
 
 @Component({
     selector: 'page-flyer',
@@ -13,18 +17,23 @@ import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core
 
 export class FlyerPage extends InputFilePage implements OnInit {
 
+    private place: Place;
     loading: any;
     isHiddenAddButton = false;
     updating: boolean;
-    private isTest: boolean;
+    isTest: boolean;
     flyer: any = {
-        words: [''],
-        title: ''
+        textList: [''],
+        title: '',
+        photoUrl: ''
     };
 
     constructor(private toast: ToastProvider,
                 private actionSheetController: ActionSheetController,
                 private alertController: AlertController,
+                private fireStorage: FireStorage,
+                private storage: StorageProvider,
+                private placesService: PlacesService,
                 protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
@@ -33,23 +42,24 @@ export class FlyerPage extends InputFilePage implements OnInit {
         const info = await Device.getInfo();
         console.log(info);
         this.isTest = info.platform === 'web';
+        this.place = await this.storage.getBusinessVerifiedByUser();
     }
 
     addWord() {
         // esto es un por si a las...
-        if (this.flyer.words.length >= 8) {
+        if (this.flyer.textList.length >= 8) {
             this.isHiddenAddButton = true;
             return this.toast.messageDefault('El maximo es de 8, recuerde guardar antes de salir', 'bottom');
         }
-        this.flyer.words.push('');
-        if (this.flyer.words.length === 8) {
+        this.flyer.textList.push('');
+        if (this.flyer.textList.length === 8) {
             this.isHiddenAddButton = true;
         }
     }
 
 
     deleteWord(i: number) {
-        this.flyer.words.splice(i, 1);
+        this.flyer.textList.splice(i, 1);
         this.isHiddenAddButton = false;
     }
 
@@ -84,12 +94,14 @@ export class FlyerPage extends InputFilePage implements OnInit {
         };
 
         const image = await Plugins.Camera.getPhoto(options);
-
-        await this.chargeImageFile(image.dataUrl);
+        await this.chargeImage(this.isTest, image.dataUrl);
     }
 
-    saveFlyer() {
-        for (const word of this.flyer.words) {
+    async validateFlyer() {
+        if (this.flyer.title.trim().length <= 2) {
+            return this.toast.messageErrorWithoutTabs('Debe agregar un titulo al volante');
+        }
+        for (const word of this.flyer.textList) {
             if (word.trim().length <= 1) {
                 return this.toast.messageErrorWithoutTabs('Debe rellenar todos los campos o eliminar el no deseado');
             }
@@ -97,6 +109,23 @@ export class FlyerPage extends InputFilePage implements OnInit {
                 return this.toast.messageErrorWithoutTabs('Las palabras no pueden exceder los 36 caracteres');
             }
         }
+        if (!this.previewUrl) {
+            return this.toast.messageErrorWithoutTabs('Debe colocar una imagen');
+        }
+        const success = await this.fireStorage.saveFlyerImage(this.fileData);
+        if (success) {
+            this.flyer.photoUrl = success;
+            this.updateFlyer();
+        } else {
+            return this.toast.messageErrorWithoutTabs('Su imagen no ha podido cargarse');
+        }
+    }
+
+    updateFlyer() {
+        this.placesService.addFlyer(this.place.id, this.flyer)
+            .then(success => {
+                console.log('-> success', success);
+            });
     }
 
     async confirmDelete() {

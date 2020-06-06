@@ -194,6 +194,6 @@ export class BusinessDetailsPage extends InputFilePage implements OnInit {
 
         const image = await Plugins.Camera.getPhoto(options);
 
-        await this.chargeImageFile(image.dataUrl);
+        await this.chargeImage(this.isTest, image.dataUrl);
     }
 }
