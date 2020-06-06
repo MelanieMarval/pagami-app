@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastProvider } from '../../../../providers/toast.provider';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { GeolocationService } from '../../../../core/geolocation/geolocation.service';
 import { InputFilePage } from '../../../parent/InputFilePage';
 import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
@@ -13,14 +13,18 @@ import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core
 
 export class FlyerPage extends InputFilePage implements OnInit {
 
-    words: string[] = [''];
     loading: any;
     isHiddenAddButton = false;
     updating: boolean;
     private isTest: boolean;
+    flyer: any = {
+        words: [''],
+        title: ''
+    };
 
     constructor(private toast: ToastProvider,
                 private actionSheetController: ActionSheetController,
+                private alertController: AlertController,
                 protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
@@ -33,19 +37,19 @@ export class FlyerPage extends InputFilePage implements OnInit {
 
     addWord() {
         // esto es un por si a las...
-        if (this.words.length >= 8) {
+        if (this.flyer.words.length >= 8) {
             this.isHiddenAddButton = true;
             return this.toast.messageDefault('El maximo es de 8, recuerde guardar antes de salir', 'bottom');
         }
-        this.words.push('');
-        if (this.words.length === 8) {
+        this.flyer.words.push('');
+        if (this.flyer.words.length === 8) {
             this.isHiddenAddButton = true;
         }
     }
 
 
     deleteWord(i: number) {
-        this.words.splice(i, 1);
+        this.flyer.words.splice(i, 1);
         this.isHiddenAddButton = false;
     }
 
@@ -85,7 +89,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
     }
 
     saveFlyer() {
-        for (const word of this.words) {
+        for (const word of this.flyer.words) {
             if (word.trim().length <= 1) {
                 return this.toast.messageErrorWithoutTabs('Debe rellenar todos los campos o eliminar el no deseado');
             }
@@ -93,6 +97,32 @@ export class FlyerPage extends InputFilePage implements OnInit {
                 return this.toast.messageErrorWithoutTabs('Las palabras no pueden exceder los 36 caracteres');
             }
         }
+    }
+
+    async confirmDelete() {
+        const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Esta seguro?',
+            message: 'Una vez eliminado su volante digital no podra recuperarlo',
+            buttons: [
+                {
+                    text: 'No',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Si, Eliminar',
+                    handler: () => {
+                        this.deleteFlyer();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    deleteFlyer() {
+        console.log('Eliminar flyer');
     }
 
     trackByIdx(index: number, obj: any): any {
