@@ -4,6 +4,7 @@ import { TabsPage } from './tabs-page';
 import { ChangeCategoryPage } from './my-business/change-category/change-category';
 import { PlansPage } from './my-business/plans/plans';
 import { FlyerPage } from './my-business/flyer/flyer';
+import { BusinessHoursPage } from './my-business/business-hours/business-hours';
 
 const routes: Routes = [
     {
@@ -36,7 +37,8 @@ const routes: Routes = [
     // For sub-page my business
     { path: 'my-business/change-category',  component: ChangeCategoryPage },
     { path: 'my-business/plans',            component: PlansPage },
-    { path: 'my-business/flyer',            component: FlyerPage }
+    { path: 'my-business/flyer',            component: FlyerPage },
+    { path: 'my-business/business-hours',   component: BusinessHoursPage }
 ];
 
 @NgModule({

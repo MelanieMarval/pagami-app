@@ -208,9 +208,10 @@ export class AddProductPage extends InputFilePage implements OnInit {
         const alert = await this.alertController.create({
             header: 'Eliminar producto',
             message: 'Esta seguro de que quiere eliminar este producto?',
+            cssClass: 'ion-color-pagami-surface',
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: 'Cnacelar',
                     role: 'cancel',
                     cssClass: 'alert-cancel'
                 }, {
@@ -220,8 +221,7 @@ export class AddProductPage extends InputFilePage implements OnInit {
                         this.deleteProduct();
                     }
                 }
-            ],
-            cssClass: 'ion-color-pagami-surface'
+            ]
         });
 
         await alert.present();

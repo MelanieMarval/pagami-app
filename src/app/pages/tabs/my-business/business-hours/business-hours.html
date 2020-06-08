@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/tabs/my-business"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Horario</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="confirmDelete()">
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
+
+<ion-content>
+    <ion-list class="ion-margin">
+        <ion-item>
+            <ion-select class="select" interface="popover" placeholder="Elige como sera tu horario" [(ngModel)]="businessHours.type">
+                <ion-select-option value="1">Lunes a domingo</ion-select-option>
+                <ion-select-option value="2">Lunes a viernes, sabado, domingo</ion-select-option>
+                <ion-select-option value="3">Personalizar cada dia</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <div [ngSwitch]="businessHours.type" class="ion-margin-vertical">
+            <div *ngSwitchCase="1">
+                <ion-text class="item-title-day">Lunes a Domingo</ion-text>
+                <ion-item-group class="toggles-container">
+                    <ion-item lines="none">
+                        <ion-label>Horario Corrido</ion-label>
+                        <ion-toggle slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.monday.breakTime" (ngModelChange)="setBreakTime($event)"></ion-toggle>
+                    </ion-item>
+                </ion-item-group>
+                <ion-item-group class="item-group-time">
+                    <ion-item lines="none">
+                        <ion-label>Desde</ion-label>
+                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45"></ion-datetime>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Hasta</ion-label>
+                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45"></ion-datetime>
+                    </ion-item>
+                </ion-item-group>
+            </div>
+            <div *ngSwitchCase="2">Opcion 2</div>
+            <div *ngSwitchCase="3">Opcion 3</div>
+        </div>
+    </ion-list>
+</ion-content>
