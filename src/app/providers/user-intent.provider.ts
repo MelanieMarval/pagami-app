@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
-import { Claim } from '../core/api/claim/claim';
 import { PagamiGeo } from '../core/geolocation/pagami.geo';
 
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppUrlOpen, Plugins } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
 import { StorageProvider } from './providers/storage.provider';
@@ -10,6 +10,8 @@ import { USER } from './utils/Const';
 import { User } from './core/api/users/user';
 import { AuthService } from './core/api/auth/auth.service';
 import { GoogleAuthService } from './core/google-auth/google-auth.service';
+import { DrawerState } from './shared/ion-bottom-drawer/drawer-state';
+import { MapProvider } from './providers/map.provider';
 
 
 const {SplashScreen} = Plugins;
@@ -27,6 +29,7 @@ export class AppComponent {
         private authService: AuthService,
         private googleAuthService: GoogleAuthService,
         private storageService: StorageProvider,
+        private mapProvider: MapProvider,
         private alert: AlertProvider,
 
     ) {
@@ -37,7 +40,12 @@ export class AppComponent {
         this.platform.ready().then(async () => this.start());
         App.addListener('backButton', () => {
             if (this.verifyIfCanCloseApp(this.router.url)) {
-                App.exitApp();
+                if (this.router.url === '/admin/tabs/activity'
+                    && this.mapProvider.currentNearbyStatus === DrawerState.Top) {
+                    this.mapProvider.hideNearby.emit();
+                } else {
+                    App.exitApp();
+                }
             }
         });
     }

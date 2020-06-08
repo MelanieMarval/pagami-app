@@ -102,6 +102,9 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         this.appService.showRegister.subscribe(() => {
             // this.selectMode(this.currentUrl);
         });
+        this.appService.hideNearby.subscribe(() => {
+            this.bottomDrawer.drawerState = DrawerState.Bottom;
+        });
     }
 
     selectNavigateMode(mode: string) {

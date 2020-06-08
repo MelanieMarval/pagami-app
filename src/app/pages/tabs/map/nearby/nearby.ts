@@ -4,7 +4,8 @@ import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
 import {ActivatedRoute, Router} from '@angular/router';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
-import { DrawerState } from "../../../../shared/ion-bottom-drawer/drawer-state";
+import { DrawerState } from '../../../../shared/ion-bottom-drawer/drawer-state';
+import { MapProvider } from '../../../../providers/map.provider';
 
 @Component({
     selector: 'app-nearby',
@@ -12,7 +13,7 @@ import { DrawerState } from "../../../../shared/ion-bottom-drawer/drawer-state";
     styleUrls: ['nearby.scss']
 })
 
-export class NearbyPage implements OnInit {
+export class NearbyPage implements OnInit, OnChanges {
 
     @Output() changePlaceType: EventEmitter<string> = new EventEmitter<string>();
     @Input() drawerState = 0;
@@ -28,6 +29,7 @@ export class NearbyPage implements OnInit {
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
+                private mapProvide: MapProvider,
                 private intentProvider: UserIntentProvider) {
     }
 
@@ -49,6 +51,12 @@ export class NearbyPage implements OnInit {
     onBarClick() {
         if (this.drawerState === DrawerState.Bottom) {
             this.changeDrawerState.emit(DrawerState.Top);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.drawerState) {
+            this.mapProvide.currentNearbyStatus = changes.drawerState.currentValue;
         }
     }
 }
