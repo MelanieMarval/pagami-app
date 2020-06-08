@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { ActionSheetController, AlertController } from '@ionic/angular';
+import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
+import { Router } from '@angular/router';
 import { GeolocationService } from '../../../../core/geolocation/geolocation.service';
 import { InputFilePage } from '../../../parent/InputFilePage';
-import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
 import { FireStorage } from '../../../../core/fire-storage/fire.storage';
 import { PlacesService } from '../../../../core/api/places/places.service';
 import { StorageProvider } from '../../../../providers/storage.provider';
@@ -22,6 +23,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
     loading: any;
     isHiddenAddButton = false;
     updating: boolean;
+    canDelete = false;
     isTest: boolean;
     flyer: Flyer = {title: '', textList: ['']};
 
@@ -31,6 +33,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
                 private fireStorage: FireStorage,
                 private storage: StorageProvider,
                 private placesService: PlacesService,
+                private router: Router,
                 protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
@@ -39,7 +42,16 @@ export class FlyerPage extends InputFilePage implements OnInit {
         const info = await Device.getInfo();
         console.log(info);
         this.isTest = info.platform === 'web';
+        this.loadInfo();
+    }
+
+    async loadInfo() {
         this.place = await this.storage.getBusinessVerifiedByUser();
+        if (this.place.flyer) {
+            this.canDelete = true;
+            this.flyer = this.place.flyer;
+            this.previewUrl = this.flyer.photoUrl;
+        }
     }
 
     addWord() {
@@ -111,23 +123,34 @@ export class FlyerPage extends InputFilePage implements OnInit {
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe colocar una imagen');
         }
+
         this.updating = true;
-        const success = await this.fireStorage.saveFlyerImage(this.fileData);
-        if (success) {
-            this.flyer.photoUrl = success;
-            this.saveFlyer();
+        if (!this.flyer.photoUrl || this.previewUrl !== this.flyer.photoUrl) {
+            const success = await this.fireStorage.saveFlyerImage(this.fileData);
+            if (success) {
+                this.flyer.photoUrl = success;
+                this.previewUrl = success;
+                this.saveFlyer();
+            } else {
+                this.updating = false;
+                return this.toast.messageErrorWithoutTabs('Su imagen no ha podido cargarse');
+            }
         } else {
-            this.updating = false;
-            return this.toast.messageErrorWithoutTabs('Su imagen no ha podido cargarse');
+            this.saveFlyer();
         }
     }
 
     saveFlyer() {
         this.updating = true;
         this.placesService.changeFlyer(this.place.id, this.flyer)
-            .then(success => {
+            .then(async success => {
+                if (success.passed) {
+                    await this.storage.setBusinessVerifiedByUser(success.response);
+                    this.toast.messageSuccessWithoutTabs('Su volante ha sido guardado exitosamente');
+                } else {
+                    this.toast.messageErrorWithoutTabs('El volante no ha podido guardarse, intente nuevamente.');
+                }
                 this.updating = false;
-                console.log('-> success', success);
             });
     }
 
@@ -154,12 +177,17 @@ export class FlyerPage extends InputFilePage implements OnInit {
     }
 
     deleteFlyer() {
-        console.log('Eliminar flyer');
         this.loading = true;
         this.placesService.deleteFlyer(this.place.id)
-            .then(success => {
+            .then(async success => {
+                if (success.passed) {
+                    await this.storage.setBusinessVerifiedByUser(success.response);
+                    this.toast.messageSuccessWithoutTabs('Su volante ha sido eliminado con exito');
+                    this.router.navigateByUrl('app/tab/my-business');
+                } else {
+                    this.toast.messageErrorWithoutTabs('El volante no ha podido eliminarse, intente de nuevo.');
+                }
                 this.loading = false;
-                console.log('-> success', success);
             });
     }
 

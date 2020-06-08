@@ -1,3 +1,5 @@
+import { Flyer } from './flyer';
+
 export interface Place {
     id?: string;
     latitude: number;
@@ -7,10 +9,11 @@ export interface Place {
     photoUrl?: string;
     name?: string;
     category?: {
-      name?: string;
-      icon?: string;
-      subCategory?: number;
+        name?: string;
+        icon?: string;
+        subCategory?: number;
     };
+    flyer?: Flyer;
     location?: {
         address?: string;        // escrito por el usuario
         addressLine?: string;   // extraido de google

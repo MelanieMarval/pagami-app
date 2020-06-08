@@ -1,9 +1,9 @@
 <ion-header>
     <ion-toolbar class="toolbar-simple">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/app/tabs/shop"></ion-back-button>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Volante Digital</ion-title>
+        <ion-title class="without-right">{{this.shop.name}}</ion-title>
     </ion-toolbar>
 </ion-header>
 <div class="progress-bar-container">
@@ -14,7 +14,16 @@
 
     <div class="add-image">
         <div class="add-image-background">
-            <ion-img [src]="flyer.photoUrl" *ngIf="flyer.photoUrl" class="img-preview"></ion-img>
+            <ion-skeleton-text
+                class="card-img-skeleton"
+                [hidden]="flyer.loaded"
+                animated>
+            </ion-skeleton-text>
+            <ion-img
+                [src]="flyer.photoUrl"
+                class="card-img"
+                (ionImgDidLoad)="flyer.loaded = true">
+            </ion-img>
         </div>
     </div>
 

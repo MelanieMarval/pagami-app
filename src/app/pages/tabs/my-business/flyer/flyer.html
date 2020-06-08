@@ -4,7 +4,7 @@
             <ion-back-button defaultHref="/app/tabs/my-business"></ion-back-button>
         </ion-buttons>
         <ion-title class="without-right">Volante Digital</ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons *ngIf="canDelete" slot="end">
             <ion-button (click)="confirmDelete()">
                 <ion-icon name="trash" slot="icon-only"></ion-icon>
             </ion-button>
@@ -48,7 +48,7 @@
         <div class="inputs-word" *ngFor="let word of flyer.textList; let i = index; trackBy: trackByIdx">
             <ion-item class="ion-margin-bottom">
                 <ion-label position="stacked">Palabra {{i+1}}</ion-label>
-                <ion-input type="text" minlength="2" maxlength="36" [(ngModel)]="flyer.textList[i]"></ion-input>
+                <ion-input type="text" minlength="2" maxlength="36" [(ngModel)]="flyer.textList[i]" autocapitalize></ion-input>
             </ion-item>
             <ion-button class="ion-no-padding btn-no-style btn-focus-circle" (click)="deleteWord(i)">
                 <ion-icon name="trash" slot="icon-only" size="small" color="light"></ion-icon>
@@ -59,7 +59,7 @@
         </ion-button>
     </ion-list>
     <div class="footer-button footer-button--div">
-        <ion-button class="button-large" color="pagami" [disabled]="updating" (click)="validateFlyer()">
+        <ion-button class="button-large" color="pagami" [disabled]="updating || loading" (click)="validateFlyer()">
             <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
             <span *ngIf="!updating">Guardar</span>
         </ion-button>

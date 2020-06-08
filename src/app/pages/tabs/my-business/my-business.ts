@@ -30,12 +30,13 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     availableToClaim = false;
     isClaim = false;
     isEditing = false;
+    isSearching = false;
+    isTest = false;
+    haveFlyer: any;
     updating = false;
     loading = true;
     place: Place = {latitude: 0, longitude: 0};
     claim: Claim;
-    isSearching = false;
-    isTest = false;
 
     constructor(
         private router: Router,
@@ -61,6 +62,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     async loadInfo() {
         this.intentProvider.placeToChangeLocation = undefined;
         const myBusiness = await this.storageService.getBusinessVerifiedByUser();
+        console.log('-> myBusiness', myBusiness);
         if (myBusiness) {
             this.loading = false;
             this.setupBusiness(myBusiness);
@@ -73,6 +75,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         this.isRegister = true;
         this.place = myBusiness;
         this.previewUrl = this.place.photoUrl;
+        this.haveFlyer = !!this.place.flyer;
         if (!this.place.dialCode) {
             this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
         }
@@ -201,4 +204,8 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         await this.chargeImage(this.isTest, image.dataUrl);
     }
 
+    async viewFlyer() {
+        this.intentProvider.placeToShow = await this.storageService.getBusinessVerifiedByUser();
+        await this.router.navigate(['/app/shop/flyer']);
+    }
 }

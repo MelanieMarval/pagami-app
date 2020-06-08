@@ -19,12 +19,8 @@ export class FlyerPage implements OnInit {
     }
 
     async ngOnInit() {
-        this.flyer = {
-            title: 'Pizzeria El Boxeador "Yornel Marval Guzman"',
-            photoUrl: 'assets/img/flyer-pizza.jpg',
-            textList: ['Comida Rapida', 'Restaurante', 'Pizza', 'Salsa', 'Queso', 'Pizzeria', 'Ingrediente']
-        };
         this.shop = this.intentProvider.placeToShow;
+        this.flyer = this.shop.flyer;
     }
 
 }

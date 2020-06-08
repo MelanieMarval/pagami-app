@@ -66,18 +66,15 @@ export class GoogleAuthService {
         const response = await this.googleAuth.refresh();
         const credential = auth.GoogleAuthProvider.credential(response.idToken);
         const fireCredential = await this.angularFireAuth.auth.signInWithCredential(credential);
-        const sessionToken = await fireCredential.user.getIdToken();
-        return sessionToken;
+        return await fireCredential.user.getIdToken();
     }
 
 
     private async callRefreshSessionAgain() {
         try {
-            const token = await this.refreshSession();
-            return token;
+            return await this.refreshSession();
         } catch (err) {
-            const token = await this.toastTokenError();
-            return token;
+            return await this.toastTokenError();
         }
     }
 

@@ -20,6 +20,7 @@ export class ShopPage implements OnInit {
     place: Place = {latitude: 0, longitude: 0};
     CLAIMS = CLAIMS.STATUS;
     browser = this.browserProvider;
+    haveFlyer = false;
 
     constructor(private intentProvider: UserIntentProvider,
                 private alert: AlertProvider,
@@ -31,6 +32,9 @@ export class ShopPage implements OnInit {
         if (this.intentProvider.placeToShow) {
             this.claiming = false;
             this.place = this.intentProvider.placeToShow;
+            if (this.place.flyer) {
+                this.haveFlyer = true;
+            }
             return;
         }
         if (this.intentProvider.placeToClaim) {

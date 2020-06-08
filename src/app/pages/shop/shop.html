@@ -10,8 +10,8 @@
 
         <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
 
-        <div class="flyer" *ngIf="place.status === STATUS.VERIFIED">
-            <ion-button class="flyer-button ion-no-padding" routerLink="flyer">
+        <div class="flyer" *ngIf="haveFlyer">
+            <ion-button class="flyer-button ion-no-padding" routerLink="/app/shop/flyer">
                 <ion-icon name="newspaper" slot="icon-only" size="small"></ion-icon>
             </ion-button>
         </div>
