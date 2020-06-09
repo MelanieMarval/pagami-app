@@ -8,6 +8,7 @@ import { PlacesService } from '../../../../core/api/places/places.service';
 import { StorageProvider } from '../../../../providers/storage.provider';
 import { Place } from '../../../../core/api/places/place';
 import { BusinessHours } from '../../../../core/api/places/business-hours';
+import { WeedDayHours } from '../../../../core/api/places/weed-day-hours';
 
 @Component({
     selector: 'page-flyer',
@@ -20,7 +21,18 @@ export class BusinessHoursPage extends InputFilePage implements OnInit {
     private place: Place;
     loading: any;
     updating: boolean;
-    businessHours: BusinessHours = {type: 0};
+    hours: WeedDayHours = { hoursOne: {}, hoursTwo: {} };
+    businessHours: BusinessHours = {
+        type: 0,
+        monday: this.hours,
+        tuesday: this.hours,
+        wednesday: this.hours,
+        thursday: this.hours,
+        friday: this.hours,
+        saturday: this.hours,
+        sunday: this.hours
+    };
+    haveBreakTime = false;
 
     constructor(private toast: ToastProvider,
                 private actionSheetController: ActionSheetController,
@@ -69,10 +81,12 @@ export class BusinessHoursPage extends InputFilePage implements OnInit {
     }
 
     setBreakTime(event: any) {
+        console.log('-> this.businessHours.type', typeof this.businessHours.type);
         console.log('-> event', event);
-        switch (this.businessHours.type) {
+        switch (Number(this.businessHours.type)) {
             case 1:
-
+                console.log('-> show');
+                this.haveBreakTime = event;
                 break;
             case 2:
                 break;

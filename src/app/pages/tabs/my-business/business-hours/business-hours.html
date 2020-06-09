@@ -36,11 +36,21 @@
                 <ion-item-group class="item-group-time">
                     <ion-item lines="none">
                         <ion-label>Desde</ion-label>
-                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45"></ion-datetime>
+                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="businessHours.monday.hoursOne.to" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
                     </ion-item>
                     <ion-item lines="none">
                         <ion-label>Hasta</ion-label>
-                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45"></ion-datetime>
+                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="businessHours.monday.hoursOne.from" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                    </ion-item>
+                </ion-item-group>
+                <ion-item-group class="item-group-time" *ngIf="haveBreakTime">
+                    <ion-item lines="none">
+                        <ion-label>Desde</ion-label>
+                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Hasta</ion-label>
+                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
                     </ion-item>
                 </ion-item-group>
             </div>
