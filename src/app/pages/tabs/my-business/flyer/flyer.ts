@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastProvider } from '../../../../providers/toast.provider';
 import { ActionSheetController, AlertController } from '@ionic/angular';
-import { CameraResultType, CameraSource, Device, Plugins } from '@capacitor/core';
 import { Router } from '@angular/router';
-import { GeolocationService } from '../../../../core/geolocation/geolocation.service';
 import { InputFilePage } from '../../../parent/InputFilePage';
-import { FireStorage } from '../../../../core/fire-storage/fire.storage';
+// Services
+import { GeolocationService } from '../../../../core/geolocation/geolocation.service';
 import { PlacesService } from '../../../../core/api/places/places.service';
-import { StorageProvider } from '../../../../providers/storage.provider';
 import { Place } from '../../../../core/api/places/place';
 import { Flyer } from '../../../../core/api/places/flyer';
+// Providers
+import { FireStorage } from '../../../../core/fire-storage/fire.storage';
+import { StorageProvider } from '../../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
+
+import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
+const { Device } = Plugins;
 
 @Component({
     selector: 'page-flyer',
