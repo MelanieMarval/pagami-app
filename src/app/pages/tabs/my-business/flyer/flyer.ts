@@ -10,6 +10,7 @@ import { PlacesService } from '../../../../core/api/places/places.service';
 import { StorageProvider } from '../../../../providers/storage.provider';
 import { Place } from '../../../../core/api/places/place';
 import { Flyer } from '../../../../core/api/places/flyer';
+import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 
 @Component({
     selector: 'page-flyer',
@@ -34,6 +35,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
                 private storage: StorageProvider,
                 private placesService: PlacesService,
                 private router: Router,
+                private intentProvider: UserIntentProvider,
                 protected geolocationService: GeolocationService) {
         super(geolocationService);
     }
@@ -146,6 +148,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
             .then(async success => {
                 if (success.passed) {
                     await this.storage.setBusinessVerifiedByUser(success.response);
+                    this.intentProvider.updateMyBusiness = true;
                     this.toast.messageSuccessWithoutTabs('Su volante ha sido guardado exitosamente');
                 } else {
                     this.toast.messageErrorWithoutTabs('El volante no ha podido guardarse, intente nuevamente.');
@@ -182,6 +185,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
             .then(async success => {
                 if (success.passed) {
                     await this.storage.setBusinessVerifiedByUser(success.response);
+                    this.intentProvider.updateMyBusiness = true;
                     this.toast.messageSuccessWithoutTabs('Su volante ha sido eliminado con exito');
                     this.router.navigateByUrl('app/tab/my-business');
                 } else {

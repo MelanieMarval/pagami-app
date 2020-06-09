@@ -205,7 +205,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     }
 
     async viewFlyer() {
-        this.intentProvider.placeToShow = await this.storageService.getBusinessVerifiedByUser();
+        this.intentProvider.placeToShow = this.place;
         await this.router.navigate(['/app/shop/flyer']);
     }
 }
