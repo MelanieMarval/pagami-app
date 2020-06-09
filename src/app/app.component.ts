@@ -39,11 +39,11 @@ export class AppComponent {
     initializeApp() {
         this.platform.ready().then(async () => this.start());
         App.addListener('backButton', () => {
-            if (this.verifyIfCanCloseApp(this.router.url)) {
-                if (this.router.url === '/admin/tabs/activity'
-                    && this.mapProvider.currentNearbyStatus === DrawerState.Top) {
-                    this.mapProvider.hideNearby.emit();
-                } else {
+            if (this.router.url === '/app/tabs/map/search'
+                && (this.mapProvider.currentNearbyStatus === DrawerState.Top || this.mapProvider.currentNearbyStatus === DrawerState.Docked)) {
+                this.mapProvider.hideNearby.emit();
+            } else {
+                if (this.verifyIfCanCloseApp(this.router.url)) {
                     App.exitApp();
                 }
             }

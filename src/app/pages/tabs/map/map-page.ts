@@ -27,6 +27,9 @@ import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
 import { AlertController } from '@ionic/angular';
+import { Plugins, KeyboardInfo } from '@capacitor/core';
+
+const { Keyboard } = Plugins;
 
 const DEFAULT_DRAWER_BOTTOM_HEIGHT = 104;
 const BASIC_RADIUS_KILOMETERS = 50;
@@ -423,6 +426,10 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onSearch(event) {
         this.searchText = event.target.value.toLowerCase();
+    }
+
+    onHideKeyboard(event) {
+        Keyboard.hide();
     }
 
     async saveNewLocation() {
