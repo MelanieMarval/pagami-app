@@ -1,9 +1,9 @@
 import { PLACES } from './Const';
 
 export const CATEGORY_ICONS = [
-    { name: 'Pagami',                       route: 'pagami',                    type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.PAGAMI},
-    { name: 'Tienda (Otros)',               route: 'tienda',                    type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
-    { name: 'Servicio (Otros)',             route: 'servicios',                 type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
+    { name: 'Pagami',                      route: 'pagami',                    type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.PAGAMI},
+    { name: 'Tienda (Otros)',              route: 'tienda',                    type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Servicio (Otros)',            route: 'servicios',                 type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
     { name: 'Abasto',                      route: 'abasto',                     type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Barbería y Peluquería',       route: 'barberia_y_peluqueria',      type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.BEAUTY},
     { name: 'Café',                        route: 'cafe',                       type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
@@ -35,7 +35,7 @@ export const CATEGORY_ICONS = [
     { name: 'Tienda de Motos',             route: 'tienda_motos',               type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Tienda de Vehiculos',         route: 'tienda_vehiculos',           type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Tienda de Pinturas',          route: 'tienda_pinturas',            type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
-    { name: 'Tienda de Ropas',             route: 'tienda_ropa',                type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
+    { name: 'Tienda de Ropa',             route: 'tienda_ropa',                type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Veterinario',                 route: 'veterinario',                type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.MEDICINE},
     { name: 'Carniceria',                   route: 'carniceria',                type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Cerrajeria',                   route: 'cerrajeria',                type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},

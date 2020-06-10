@@ -159,6 +159,18 @@ export class IonBottomDrawerComponent implements AfterViewInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.state) {
             this._setDrawerState(changes.state.currentValue);
+            if (this.state === DrawerState.Bottom) {
+                if (this.ionContent) {
+                    // scroll content to position 0
+                    this.ionContent.scrollToPoint(undefined, 0);
+                    setTimeout(() => {
+                        if ((this._platform.height() - this._element.nativeElement.getBoundingClientRect().top) <= this.minimumHeight) {
+                            // scroll content to position 0 after 1 second 
+                            this.ionContent.scrollToPoint(undefined, 0);
+                        }
+                    }, 1000);
+                }
+            }
         }
 
         if (changes.minimumHeight) { // allow changes to minimum height after initialization

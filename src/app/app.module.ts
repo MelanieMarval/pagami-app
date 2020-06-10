@@ -34,6 +34,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 
 registerLocaleData(localeEs, 'es');
 
@@ -67,7 +68,8 @@ registerLocaleData(localeEs, 'es');
         NotificationsProvider,
         CompressImageProvider,
         {provide: LOCALE_ID, useValue: 'es'},
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        AppMinimize
     ],
     exports: [],
     bootstrap: [AppComponent]

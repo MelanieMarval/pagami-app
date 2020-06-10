@@ -195,9 +195,14 @@ export class ProfilePage extends InputFilePage implements OnInit {
     }
 
     async closeSession() {
-        await this.googleAuthService.singOut();
-        await this.router.navigateByUrl('/tutorial');
-        await SplashScreen.show();
+        this.googleAuthService.singOut()
+            .finally(async () => {
+                await this.storageService.setPagamiUser(null);
+                await this.storageService.setBusinessVerifiedByUser(null);
+                await this.storageService.setLogged(false);
+                await this.router.navigateByUrl('/tutorial');
+                await SplashScreen.show();
+            });
     }
 
 

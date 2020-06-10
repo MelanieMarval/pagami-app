@@ -38,10 +38,13 @@ export class GoogleAuthService {
     async singOut() {
         await this.angularFireAuth.auth.signOut();
         await this.googleAuth.signOut();
+        return true;
+    }
+
+    async removeStorage() {
         await this.storageService.setPagamiUser(null);
         await this.storageService.setBusinessVerifiedByUser(null);
         await this.storageService.setLogged(false);
-        return true;
     }
 
     async getToken(): Promise<string> {

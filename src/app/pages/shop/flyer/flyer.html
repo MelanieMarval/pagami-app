@@ -20,6 +20,7 @@
                 animated>
             </ion-skeleton-text>
             <ion-img
+                [style.opacity]="flyer.loaded ? 1 : 0"
                 [src]="flyer.photoUrl"
                 class="card-img"
                 (ionImgDidLoad)="flyer.loaded = true">

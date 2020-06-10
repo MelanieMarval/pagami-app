@@ -106,7 +106,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             // this.selectMode(this.currentUrl);
         });
         this.appService.hideNearby.subscribe(() => {
-            this.bottomDrawer.drawerState = DrawerState.Bottom;
+            this.closeToMeToDefault();
         });
     }
 
@@ -429,7 +429,8 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     onHideKeyboard(event) {
-        Keyboard.hide();
+        event.target.blur();
+        // Keyboard.hide();
     }
 
     async saveNewLocation() {

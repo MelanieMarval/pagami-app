@@ -12,6 +12,7 @@ import { AuthService } from './core/api/auth/auth.service';
 import { GoogleAuthService } from './core/google-auth/google-auth.service';
 import { DrawerState } from './shared/ion-bottom-drawer/drawer-state';
 import { MapProvider } from './providers/map.provider';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 
 
 const {SplashScreen} = Plugins;
@@ -31,7 +32,7 @@ export class AppComponent {
         private storageService: StorageProvider,
         private mapProvider: MapProvider,
         private alert: AlertProvider,
-
+        private appMinimize: AppMinimize
     ) {
         this.initializeApp();
     }
@@ -44,7 +45,9 @@ export class AppComponent {
                 this.mapProvider.hideNearby.emit();
             } else {
                 if (this.verifyIfCanCloseApp(this.router.url)) {
-                    App.exitApp();
+                    this.appMinimize.minimize();
+                    // IF IOS Should use another close method
+                    // App.exitApp();
                 }
             }
         });
