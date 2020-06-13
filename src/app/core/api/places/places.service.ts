@@ -103,6 +103,12 @@ export class PlacesService {
         return this.apiService.serverListener(request);
     }
 
+    async changeHours(id: string, flyer: any): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.put(`${this.URL}/${id}/hours`, flyer, options);
+        return this.apiService.serverListener(request);
+    }
+
     async delete(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.delete(`${this.URL}/${id}`, options);
@@ -112,6 +118,11 @@ export class PlacesService {
     async deleteFlyer(id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
         const request = this.httpClient.delete(`${this.URL}/${id}/flyer`, options);
+        return this.apiService.serverListener(request);
+    }
+    async deleteHours(id: string): Promise<ApiResponse> {
+        const options: any = await this.apiService.getOptionsHeadersTokenized();
+        const request = this.httpClient.delete(`${this.URL}/${id}/hours`, options);
         return this.apiService.serverListener(request);
     }
 

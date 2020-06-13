@@ -1,10 +1,10 @@
 <ion-header>
-    <ion-toolbar class="toolbar-simple">
+    <ion-toolbar [class]="haveHours ? 'toolbar-dual' : 'toolbar-simple'">
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/tabs/my-business"></ion-back-button>
         </ion-buttons>
         <ion-title class="without-right">Horario</ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons slot="end" *ngIf="haveHours">
             <ion-button (click)="confirmDelete()">
                 <ion-icon name="trash" slot="icon-only"></ion-icon>
             </ion-button>
@@ -16,46 +16,406 @@
 </div>
 
 <ion-content>
-    <ion-list class="ion-margin">
+    <ion-list [ngSwitch]="businessHours.type">
         <ion-item>
-            <ion-select class="select" interface="popover" placeholder="Elige como sera tu horario" [(ngModel)]="businessHours.type">
-                <ion-select-option value="1">Lunes a domingo</ion-select-option>
-                <ion-select-option value="2">Lunes a viernes, sabado, domingo</ion-select-option>
-                <ion-select-option value="3">Personalizar cada dia</ion-select-option>
+            <ion-select class="select" interface="popover" placeholder="Elige como sera tu horario" [(ngModel)]="businessHours.type" (ngModelChange)="resetValues()">
+                <ion-select-option [value]="1">Lunes a domingo</ion-select-option>
+                <ion-select-option [value]="2">Lunes a viernes, sabado, domingo</ion-select-option>
+                <ion-select-option [value]="3">Personalizar cada dia</ion-select-option>
             </ion-select>
         </ion-item>
-        <div [ngSwitch]="businessHours.type" class="ion-margin-vertical">
-            <div *ngSwitchCase="1">
-                <ion-text class="item-title-day">Lunes a Domingo</ion-text>
-                <ion-item-group class="toggles-container">
+        <div *ngSwitchCase="1" class="ion-margin-vertical">
+            <div id="mondayToSunday">
+                <ion-item lines="none">
+                    <ion-label>Lunes a Domingo</ion-label>
+                </ion-item>
+                <div class="ion-margin-horizontal">
                     <ion-item lines="none">
-                        <ion-label>Horario Corrido</ion-label>
-                        <ion-toggle slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.monday.breakTime" (ngModelChange)="setBreakTime($event)"></ion-toggle>
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.monday.breakTime"></ion-checkbox>
                     </ion-item>
-                </ion-item-group>
-                <ion-item-group class="item-group-time">
-                    <ion-item lines="none">
-                        <ion-label>Desde</ion-label>
-                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="businessHours.monday.hoursOne.to" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
-                    </ion-item>
-                    <ion-item lines="none">
-                        <ion-label>Hasta</ion-label>
-                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="businessHours.monday.hoursOne.from" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
-                    </ion-item>
-                </ion-item-group>
-                <ion-item-group class="item-group-time" *ngIf="haveBreakTime">
-                    <ion-item lines="none">
-                        <ion-label>Desde</ion-label>
-                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
-                    </ion-item>
-                    <ion-item lines="none">
-                        <ion-label>Hasta</ion-label>
-                        <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
-                    </ion-item>
-                </ion-item-group>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.monday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.monday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
             </div>
-            <div *ngSwitchCase="2">Opcion 2</div>
-            <div *ngSwitchCase="3">Opcion 3</div>
+        </div>
+        <div *ngSwitchCase="2" class="ion-margin-vertical">
+            <div id="mondayToFriday">
+                <ion-item lines="none">
+                    <ion-label>Lunes a Viernes</ion-label>
+                </ion-item>
+                <div class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.monday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.monday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.monday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="saturdayOnly">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Sabado</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.saturday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.saturday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.saturday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.saturday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.saturday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.saturday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.saturday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.saturday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="sundayOnly">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Domingo</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.sunday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.sunday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.sunday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.sunday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.sunday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.sunday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.sunday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.sunday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+        </div>
+        <div *ngSwitchCase="3" class="ion-margin-vertical">
+            <div id="monday">
+                <ion-item lines="none">
+                    <ion-label>Lunes</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.monday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.monday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.monday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.monday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.monday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.monday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="tuesday">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Martes</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.tuesday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.tuesday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.tuesday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.tuesday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.tuesday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.tuesday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.tuesday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.tuesday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.tuesday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.tuesday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="wednesday">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Miercoles</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.wednesday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.wednesday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.wednesday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.wednesday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.wednesday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.wednesday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.wednesday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.wednesday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.wednesday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.wednesday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="thursday">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Jueves</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.thursday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.thursday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.thursday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.thursday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.thursday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.thursday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.thursday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.thursday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.thursday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.thursday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="friday">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Viernes</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.friday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.friday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.friday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.friday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.friday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.friday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.friday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.friday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.friday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.friday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="saturday">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Sabado</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.saturday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.saturday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.saturday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.saturday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.saturday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.saturday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.saturday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.saturday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
+            <div id="sunday">
+                <ion-item lines="none" class="item-title-day">
+                    <ion-label>Domingo</ion-label>
+                    <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.sunday.active"></ion-checkbox>
+                </ion-item>
+                <div *ngIf="!businessHours.sunday.active" class="ion-text-center">Cerrado</div>
+                <div *ngIf="businessHours.sunday.active" class="ion-margin-horizontal">
+                    <ion-item lines="none">
+                        <ion-label>Horario en dos turnos</ion-label>
+                        <ion-checkbox slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="businessHours.sunday.breakTime"></ion-checkbox>
+                    </ion-item>
+                    <ion-item-group class="item-group-time">
+                        <ion-label *ngIf="businessHours.sunday.breakTime">1</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.sunday.hoursOne.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.sunday.hoursOne.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group class="item-group-time" *ngIf="businessHours.sunday.breakTime">
+                        <ion-label>2</ion-label>
+                        <ion-item lines="none">
+                            <ion-label>Desde</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.from"></ion-datetime>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-label>Hasta</ion-label>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.to"></ion-datetime>
+                        </ion-item>
+                    </ion-item-group>
+                </div>
+            </div>
         </div>
     </ion-list>
+    <div class="footer-button footer-button--div">
+        <ion-button class="button-large" color="pagami" [disabled]="updating" (click)="validateHours()">
+            <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
+            <span *ngIf="!updating">Guardar</span>
+        </ion-button>
+    </div>
 </ion-content>

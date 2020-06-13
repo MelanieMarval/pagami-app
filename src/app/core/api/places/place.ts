@@ -1,3 +1,5 @@
+import { BusinessHours } from './business-hours';
+
 export interface Place {
     id?: string;
     latitude: number;
@@ -11,6 +13,7 @@ export interface Place {
       icon?: string;
       subCategory?: number;
     };
+    hours?: BusinessHours;
     location?: {
         address?: string;        // escrito por el usuario
         addressLine?: string;   // extraido de google
