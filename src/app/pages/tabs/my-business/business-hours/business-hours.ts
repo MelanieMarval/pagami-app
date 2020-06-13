@@ -110,8 +110,14 @@ export class BusinessHoursPage extends InputFilePage implements OnInit {
     }
 
     private parseDay(hours: any) {
-        const to = new Date(hours.to).getHours() + ':' + new Date(hours.to).getMinutes();
-        const from = new Date(hours.from).getHours() + ':' + new Date(hours.from).getMinutes();
+        let to: any; let from: any;
+        if (this.haveHours) {
+            to = hours.to + ':00';
+            from = hours.from + ':00';
+        } else {
+            to = new Date(hours.to).getHours() + ':' + new Date(hours.to).getMinutes() + ':00';
+            from = new Date(hours.from).getHours() + ':' + new Date(hours.from).getMinutes() + ':00';
+        }
         return {to, from};
     }
 
@@ -139,8 +145,14 @@ export class BusinessHoursPage extends InputFilePage implements OnInit {
     }
 
     private validateDay(hours: any): boolean {
-        const hourTo = new Date(hours.to).getHours();
-        const hourFrom = new Date(hours.from).getHours();
+        let hourTo: any; let hourFrom: any;
+        if (this.haveHours) {
+            hourTo = hours.to.split(':')[0];
+            hourFrom = hours.from.split(':')[0];
+        } else {
+            hourTo = new Date(hours.to).getHours();
+            hourFrom = new Date(hours.from).getHours();
+        }
         return Number(hourFrom) < Number(hourTo);
     }
 
