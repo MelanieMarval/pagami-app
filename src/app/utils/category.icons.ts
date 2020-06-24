@@ -7,7 +7,7 @@ export const CATEGORY_ICONS = [
     { name: 'Abasto',                      route: 'abasto',                     type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Barbería y Peluquería',       route: 'barberia_y_peluqueria',      type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.BEAUTY},
     { name: 'Café',                        route: 'cafe',                       type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
-//  { name: 'Comida Rapida',               route: 'comida_rapida',              type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
+    { name: 'Comida Rapida',               route: 'comida_rapida',              type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.FOOD},
 //  { name: 'Estacionamiento',             route: 'estacionamiento',            type: PLACES.TYPE.SERVICE ,     subCategory: PLACES.CATEGORY.SERVICE},
     { name: 'Farmacia',                    route: 'farmacia',                   type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},
     { name: 'Frutería',                    route: 'fruteria',                   type: PLACES.TYPE.STORE ,       subCategory: PLACES.CATEGORY.SHOP},

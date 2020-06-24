@@ -145,8 +145,10 @@ export class PlaceUtils {
             return `assets/marker-icons/casa_cambio${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'optica') {
             return `assets/marker-icons/optica${PlaceUtils.getIconSuffix(place, suffix)}`;
-        } else if (place.category.icon === 'tienda_bolsos') {
-            return `assets/marker-icons/tienda_bolsos${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'negocio_de_bebidas') {
+            return `assets/marker-icons/negocio_de_bebidas${PlaceUtils.getIconSuffix(place, suffix)}`;
+        } else if (place.category.icon === 'comida_rapida') {
+            return `assets/marker-icons/comida_rapida${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else {
             return `assets/marker-icons/tienda${PlaceUtils.getIconSuffix(place, suffix)}`;
         }
