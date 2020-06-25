@@ -146,7 +146,7 @@ export class PlaceUtils {
         } else if (place.category.icon === 'optica') {
             return `assets/marker-icons/optica${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'negocio_de_bebidas') {
-            return `assets/marker-icons/negocio_de_bebidas${PlaceUtils.getIconSuffix(place, suffix)}`;
+            return `assets/marker-icons/licoreria${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else if (place.category.icon === 'comida_rapida') {
             return `assets/marker-icons/comida_rapida${PlaceUtils.getIconSuffix(place, suffix)}`;
         } else {
