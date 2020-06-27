@@ -5,6 +5,7 @@ import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { Router } from '@angular/router';
 import { AlertProvider } from '../../providers/alert.provider';
 import { BrowserProvider } from '../../providers/browser.provider';
+import { WeekDayHours } from '../../core/api/places/week-day-hours';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ShopPage implements OnInit {
     place: Place = {latitude: 0, longitude: 0};
     CLAIMS = CLAIMS.STATUS;
     browser = this.browserProvider;
+    isOpen: boolean;
 
     constructor(private intentProvider: UserIntentProvider,
                 private alert: AlertProvider,
@@ -31,6 +33,7 @@ export class ShopPage implements OnInit {
         if (this.intentProvider.placeToShow) {
             this.claiming = false;
             this.place = this.intentProvider.placeToShow;
+            this.setIsOpen();
             return;
         }
         if (this.intentProvider.placeToClaim) {
@@ -42,6 +45,21 @@ export class ShopPage implements OnInit {
             } else {
                 this.intentProvider.placeToClaim = undefined;
                 this.isClaimed = true;
+            }
+        }
+    }
+
+    private setIsOpen() {
+        if (this.place.hours) {
+            const daysHours = this.place.hours;
+            const currentDay = new Date();
+
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const dayName = days[currentDay.getDay()];
+
+            const hours: WeekDayHours = daysHours[dayName];
+            if (!hours.active) {
+                return this.isOpen = false;
             }
         }
     }

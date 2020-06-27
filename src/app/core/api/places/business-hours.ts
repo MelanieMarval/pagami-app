@@ -1,13 +1,13 @@
-import { WeedDayHours } from './weed-day-hours';
+import { WeekDayHours } from './week-day-hours';
 
 export interface BusinessHours {
     type: number;
-    monday?: WeedDayHours;
-    tuesday?: WeedDayHours;
-    wednesday?: WeedDayHours;
-    thursday?: WeedDayHours;
-    friday?: WeedDayHours;
-    saturday?: WeedDayHours;
-    sunday?: WeedDayHours;
+    monday?: WeekDayHours;
+    tuesday?: WeekDayHours;
+    wednesday?: WeekDayHours;
+    thursday?: WeekDayHours;
+    friday?: WeekDayHours;
+    saturday?: WeekDayHours;
+    sunday?: WeekDayHours;
 }
 

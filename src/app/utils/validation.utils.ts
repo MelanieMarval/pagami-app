@@ -1,4 +1,4 @@
-import { WeedDayHours } from '../core/api/places/weed-day-hours';
+import { WeekDayHours } from '../core/api/places/week-day-hours';
 
 export class ValidationUtils {
 
@@ -39,7 +39,7 @@ export class ValidationUtils {
         return Number(hourFrom) < Number(hourTo);
     }
 
-    static validateEmptyHours(day: WeedDayHours): boolean {
+    static validateEmptyHours(day: WeekDayHours): boolean {
         if (day.active) {
             if (!day.hoursOne) {
                 return false;

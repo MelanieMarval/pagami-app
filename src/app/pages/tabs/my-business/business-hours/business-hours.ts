@@ -12,7 +12,7 @@ import { StorageProvider } from '../../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 // Utils
 import { BusinessHours } from '../../../../core/api/places/business-hours';
-import { WeedDayHours } from '../../../../core/api/places/weed-day-hours';
+import { WeekDayHours } from '../../../../core/api/places/week-day-hours';
 import { HourType } from '../../../../domain/enums/hour-type.enum';
 import { ValidationUtils } from '../../../../utils/validation.utils';
 

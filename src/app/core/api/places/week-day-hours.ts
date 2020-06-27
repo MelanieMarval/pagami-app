@@ -1,4 +1,4 @@
-export interface WeedDayHours {
+export interface WeekDayHours {
     active?: boolean;
     breakTime?: boolean;
     hoursOne?: {
