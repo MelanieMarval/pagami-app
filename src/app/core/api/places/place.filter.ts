@@ -3,4 +3,5 @@ export interface PlaceFilter {
     longitude: number;
     radius: number; // kilometers
     placeType?: string;
+    text?: string;
 }

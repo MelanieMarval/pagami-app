@@ -153,6 +153,7 @@ export class FlyerPage extends InputFilePage implements OnInit {
                 if (success.passed) {
                     await this.storage.setBusinessVerifiedByUser(success.response);
                     this.intentProvider.updateMyBusiness = true;
+                    this.router.navigateByUrl('app/tab/my-business');
                     this.toast.messageSuccessWithoutTabs('Su volante ha sido guardado exitosamente');
                 } else {
                     this.toast.messageErrorWithoutTabs('El volante no ha podido guardarse, intente nuevamente.');

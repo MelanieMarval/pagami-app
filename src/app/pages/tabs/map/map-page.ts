@@ -292,6 +292,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             longitude: geo.longitude,
             radius: BASIC_RADIUS_KILOMETERS
         };
+        //this.searchText ? filter.text = this.searchText : delete filter.text;
         if (this.placeTypeSelected !== PLACES.TYPE.ALL) {
             filter.placeType = this.placeTypeSelected;
         }
@@ -425,12 +426,13 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     }
 
     onSearch(event) {
-        this.searchText = event.target.value.toLowerCase();
+        this.searchText = event.target.value.toLowerCase(); // TODO
     }
 
     onHideKeyboard(event) {
         event.target.blur();
         // Keyboard.hide();
+        this.getNearPlaces();
     }
 
     async saveNewLocation() {

@@ -26,7 +26,7 @@ export class FireStorage {
         return new Promise(resolve => {
             try {
                 const randomId = Math.random().toString(36).substring(2);
-                const url = `/images/${folder}/${randomId}`;
+                const url = `/images-tttt/${folder}/${randomId}`;
                 const ref = this.storageFire.ref(url);
                 const task = this.storageFire.upload(url, image);
                 task.snapshotChanges().pipe(
