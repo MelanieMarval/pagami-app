@@ -1,3 +1,4 @@
+import { BusinessHours } from './business-hours';
 import { Flyer } from './flyer';
 
 export interface Place {
@@ -13,6 +14,7 @@ export interface Place {
         icon?: string;
         subCategory?: number;
     };
+    hours?: BusinessHours;
     flyer?: Flyer;
     location?: {
         address?: string;        // escrito por el usuario

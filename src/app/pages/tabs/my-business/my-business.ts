@@ -74,6 +74,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     async setupBusiness(myBusiness) {
         this.isRegister = true;
         this.place = myBusiness;
+        this.intentProvider.myBusinessDetails = {id: myBusiness.id, name: myBusiness.name, acronym: myBusiness.location.acronym};
         this.previewUrl = this.place.photoUrl;
         this.haveFlyer = !!this.place.flyer;
         if (!this.place.dialCode) {

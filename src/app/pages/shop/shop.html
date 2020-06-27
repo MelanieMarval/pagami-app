@@ -39,6 +39,10 @@
                 <ion-label class="label-flex">
                     <div>{{0 | plural:'comentarios'}}</div>
                     <div *ngIf="place.status === STATUS.ACCEPTED">No verificada</div>
+<!--                    <div *ngIf="place.hours" class="place-hour">-->
+<!--                        <ion-text color="success" *ngIf="isOpen">Abierto</ion-text>-->
+<!--                        <ion-text color="danger" *ngIf="!isOpen">Cerrado</ion-text>-->
+<!--                    </div>-->
                 </ion-label>
             </ion-item>
         </div>
@@ -68,8 +72,8 @@
     </ion-list>
 
     <ion-list *ngIf="place.status === STATUS.VERIFIED" class="link-buttons-container" lines="none">
-<!--        <ion-item button routerLink="/app/shop/products" color="pagami-surface">-->
-        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
+        <ion-item button [routerLink]="'/app/shop/products/'+place.id" color="pagami-surface">
+<!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Productos</ion-label>
         </ion-item>

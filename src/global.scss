@@ -196,7 +196,11 @@ ion-bottom-drawer {
     --border-radius: 0;
     margin: 0;
 }
-
+.button-hover-circle {
+    --border-radius: 50% !important;
+    width: 45px;
+    height: 45px;
+}
 .size-icon-default {
     width: 24px;
     height: 24px;

@@ -1,37 +1,44 @@
 <ion-header>
+
     <ion-toolbar class="toolbar-simple">
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/tabs/my-business"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Tiendas D1 - Mis productos</ion-title>
+        <ion-title class="without-right">{{intentProvider.myBusinessDetails.name}}</ion-title>
 <!--        <ion-buttons slot="end" class="right-button">-->
 <!--            <ion-icon name="cart"></ion-icon>-->
 <!--        </ion-buttons>-->
     </ion-toolbar>
 
 </ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
 
 
 <ion-content>
     <ion-header class="top-searchbar">
-        <ion-searchbar placeholder="Buscar productos"></ion-searchbar>
+        <ion-searchbar placeholder="Buscar productos" [(ngModel)]="textSearch"></ion-searchbar>
     </ion-header>
 
     <ion-list inset="false" lines="none" class="products">
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(15).split(''), let x = index">
+        <ion-item button detail="false"
+                  color="pagami-surface"
+                  class="product ion-no-padding"
+                  *ngFor="let product of products | filterByName: textSearch"
+                  (click)="openProduct(product)">
             <ion-avatar class="avatar-square product-image">
-                <img src="assets/img/avatar-product.jpg">
+                <ion-img [src]="product.photoUrl"></ion-img>
             </ion-avatar>
             <ion-label class="product-name">
-                Leche south cost 1 Ltr <br>
-                <span class="product-price">COP $24.000</span>
+                {{product.name}} <br>
+                <span class="product-price">{{product.localCurrency}} ${{product.price}}</span>
             </ion-label>
         </ion-item>
-
     </ion-list>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-corner-lr">
-        <ion-fab-button color="pagami" routerLink="/app/my-products/add-product">
+        <ion-fab-button color="pagami" routerLink="/app/my-products/product/add">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>

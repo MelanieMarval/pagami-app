@@ -10,6 +10,7 @@ import {ProductsPage} from './products/products';
 import {OrderSummaryPage} from './order-summary/order-summary';
 import { PipesModule } from '../../pipes/pipes.module';
 import { FlyerPage } from './flyer/flyer';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FlyerPage } from './flyer/flyer';
         IonicModule,
         HttpClientModule,
         ShopPageRoutingModule,
-        PipesModule
+        PipesModule,
+        FormsModule
     ],
     declarations: [
         ShopPage,

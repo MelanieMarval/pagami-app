@@ -11,9 +11,10 @@ const routes: Routes = [
         component: ProductsPage
     },
     {
-        path: 'add-product',
+        path: 'product/:action',
         component: AddProductPage
     }
+
 ];
 
 @NgModule({

@@ -118,6 +118,10 @@
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Volante Digital</ion-label>
         </ion-item>
+        <ion-item routerLink="business-hours" color="pagami-surface">
+            <ion-icon name="arrow-forward" slot="end"></ion-icon>
+            <ion-label>Mi horario</ion-label>
+        </ion-item>
     </ion-list>
 
     <ion-item-group class="toggles-container">
@@ -129,12 +133,12 @@
     </ion-item-group>
 
     <ion-list class="link-buttons-container" lines="none">
-<!--        <ion-item button routerLink="/app/my-products" color="pagami-surface">-->
-<!--        <ion-item button routerLink="/app/tabs/my-business/plans" color="pagami-surface">-->
-        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
+        <ion-item button routerLink="/app/my-products" color="pagami-surface">
+<!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Mis Productos</ion-label>
         </ion-item>
+<!--        <ion-item button routerLink="/app/tabs/my-business/plans" color="pagami-surface">-->
         <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Mis Servicios</ion-label>

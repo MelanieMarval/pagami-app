@@ -102,7 +102,7 @@ export class GoogleAuthService {
                 ]
             });
 
-            await toast.present();
+            // await toast.present();
         });
     }
 

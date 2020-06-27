@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
 import { PagamiGeo } from '../core/geolocation/pagami.geo';
+import { Product } from '../core/api/products/product';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class UserIntentProvider {
     private _placeToChangeLocation: Place;
     private _showingPlaceDetails = false;
     private _lastUpdatedPoint: PagamiGeo;
+    private _myBusinessDetails: any; // contain id and name
     private _updateMyBusiness = false;
 
     get placeToEdit(): Place {
@@ -79,5 +81,53 @@ export class UserIntentProvider {
 
     set placeToChangeLocation(value: Place) {
         this._placeToChangeLocation = value;
+    }
+
+
+    get myBusinessDetails(): any {
+        return this._myBusinessDetails;
+    }
+
+    set myBusinessDetails(value: any) {
+        this._myBusinessDetails = value;
+    }
+
+
+    // Products
+    private _productToEdit: Product;
+    private _productEdited: Product;
+    private _productDeleted: Product;
+    private _reloadProducts = false;
+
+    get productToEdit(): Product {
+        return this._productToEdit;
+    }
+
+    set productToEdit(value: Product) {
+        this._productToEdit = value;
+    }
+
+    get productEdited(): Product {
+        return this._productEdited;
+    }
+
+    set productEdited(value: Product) {
+        this._productEdited = value;
+    }
+
+    get productDeleted(): Product {
+        return this._productDeleted;
+    }
+
+    set productDeleted(value: Product) {
+        this._productDeleted = value;
+    }
+
+    get reloadProducts(): boolean {
+        return this._reloadProducts;
+    }
+
+    set reloadProducts(value: boolean) {
+        this._reloadProducts = value;
     }
 }

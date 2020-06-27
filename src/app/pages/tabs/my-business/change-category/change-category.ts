@@ -27,7 +27,6 @@ export class ChangeCategoryPage implements OnInit {
                 private placesService: PlacesService,
                 private intentProvider: UserIntentProvider,
                 private router: Router) {
-
     }
 
     async ngOnInit() {

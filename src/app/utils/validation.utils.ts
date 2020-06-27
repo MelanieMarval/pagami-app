@@ -1,4 +1,4 @@
-
+import { WeekDayHours } from '../core/api/places/week-day-hours';
 
 export class ValidationUtils {
 
@@ -28,4 +28,37 @@ export class ValidationUtils {
         const extension = file.slice(-1)[0];
         return extension === 'png' || extension === 'jpg' || extension === 'jpeg';
     }
+
+    // For BusinessHours
+
+    static validateDay(hours: any): boolean {
+        let hourTo: any;
+        let hourFrom: any;
+        hourTo = hours.to.split(':')[0];
+        hourFrom = hours.from.split(':')[0];
+        return Number(hourFrom) < Number(hourTo);
+    }
+
+    static validateEmptyHours(day: WeekDayHours): boolean {
+        if (day.active) {
+            if (!day.hoursOne) {
+                return false;
+            } else {
+                if (!day.hoursOne.to || !day.hoursOne.from) {
+                    return false;
+                }
+                if (day.breakTime) {
+                    if (!day.hoursTwo) {
+                        return false;
+                    } else {
+                        if (!day.hoursTwo.to || !day.hoursTwo.from) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 }

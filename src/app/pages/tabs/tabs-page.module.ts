@@ -14,6 +14,7 @@ import { ChangeCategoryPage } from './my-business/change-category/change-categor
 import { PlansPage } from './my-business/plans/plans';
 import { FlyerPage } from './my-business/flyer/flyer';
 import { ImageTooltipsModule } from '../../shared/image-tooltips/image-tooltips.module';
+import { BusinessHoursPage } from './my-business/business-hours/business-hours';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { ImageTooltipsModule } from '../../shared/image-tooltips/image-tooltips.
         TabsPage,
         PlansPage,
         ChangeCategoryPage,
-        FlyerPage
+        FlyerPage,
+        BusinessHoursPage
     ],
     providers: []
 })

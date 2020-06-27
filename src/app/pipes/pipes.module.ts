@@ -3,6 +3,7 @@ import { CapitalizePipe } from './capitalize.pipe';
 import { NoImagePipe } from './no-image.pipe';
 import { PluralPipe } from './plural.pipe';
 import { FilterPlacePipe } from './filter-place.pipe';
+import { FilterByNamePipe } from './filter-by-name.pipe';
 import { FilterCategoryPipe } from './filter-category.pipe';
 
 @NgModule({
@@ -11,13 +12,16 @@ import { FilterCategoryPipe } from './filter-category.pipe';
         NoImagePipe,
         PluralPipe,
         FilterPlacePipe,
-        FilterCategoryPipe
+        FilterCategoryPipe,
+        FilterByNamePipe
     ],
     imports: [],
     exports: [
         CapitalizePipe,
         NoImagePipe,
         PluralPipe,
+        FilterPlacePipe,
+        FilterByNamePipe,
         FilterPlacePipe,
         FilterCategoryPipe
     ],

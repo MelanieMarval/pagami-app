@@ -1,0 +1,32 @@
+.select {
+    max-width: 100%;
+    width: 100%;
+}
+.item-title-day {
+    margin-top: 16px;
+    --border-width: 1px 0 0 0;
+}
+.item-group-time {
+    display: flex;
+    & > ion-label {
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+        margin: 14px 0 14px 14px;
+    }
+    ion-item {
+        width: 50%;
+    }
+}
+.div-hours {
+    border-bottom: 1px solid;
+    margin: 16px 0;
+}
+
+
+.sc-ion-popover-md-h {
+    --width: 312px;
+}
+ion-toolbar {
+    visibility: visible;
+}
