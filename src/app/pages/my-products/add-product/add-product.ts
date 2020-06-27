@@ -27,6 +27,7 @@ export class AddProductPage extends InputFilePage implements OnInit {
     updating = false;
     currencies: Currency[] = [];
     currency: Currency;
+    localCurrency: string;
     action: string;
     localSelected: { currency: string, price: number };
 
@@ -59,9 +60,8 @@ export class AddProductPage extends InputFilePage implements OnInit {
             });
         this.form = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
-            price: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(10000000)]),
-            localPrice: new FormControl(null),
-            localCurrency: new FormControl(''),
+            price: new FormControl(null, [Validators.min(1), Validators.max(10000000)]),
+            localPrice: new FormControl(null, [Validators.min(1), Validators.max(10000000)]),
             stock: new FormControl(null, [Validators.required, Validators.max(500)]),
             available: new FormControl(true),
             description: new FormControl('', Validators.maxLength(300))
@@ -78,6 +78,8 @@ export class AddProductPage extends InputFilePage implements OnInit {
     loadForm(product?: Product) {
         if (this.action === 'add') {
             this.form.reset();
+            this.form.get('available').setValue(true);
+            this.localCurrency = null;
         } else {
             this.product = product;
             console.log(this.intentProvider.productToEdit);
@@ -87,9 +89,9 @@ export class AddProductPage extends InputFilePage implements OnInit {
                 price: product.price,
                 description: product.description,
                 available: product.available,
-                localPrice: product.localPrice ? product.localPrice : null,
-                localCurrency: product.localCurrency ? product.localCurrency : null,
+                localPrice: product.localPrice,
             };
+            this.localCurrency = product.localCurrency;
             this.previewUrl = product.photoUrl;
             this.form.setValue(productValues);
             this.intentProvider.productToEdit = undefined;
@@ -99,6 +101,12 @@ export class AddProductPage extends InputFilePage implements OnInit {
     saveProduct() {
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe seleccionar una imagen para representar su producto');
+        }
+        if (!this.data.localPrice.value && !this.data.price.value) {
+            return this.toast.messageErrorWithoutTabs('Debe colocar el precio en dolares o en su moneda local');
+        }
+        if ((this.data.localPrice.value && !this.localCurrency) || (!this.data.localPrice.value && this.localCurrency)) {
+            return this.toast.messageErrorWithoutTabs('Si coloca el precio local debe seleccionar tambien la moneda');
         }
 
         if (this.action === 'add') {
@@ -110,7 +118,7 @@ export class AddProductPage extends InputFilePage implements OnInit {
                 description: this.data.description.value,
                 available: this.data.available.value,
                 localPrice: this.data.localPrice.value,
-                localCurrency: this.data.localCurrency.value,
+                localCurrency: this.localCurrency,
             };
         } else {
             this.product.name = this.data.name.value;
@@ -119,7 +127,7 @@ export class AddProductPage extends InputFilePage implements OnInit {
             this.product.description = this.data.description.value;
             this.product.available = this.data.available.value;
             this.product.localPrice = this.data.localPrice.value;
-            this.product.localCurrency = this.data.localCurrency.value;
+            this.product.localCurrency = this.localCurrency;
         }
 
         if (!this.product.photoUrl) {
@@ -225,5 +233,9 @@ export class AddProductPage extends InputFilePage implements OnInit {
         });
 
         await alert.present();
+    }
+
+    compareFn(e1: any, e2: any): boolean {
+        return e1 && e2 ? e1 === e2 : e1 === e2;
     }
 }

@@ -18,7 +18,7 @@ const routes: Routes = [
         component: FlyerPage
     },
     {
-        path: 'products',
+        path: 'products/:id',
         component: ProductsPage
     },
     {

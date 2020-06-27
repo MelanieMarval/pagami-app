@@ -68,8 +68,8 @@
     </ion-list>
 
     <ion-list *ngIf="place.status === STATUS.VERIFIED" class="link-buttons-container" lines="none">
-<!--        <ion-item button routerLink="/app/shop/products" color="pagami-surface">-->
-        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
+        <ion-item button [routerLink]="'/app/shop/products/'+place.id" color="pagami-surface">
+<!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Productos</ion-label>
         </ion-item>

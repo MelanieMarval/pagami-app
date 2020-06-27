@@ -44,8 +44,15 @@
             <ion-item-group class="group-flex">
                 <ion-item color="pagami-surface" [disabled]="updating">
                     <ion-label position="floating">Moneda</ion-label>
-                    <ion-select okText="Aceptar" cancelText="Cancelar"  [value]="currency?.code" formControlName="localCurrency">
-                        <ion-select-option *ngFor="let currency of currencies" [value]="currency.code" >{{currency.code}}</ion-select-option>
+                    <ion-select *ngIf="action === 'add' || !localCurrency"
+                                okText="Aceptar" cancelText="Cancelar"
+                                [(ngModel)]="localCurrency" [ngModelOptions]="{standalone: true}">
+                        <ion-select-option *ngFor="let currency of currencies" [value]="currency.code">{{currency.code}}</ion-select-option>
+                    </ion-select>
+                    <ion-select *ngIf="action === 'edit' && localCurrency"
+                                okText="Aceptar" cancelText="Cancelar" disabled
+                                [(ngModel)]="localCurrency" [ngModelOptions]="{standalone: true}">
+                        <ion-select-option [value]="localCurrency">{{localCurrency}}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item color="pagami-surface" [disabled]="updating">
@@ -54,12 +61,12 @@
                 </ion-item>
             </ion-item-group>
             <div class="error-text">
-<!--                <small >Minimo 1 </small>-->
-<!--                <small *ngIf="form.get('localPrice').errors?.max">Máximo 1000000 $</small>-->
+                <small *ngIf="form.get('localPrice').errors?.min && form.get('price').touched">Minimo 1 $</small>
+                <small *ngIf="form.get('localPrice').errors?.max">Máximo 1000000 $</small>
             </div>
 
             <ion-item color="pagami-surface" [disabled]="updating">
-                <ion-label position="floating">Equivalente en dolares</ion-label>
+                <ion-label position="floating">Precio en dolares</ion-label>
                 <ion-input type="number" formControlName="price"></ion-input>
                 <ion-icon slot="start" name="logo-usd"></ion-icon>
             </ion-item>
