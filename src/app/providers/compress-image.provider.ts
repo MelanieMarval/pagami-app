@@ -11,6 +11,7 @@ export class CompressImageProvider {
     }
 
     static async handleImageUpload(isTest: boolean, image: any, name = 'pagami') {
+        console.log('-> image', image);
         const imageFile = isTest ? image.target.files[0] : await imageCompression.getFilefromDataUrl(image, name);
         const options = {
             maxSizeMB: 0.100,

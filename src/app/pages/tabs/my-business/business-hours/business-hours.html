@@ -38,22 +38,22 @@
                         <ion-label *ngIf="businessHours.monday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.monday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.monday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.monday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -73,22 +73,22 @@
                         <ion-label *ngIf="businessHours.monday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.monday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.monday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.monday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -108,22 +108,22 @@
                         <ion-label *ngIf="businessHours.saturday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.saturday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.saturday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.saturday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.saturday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.saturday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.saturday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.saturday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -143,22 +143,22 @@
                         <ion-label *ngIf="businessHours.sunday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.sunday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.sunday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.sunday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.sunday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.sunday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.sunday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.sunday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -180,22 +180,22 @@
                         <ion-label *ngIf="businessHours.monday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.monday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.monday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.monday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.monday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.monday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.monday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.monday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -215,22 +215,22 @@
                         <ion-label *ngIf="businessHours.tuesday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.tuesday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.tuesday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.tuesday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.tuesday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.tuesday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.tuesday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.tuesday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.tuesday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.tuesday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.tuesday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.tuesday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.tuesday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.tuesday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -250,22 +250,22 @@
                         <ion-label *ngIf="businessHours.wednesday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.wednesday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.wednesday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.wednesday.hoursOne.from, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.wednesday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.wednesday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.wednesday.hoursOne.to, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.wednesday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.wednesday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.wednesday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.wednesday.hoursTwo.from, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.wednesday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.wednesday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.wednesday.hoursTwo.to, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -285,22 +285,22 @@
                         <ion-label *ngIf="businessHours.thursday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.thursday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.thursday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.thursday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.thursday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.thursday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.thursday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.thursday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.thursday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.thursday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.thursday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.thursday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.thursday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.thursday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -320,22 +320,22 @@
                         <ion-label *ngIf="businessHours.friday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.friday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.friday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.friday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.friday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.friday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.friday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.friday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.friday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.friday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.friday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.friday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.friday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.friday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -355,22 +355,22 @@
                         <ion-label *ngIf="businessHours.saturday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.saturday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.saturday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.saturday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.saturday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.saturday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.saturday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.saturday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.saturday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.saturday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>
@@ -390,22 +390,22 @@
                         <ion-label *ngIf="businessHours.sunday.breakTime">1</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [max]="" [(ngModel)]="businessHours.sunday.hoursOne.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [max]="" [(ngModel)]="businessHours.sunday.hoursOne.from" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursOne, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [min]="" [(ngModel)]="businessHours.sunday.hoursOne.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [min]="" [(ngModel)]="businessHours.sunday.hoursOne.to" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursOne, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                     <ion-item-group class="item-group-time" *ngIf="businessHours.sunday.breakTime">
                         <ion-label>2</ion-label>
                         <ion-item lines="none">
                             <ion-label>Desde</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.from"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.sunday.hoursTwo.from" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursTwo, hourType.FROM)"></ion-datetime>
                         </ion-item>
                         <ion-item lines="none">
                             <ion-label>Hasta</ion-label>
-                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,15,30,45" [(ngModel)]="businessHours.sunday.hoursTwo.to"></ion-datetime>
+                            <ion-datetime displayFormat="hh:mm a" minuteValues="0,5,10,15,20,25,30,35,40,45,50,55" [(ngModel)]="businessHours.sunday.hoursTwo.to" (ngModelChange)="parseDateToTime($event, businessHours.sunday.hoursTwo, hourType.TO)"></ion-datetime>
                         </ion-item>
                     </ion-item-group>
                 </div>

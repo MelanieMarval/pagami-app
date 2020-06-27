@@ -2,12 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        debug {
-            storeFile file('C:\\Projects\\Johan\\pagami_sites_key.jks')
-            storePassword '123456'
-            keyAlias = 'pagamiKey'
-            keyPassword '123456'
-        }
+        
     }
     compileSdkVersion 28
     defaultConfig {
