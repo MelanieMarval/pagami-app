@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertProvider } from '../../providers/alert.provider';
 import { BrowserProvider } from '../../providers/browser.provider';
 import { WeekDayHours } from '../../core/api/places/week-day-hours';
+import { PlaceUtils } from '../../utils/place.utils';
 
 
 @Component({
@@ -37,7 +38,9 @@ export class ShopPage implements OnInit {
             if (this.place.flyer) {
                 this.haveFlyer = true;
             }
-            this.setIsOpen();
+            if (this.place.hours) {
+                this.isOpen = PlaceUtils.placeIsOpen(this.place.hours);
+            }
             return;
         }
         if (this.intentProvider.placeToClaim) {
@@ -49,21 +52,6 @@ export class ShopPage implements OnInit {
             } else {
                 this.intentProvider.placeToClaim = undefined;
                 this.isClaimed = true;
-            }
-        }
-    }
-
-    private setIsOpen() {
-        if (this.place.hours) {
-            const daysHours = this.place.hours;
-            const currentDay = new Date();
-
-            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-            const dayName = days[currentDay.getDay()];
-
-            const hours: WeekDayHours = daysHours[dayName];
-            if (!hours.active) {
-                return this.isOpen = false;
             }
         }
     }

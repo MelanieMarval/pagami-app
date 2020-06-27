@@ -39,10 +39,10 @@
                 <ion-label class="label-flex">
                     <div>{{0 | plural:'comentarios'}}</div>
                     <div *ngIf="place.status === STATUS.ACCEPTED">No verificada</div>
-<!--                    <div *ngIf="place.hours" class="place-hour">-->
-<!--                        <ion-text color="success" *ngIf="isOpen">Abierto</ion-text>-->
-<!--                        <ion-text color="danger" *ngIf="!isOpen">Cerrado</ion-text>-->
-<!--                    </div>-->
+                    <div *ngIf="place.hours" class="place-hour">
+                        <ion-text color="success" *ngIf="isOpen">Abierto</ion-text>
+                        <ion-text color="danger" *ngIf="!isOpen">Cerrado</ion-text>
+                    </div>
                 </ion-label>
             </ion-item>
         </div>

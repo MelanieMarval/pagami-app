@@ -1,5 +1,7 @@
 import { Place } from '../core/api/places/place';
 import { PLACES } from './Const';
+import { WeekDayHours } from '../core/api/places/week-day-hours';
+import { BusinessHours } from '../core/api/places/business-hours';
 
 export class PlaceUtils {
 
@@ -166,6 +168,36 @@ export class PlaceUtils {
 
     static getSortData(registers): any[] {
         return registers.sort((a, b) => new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime());
+    }
+
+    static placeIsOpen(daysHours: BusinessHours) {
+        const currentDay = new Date();
+
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const dayName = days[currentDay.getDay()];
+
+        const hours: WeekDayHours = daysHours[dayName];
+        if (!hours.active) {
+            return false;
+        }
+        const currentHour = currentDay.getHours();
+        const currentMinute = currentDay.getMinutes();
+        let from = hours.hoursOne.from.split(':')[0];
+        let to = hours.hoursOne.to.split(':')[0];
+        let toMin = hours.hoursOne.to.split(':')[1];
+        if ((Number(currentHour) >= Number(from)) && (Number(currentHour) <= Number(to))) {
+            return currentHour !== Number(to) || currentMinute < Number(toMin);
+        } else {
+            if (hours.breakTime) {
+                from = hours.hoursTwo.from.split(':')[0];
+                to = hours.hoursTwo.to.split(':')[0];
+                toMin = hours.hoursTwo.to.split(':')[1];
+                if ((Number(currentHour) >= Number(from)) && (Number(currentHour) <= Number(to))) {
+                    return currentHour !== Number(to) || currentMinute < Number(toMin);
+                }
+            }
+            return false;
+        }
     }
 
 }

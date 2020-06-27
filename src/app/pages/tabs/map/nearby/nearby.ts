@@ -2,10 +2,12 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Place } from '../../../../core/api/places/place';
 import { PLACES } from '../../../../utils/Const';
 import { PlaceUtils } from '../../../../utils/place.utils';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 import { DrawerState } from '../../../../shared/ion-bottom-drawer/drawer-state';
 import { MapProvider } from '../../../../providers/map.provider';
+import { BusinessHours } from '../../../../core/api/places/business-hours';
+import { ValidationUtils } from '../../../../utils/validation.utils';
 
 @Component({
     selector: 'app-nearby',
@@ -33,7 +35,14 @@ export class NearbyPage implements OnInit, OnChanges {
                 private intentProvider: UserIntentProvider) {
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.drawerState) {
+            this.mapProvide.currentNearbyStatus = changes.drawerState.currentValue;
+        }
+    }
 
     savePlaceToShowDetails(place: Place) {
         this.intentProvider.placeToShow = place;
@@ -54,9 +63,7 @@ export class NearbyPage implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.drawerState) {
-            this.mapProvide.currentNearbyStatus = changes.drawerState.currentValue;
-        }
+    messageStatusIsOpen(hours: BusinessHours) {
+        return PlaceUtils.placeIsOpen(hours) ? 'Abierto' : 'Cerrado';
     }
 }
