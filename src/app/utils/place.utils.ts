@@ -158,6 +158,11 @@ export class PlaceUtils {
 
     private static getIconSuffix(place: Place, suffix) {
         if (place.status === PLACES.STATUS.VERIFIED && suffix) {
+            if (place.hours) {
+                if (!PlaceUtils.placeIsOpen(place.hours)) {
+                    return '_inactivo.svg';
+                }
+            }
             return '_verificado.svg';
         } else if (place.status === PLACES.STATUS.ACCEPTED && suffix) {
             return '_aceptado.svg';
