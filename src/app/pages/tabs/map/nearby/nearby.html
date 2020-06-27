@@ -6,7 +6,7 @@
         <h2 class="ion-text-center nearby-title pan-active">
             Destacados en tu área
         </h2>
-        <ion-row class="footer-button pan-active">
+        <ion-row class="footer-button pan-active" [hidden]="this.searchText && this.searchText.length > 0 && this.drawerState == 2">
             <ion-col class="6 pan-active">
                 <ion-button class="button-large btn-category pan-active" expand="block"
                             color="{{selectedCategory === 0 ? 'pagami' : 'pagami-surface'}}"
@@ -61,7 +61,7 @@
                 </ion-card-header>
             </ion-card>
         </ion-row>
-        <ion-row *ngFor="let place of nearPlaces | filterPlace: searchText" [hidden]="selectedPlace && selectedPlace.id === place.id || place.type !== getName(selectedCategory)">
+        <ion-row *ngFor="let place of nearPlaces" [hidden]="(selectedPlace && selectedPlace.id === place.id) || !shouldShowPlace(place)">
             <ion-card button color="pagami-surface" (click)="savePlaceToShowDetails(place)" class="card" routerLink="/app/shop">
                 <div class="card-img-contain">
                     <ion-skeleton-text

@@ -53,8 +53,17 @@ export class NearbyPage implements OnInit, OnChanges {
         this.changePlaceType.emit(/*this.selectedCategory === 0 ? PLACES.TYPE.STORE : PLACES.TYPE.SERVICE*/PLACES.TYPE.ALL);
     }
 
-    getName(select: number) {
-        return this.selectedCategory === 0 ? PLACES.TYPE.STORE : PLACES.TYPE.SERVICE;
+    shouldShowPlace(place: Place) {
+        if (this.searchText && this.searchText.length > 0 && this.drawerState === DrawerState.Top) {
+            return true;
+        }
+        if (this.selectedCategory === 0 && place.type === PLACES.TYPE.STORE) {
+            return true;
+        } else if (this.selectedCategory === 1 && place.type === PLACES.TYPE.SERVICE) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     onBarClick() {
