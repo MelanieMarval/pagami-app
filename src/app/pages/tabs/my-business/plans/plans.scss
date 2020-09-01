@@ -1,24 +1,30 @@
-.card-container {
-    padding: 16px 8px;
-}
 
 .card-plan {
     border-radius: 3px;
     margin-bottom: 17px;
 
     &__name {
-        font-size: 12px;
+        font-size: 20px;
         text-transform: uppercase;
         ion-icon {
-            font-size: 11px;
+            font-size: 16px;
         }
     }
     &__price {
+        text-align: left;
         font-size: 24px;
+        &Cop {
+            font-size: 16px;
+        }
+    }
+    &__details {
+        margin-left: 0;
+        font-size: 16px;
+        text-align: left;
     }
 
     ion-card-header {
-        padding-bottom: 8px;
+        //padding-bottom: 8px;
         .checkmark {
             padding-top: 4px;
             font-size: 22px;

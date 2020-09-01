@@ -6,6 +6,9 @@ import { Plan } from '../../../../core/api/plans/plan';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 import { Claim } from '../../../../core/api/claim/claim';
 import { ClaimService } from '../../../../core/api/claim/claim.service';
+import { PopoverController } from '@ionic/angular';
+import { OptionsPayComponent } from '../../../../components/options-pay/options-pay.component';
+import { ConfigService } from '../../../../core/api/config/config.service';
 
 @Component({
     selector: 'page-plans',
@@ -24,45 +27,69 @@ export class PlansPage implements OnInit {
     constructor(private toast: ToastProvider,
                 private intentProvider: UserIntentProvider,
                 private plansService: PlansService,
-                private claimService: ClaimService) {
+                private popoverController: PopoverController,
+                private configService: ConfigService) {
     }
 
     ngOnInit() {
         this.loading = true;
         // @ts-ignore
-        this.claim = this.intentProvider.placeToClaim;
         this.plansService.getAll()
             .then((success: ApiResponse) => {
                 this.loading = false;
                 if (success.passed) {
-                    this.selectedPlan = success.response.filter(plan => plan.amount === 0)[0].id;
                     this.plans = success.response;
+                    console.log('-> success.response', success.response);
                 } else {
                     console.log('Los planes no se han podido cargar');
                 }
             });
     }
 
-    pay() {
-        this.loading = true;
-        if (this.selectedPlan) {
-            this.claim.planSelectedId = this.selectedPlan;
+    pay(plan: Plan, i: number) {
 
-            // this.claimService.claimBusiness(this.claim)
-            //     .then(success => {
-            //         this.loading = false;
-            //         if (success.passed) {
-            this.save = true;
-            this.intentProvider.placeToClaim = undefined;
-            this.toast.messageDefault('Gracias por tu compra. <br>La verificacion de tu empresa esta en camino!', 'bottom', 3000);
-                //     } else {
-                //         this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');
-                //     }
-                // });
-        } else {
-            this.loading = false;
-            this.toast.messageErrorWithoutTabs('Debe seleccionar un plan para continuar');
-        }
+        this.configService.getPayMethods()
+            .then(async (success: ApiResponse) => {
+                console.log('-> res', success);
+                if (success.passed) {
+                    const popover = await this.popoverController.create({
+                        component: OptionsPayComponent,
+                        componentProps: { payMethods: success.response }
+                    });
+                    await popover.present();
+
+                    const {data} = await popover.onDidDismiss();
+                    console.log('-> data', data);
+                } else {
+                    this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud');
+                }
+            }, error => {
+                this.loading = false;
+                this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud. Intente de nuevo o compruebe su conexion a internet', 3500);
+            });
+
+
+        // this.loading = true;
+        // if (this.selectedPlan) {
+        //
+        //     // this.claimService.claimBusiness(this.claim)
+        //     //     .then(success => {
+        //     //         this.loading = false;
+        //     //         if (success.passed) {
+        //     this.save = true;
+        //     this.toast.messageDefault('Gracias por tu compra. <br>La verificacion de tu empresa esta en camino!', 'bottom', 3000);
+        //     //     } else {
+        //     //         this.toast.messageErrorWithoutTabs('Hay problemas de conexion. Intente de nuevo.');
+        //     //     }
+        //     // });
+        // } else {
+        //     this.loading = false;
+        //     this.toast.messageErrorWithoutTabs('Debe seleccionar un plan para continuar');
+        // }
+    }
+
+    counter(i: number) {
+        return new Array(i);
     }
 
 }

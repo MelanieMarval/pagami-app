@@ -48,8 +48,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         private fireStorage: FireStorage,
         private storageService: StorageProvider,
         protected geolocationService: GeolocationService,
-        private actionSheetController: ActionSheetController
-    ) {
+        private actionSheetController: ActionSheetController) {
         super(geolocationService);
     }
 
