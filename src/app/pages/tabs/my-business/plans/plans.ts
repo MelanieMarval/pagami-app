@@ -21,6 +21,7 @@ export class PlansPage implements OnInit {
     loading = false;
     save = false;
     plans: Plan[];
+    paymentMethods: any[];
     selectedPlan: string;
     claim: Claim;
 
@@ -39,6 +40,7 @@ export class PlansPage implements OnInit {
                 this.loading = false;
                 if (success.passed) {
                     this.plans = success.response;
+                    this.getPayMethods();
                     console.log('-> success.response', success.response);
                 } else {
                     console.log('Los planes no se han podido cargar');
@@ -46,27 +48,16 @@ export class PlansPage implements OnInit {
             });
     }
 
-    pay(plan: Plan, i: number) {
+    async pay(plan: Plan, i: number) {
 
-        this.configService.getPayMethods()
-            .then(async (success: ApiResponse) => {
-                console.log('-> res', success);
-                if (success.passed) {
-                    const popover = await this.popoverController.create({
-                        component: OptionsPayComponent,
-                        componentProps: { payMethods: success.response }
-                    });
-                    await popover.present();
+        const popover = await this.popoverController.create({
+            component: OptionsPayComponent,
+            componentProps: {payMethods: this.paymentMethods, planSelected: plan}
+        });
+        await popover.present();
 
-                    const {data} = await popover.onDidDismiss();
-                    console.log('-> data', data);
-                } else {
-                    this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud');
-                }
-            }, error => {
-                this.loading = false;
-                this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud. Intente de nuevo o compruebe su conexion a internet', 3500);
-            });
+        const {data} = await popover.onDidDismiss();
+        console.log('-> data', this.paymentMethods[data.paymentSelected]);
 
 
         // this.loading = true;
@@ -92,4 +83,17 @@ export class PlansPage implements OnInit {
         return new Array(i);
     }
 
+    private getPayMethods() {
+        this.configService.getPayMethods()
+            .then(async (success: ApiResponse) => {
+                if (success.passed) {
+                     this.paymentMethods = Object.values(success.response).filter(item => item !== 'payMethods');
+                } else {
+                    this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud');
+                }
+            }, error => {
+                this.loading = false;
+                this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud. Intente de nuevo o compruebe su conexion a internet', 3500);
+            });
+    }
 }

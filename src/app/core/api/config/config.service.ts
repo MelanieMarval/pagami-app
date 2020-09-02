@@ -18,7 +18,7 @@ export class ConfigService {
 
     async getPayMethods(id = 'payMethods'): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.get(`${this.URL}/${id}`, options);
+        const request = this.httpClient.get(`${this.URL}/payment-methods`, options);
         return this.apiService.serverListener(request);
     }
 }

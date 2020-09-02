@@ -53,7 +53,7 @@
 
                 <div class="footer-button footer-button--div --without-pt" *ngIf="!save">
                     <ion-button class="button-large" expand="block" color="pagami" type="button"
-                                [disabled]="loading" (click)="pay(plan, i)">
+                                [disabled]="loading || !paymentMethods" (click)="pay(plan, i)">
                         <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
                         <span *ngIf="!loading">Pagar</span>
                     </ion-button>

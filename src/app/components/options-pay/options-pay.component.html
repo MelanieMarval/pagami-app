@@ -4,15 +4,12 @@
         Pagar con
     </ion-list-header>
 
-    <ion-item (click)="pay()" color="pagami-surface">
-        <ion-icon name="logo-google" slot="start"></ion-icon>
-        <ion-label>Google Pay</ion-label>
+    <ion-item *ngFor="let method of payMethods; let i = index" [ngClass]="{'d-none': !method.active}"
+              (click)="selectMethod(i)" color="pagami-surface">
+        <ion-icon [name]="method.icon" slot="start"></ion-icon>
+        <ion-label>{{method.name}}</ion-label>
     </ion-item>
 
-    <ion-item (click)="pay()" color="pagami-surface">
-        <ion-icon name="cash" slot="start"></ion-icon>
-        <ion-label>Transferencia</ion-label>
-    </ion-item>
 
 
 </ion-list>
