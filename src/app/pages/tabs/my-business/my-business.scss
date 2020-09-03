@@ -27,18 +27,22 @@ ion-col.md {
         ion-item {
             --background: transparent;
             height: 35px;
+
             ion-icon {
                 margin-right: 4px;
                 color: #FFF
             }
         }
+
         .info-category {
             font-size: 13px;
             text-transform: uppercase;
+
             ion-icon {
                 width: 18px;
             }
         }
+
         ion-text {
             font-size: 20px;
             margin-left: 15px;
@@ -48,23 +52,28 @@ ion-col.md {
         .info-title {
             display: flex;
             align-items: center;
+
             .icon-verified {
                 position: relative;
                 top: 2px;
             }
+
             .button-edit {
                 --border-radius: 50%;
                 width: 25px;
                 height: 25px;
                 margin-left: 6px;
                 margin-top: 3px;
+
                 ion-icon {
                     font-size: 16px;
                 }
             }
         }
+
         .info-rating {
             font-size: 12px;
+
             ion-icon {
                 width: 10px;
                 margin-bottom: 10px;
@@ -97,7 +106,8 @@ img {
     ion-label {
         font-size: 15px !important;
     }
-    &--special{
+
+    &--special {
         --padding-start: 0px !important;;
         margin-bottom: 12px;
     }
@@ -109,14 +119,35 @@ img {
 
 .group-flex {
     display: flex;
+
     ion-item:nth-child(1) {
         width: 130px;
         border-radius: 5px 0 0 0;
     }
+
     ion-item:nth-child(2) {
         width: 100%;
         border-radius: 0 5px 0 0;
     }
 }
 
+.optionsDisabled {
+    margin: 16px;
+    padding-top: 8px;
+    border: 1px solid;
+    border-radius: 4px;
+}
 
+.button-small--active {
+    position: relative;
+    &::before {
+        content: '';
+        border: 2px solid;
+        top: -5px;
+        position: absolute;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;
+        border-radius: 6px;
+    }
+}

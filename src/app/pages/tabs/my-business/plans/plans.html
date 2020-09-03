@@ -13,49 +13,56 @@
     <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
 </div>
 
-<ion-content>
-    <ion-list class="card-container">
+<ion-content class="">
 
-        <ion-item-group>
-            <ion-card class="card-plan" button
-                      *ngFor="let plan of plans; let i = index"
-                      (click)="this.selectedPlan = plan.id"
-                      [color]="this.selectedPlan === plan.id ? 'pagami' : 'pagami-surface'">
-                <ion-card-header>
-                    <ion-row>
-                        <ion-col size="10">
-                            <ion-text class="card-plan__name">{{plan.name}}
-                                <ion-icon name="star"></ion-icon>
-                            </ion-text>
-                        </ion-col>
-                        <ion-col size="2" class="ion-text-end ion-no-padding" *ngIf="this.selectedPlan === plan.id">
-                            <ion-icon name="checkmark-circle" color="light" class="checkmark"></ion-icon>
-                        </ion-col>
-                    </ion-row>
+    <ion-slides class="h-100" [pager]="true">
+        <ion-slide *ngFor="let plan of plans; let i = index">
+
+            <ion-card class="card-plan" color="pagami-surface">
+
+                <ion-card-header class="ion-padding">
+                    <ion-card-title class="card-plan__name">
+                        {{plan.name}}
+                        <div>
+                            <ion-icon name="star" color="primary" *ngFor="let i of counter(plan.stars)"></ion-icon>
+                            <span *ngIf="plan.stars < 5">
+                                <ion-icon name="star-outline" *ngFor="let i of counter(5 - plan.stars)"></ion-icon>
+                            </span>
+                        </div>
+                    </ion-card-title>
                 </ion-card-header>
+
                 <ion-card-content>
                     <ion-row>
-                        <ion-col size="6">
+                        <ion-col size="5">
                             <ion-card-title class="card-plan__price">
                                 ${{plan.amount}} USD
                             </ion-card-title>
                         </ion-col>
-                        <ion-col size="6" class="ion-text-end ion-align-self-end">
-                            <ion-card-subtitle class="card-plan__details">
-                                {{plan.daysSubText}} / {{plan.daysText}}
+                        <ion-col size="7" class="ion-text-end ion-align-self-end">
+                            <ion-card-subtitle class="card-plan__priceCop" >
+                                ${{plan.amountCop | number}} COP / {{plan.days}} días
                             </ion-card-subtitle>
                         </ion-col>
                     </ion-row>
-                </ion-card-content>
-            </ion-card>
-        </ion-item-group>
 
-    </ion-list>
+                    <ul class="card-plan__details">
+                        <li *ngFor="let item of plan.details">{{item}}</li>
+                    </ul>
+                </ion-card-content>
+
+                <div class="footer-button footer-button--div --without-pt" *ngIf="!save">
+                    <ion-button class="button-large" expand="block" color="pagami" type="button"
+                                [disabled]="loading || !paymentMethods" (click)="pay(plan, i)">
+                        <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
+                        <span *ngIf="!loading">Pagar</span>
+                    </ion-button>
+                </div>
+            </ion-card>
+
+        </ion-slide>
+    </ion-slides>
+
+
 </ion-content>
 
-<footer class="footer-button" slot="fixed" *ngIf="!save">
-    <ion-button class="button-large" expand="block" color="pagami" type="button" [disabled]="loading" (click)="pay()">
-        <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
-        <span *ngIf="!loading">Pagar</span>
-    </ion-button>
-</footer>

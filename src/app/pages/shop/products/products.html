@@ -21,7 +21,8 @@
         <ion-searchbar placeholder="Buscar productos" [(ngModel)]="textSearch"></ion-searchbar>
     </ion-header>
 
-    <ion-list inset="false" lines="none" class="products">
+    <ion-list inset="false" lines="none" class="products" [ngClass]="{'ion-text-center': !products.length}">
+        <ion-label *ngIf="!products.length">No tiene productos registrados</ion-label>
         <ion-item button color="pagami-surface" detail="false" class="product ion-no-padding"
                   *ngFor="let product of products | filterByName: textSearch; let x = index"
                   (click)="alert.alertComingSoon()">

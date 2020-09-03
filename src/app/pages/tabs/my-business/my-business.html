@@ -105,6 +105,7 @@
             <ion-icon src="assets/icon/website.svg" slot="start"></ion-icon>
         </ion-item>
     </ion-list>
+
     <ion-list class="link-buttons-container mt-0 pt-0" lines="none">
         <ion-item (click)="intentProvider.placeToChangeLocation = place" routerLink="/app/tabs/map/edit-business" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
@@ -118,36 +119,44 @@
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Volante Digital</ion-label>
         </ion-item>
-        <ion-item routerLink="business-hours" color="pagami-surface">
+        <ion-item routerLink="/app/tabs/my-business/business-hours" color="pagami-surface">
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Mi horario</ion-label>
         </ion-item>
     </ion-list>
 
-    <ion-item-group class="toggles-container">
-        <ion-item lines="none" disabled>
-            <ion-label>Habilitar Domicilio</ion-label>
-<!--            <ion-toggle slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="place.allowHome" (ngModelChange)="saveBusiness()"></ion-toggle>-->
-            <ion-toggle slot="end" name="orders" color="pagami" ></ion-toggle>
-        </ion-item>
-    </ion-item-group>
+    <div class="ion-padding-horizontal">
+        <ion-button class="button-small button-small--active" expand="block" color="pagami" routerLink="/app/tabs/my-business/plans">
+            Activar
+        </ion-button>
+    </div>
 
-    <ion-list class="link-buttons-container" lines="none">
-        <ion-item button routerLink="/app/my-products" color="pagami-surface">
-<!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
-            <ion-icon name="arrow-forward" slot="end"></ion-icon>
-            <ion-label>Mis Productos</ion-label>
-        </ion-item>
-<!--        <ion-item button routerLink="/app/tabs/my-business/plans" color="pagami-surface">-->
-        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
-            <ion-icon name="arrow-forward" slot="end"></ion-icon>
-            <ion-label>Mis Servicios</ion-label>
-        </ion-item>
-        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
-            <ion-icon name="arrow-forward" slot="end"></ion-icon>
-            <ion-label>Pedidos</ion-label>
-        </ion-item>
-    </ion-list>
+    <div [ngClass]="{'optionsDisabled': true}">
+
+        <ion-item-group class="toggles-container">
+            <ion-item lines="none" [disabled]="true">
+                <ion-label>Habilitar Domicilio</ion-label>
+    <!--            <ion-toggle slot="end" name="orders" color="pagami" [disabled]="updating" [(ngModel)]="place.allowHome" (ngModelChange)="saveBusiness()"></ion-toggle>-->
+                <ion-toggle slot="end" name="orders" color="pagami" ></ion-toggle>
+            </ion-item>
+        </ion-item-group>
+
+        <ion-list class="link-buttons-container" lines="none">
+            <ion-item button routerLink="/app/my-products" color="pagami-surface" [disabled]="true">
+                <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                <ion-label>Mis Productos</ion-label>
+            </ion-item>
+            <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface" [disabled]="true">
+                <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                <ion-label>Mis Servicios</ion-label>
+            </ion-item>
+            <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface" [disabled]="true">
+                <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                <ion-label>Pedidos</ion-label>
+            </ion-item>
+        </ion-list>
+
+    </div>
 
 </ion-content>
 <!-- END NOT EDITING -->
