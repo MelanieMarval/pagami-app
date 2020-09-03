@@ -4,7 +4,7 @@
             <div class="scrollable-draw-children pan-active" [ngClass]="drawerState == 2 ? 'background-transparent' : ''"></div>
         </ion-row>
         <h2 class="ion-text-center nearby-title pan-active">
-            Destacados en tu área
+            {{ this.searchText && this.searchText.length > 0 && this.drawerState == 2 ? 'Busqueda en tu área' : 'Destacados en tu área' }}
         </h2>
         <ion-row class="footer-button pan-active" [hidden]="this.searchText && this.searchText.length > 0 && this.drawerState == 2">
             <ion-col class="6 pan-active">

@@ -26,7 +26,7 @@ import { ToastProvider } from '../../../providers/toast.provider';
 import { StorageProvider } from '../../../providers/storage.provider';
 import { UserIntentProvider } from '../../../providers/user-intent.provider';
 import { PagamiGeo } from '../../../core/geolocation/pagami.geo';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonInput, IonSearchbar } from '@ionic/angular';
 import { Plugins, KeyboardInfo } from '@capacitor/core';
 
 const { Keyboard } = Plugins;
@@ -71,6 +71,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
     isSearching = false;
     isHiddenCloseToMe = false;
     searchText: '';
+    lastSearchText = undefined;
 
     constructor(
         private router: Router,
@@ -106,7 +107,11 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
             // this.selectMode(this.currentUrl);
         });
         this.appService.hideNearby.subscribe(() => {
+            this.focusOut();
             this.closeToMeToDefault();
+            if (this.lastSearchText && !this.isSearching && !this.searchText) {
+                this.getNearPlaces();
+            }
         });
     }
 
@@ -302,6 +307,7 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
                 this.setupPlacesToDrawer(this.searchPlaces);
                 this.setupPlacesToMap(this.searchPlaces);
                 this.intentProvider.lastUpdatedPoint = geo;
+                this.lastSearchText = filter.text;
             }
         }).finally(() => this.searching = false);
     }
@@ -431,8 +437,12 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
 
     onHideKeyboard(event) {
         event.target.blur();
-        // Keyboard.hide();
         this.getNearPlaces();
+    }
+
+    focusOut() {
+        const activeElement: any = document.activeElement;
+        activeElement.blur();
     }
 
     async saveNewLocation() {
