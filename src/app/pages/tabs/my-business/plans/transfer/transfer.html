@@ -1,0 +1,109 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-button (click)="closeModal()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title class="without-right">Datos de transferencia</ion-title>
+    </ion-toolbar>
+</ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
+
+<ion-content class="">
+
+    <ion-card *ngIf="!showForm" class="ion-text-left" color="pagami-surface">
+        <ion-card-header>
+            <ion-card-title>Datos de contacto</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p><b>A nombre de: </b>Byran Chason</p>
+            <p><b>Identificador (DNI): </b>858411588</p>
+            <p><b>Correo electronico: </b>bchason0@macromedia.com</p>
+            <p><b>Numero de telefono: </b>382-148-2349</p>
+        </ion-card-content>
+
+        <ion-card-header>
+            <ion-card-title>Datos de la cuenta</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p><b>Banco: </b>Jewelery</p>
+            <p><b>Numero de Cuenta: </b>39822-0710-42268-3001-0363-0420</p>
+            <p>
+                <b>Monto</b>
+                <ion-chip color="pagami">
+                    <ion-label>${{planSelected.amountCop}} COP</ion-label>
+                </ion-chip>
+            </p>
+            <ion-button class="button-large ion-margin-top" color="pagami" (click)="showForm = !showForm">
+                Listo, enviar datos
+            </ion-button>
+        </ion-card-content>
+
+    </ion-card>
+
+    <div *ngIf="showForm">
+
+        <ion-list class="inputs-container">
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Numero de referencia</ion-label>
+                <ion-input type="text" name="location" [(ngModel)]="paymentPlan.number" required></ion-input>
+                <ion-icon name="hand-left" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Banco</ion-label>
+                <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>
+                <ion-icon name="podium" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Fecha</ion-label>
+                <ion-datetime name="date" [(ngModel)]="paymentPlan.date" displayFormat="DD/MM/YYYY"
+                              required></ion-datetime>
+                <ion-icon name="calendar" slot="start"></ion-icon>
+            </ion-item>
+
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" name="name" [(ngModel)]="paymentPlan.name" required></ion-input>
+                <ion-icon name="person" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface">
+                <ion-label position="floating">Telefono</ion-label>
+                <ion-input type="tel" name="phone" [(ngModel)]="paymentPlan.phone" maxlength="15" required></ion-input>
+                <ion-icon src="assets/icon/call.svg" slot="start"></ion-icon>
+            </ion-item>
+            <ion-item color="pagami-surface" class="mb-0">
+                <ion-label position="floating">Email</ion-label>
+                <ion-input type="email" name="email" [(ngModel)]="paymentPlan.email"></ion-input>
+                <ion-icon src="assets/icon/alternate-email.svg" slot="start"></ion-icon>
+            </ion-item>
+            <div class="info-text">
+                <small>*Opcional</small>
+            </div>
+        </ion-list>
+
+        <div class="footer-button --without-pt">
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button class="button-small" expand="block" color="pagami-surface"
+                                (click)="showForm = !showForm">
+                        Volver
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button class="button-small" expand="block" color="pagami"
+                                (click)="validateMyPaymentPlan()">
+                        <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
+                        <span *ngIf="!loading">Guardar</span>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
+
+    </div>
+
+
+</ion-content>
+

@@ -5,10 +5,10 @@ import { ApiResponse } from '../../../../core/api/api.response';
 import { Plan } from '../../../../core/api/plans/plan';
 import { UserIntentProvider } from '../../../../providers/user-intent.provider';
 import { Claim } from '../../../../core/api/claim/claim';
-import { ClaimService } from '../../../../core/api/claim/claim.service';
-import { PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { OptionsPayComponent } from '../../../../components/options-pay/options-pay.component';
 import { ConfigService } from '../../../../core/api/config/config.service';
+import { TransferPage } from './transfer/transfer';
 
 @Component({
     selector: 'page-plans',
@@ -29,6 +29,7 @@ export class PlansPage implements OnInit {
                 private intentProvider: UserIntentProvider,
                 private plansService: PlansService,
                 private popoverController: PopoverController,
+                private modalController: ModalController,
                 private configService: ConfigService) {
     }
 
@@ -56,8 +57,20 @@ export class PlansPage implements OnInit {
         });
         await popover.present();
 
+
         const {data} = await popover.onDidDismiss();
         console.log('-> data', this.paymentMethods[data.paymentSelected]);
+
+        if (this.paymentMethods[data.paymentSelected].id === 'transfer') {
+            const modal = await this.modalController.create({
+                component: TransferPage,
+                componentProps: {planSelected: plan},
+                cssClass: 'my-custom-class'
+            });
+            return await modal.present();
+        } else {
+            console.log('No se que voy a hacer cuando le de a google pay');
+        }
 
 
         // this.loading = true;
@@ -87,7 +100,7 @@ export class PlansPage implements OnInit {
         this.configService.getPayMethods()
             .then(async (success: ApiResponse) => {
                 if (success.passed) {
-                     this.paymentMethods = Object.values(success.response).filter(item => item !== 'payMethods');
+                    this.paymentMethods = Object.values(success.response).filter(item => item !== 'payMethods');
                 } else {
                     this.toast.messageErrorWithoutTabs('Tenemos problemas al procesar su solicitud');
                 }

@@ -13,6 +13,7 @@ import { FlyerPage } from './flyer/flyer';
 import { BusinessHoursPage } from './business-hours/business-hours';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { OptionsPayComponent } from '../../../components/options-pay/options-pay.component';
+import { TransferPage } from './plans/transfer/transfer';
 
 @NgModule({
     imports: [
@@ -30,9 +31,11 @@ import { OptionsPayComponent } from '../../../components/options-pay/options-pay
         PlansPage,
         FlyerPage,
         BusinessHoursPage,
+        TransferPage,
         OptionsPayComponent
     ],
     entryComponents: [
+        TransferPage,
         OptionsPayComponent
     ]
 })
