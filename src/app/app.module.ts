@@ -35,6 +35,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 registerLocaleData(localeEs, 'es');
 
@@ -69,7 +70,8 @@ registerLocaleData(localeEs, 'es');
         CompressImageProvider,
         {provide: LOCALE_ID, useValue: 'es'},
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-        AppMinimize
+        AppMinimize,
+        Clipboard
     ],
     exports: [],
     bootstrap: [AppComponent]

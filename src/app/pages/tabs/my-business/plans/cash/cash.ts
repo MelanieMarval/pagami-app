@@ -4,37 +4,28 @@ import { PlansService } from '../../../../../core/api/plans/plans.service';
 import { Plan } from '../../../../../core/api/plans/plan';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 @Component({
-    selector: 'page-transfer',
-    templateUrl: 'transfer.html',
-    styleUrls: ['./transfer.scss'],
+    selector: 'page-cash',
+    templateUrl: 'cash.html',
+    styleUrls: ['./cash.scss'],
 })
 
-export class TransferPage implements OnInit {
+export class CashPage implements OnInit {
 
     @Input() planSelected: Plan;
-    @Input() methodSelected;
     loading = false;
-    showForm = false;
-    slideOpts: any = {
-        // preventInteractionOnTransition: true,
-        // allowTouchMove: false,
-        // onlyExternal: true
-    };
-    paymentPlan: Transfer = {};
+    paymentPlan: Cash = {};
 
     constructor(private toast: ToastProvider,
                 private plansService: PlansService,
                 private modalController: ModalController,
                 private router: Router,
-                private alertController: AlertController,
-                private clipboard: Clipboard) {
+                private alertController: AlertController) {
     }
 
     ngOnInit() {
-        console.log('-> planSelected', this.planSelected, this.methodSelected);
+        console.log('-> planSelected', this.planSelected);
     }
 
     closeModal() {
@@ -44,15 +35,15 @@ export class TransferPage implements OnInit {
 
     async validateMyPaymentPlan() {
         const alert = await this.alertController.create({
-            header: '¿Estás seguro de haber realizado la transferencia?',
-            message: 'Sólo debes rellenar y enviar este formulario cuando tu transferencia haya sido realizada',
+            header: '¿Estás seguro de haber entregado el pago?',
+            message: 'Sólo debes rellenar y enviar este formulario cuando tu pago haya sido entregado a un administrador Pagami',
             buttons: [
                 {
                     text: 'Cancelar',
                     role: 'cancel',
                     cssClass: 'secondary'
                 }, {
-                    text: 'Sí, la realice',
+                    text: 'Sí, lo realice',
                     handler: () => {
                         if (this.paymentPlan.number && this.paymentPlan.date) {
                             this.loading = true;
@@ -69,15 +60,9 @@ export class TransferPage implements OnInit {
 
         await alert.present();
     }
-
-    copyClipboard(numberAccount: string) {
-        this.clipboard.copy(numberAccount).then(() =>
-            this.toast.messageDefault('Numero de cuenta copiado en el portapapeles')
-        );
-    }
 }
 
-export interface Transfer {
+export interface Cash {
     number?: string;
     date?: string;
     note?: string;

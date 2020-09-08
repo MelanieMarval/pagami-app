@@ -18,23 +18,7 @@
 
         <div class="ion-text-left w-100">
 
-            <ion-card-header>
-                <ion-card-title class="ion-text-center">Datos de la cuenta</ion-card-title>
-            </ion-card-header>
             <ion-card-content>
-                <p><b>Banco: </b>{{methodSelected.bankAccount}} </p>
-                <p>
-                    <b>Numero de Cuenta: </b>{{methodSelected.numberAccount}}
-                    <ion-icon name="copy" (click)="copyClipboard(methodSelected.numberAccount)"></ion-icon>
-                </p>
-                <p><b>Tipo de Cuenta: </b>{{methodSelected.typeAccount}}</p>
-                <p>
-                    <b>Monto</b>
-                    <ion-chip color="pagami">
-                        <ion-label>${{planSelected.amountCop}} COP</ion-label>
-                    </ion-chip>
-                </p>
-                <p class="ion-text-center">Unicamente transferencias</p>
                 <p class="ion-text-center">*SOLO VÁLIDO PARA COLOMBIA*</p>
             </ion-card-content>
 
@@ -46,7 +30,7 @@
             <ion-card-content>
                 <ion-list class="inputs-container">
                     <ion-item color="pagami-surface">
-                        <ion-label position="floating">Número de referencia</ion-label>
+                        <ion-label position="floating">Monto pagado</ion-label>
                         <ion-input type="text" name="number" [(ngModel)]="paymentPlan.number"
                                    [readonly]="loading" required></ion-input>
                     </ion-item>

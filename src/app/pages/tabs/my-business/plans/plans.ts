@@ -9,6 +9,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { OptionsPayComponent } from '../../../../components/options-pay/options-pay.component';
 import { ConfigService } from '../../../../core/api/config/config.service';
 import { TransferPage } from './transfer/transfer';
+import { CashPage } from './cash/cash';
 
 @Component({
     selector: 'page-plans',
@@ -42,7 +43,6 @@ export class PlansPage implements OnInit {
                 if (success.passed) {
                     this.plans = success.response;
                     this.getPayMethods();
-                    console.log('-> success.response', success.response);
                 } else {
                     console.log('Los planes no se han podido cargar');
                 }
@@ -56,22 +56,21 @@ export class PlansPage implements OnInit {
             componentProps: {payMethods: this.paymentMethods, planSelected: plan}
         });
         await popover.present();
-
-
         const {data} = await popover.onDidDismiss();
-        console.log('-> data', this.paymentMethods[data.paymentSelected]);
 
-        if (this.paymentMethods[data.paymentSelected].id === 'transfer') {
-            const modal = await this.modalController.create({
-                component: TransferPage,
-                componentProps: {planSelected: plan},
-                cssClass: 'my-custom-class'
-            });
-            return await modal.present();
-        } else {
-            console.log('No se que voy a hacer cuando le de a google pay');
+        if (data) {
+            const id = this.paymentMethods[data.paymentSelected].id;
+
+            if (id !== 'googlePay') {
+                const modal = await this.modalController.create({
+                    component: id === 'transfer' ? TransferPage : CashPage,
+                    componentProps: {planSelected: plan, methodSelected: this.paymentMethods[data.paymentSelected]}
+                });
+                return await modal.present();
+            } else {
+                console.log('No se que voy a hacer cuando le de a google pay');
+            }
         }
-
 
         // this.loading = true;
         // if (this.selectedPlan) {
