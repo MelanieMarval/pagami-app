@@ -8,18 +8,19 @@ import { PipesModule } from '../../../../pipes/pipes.module';
 import { BackgroundEmptyModule } from '../../../../shared/background-empty/background-empty.module';
 import { SkeletonRecordsModule } from '../../../../shared/skeleton-records/skeleton-records.module';
 // Pages
-import { ClaimDetailsPage } from '../claim-details/claim-details';
 import { PaymentsPage } from './payments';
+import { DetailsPage } from './details/details';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
+        HttpClientModule,
         FormsModule,
         RouterModule.forChild([
             {path: '', component: PaymentsPage},
-            {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)},
-            {path: 'claim', component: ClaimDetailsPage}
+            {path: 'details', component: DetailsPage}
         ]),
         PipesModule,
         BackgroundEmptyModule,
@@ -27,7 +28,7 @@ import { PaymentsPage } from './payments';
     ],
     declarations: [
         PaymentsPage,
-        ClaimDetailsPage
+        DetailsPage
     ]
 })
 export class PaymentsModule {

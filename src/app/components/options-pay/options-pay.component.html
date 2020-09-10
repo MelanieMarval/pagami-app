@@ -5,7 +5,7 @@
     </ion-list-header>
 
     <ion-item *ngFor="let method of payMethods; let i = index" [ngClass]="{'d-none': !method.active}"
-              (click)="selectMethod(i)" color="pagami-surface">
+              (click)="selectMethod(method)" color="pagami-surface">
         <ion-icon [name]="method.icon" slot="start"></ion-icon>
         <ion-label>{{method.name}}</ion-label>
     </ion-item>

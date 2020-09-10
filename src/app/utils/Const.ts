@@ -65,6 +65,14 @@ export const CLAIMS = {
     }
 };
 
+export const PAYMENTS = {
+    STATUS: {
+        PENDING: 'PENDING',
+        ACCEPTED: 'ACCEPTED',
+        REJECTED: 'REJECTED'
+    }
+};
+
 
 
 export const MAP_MODE = {

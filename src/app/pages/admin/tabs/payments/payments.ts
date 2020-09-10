@@ -1,117 +1,55 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-// Providers
-import { ToastProvider } from '../../../../providers/toast.provider';
-import { StorageProvider } from '../../../../providers/storage.provider';
-// Utils
-import { PLACES } from '../../../../utils/Const';
-import { PlaceUtils } from '../../../../utils/place.utils';
+import { Component, OnInit } from '@angular/core';
+import { PaymentsService } from '../../../../core/api/payments/payments.service';
+import { Payment } from '../../../../core/api/payments/Payment';
+import { Router } from '@angular/router';
 import { AdminIntentProvider } from '../../../../providers/admin-intent.provider';
-// Services
-import { PlacesService } from '../../../../core/api/places/places.service';
-import { ClaimService } from '../../../../core/api/claim/claim.service';
-import { Place } from '../../../../core/api/places/place';
-import { Claim } from '../../../../core/api/claim/claim';
 
 @Component({
     selector: 'app-admin-payments',
     templateUrl: 'payments.html',
     styleUrls: ['payments.scss']
 })
-export class PaymentsPage implements OnInit, AfterViewChecked {
+export class PaymentsPage implements OnInit {
 
-    loading = {
-        verified: true,
-        accepted: false
-    };
+    loading = false;
     error = false;
-    empty = false;
-    showNotification = {
-        verified: false,
-        accepted: false
-    };
-    tabView = 'beAccepted';
-    recordsToBeAccepted: Place[];
-    totalToBeAccepted: number;
-    recordsToBeVerified: Claim[];
-    totalToBeVerified: number;
-    STATUS = PLACES.STATUS;
-    placeThumbnailPhoto = PlaceUtils.getThumbnailPhoto;
-    placeSortData = PlaceUtils.getSortData;
-    targetRefreshToBeAccepted;
-    targetRefreshToToBeVerified;
+    payments: Payment[] = [];
 
-    constructor(private placesService: PlacesService,
-                private claimService: ClaimService,
-                private storageService: StorageProvider,
+    constructor(private paymentsService: PaymentsService,
                 private router: Router,
-                private toast: ToastProvider,
-                private activatedRoute: ActivatedRoute,
-                private intentProvider: AdminIntentProvider,
-                private cdRef: ChangeDetectorRef) {
+                private intentProvider: AdminIntentProvider) {
     }
 
     ngOnInit() {
-        this.getRecordsToBeAccepted();
+        this.getPaymentsPending();
     }
 
-    ngAfterViewChecked(): void {
-        if (this.intentProvider.showNotification) {
-            this.intentProvider.showNotification = false;
-        }
-        if (this.intentProvider.placeToView || this.intentProvider.userToView) {
-            this.intentProvider.placeToView = undefined;
-            this.intentProvider.userToView = undefined;
-        }
-        // Cuando vuelve luego de aceptar o verificar un place lo elimina de la lista
-        if (this.intentProvider.returnPlaceToAccept) {
-            const index = this.recordsToBeAccepted.indexOf(this.recordsToBeAccepted
-                .filter(record => record.id === this.intentProvider.returnPlaceToAccept.id)[0]);
-            this.recordsToBeAccepted.splice(index, 1);
-            this.totalToBeAccepted = this.totalToBeAccepted - 1;
-            this.showNotification.accepted = this.totalToBeAccepted !== 0;
-            this.empty = this.totalToBeAccepted === 0;
-            this.intentProvider.returnPlaceToAccept = undefined;
-            this.intentProvider.needToUpdate = true;
-            this.cdRef.detectChanges();
+    ionViewWillEnter() {
+        if (this.intentProvider.paymentChanged) {
+            const index = this.payments.indexOf(this.intentProvider.paymentChanged);
+            this.payments.splice(index, 1);
+            this.intentProvider.paymentChanged = null;
         }
     }
 
-    getRecordsToBeAccepted() {
-        this.loading.accepted = true;
-        this.placesService.getAllWaiting()
+    private getPaymentsPending() {
+        this.loading = true;
+        this.paymentsService.getPending()
             .then(success => {
-                this.loading.accepted = false;
                 if (success.passed) {
-                    this.recordsToBeAccepted = success.response;
-                    this.showNotification.accepted = this.recordsToBeAccepted.length !== 0;
-                    this.totalToBeAccepted = this.recordsToBeAccepted.length;
-                    this.empty = this.recordsToBeAccepted.length === 0;
-                    this.error = false;
-
-                } else {
-                    this.error = true;
-                    this.toast.messageErrorAboveButton('No se ha podido cargar la informacion. Compruebe su conexion a internet', 3000);
-                }
-                if (this.targetRefreshToBeAccepted) {
-                    this.targetRefreshToBeAccepted.complete();
+                    this.loading = false;
+                    console.log('-> success', success);
+                    this.payments = success.response;
                 }
             });
     }
 
-    showPlace(place: Place) {
-        this.intentProvider.placeToView = undefined;
-        this.intentProvider.placeToAccept = place;
-        this.router.navigate(['admin/tabs/records/details']);
-    }
-
-    showClaim(claim: Claim) {
-        this.intentProvider.claimToVerified = claim;
-        this.router.navigate(['admin/tabs/records/claim']);
-    }
-
     reload() {
-        this.getRecordsToBeAccepted();
+        this.getPaymentsPending();
+    }
+
+    openDetails(payment: Payment) {
+        this.intentProvider.paymentToView = payment;
+        this.router.navigate(['/admin/tabs/payments/details']);
     }
 }

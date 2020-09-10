@@ -10,6 +10,8 @@ import { OptionsPayComponent } from '../../../../components/options-pay/options-
 import { ConfigService } from '../../../../core/api/config/config.service';
 import { TransferPage } from './transfer/transfer';
 import { CashPage } from './cash/cash';
+import { StorageProvider } from '../../../../providers/storage.provider';
+import { Place } from '../../../../core/api/places/place';
 
 @Component({
     selector: 'page-plans',
@@ -29,6 +31,7 @@ export class PlansPage implements OnInit {
     constructor(private toast: ToastProvider,
                 private intentProvider: UserIntentProvider,
                 private plansService: PlansService,
+                private storageService: StorageProvider,
                 private popoverController: PopoverController,
                 private modalController: ModalController,
                 private configService: ConfigService) {
@@ -44,8 +47,11 @@ export class PlansPage implements OnInit {
                     this.plans = success.response;
                     this.getPayMethods();
                 } else {
-                    console.log('Los planes no se han podido cargar');
+                    this.toast.messageErrorWithoutTabs('Ha ocurrido un problema cargando los planes. Intente de nuevo!');
                 }
+            }, error => {
+                this.loading = false;
+                this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al cargar los planes. Intente mas tarde o compruebe su conexion a internet');
             });
     }
 
@@ -56,15 +62,22 @@ export class PlansPage implements OnInit {
             componentProps: {payMethods: this.paymentMethods, planSelected: plan}
         });
         await popover.present();
-        const {data} = await popover.onDidDismiss();
+        const { data } = await popover.onDidDismiss();
+        console.log('-> data', data);
 
         if (data) {
-            const id = this.paymentMethods[data.paymentSelected].id;
+            const paymentMethod = data.paymentSelected;
 
-            if (id !== 'googlePay') {
+            if (paymentMethod.id !== 'googlePay') {
+                const myBusiness: Place = await this.storageService.getBusinessVerifiedByUser();
+                console.log('-> paymentMethod', paymentMethod);
                 const modal = await this.modalController.create({
-                    component: id === 'transfer' ? TransferPage : CashPage,
-                    componentProps: {planSelected: plan, methodSelected: this.paymentMethods[data.paymentSelected]}
+                    component: paymentMethod.id === 'transfer' ? TransferPage : CashPage,
+                    componentProps: {
+                        planSelected: plan,
+                        methodSelected: paymentMethod,
+                        placeId: myBusiness.id
+                    }
                 });
                 return await modal.present();
             } else {

@@ -45,25 +45,33 @@
             </ion-card-header>
             <ion-card-content>
                 <ion-list class="inputs-container">
-                    <ion-item color="pagami-surface">
-                        <ion-label position="floating">Número de referencia</ion-label>
-                        <ion-input type="text" name="number" [(ngModel)]="paymentPlan.number"
-                                   [readonly]="loading" required></ion-input>
-                    </ion-item>
-                    <!--            <ion-item color="pagami-surface">-->
-                    <!--                <ion-label position="floating">Banco</ion-label>-->
-                    <!--                <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>-->
-                    <!--                <ion-icon name="podium" slot="start"></ion-icon>-->
-                    <!--            </ion-item>-->
-                    <ion-item color="pagami-surface">
-                        <ion-label position="floating">Fecha</ion-label>
-                        <ion-datetime name="date" [(ngModel)]="paymentPlan.date" displayFormat="DD/MM/YYYY"
-                                      [readonly]="loading" required></ion-datetime>
-                    </ion-item>
+<!--                    <ion-item color="pagami-surface">-->
+<!--                        <ion-label position="floating">Número de referencia</ion-label>-->
+<!--                        <ion-input type="text" name="number" [(ngModel)]="paymentPlan.number"-->
+<!--                                   [readonly]="loading" required></ion-input>-->
+<!--                    </ion-item>-->
+<!--                    <ion-item color="pagami-surface">-->
+<!--                        <ion-label position="floating">Banco</ion-label>-->
+<!--                        <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>-->
+<!--                        <ion-icon name="podium" slot="start"></ion-icon>-->
+<!--                    </ion-item>-->
+<!--                    <ion-item color="pagami-surface">-->
+<!--                        <ion-label position="floating">Fecha</ion-label>-->
+<!--                        <ion-datetime name="date" [(ngModel)]="paymentPlan.date" displayFormat="DD/MM/YYYY"-->
+<!--                                      [readonly]="loading" required></ion-datetime>-->
+<!--                    </ion-item>-->
 
+                    <ion-item color="pagami-surface">
+                        <ion-label position="floating">Adjuntar foto</ion-label>
+                        <ion-input *ngIf="payment" type="text" [(ngModel)]="payment.photo" [readonly]="loading"></ion-input>
+                        <input class="input-file" type="file" accept="image/*"
+                               (click)="isTest || takeImage()"
+                               (change)="!isTest || addPhoto( $event)"/>
+<!--                        <ion-icon name="document" slot="start"></ion-icon>-->
+                    </ion-item>
                     <ion-item color="pagami-surface" class="mb-0">
                         <ion-label position="floating">Nota</ion-label>
-                        <ion-textarea [(ngModel)]="paymentPlan.note" [readonly]="loading"></ion-textarea>
+                        <ion-textarea *ngIf="payment" [(ngModel)]="payment.note" [readonly]="loading"></ion-textarea>
                     </ion-item>
                     <div class="info-text">
                         <small>*Opcional</small>

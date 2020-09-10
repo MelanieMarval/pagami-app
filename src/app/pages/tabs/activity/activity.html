@@ -15,7 +15,52 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-list>
-        <ion-item-group *ngIf="!loading && !error && !empty">
+
+        <ion-item-group *ngIf="!loading && !error && notifications.length">
+            <ion-card *ngFor="let notification of notifications"
+                      class="card card-place" button
+                      (click)="notification.showMessage = !notification.showMessage">
+                <ion-card-header>
+                    <ion-row>
+                        <ion-col size="11">
+                            <ion-card-subtitle>
+                                {{ notification.lastUpdate | date:'d/M/y'}} · {{ notification.lastUpdate | date:'shortTime'}}
+                            </ion-card-subtitle>
+                        </ion-col>
+                        <ion-col size="1">
+                            <ion-icon *ngIf="notification.type !== 'PAYMENT_ACCEPTED'" name="close-circle"></ion-icon>
+                            <ion-icon *ngIf="notification.type === 'PAYMENT_ACCEPTED'" name="checkmark-circle"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-row>
+                        <ion-col size="12">
+                            <ion-card-title>{{notification.type === 'PAYMENT_ACCEPTED' ? 'Pago Aceptado' : 'Pago Rechazado'}}</ion-card-title>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="notification.showMessage" class="animated fadeInDown faster">
+                        <ion-col size="12">
+                            <ion-row>
+                                <ion-col size="11">
+                                    <ion-card-subtitle>Mensaje</ion-card-subtitle>
+                                </ion-col>
+                                <ion-col size="1">
+                                    <ion-icon name="chevron-up" size="large"></ion-icon>
+                                </ion-col>
+                                <ion-col size="12">
+                                    <ion-text>{{notification.message}}</ion-text>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+        </ion-item-group>
+
+        <ion-item-group *ngIf="!loading && !error && registers.length">
+
             <ion-card *ngFor="let register of placeSortData(registers)"
                       class="card card-place" button
                       [ngClass]="[register.selectedToDelete ? 'animated fadeOut fast': '',

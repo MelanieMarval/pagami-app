@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { Plan } from '../../core/api/plans/plan';
+import { MethodPayment } from '../../core/api/payments/MethodPayment';
 
 @Component({
     selector: 'app-options-pay',
@@ -9,7 +10,7 @@ import { Plan } from '../../core/api/plans/plan';
 })
 export class OptionsPayComponent implements OnInit {
 
-    @Input() payMethods: any;
+    @Input() payMethods: MethodPayment;
     @Input() planSelected: Plan;
 
     constructor(private popoverController: PopoverController) {
@@ -20,8 +21,8 @@ export class OptionsPayComponent implements OnInit {
         console.log('-> planSelected', this.planSelected);
     }
 
-    selectMethod(index: number) {
+    selectMethod(method: MethodPayment) {
         console.log('Pagare ahora');
-        this.popoverController.dismiss({paymentSelected: index});
+        this.popoverController.dismiss({paymentSelected: method});
     }
 }

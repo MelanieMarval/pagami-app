@@ -1,5 +1,5 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -10,12 +10,14 @@ import { SkeletonRecordsModule } from '../../../../shared/skeleton-records/skele
 // Pages
 import { ClaimDetailsPage } from '../claim-details/claim-details';
 import { RecordsPage } from './records';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
+        HttpClientModule,
         RouterModule.forChild([
             {path: '', component: RecordsPage},
             {path: 'details', loadChildren: () => import('../record-details/record-details.module').then(m => m.RecordDetailsModule)},

@@ -20,3 +20,10 @@ ion-card-header {
 p {
     font-size: 16px;
 }
+.input-file {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
+}

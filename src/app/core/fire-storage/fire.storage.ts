@@ -26,6 +26,10 @@ export class FireStorage {
         return this.uploadImage(image, 'place/flyer');
     }
 
+    savePaymentPhotoImage(image) {
+        return this.uploadImage(image, 'payment');
+    }
+
     private uploadImage(image, folder: string): Promise<string> {
         return new Promise(resolve => {
             try {

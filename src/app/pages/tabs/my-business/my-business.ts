@@ -17,7 +17,9 @@ import { ValidationUtils } from '../../../utils/validation.utils';
 import { FireStorage } from '../../../core/fire-storage/fire.storage';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { ActionSheetController } from '@ionic/angular';
-const { Device } = Plugins;
+import { PaymentsService } from '../../../core/api/payments/payments.service';
+
+const {Device} = Plugins;
 
 @Component({
     selector: 'app-my-business',
@@ -37,18 +39,19 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     loading = true;
     place: Place = {latitude: 0, longitude: 0};
     claim: Claim;
+    paymentPending: boolean;
 
-    constructor(
-        private router: Router,
-        private toast: ToastProvider,
-        private alert: AlertProvider,
-        private intentProvider: UserIntentProvider,
-        private claimService: ClaimService,
-        private placesService: PlacesService,
-        private fireStorage: FireStorage,
-        private storageService: StorageProvider,
-        protected geolocationService: GeolocationService,
-        private actionSheetController: ActionSheetController) {
+    constructor(private router: Router,
+                private toast: ToastProvider,
+                private alert: AlertProvider,
+                private intentProvider: UserIntentProvider,
+                private claimService: ClaimService,
+                private placesService: PlacesService,
+                private fireStorage: FireStorage,
+                private paymentsService: PaymentsService,
+                private storageService: StorageProvider,
+                protected geolocationService: GeolocationService,
+                private actionSheetController: ActionSheetController) {
         super(geolocationService);
     }
 
@@ -65,9 +68,8 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         if (myBusiness) {
             this.loading = false;
             this.setupBusiness(myBusiness);
-        } else {
-            this.getMyBusiness();
         }
+        this.getMyBusiness();
     }
 
     async setupBusiness(myBusiness) {
@@ -76,9 +78,24 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         this.intentProvider.myBusinessDetails = {id: myBusiness.id, name: myBusiness.name, acronym: myBusiness.location.acronym};
         this.previewUrl = this.place.photoUrl;
         this.haveFlyer = !!this.place.flyer;
+        this.getIsPaymentPending();
         if (!this.place.dialCode) {
             this.place.dialCode = await this.placesService.getDialCode(this.place.location.acronym);
         }
+    }
+
+    getIsPaymentPending() {
+        this.paymentsService.getPendingById(this.place.id)
+            .then(success => {
+                console.log('-> success', success);
+                if (success.passed) {
+                    this.paymentPending = success.response.status === 'PENDING';
+                } else {
+                    this.toast.messageErrorWithoutTabs('Estamos teniendo problemas verificando si tiene pagos pendientes. Intente recangando');
+                }
+            }, error => {
+                this.toast.messageErrorWithoutTabs('Estamos teniendo problemas verificando si tiene pagos pendientes. Intente recangando');
+            });
     }
 
     async ngAfterViewChecked() {
@@ -112,6 +129,9 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
                     }
                     this.loading = false;
                 }
+            }, error => {
+                this.loading = false;
+                this.toast.messageErrorWithoutTabs('Estamos teniendo problemas al procesar su solicitud. Intente mas tarde');
             });
     }
 

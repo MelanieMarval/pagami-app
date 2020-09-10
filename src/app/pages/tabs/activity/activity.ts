@@ -24,8 +24,8 @@ export class ActivityPage implements OnInit {
 
     loading = true;
     error = false;
-    empty = false;
     hasNotification = false;
+    notifications: any[];
     registers: Place[];
     user: User;
     STATUS = PLACES.STATUS;
@@ -53,6 +53,7 @@ export class ActivityPage implements OnInit {
         });
         this.getRegisters();
         this.user = await this.storageService.getPagamiUser();
+        this.notifications = this.notificationsProvider.activityNotifications;
         this.hasNotification = this.notificationsProvider.hasWalletNotification;
         if (this.hasNotification) {
             this.notificationsProvider.setNotificationState(false);
@@ -65,7 +66,6 @@ export class ActivityPage implements OnInit {
             .then((success: ApiResponse) => {
                 if (success.passed) {
                     this.registers = success.response;
-                    this.empty = this.registers.length === 0;
                     this.loading = false;
                     this.error = false;
                 } else {
@@ -77,18 +77,18 @@ export class ActivityPage implements OnInit {
                     this.targetRefresh.complete();
                 }
             }).catch(error => {
-                this.loading = false;
-                this.error = true;
-                this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
-                if (this.targetRefresh) {
-                    this.targetRefresh.complete();
-                }
+            this.loading = false;
+            this.error = true;
+            this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la informacion');
+            if (this.targetRefresh) {
+                this.targetRefresh.complete();
+            }
         });
     }
 
     verifyItemUpdated() {
         if (this.storageInstance.placeEdited) {
-            if (this.registers.filter(place => place.id === this.storageInstance.placeEdited.id).length === 0) {
+            if (!this.registers.filter(place => place.id === this.storageInstance.placeEdited.id).length) {
                 this.getRegisters();
             } else {
                 if (isNumber(this.indexOfPlaceToEdit)) {

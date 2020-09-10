@@ -1,0 +1,167 @@
+<ion-content>
+
+    <div *ngIf="loading">
+
+        <ion-header class="header-image">
+            <ion-skeleton-text [style.width.%]="100"></ion-skeleton-text>
+        </ion-header>
+
+        <ion-list lines="none" class="inputs-container">
+            <ion-item-group class="ion-margin-bottom">
+                <ion-skeleton-text class="group-label" animated [style.width.%]="40"></ion-skeleton-text>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label>
+                        <ion-skeleton-text animated [style.width.%]="70"></ion-skeleton-text>
+                    </ion-label>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group class="ion-margin-bottom">
+                <ion-skeleton-text class="group-label" animated [style.width.%]="40"></ion-skeleton-text>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-label>
+                        <ion-skeleton-text animated [style.width.%]="70"></ion-skeleton-text>
+                    </ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="logo-usd" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label>
+                        <ion-skeleton-text animated [style.width.%]="80"></ion-skeleton-text>
+                    </ion-label>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group class="ion-margin-bottom">
+                <ion-skeleton-text class="group-label" animated [style.width.%]="50"></ion-skeleton-text>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-label><ion-skeleton-text animated [style.width.%]="70"></ion-skeleton-text></ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="document-text" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label><ion-skeleton-text animated [style.width.%]="60"></ion-skeleton-text></ion-label>
+                </ion-item>
+            </ion-item-group>
+        </ion-list>
+
+    </div>
+
+    <div *ngIf="!loading">
+        <ion-header class="header-image">
+            <ion-toolbar class="background-transparent">
+                <ion-buttons slot="start">
+                    <ion-back-button defaultHref="/admin/tabs/records"></ion-back-button>
+                </ion-buttons>
+            </ion-toolbar>
+
+            <ion-img [src]="place.photoUrl" alt="Background Image"></ion-img>
+
+            <div class="header-image--info">
+                <ion-item lines="none" class="info-category">
+                    <ion-icon slot="start" [src]="'assets/category-icons/'+place.category?.icon+'.svg'"></ion-icon>
+                    &nbsp;&nbsp;
+                    <ion-label>{{place.category?.name}} · {{placeTypeSpanish(place.type)}}</ion-label>
+                </ion-item>
+                <div class="info-title">
+                    <ion-text color="light">
+                        {{place.name}}
+                    </ion-text>
+                </div>
+                <ion-label class="info-country">{{place.location?.country}}</ion-label>
+            </div>
+        </ion-header>
+
+        <ion-list lines="none" class="inputs-container">
+            <ion-item-group class="ion-margin-bottom">
+                <ion-label class="group-label">Telefonos</ion-label>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-button [href]="'tel:'+place.phone"
+                                class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                        <ion-avatar slot="start" class="item-admin__avatar">
+                            <ion-icon src="assets/icon/call.svg" class="size-icon-default"></ion-icon>
+                        </ion-avatar>
+                    </ion-button>
+                    <ion-label>{{place.phone}}</ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding" *ngIf="place.whatsapp">
+                    <ion-button [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp"
+                                class="btn-no-style item-admin__redirect ion-no-padding circle-shape">
+                        <ion-avatar slot="start" class="item-admin__avatar">
+                            <ion-icon name="logo-whatsapp" class="size-icon-default"></ion-icon>
+                        </ion-avatar>
+                    </ion-button>
+                    <ion-label>{{place.whatsapp}}</ion-label>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group class="ion-margin-bottom">
+                <ion-label class="group-label">Plan Seleccionado</ion-label>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-label>{{plan.name}}</ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="logo-usd" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label>USD ${{plan.amount}} / COP ${{plan.amountCop}}</ion-label>
+                </ion-item>
+            </ion-item-group>
+
+            <ion-item-group class="ion-margin-bottom">
+                <ion-label class="group-label">Datos del pago</ion-label>
+                <ion-item class="item-admin ion-no-padding">
+                    <ion-label>{{payment.type === 'transfer' ? 'Transferencia' : payment.type === 'cash' ? 'Efectivo' : 'Google Pay'}}</ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding" *ngIf="payment.date">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="calendar" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label>{{payment.date | date:'d MMMM'}} de {{ payment.date | date:'y'}}}}</ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding" *ngIf="payment.amount">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="cash" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label>{{payment.typeCurrency}} ${{payment.amount}}</ion-label>
+                </ion-item>
+                <ion-item class="item-admin ion-no-padding" *ngIf="payment.note">
+                    <ion-avatar slot="start" class="item-admin__avatar">
+                        <ion-icon name="document-text" class="size-icon-default"></ion-icon>
+                    </ion-avatar>
+                    <ion-label class="not-ellipsis">{{payment.note}}</ion-label>
+                </ion-item>
+                <div class="ion-margin-top p-relative" *ngIf="payment.photo">
+                    <ion-img [src]="payment.photo"></ion-img>
+                    <ion-icon class="icon-open-image" src="assets/icon/website.svg" color="pagami-surface"
+                              (click)="browserProvider.open(payment.photo)"></ion-icon>
+                </div>
+            </ion-item-group>
+        </ion-list>
+    </div>
+
+
+</ion-content>
+
+<ion-footer class="footer-button">
+    <ion-row>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" color="pagami-surface" (click)="openConfirm()"
+                        [disabled]="updating">
+                <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!updating">Rechazar</span>
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button class="button-small" expand="block" [disabled]="updating" (click)="changePaymentStatus(STATUS.ACCEPTED)">
+                <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
+                <span *ngIf="!updating">Aceptar</span>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

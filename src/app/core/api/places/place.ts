@@ -1,5 +1,6 @@
 import { BusinessHours } from './business-hours';
 import { Flyer } from './flyer';
+import { Plan } from '../plans/plan';
 
 export interface Place {
     id?: string;
@@ -26,6 +27,7 @@ export interface Place {
         city?: string;
     };
     phone?: string;
+    plan?: Plan | string;
     allowHome?: boolean;
     dialCode?: string;
     whatsapp?: string;

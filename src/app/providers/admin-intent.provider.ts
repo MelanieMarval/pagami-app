@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
 import { User } from '../core/api/users/user';
 import { Claim } from '../core/api/claim/claim';
+import { Payment } from '../core/api/payments/Payment';
 
 
 @Injectable({
@@ -19,6 +20,8 @@ export class AdminIntentProvider {
     private _returnClaimToVerified: Claim;
     private _userToEdit: User;
     private _userToView: User;
+    private _paymentToView: Payment;
+    private _paymentChanged: Payment;
     private _showNotification: boolean;
     private _needToUpdate = false;
 
@@ -63,6 +66,14 @@ export class AdminIntentProvider {
         this._returnPlaceToAccept = value;
     }
 
+    get placeToViewDeleted(): Place {
+        return this._placeToViewDeleted;
+    }
+
+    set placeToViewDeleted(value: Place) {
+        this._placeToViewDeleted = value;
+    }
+
     // Claim
     get claimToVerified(): Claim {
         return this._claimToVerified;
@@ -97,7 +108,24 @@ export class AdminIntentProvider {
         this._userToEdit = value;
     }
 
-    // For Actions
+    // Payment
+    get paymentToView(): Payment {
+        return this._paymentToView;
+    }
+
+    set paymentToView(value: Payment) {
+        this._paymentToView = value;
+    }
+
+    get paymentChanged(): Payment {
+        return this._paymentChanged;
+    }
+
+    set paymentChanged(value: Payment) {
+        this._paymentChanged = value;
+    }
+
+// For Actions
     get showNotification(): boolean {
         return this._showNotification;
     }
@@ -114,11 +142,4 @@ export class AdminIntentProvider {
         this._needToUpdate = value;
     }
 
-    get placeToViewDeleted(): Place {
-        return this._placeToViewDeleted;
-    }
-
-    set placeToViewDeleted(value: Place) {
-        this._placeToViewDeleted = value;
-    }
 }
