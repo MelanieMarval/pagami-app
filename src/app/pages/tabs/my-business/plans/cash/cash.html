@@ -5,7 +5,7 @@
                 <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title class="without-right">Datos de transferencia</ion-title>
+        <ion-title class="without-right">Datos del Pago en Efectivo</ion-title>
     </ion-toolbar>
 </ion-header>
 <div class="progress-bar-container">
@@ -14,7 +14,9 @@
 
 <ion-content class="">
 
+
     <div class="contain">
+
 
         <div class="ion-text-left w-100">
 
@@ -27,54 +29,65 @@
                     comprobar
                 </ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-                <ion-list class="inputs-container">
-                    <ion-item color="pagami-surface">
-                        <ion-label position="floating">Monto pagado</ion-label>
-                        <ion-input type="number" name="number" [(ngModel)]="payment.amount"
-                                   [readonly]="loading" required></ion-input>
-                    </ion-item>
-                    <!--            <ion-item color="pagami-surface">-->
-                    <!--                <ion-label position="floating">Banco</ion-label>-->
-                    <!--                <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>-->
-                    <!--                <ion-icon name="podium" slot="start"></ion-icon>-->
-                    <!--            </ion-item>-->
-                    <ion-item color="pagami-surface">
-                        <ion-label position="floating">Fecha</ion-label>
-                        <ion-datetime name="date" [(ngModel)]="payment.date" displayFormat="DD/MM/YYYY"
-                                      [readonly]="loading" required></ion-datetime>
-                    </ion-item>
 
-                    <ion-item color="pagami-surface" class="mb-0">
-                        <ion-label position="floating">Nota</ion-label>
-                        <ion-textarea [(ngModel)]="payment.note" [readonly]="loading"></ion-textarea>
-                    </ion-item>
-                    <div class="info-text">
-                        <small>*Opcional</small>
+            <ion-list class="inputs-container">
+                <ion-item color="pagami-surface">
+                    <ion-label position="floating">Monto pagado</ion-label>
+                    <ion-input type="number" name="number" [(ngModel)]="payment.amount"
+                               [readonly]="loading" required></ion-input>
+                </ion-item>
+                <ion-radio-group class="checkbox-container" [(ngModel)]="payment.currency">
+                    <ion-label>Tipo de moneda usada</ion-label>
+                    <div class="d-flex">
+                        <ion-item lines="none" class=" border-none">
+                            <ion-label>COP</ion-label>
+                            <ion-radio slot="start" value="COP"></ion-radio>
+                        </ion-item>
+                        <ion-item lines="none" class="ion-margin-start border-none">
+                            <ion-label>USD</ion-label>
+                            <ion-radio slot="start" value="USD"></ion-radio>
+                        </ion-item>
                     </div>
-                </ion-list>
+                </ion-radio-group>
+                <!--            <ion-item color="pagami-surface">-->
+                <!--                <ion-label position="floating">Banco</ion-label>-->
+                <!--                <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>-->
+                <!--                <ion-icon name="podium" slot="start"></ion-icon>-->
+                <!--            </ion-item>-->
+                <ion-item color="pagami-surface">
+                    <ion-label position="floating">Fecha</ion-label>
+                    <ion-datetime name="date" [(ngModel)]="payment.date" displayFormat="DD/MM/YYYY"
+                                  [readonly]="loading" required></ion-datetime>
+                </ion-item>
 
-                <ion-row>
-                    <ion-col size="6">
-                        <ion-button class="button-small" expand="block" color="pagami-surface"
-                                    [disabled]="loading" (click)="closeModal()">
-                            Volver
-                        </ion-button>
-                    </ion-col>
-                    <ion-col size="6">
-                        <ion-button class="button-small" expand="block" color="pagami"
-                                    [disabled]="loading" (click)="validateMyPaymentPlan()">
-                            <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
-                            <span *ngIf="!loading">Enviar</span>
-                        </ion-button>
-                    </ion-col>
-                </ion-row>
-            </ion-card-content>
-
+                <ion-item color="pagami-surface" class="mb-0">
+                    <ion-label position="floating">Nota</ion-label>
+                    <ion-textarea [(ngModel)]="payment.note" [readonly]="loading"></ion-textarea>
+                </ion-item>
+                <div class="info-text">
+                    <small>*Opcional</small>
+                </div>
+            </ion-list>
         </div>
-
     </div>
 
+    <div class="footer-button footer-button--div">
+        <ion-row>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami-surface"
+                            [disabled]="loading" (click)="closeModal()">
+                    Volver
+                </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami"
+                            [disabled]="loading" (click)="validateMyPaymentPlan()">
+                    <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
+                    <span *ngIf="!loading">Enviar</span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
 
 </ion-content>
 

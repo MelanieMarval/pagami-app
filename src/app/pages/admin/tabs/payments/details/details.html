@@ -122,13 +122,13 @@
                     <ion-avatar slot="start" class="item-admin__avatar">
                         <ion-icon name="calendar" class="size-icon-default"></ion-icon>
                     </ion-avatar>
-                    <ion-label>{{payment.date | date:'d MMMM'}} de {{ payment.date | date:'y'}}}}</ion-label>
+                    <ion-label>{{payment.date | date:'d MMMM'}} de {{ payment.date | date:'y'}}</ion-label>
                 </ion-item>
                 <ion-item class="item-admin ion-no-padding" *ngIf="payment.amount">
                     <ion-avatar slot="start" class="item-admin__avatar">
                         <ion-icon name="cash" class="size-icon-default"></ion-icon>
                     </ion-avatar>
-                    <ion-label>{{payment.typeCurrency}} ${{payment.amount}}</ion-label>
+                    <ion-label>{{payment.currency}} ${{payment.amount}}</ion-label>
                 </ion-item>
                 <ion-item class="item-admin ion-no-padding" *ngIf="payment.note">
                     <ion-avatar slot="start" class="item-admin__avatar">

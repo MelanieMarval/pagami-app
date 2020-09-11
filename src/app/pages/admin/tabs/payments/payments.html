@@ -46,7 +46,7 @@
                 </ion-card>
             </ion-item-group>
 
-            <app-background-empty *ngIf="!payments.length" [title]="'Todo listo'" height="90"
+            <app-background-empty *ngIf="!loading && !payments.length" [title]="'Todo listo'" height="90"
                                   [text]="'No hay nada en pagos por confirmar'"></app-background-empty>
         </ion-list>
 

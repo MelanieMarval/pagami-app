@@ -75,7 +75,12 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
     async setupBusiness(myBusiness) {
         this.isRegister = true;
         this.place = myBusiness;
-        this.intentProvider.myBusinessDetails = {id: myBusiness.id, name: myBusiness.name, acronym: myBusiness.location.acronym};
+        this.intentProvider.myBusinessDetails = {
+            id: myBusiness.id,
+            name: myBusiness.name,
+            acronym: myBusiness.location.acronym,
+            plan: myBusiness.plan
+        };
         this.previewUrl = this.place.photoUrl;
         this.haveFlyer = !!this.place.flyer;
         this.getIsPaymentPending();
@@ -89,7 +94,7 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
             .then(success => {
                 console.log('-> success', success);
                 if (success.passed) {
-                    this.paymentPending = success.response.status === 'PENDING';
+                    this.paymentPending = success.response && success.response.status === 'PENDING';
                 } else {
                     this.toast.messageErrorWithoutTabs('Estamos teniendo problemas verificando si tiene pagos pendientes. Intente recangando');
                 }

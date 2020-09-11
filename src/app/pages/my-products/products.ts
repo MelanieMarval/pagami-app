@@ -5,6 +5,7 @@ import { UserIntentProvider } from '../../providers/user-intent.provider';
 import { Product } from '../../core/api/products/product';
 import { ToastProvider } from '../../providers/toast.provider';
 import { Router } from '@angular/router';
+import { PlansService } from '../../core/api/plans/plans.service';
 
 @Component({
     selector: 'app-products',
@@ -49,6 +50,7 @@ export class ProductsPage implements OnInit, AfterViewChecked {
     }
 
     chargeProducts() {
+        console.log('-> this.intentProvider.myBusinessDetails', this.intentProvider.myBusinessDetails);
         this.loading = true;
         this.productsService.getByPlaceId(this.intentProvider.myBusinessDetails.id)
             .then(success => {
@@ -69,5 +71,14 @@ export class ProductsPage implements OnInit, AfterViewChecked {
     openProduct(product: Product) {
         this.intentProvider.productToEdit = Object.assign({}, product);
         this.router.navigateByUrl('/app/my-products/product/edit');
+    }
+
+    validateCanAddProduct() {
+        if (this.products.length >= this.intentProvider.myBusinessDetails.plan.limitProducts) {
+            this.toast.messageErrorWithoutTabs(
+                `Has excedido el limite de ${this.intentProvider.myBusinessDetails.plan.limitProduct} productos permitidos por tu plan`);
+            return;
+        }
+        this.router.navigateByUrl('/app/my-products/product/add');
     }
 }

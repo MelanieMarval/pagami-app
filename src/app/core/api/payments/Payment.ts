@@ -8,7 +8,7 @@ export interface Payment {
     placeId: string;
     planId: string;
     type?: string;
-    typeCurrency?: string;
+    currency?: string;
 
     createTime?: string;
 }

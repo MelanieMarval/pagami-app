@@ -73,7 +73,7 @@ export class DetailsPage implements OnInit {
                 if (success.passed) {
                     this.loading = false;
                     // @ts-ignore
-                    this.plan = success;
+                    this.plan = success.response;
                     console.log('-> success.response', success.response);
                 } else {
                     this.loading = false;

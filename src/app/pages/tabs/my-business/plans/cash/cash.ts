@@ -21,6 +21,7 @@ export class CashPage implements OnInit {
     @Input() methodSelected: MethodPayment;
     loading = false;
     payment: Payment;
+    currency: any = {cop: true, usd: false};
 
     constructor(private toast: ToastProvider,
                 private modalController: ModalController,
@@ -34,6 +35,7 @@ export class CashPage implements OnInit {
             type: this.methodSelected.id,
             planId: this.planSelected.id,
             placeId: this.placeId,
+            currency: 'COP'
         };
     }
 

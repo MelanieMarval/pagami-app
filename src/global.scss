@@ -188,7 +188,9 @@ ion-bottom-drawer {
 .border-white-1px {
     border: 1px solid #FFFFFF;
 }
-
+.border-none {
+    border: unset !important;
+}
 .avatar-square {
     --border-radius: 0;
     margin: 0;

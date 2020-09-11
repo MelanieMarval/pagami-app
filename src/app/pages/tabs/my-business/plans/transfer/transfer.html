@@ -15,7 +15,6 @@
 <ion-content class="">
 
     <div class="contain">
-
         <div class="ion-text-left w-100">
 
             <ion-card-header>
@@ -43,62 +42,61 @@
                     comprobar
                 </ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-                <ion-list class="inputs-container">
-<!--                    <ion-item color="pagami-surface">-->
-<!--                        <ion-label position="floating">Número de referencia</ion-label>-->
-<!--                        <ion-input type="text" name="number" [(ngModel)]="paymentPlan.number"-->
-<!--                                   [readonly]="loading" required></ion-input>-->
-<!--                    </ion-item>-->
-<!--                    <ion-item color="pagami-surface">-->
-<!--                        <ion-label position="floating">Banco</ion-label>-->
-<!--                        <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>-->
-<!--                        <ion-icon name="podium" slot="start"></ion-icon>-->
-<!--                    </ion-item>-->
-<!--                    <ion-item color="pagami-surface">-->
-<!--                        <ion-label position="floating">Fecha</ion-label>-->
-<!--                        <ion-datetime name="date" [(ngModel)]="paymentPlan.date" displayFormat="DD/MM/YYYY"-->
-<!--                                      [readonly]="loading" required></ion-datetime>-->
-<!--                    </ion-item>-->
 
-                    <ion-item color="pagami-surface">
-                        <ion-label position="floating">Adjuntar foto</ion-label>
-                        <ion-input *ngIf="payment" type="text" [(ngModel)]="payment.photo" [readonly]="loading"></ion-input>
-                        <input class="input-file" type="file" accept="image/*"
-                               (click)="isTest || takeImage()"
-                               (change)="!isTest || addPhoto( $event)"/>
-<!--                        <ion-icon name="document" slot="start"></ion-icon>-->
-                    </ion-item>
-                    <ion-item color="pagami-surface" class="mb-0">
-                        <ion-label position="floating">Nota</ion-label>
-                        <ion-textarea *ngIf="payment" [(ngModel)]="payment.note" [readonly]="loading"></ion-textarea>
-                    </ion-item>
-                    <div class="info-text">
-                        <small>*Opcional</small>
-                    </div>
-                </ion-list>
+            <ion-list class="inputs-container">
+                <!--                    <ion-item color="pagami-surface">-->
+                <!--                        <ion-label position="floating">Número de referencia</ion-label>-->
+                <!--                        <ion-input type="text" name="number" [(ngModel)]="paymentPlan.number"-->
+                <!--                                   [readonly]="loading" required></ion-input>-->
+                <!--                    </ion-item>-->
+                <!--                    <ion-item color="pagami-surface">-->
+                <!--                        <ion-label position="floating">Banco</ion-label>-->
+                <!--                        <ion-input type="bank" name="bank" [(ngModel)]="paymentPlan.bank"></ion-input>-->
+                <!--                        <ion-icon name="podium" slot="start"></ion-icon>-->
+                <!--                    </ion-item>-->
+                <!--                    <ion-item color="pagami-surface">-->
+                <!--                        <ion-label position="floating">Fecha</ion-label>-->
+                <!--                        <ion-datetime name="date" [(ngModel)]="paymentPlan.date" displayFormat="DD/MM/YYYY"-->
+                <!--                                      [readonly]="loading" required></ion-datetime>-->
+                <!--                    </ion-item>-->
 
-                <ion-row>
-                    <ion-col size="6">
-                        <ion-button class="button-small" expand="block" color="pagami-surface"
-                                    [disabled]="loading" (click)="closeModal()">
-                            Volver
-                        </ion-button>
-                    </ion-col>
-                    <ion-col size="6">
-                        <ion-button class="button-small" expand="block" color="pagami"
-                                    [disabled]="loading" (click)="validateMyPaymentPlan()">
-                            <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
-                            <span *ngIf="!loading">Enviar</span>
-                        </ion-button>
-                    </ion-col>
-                </ion-row>
-            </ion-card-content>
+                <ion-item color="pagami-surface">
+                    <ion-label position="floating">Adjuntar foto</ion-label>
+                    <ion-input *ngIf="payment" type="text" [(ngModel)]="payment.photo" [readonly]="loading"></ion-input>
+                    <input class="input-file" type="file" accept="image/*"
+                           (click)="isTest || takeImage()"
+                           (change)="!isTest || addPhoto( $event)"/>
+                    <!--                        <ion-icon name="document" slot="start"></ion-icon>-->
+                </ion-item>
+                <ion-item color="pagami-surface" class="mb-0">
+                    <ion-label position="floating">Nota</ion-label>
+                    <ion-textarea *ngIf="payment" [(ngModel)]="payment.note" [readonly]="loading"></ion-textarea>
+                </ion-item>
+                <div class="info-text">
+                    <small>*Opcional</small>
+                </div>
+            </ion-list>
 
         </div>
-
     </div>
 
+    <div class="footer-button footer-button--div">
+        <ion-row>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami-surface"
+                            [disabled]="loading" (click)="closeModal()">
+                    Volver
+                </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button class="button-small" expand="block" color="pagami"
+                            [disabled]="loading" (click)="validateMyPaymentPlan()">
+                    <ion-spinner *ngIf="loading" class="spinner-energized"></ion-spinner>
+                    <span *ngIf="!loading">Enviar</span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
 
 </ion-content>
 

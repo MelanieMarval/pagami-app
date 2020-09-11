@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Place } from '../core/api/places/place';
 import { PagamiGeo } from '../core/geolocation/pagami.geo';
 import { Product } from '../core/api/products/product';
+import { Service } from '../core/api/services/service';
 
 
 @Injectable({
@@ -129,5 +130,43 @@ export class UserIntentProvider {
 
     set reloadProducts(value: boolean) {
         this._reloadProducts = value;
+    }
+
+    // Services
+    private _serviceToEdit: Service;
+    private _serviceToEdited: Service;
+    private _serviceDeleted: Service;
+    private _reloadServices = false;
+
+    get serviceToEdit(): Service {
+        return this._serviceToEdit;
+    }
+
+    set serviceToEdit(value: Service) {
+        this._serviceToEdit = value;
+    }
+
+    get serviceEdited(): Service {
+        return this._serviceToEdited;
+    }
+
+    set serviceEdited(value: Service) {
+        this._serviceToEdited = value;
+    }
+
+    get serviceDeleted(): Service {
+        return this._productDeleted;
+    }
+
+    set serviceDeleted(value: Service) {
+        this._serviceDeleted = value;
+    }
+
+    get reloadServices(): boolean {
+        return this._reloadServices;
+    }
+
+    set reloadServices(value: boolean) {
+        this._reloadServices = value;
     }
 }

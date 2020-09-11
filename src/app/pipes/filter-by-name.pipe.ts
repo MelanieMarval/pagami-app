@@ -6,13 +6,13 @@ import { Product } from '../core/api/products/product';
 })
 export class FilterByNamePipe implements PipeTransform {
 
-  transform(products: Product[], search: string): any {
+  transform(items: any[], search: string): any {
       if (search === undefined || search.trim() === '') {
-          return products;
+          return items;
       } else {
-          return products.filter(product => {
-              if (product.name && product.name.toLowerCase().includes(search.toLowerCase())) {
-                  return product.name.toLowerCase().includes(search.toLowerCase());
+          return items.filter(item => {
+              if (item.name && item.name.toLowerCase().includes(search.toLowerCase())) {
+                  return item.name.toLowerCase().includes(search.toLowerCase());
               }
           });
       }
