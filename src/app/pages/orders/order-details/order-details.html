@@ -1,29 +1,26 @@
 <ion-header>
-    <ion-toolbar class="toolbar-dual">
+    <ion-toolbar class="toolbar-simple">
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/shop/products"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Pedidos</ion-title>
+        <ion-title class="without-right">Resumen de la Orden</ion-title>
+        <ion-buttons slot="end" class="right-button">
+            <ion-button (click)="confirmDeleteProduct()">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
-</ion-header>
 
-<ion-toolbar>
-    <ion-segment value="products">
-        <ion-segment-button value="products">
-            <ion-label>Productos</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="services">
-            <ion-label>Servicios</ion-label>
-        </ion-segment-button>
-    </ion-segment>
-</ion-toolbar>
+</ion-header>
 
 
 <ion-content>
+    <ion-header class="top-searchbar">
+        <ion-searchbar placeholder="Buscar productos"></ion-searchbar>
+    </ion-header>
 
     <ion-list inset="false" lines="none" class="products">
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding"
-                  *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
             <ion-avatar class="avatar-square product-image">
                 <ion-img src="assets/img/avatar-product.jpg"></ion-img>
             </ion-avatar>
@@ -46,8 +43,7 @@
                 </ion-row>
             </ion-label>
         </ion-item>
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding"
-                  *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
             <ion-avatar class="avatar-square product-image">
                 <img src="assets/img/avatar-product-2.jpg">
             </ion-avatar>
@@ -74,3 +70,16 @@
     </ion-list>
 
 </ion-content>
+
+<ion-footer>
+    <ion-grid class="ion-padding">
+        <ion-row>
+            <ion-col size="5">
+                <ion-button class="button-small" expand="block" (click)="makeOrder()">Realizar pedido</ion-button>
+            </ion-col>
+            <ion-col size="7" class="ion-text-right ion-align-self-center">
+                <ion-text color="light">Total COP $136.000</ion-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

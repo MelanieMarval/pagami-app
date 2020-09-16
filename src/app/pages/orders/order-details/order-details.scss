@@ -1,0 +1,22 @@
+.top-searchbar{
+  width: 92%;
+  margin: 4%;
+}
+
+.products{
+  margin: 20px;
+  .product{
+    --border-radius: 3px;
+    margin-bottom: 20px;
+    ion-avatar{
+      height: 100%;
+      width: 60px;
+    }
+    ion-label{
+      margin-left: 20px;
+      span{
+        font-size: 12px;
+      }
+    }
+  }
+}

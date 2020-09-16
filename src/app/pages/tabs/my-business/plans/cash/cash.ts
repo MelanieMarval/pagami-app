@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Payment } from '../../../../../core/api/payments/Payment';
 import { MethodPayment } from '../../../../../core/api/payments/MethodPayment';
 import { PaymentsService } from '../../../../../core/api/payments/payments.service';
+import { UserIntentProvider } from '../../../../../providers/user-intent.provider';
 
 @Component({
     selector: 'page-cash',
@@ -26,6 +27,7 @@ export class CashPage implements OnInit {
     constructor(private toast: ToastProvider,
                 private modalController: ModalController,
                 private router: Router,
+                private intentProvider: UserIntentProvider,
                 private paymentsService: PaymentsService,
                 private alertController: AlertController) {
     }
@@ -77,6 +79,7 @@ export class CashPage implements OnInit {
                 this.loading = false;
                 if (success.passed) {
                     this.toast.messageSuccessWithoutTabs('Su pago ha sido registrado, espere mientras es verificado');
+                    this.intentProvider.updateMyBusiness = true;
                     this.router.navigateByUrl('/app/tabs/my-business');
                     this.closeModal();
                 } else {

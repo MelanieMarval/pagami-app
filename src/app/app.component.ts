@@ -69,7 +69,7 @@ export class AppComponent {
             }
             setTimeout(() => {
                 this.verifyUser(user);
-            }, 5000);
+            }, 2000);
         } else {
             await this.openTutorial();
         }

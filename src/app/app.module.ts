@@ -19,7 +19,6 @@ import { PipesModule } from './pipes/pipes.module';
 import { firebaseConfig } from '../environments/environment';
 // Components
 import { AppComponent } from './app.component';
-import { OrdersPage } from './pages/orders/orders';
 // Providers
 import { MapProvider } from './providers/map.provider';
 import { UserIntentProvider } from './providers/user-intent.provider';
@@ -40,7 +39,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
-    declarations: [AppComponent, OrdersPage],
+    declarations: [AppComponent],
     entryComponents: [],
     imports: [
         BrowserModule,

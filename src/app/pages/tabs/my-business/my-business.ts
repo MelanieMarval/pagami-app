@@ -233,4 +233,8 @@ export class MyBusinessPage extends InputFilePage implements OnInit, AfterViewCh
         this.intentProvider.placeToShow = this.place;
         await this.router.navigate(['/app/shop/flyer']);
     }
+
+    openUrl(url: string) {
+        this.router.navigateByUrl(url);
+    }
 }

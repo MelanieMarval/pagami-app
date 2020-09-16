@@ -51,7 +51,8 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
             },
             {
-                path: 'orders', component: OrdersPage
+                path: 'orders',
+                loadChildren: () => import('./pages/orders/orders.module').then(m => m.OrdersModule)
             },
             {
                 path: 'my-products',
