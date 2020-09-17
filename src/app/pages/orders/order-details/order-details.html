@@ -1,9 +1,9 @@
 <ion-header>
-    <ion-toolbar class="toolbar-simple">
+    <ion-toolbar class="toolbar-dual">
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/shop/products"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Resumen de la Orden</ion-title>
+        <ion-title class="without-right">Armando Guitierrez</ion-title>
         <ion-buttons slot="end" class="right-button">
             <ion-button (click)="confirmDeleteProduct()">
                 <ion-icon name="trash"></ion-icon>
@@ -16,11 +16,34 @@
 
 <ion-content>
     <ion-header class="top-searchbar">
-        <ion-searchbar placeholder="Buscar productos"></ion-searchbar>
+        <ion-item>
+            <ion-label>Estado de la orden</ion-label>
+            <ion-select interface="popover">
+                <ion-select-option value="nes">Recibido</ion-select-option>
+                <ion-select-option value="n64">Llenando orden</ion-select-option>
+                <ion-select-option value="ps">Despachado</ion-select-option>
+                <ion-select-option value="snes">Entregado</ion-select-option>
+            </ion-select>
+        </ion-item>
     </ion-header>
 
+    <ion-list class="inputs-container">
+        <div class="ion-padding-bottom">Detalles de Contacto</div>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input type="tel" readonly [value]="05154448841"></ion-input>
+            <ion-icon name="call" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item color="pagami-surface">
+            <ion-label position="floating">Direccion</ion-label>
+            <ion-input type="tel" readonly value="Calle 30 & Autopista Sur, Itagüi, Antioquia"></ion-input>
+            <ion-icon src="assets/icon/locate-checkmark.svg" slot="start"></ion-icon>
+        </ion-item>
+    </ion-list>
+
     <ion-list inset="false" lines="none" class="products">
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <div class="ion-padding-bottom">Productos</div>
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding">
             <ion-avatar class="avatar-square product-image">
                 <ion-img src="assets/img/avatar-product.jpg"></ion-img>
             </ion-avatar>
@@ -43,7 +66,7 @@
                 </ion-row>
             </ion-label>
         </ion-item>
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding">
             <ion-avatar class="avatar-square product-image">
                 <img src="assets/img/avatar-product-2.jpg">
             </ion-avatar>
@@ -70,16 +93,3 @@
     </ion-list>
 
 </ion-content>
-
-<ion-footer>
-    <ion-grid class="ion-padding">
-        <ion-row>
-            <ion-col size="5">
-                <ion-button class="button-small" expand="block" (click)="makeOrder()">Realizar pedido</ion-button>
-            </ion-col>
-            <ion-col size="7" class="ion-text-right ion-align-self-center">
-                <ion-text color="light">Total COP $136.000</ion-text>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-footer>

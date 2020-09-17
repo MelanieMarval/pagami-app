@@ -5,7 +5,7 @@
         </ion-buttons>
         <ion-title class="without-right">{{action === 'add' ? 'Agregar' : 'Editar'}} Servicio</ion-title>
         <ion-buttons slot="end" class="right-button button-hover-circle" *ngIf="action === 'edit'">
-            <ion-button (click)="confirmDeleteProduct()">
+            <ion-button (click)="confirmDeleteService()">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -96,7 +96,7 @@
     </form>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fab-corner-lr">
-        <ion-fab-button [disabled]="form.invalid || updating" color="pagami" (click)="saveProduct()">
+        <ion-fab-button [disabled]="form.invalid || updating" color="pagami" (click)="saveService()">
             <ion-icon *ngIf="!updating" name="save"></ion-icon>
             <ion-spinner *ngIf="updating" class="spinner-energized"></ion-spinner>
         </ion-fab-button>

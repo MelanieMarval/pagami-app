@@ -1,4 +1,3 @@
-
 <ion-content>
 
     <ion-header class="header-image">
@@ -25,11 +24,12 @@
             <div class="info-title">
                 <ion-text color="light">
                     {{place.name}}
-                    <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark" color="success"></ion-icon>
+                    <ion-icon *ngIf="place.status === STATUS.VERIFIED" name="shield-checkmark"
+                              color="success"></ion-icon>
                 </ion-text>
             </div>
             <ion-item lines="none" class="info-rating">
-<!--            <ion-icon slot="start" name="star" color="pagami"></ion-icon>-->
+                <!--            <ion-icon slot="start" name="star" color="pagami"></ion-icon>-->
                 <ion-icon slot="start" name="star-outline"></ion-icon>
                 <ion-icon slot="start" name="star-outline"></ion-icon>
                 <ion-icon slot="start" name="star-outline"></ion-icon>
@@ -54,7 +54,8 @@
             <ion-input readonly [value]="place.location.address"></ion-input>
             <ion-icon src="assets/icon/locate-checkmark.svg" slot="start"></ion-icon>
         </ion-item>
-        <ion-item *ngIf="place.whatsapp" color="pagami-surface" [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp">
+        <ion-item *ngIf="place.whatsapp" color="pagami-surface"
+                  [href]="'https://wa.me/' + (place.dialCode ? place.dialCode : '') + place.whatsapp">
             <ion-label position="floating">WhatsApp</ion-label>
             <ion-input readonly [value]="(place.dialCode ? place.dialCode : '') + place.whatsapp"></ion-input>
             <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
@@ -72,24 +73,26 @@
     </ion-list>
 
     <ion-list *ngIf="place.status === STATUS.VERIFIED" class="link-buttons-container" lines="none">
-        <ion-item button [routerLink]="'/app/shop/products/'+place.id" color="pagami-surface">
-<!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
+        <ion-item button [routerLink]="'/app/shop/products/' + place.id" color="pagami-surface">
+            <!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Productos</ion-label>
         </ion-item>
-<!--        <ion-item button routerLink="/app/shop/services" color="pagami-surface">-->
-        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">
+        <ion-item button [routerLink]="'/app/shop/services/' + place.id" color="pagami-surface">
+            <!--        <ion-item button (click)="alert.alertComingSoon()" color="pagami-surface">-->
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
             <ion-label>Servicios</ion-label>
         </ion-item>
     </ion-list>
 
     <ion-footer class="footer-button footer-button--div" *ngIf="claiming">
-        <ion-button *ngIf="!isClaimed" class="button-large" expand="block" color="pagami" routerLink="/app/business-claim">
+        <ion-button *ngIf="!isClaimed" class="button-large" expand="block" color="pagami"
+                    routerLink="/app/business-claim">
             Reclamar esta empresa
         </ion-button>
         <div *ngIf="isClaimed" class="ion-text-center">
-            <ion-text color="light">Esta empresa ya ha sido reclamada por alguien mas, vuelve e intenta con otra!</ion-text>
+            <ion-text color="light">Esta empresa ya ha sido reclamada por alguien mas, vuelve e intenta con otra!
+            </ion-text>
         </div>
     </ion-footer>
 </ion-content>

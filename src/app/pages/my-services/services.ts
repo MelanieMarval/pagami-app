@@ -9,11 +9,11 @@ import { Place } from '../../core/api/places/place';
 import { StorageProvider } from '../../providers/storage.provider';
 
 @Component({
-    selector: 'app-products',
+    selector: 'app-services',
     templateUrl: 'services.html',
     styleUrls: ['services.scss']
 })
-export class ServicePage implements OnInit, AfterViewChecked {
+export class ServicePage implements OnInit {
 
     services: Service[] = [];
     loading = false;
@@ -32,10 +32,10 @@ export class ServicePage implements OnInit, AfterViewChecked {
     async ngOnInit() {
         this.loading = true;
         this.myBusiness = await this.storage.getBusinessVerifiedByUser();
-        this.chargeProducts();
+        this.chargeServices();
     }
 
-    ngAfterViewChecked(): void {
+    ionViewWillEnter() {
         if (this.intentProvider.serviceEdited) {
             const idx = this.services.findIndex(service => service.id === this.intentProvider.serviceEdited.id);
             this.services[idx] = this.intentProvider.serviceEdited;
@@ -48,12 +48,11 @@ export class ServicePage implements OnInit, AfterViewChecked {
         }
         if (this.intentProvider.reloadServices) {
             this.intentProvider.reloadServices = false;
-            this.chargeProducts();
-            this.cdRef.detectChanges();
+            this.chargeServices();
         }
     }
 
-    chargeProducts() {
+    chargeServices() {
         console.log('-> this.myBusiness', this.myBusiness);
         this.loading = true;
         this.servicesService.getByPlaceId(this.myBusiness.id)
@@ -62,19 +61,19 @@ export class ServicePage implements OnInit, AfterViewChecked {
                     this.services = success.response;
                     this.loading = false;
                 } else {
-                    this.toast.messageErrorWithoutTabs('No hemos podido cargar sus productos, compruebe su conexion');
+                    this.toast.messageErrorWithoutTabs('No hemos podido cargar sus services, compruebe su conexion');
                     this.loading = false;
                 }
             }).catch(error => {
-            this.toast.messageErrorWithoutTabs('No hemos podido cargar sus productos, compruebe su conexion');
+            this.toast.messageErrorWithoutTabs('No hemos podido cargar sus services, compruebe su conexion');
             this.loading = false;
         });
     }
 
 
     openService(service: Service) {
-        // this.intentProvider.serviceToEdit = Object.assign({}, service);
-        // this.router.navigateByUrl('/app/my-services/service/edit');
+        this.intentProvider.serviceToEdit = Object.assign({}, service);
+        this.router.navigateByUrl('/app/my-services/service/edit');
     }
 
     validateCanAddService() {

@@ -9,10 +9,8 @@ import { Router } from '@angular/router';
 })
 export class OrderDetailsPage {
 
-    constructor(
-        public alertController: AlertController,
-        private route: Router,
-    ) {
+    constructor(private alertController: AlertController,
+                private route: Router) {
     }
 
     async selectProduct() {
@@ -68,18 +66,15 @@ export class OrderDetailsPage {
 
     async confirmDeleteProduct() {
         const alert = await this.alertController.create({
-            header: 'Eliminar producto',
-            message: 'Esta seguro de que quiere eliminar este producto de su orden?',
+            header: 'Cancelación de pedido',
+            message: 'Estas seguro que quieres cancelar el pedido actual?',
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: 'No, cerrar',
                     role: 'cancel',
-                    cssClass: 'alert-cancel',
-                    handler: (blah) => {
-                        console.log('Confirm Cancel: blah');
-                    }
+                    cssClass: 'alert-cancel'
                 }, {
-                    text: 'Si, eliminar',
+                    text: 'Si, Cancelar pedido',
                     cssClass: 'alert-confirm',
                     handler: () => {
                         console.log('Confirm Okay');

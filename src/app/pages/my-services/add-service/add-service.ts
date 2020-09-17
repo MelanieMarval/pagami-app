@@ -66,9 +66,9 @@ export class AddServicePage extends InputFilePage implements OnInit {
             available: new FormControl(true),
             description: new FormControl('', Validators.maxLength(300))
         });
-        if (this.intentProvider.productToEdit) {
+        if (this.intentProvider.serviceToEdit) {
             this.action = 'edit';
-            this.loadForm(this.intentProvider.productToEdit);
+            this.loadForm(this.intentProvider.serviceToEdit);
         } else {
             this.action = 'add';
             this.loadForm();
@@ -82,8 +82,8 @@ export class AddServicePage extends InputFilePage implements OnInit {
             this.localCurrency = null;
         } else {
             this.service = service;
-            console.log(this.intentProvider.productToEdit);
-            const productValues = {
+            console.log(this.intentProvider.serviceToEdit);
+            const serviceValues = {
                 name: service.name,
                 price: service.price,
                 description: service.description,
@@ -92,12 +92,12 @@ export class AddServicePage extends InputFilePage implements OnInit {
             };
             this.localCurrency = service.localCurrency;
             this.previewUrl = service.photoUrl;
-            this.form.setValue(productValues);
-            this.intentProvider.productToEdit = undefined;
+            this.form.setValue(serviceValues);
+            this.intentProvider.serviceToEdit = undefined;
         }
     }
 
-    saveProduct() {
+    saveService() {
         if (!this.previewUrl) {
             return this.toast.messageErrorWithoutTabs('Debe seleccionar una imagen para representar su servicio');
         }
@@ -133,7 +133,7 @@ export class AddServicePage extends InputFilePage implements OnInit {
             if (this.previewUrl !== this.service.photoUrl) {
                 this.saveImage();
             } else {
-                this.action === 'add' ? this.addProduct() : this.updateProduct();
+                this.action === 'add' ? this.addService() : this.updateService();
             }
         }
     }
@@ -144,22 +144,22 @@ export class AddServicePage extends InputFilePage implements OnInit {
         if (success) {
             this.service.photoUrl = success;
             this.previewUrl = success;
-            this.action === 'add' ? this.addProduct() : this.updateProduct();
+            this.action === 'add' ? this.addService() : this.updateService();
         } else {
             this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando la imagen. Intente de nuevo');
             this.updating = false;
         }
     }
 
-    addProduct() {
+    addService() {
         this.updating = true;
         this.servicesService.save(this.service)
             .then(success => {
                 if (success.passed) {
                     this.toast.messageSuccessWithoutTabs('Su servicio ha sido guardado con exito!');
-                    this.route.navigate(['/app/my-products']);
+                    this.intentProvider.reloadServices = true;
                     this.updating = false;
-                    this.intentProvider.reloadProducts = true;
+                    this.route.navigate(['/app/my-services']);
                 } else {
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas cargando su servicio. Intente de nuevo');
                     this.updating = false;
@@ -170,15 +170,15 @@ export class AddServicePage extends InputFilePage implements OnInit {
         });
     }
 
-    updateProduct() {
+    updateService() {
         this.updating = true;
         this.servicesService.update(this.service, this.service.id)
             .then(success => {
                 if (success.passed) {
                     this.toast.messageSuccessWithoutTabs('Su servicio ha sido actualizado con exito!');
-                    this.route.navigate(['/app/my-products']);
+                    this.intentProvider.serviceEdited = success.response;
                     this.updating = false;
-                    this.intentProvider.productEdited = success.response;
+                    this.route.navigate(['/app/my-services']);
                 } else {
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas actualizando su servicio. Intente de nuevo');
                     this.updating = false;
@@ -189,16 +189,16 @@ export class AddServicePage extends InputFilePage implements OnInit {
         });
     }
 
-    deleteProduct() {
+    deleteService() {
         this.updating = true;
         this.servicesService.delete(this.service.id)
             .then(success => {
                 if (success.passed) {
                     console.log(success);
                     this.toast.messageSuccessWithoutTabs('Su servicio ha sido eliminado con exito!');
-                    this.route.navigate(['/app/my-products']);
-                    this.updating = false;
                     this.intentProvider.serviceDeleted = this.service;
+                    this.updating = false;
+                    this.route.navigate(['/app/my-services']);
                 } else {
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas eliminando el servicio');
                     this.updating = false;
@@ -209,7 +209,7 @@ export class AddServicePage extends InputFilePage implements OnInit {
         });
     }
 
-    async confirmDeleteProduct() {
+    async confirmDeleteService() {
         const alert = await this.alertController.create({
             header: 'Eliminar servicio',
             message: 'Esta seguro de que quiere eliminar este servicio?',
@@ -223,7 +223,7 @@ export class AddServicePage extends InputFilePage implements OnInit {
                     text: 'Si, eliminar',
                     cssClass: 'alert-confirm',
                     handler: () => {
-                        this.deleteProduct();
+                        this.deleteService();
                     }
                 }
             ]

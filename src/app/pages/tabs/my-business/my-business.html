@@ -148,15 +148,15 @@
                 <ion-icon name="arrow-forward" slot="end"></ion-icon>
                 <ion-label>Mis Productos</ion-label>
             </ion-item>
-<!--            <ion-item button (click)="(!place.plan || place.plan.remainDays === 0) || alert.alertComingSoon()"-->
-<!--                      color="pagami-surface" [disabled]="!place.plan || place.plan.remainDays === 0">-->
            <ion-item button (click)="(!place.plan || place.plan.remainDays === 0) || openUrl('/app/my-services')"
                      color="pagami-surface" [disabled]="!place.plan || place.plan.remainDays === 0">
                 <ion-icon name="arrow-forward" slot="end"></ion-icon>
                 <ion-label>Mis Servicios</ion-label>
             </ion-item>
-            <ion-item button (click)="(!place.plan || place.plan.remainDays === 0) || openUrl('/app/orders')"
+            <ion-item button (click)="(!place.plan || place.plan.remainDays === 0) || alert.alertComingSoon()"
                       color="pagami-surface" [disabled]="!place.plan || place.plan.remainDays === 0">
+<!--            <ion-item button (click)="(!place.plan || place.plan.remainDays === 0) || openUrl('/app/orders')"-->
+<!--                      color="pagami-surface" [disabled]="!place.plan || place.plan.remainDays === 0">-->
                 <ion-icon name="arrow-forward" slot="end"></ion-icon>
                 <ion-label>Pedidos</ion-label>
             </ion-item>

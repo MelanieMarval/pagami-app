@@ -155,7 +155,7 @@ export class UserIntentProvider {
     }
 
     get serviceDeleted(): Service {
-        return this._productDeleted;
+        return this._serviceDeleted;
     }
 
     set serviceDeleted(value: Service) {

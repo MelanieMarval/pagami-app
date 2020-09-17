@@ -10,7 +10,7 @@ import { Service } from './service';
 })
 export class ServicesService {
 
-    private URL = `${environment.API_URL}/products`;
+    private URL = `${environment.API_URL}/services`;
     private httpClient: HttpClient;
 
     constructor(private apiService: ApiService) {
@@ -19,17 +19,17 @@ export class ServicesService {
 
     /**
      *
-     * @param product: product object to make request
+     * @param service: service object to make request
      */
-    async save(product: Service): Promise<ApiResponse> {
+    async save(service: Service): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.post(`${this.URL}`, product, options);
+        const request = this.httpClient.post(`${this.URL}`, service, options);
         return this.apiService.serverListener(request);
     }
 
-    async update(product: Service, id: string): Promise<ApiResponse> {
+    async update(service: Service, id: string): Promise<ApiResponse> {
         const options: any = await this.apiService.getOptionsHeadersTokenized();
-        const request = this.httpClient.put(`${this.URL}/${id}`, product, options);
+        const request = this.httpClient.put(`${this.URL}/${id}`, service, options);
         return this.apiService.serverListener(request);
     }
 

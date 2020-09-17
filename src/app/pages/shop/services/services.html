@@ -3,30 +3,39 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/shop"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Tiendas D1 - Servicios</ion-title>
+        <ion-title class="without-right">{{title}}</ion-title>
         <ion-buttons slot="end" class="right-button">
-            <ion-button  routerLink="#">
+            <ion-button (click)="alert.alertComingSoon()">
                 <ion-icon name="cart"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 
 </ion-header>
+<div class="progress-bar-container">
+    <ion-progress-bar type="indeterminate" color="pagami" *ngIf="loading"></ion-progress-bar>
+</div>
 
 
 <ion-content>
     <ion-header class="top-searchbar">
-        <ion-searchbar placeholder="Buscar servicios"></ion-searchbar>
+        <ion-searchbar placeholder="Buscar productos" [(ngModel)]="textSearch"></ion-searchbar>
     </ion-header>
 
-    <ion-list inset="false" lines="none" class="products">
-        <ion-item button (click)="selectService()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+    <ion-list inset="false" lines="none" class="products" [ngClass]="{'ion-text-center': !services.length}">
+        <ion-label *ngIf="!services.length">No tiene servicios registrados</ion-label>
+        <ion-item button color="pagami-surface" detail="false" class="product ion-no-padding"
+                  *ngFor="let service of services | filterByName: textSearch; let x = index"
+                  (click)="alert.alertComingSoon()">
+            <!--                  (click)="selectProduct(product)">-->
             <ion-avatar class="avatar-square product-image">
-                <img src="assets/img/avatar-service.jpg">
+                <ion-img [src]="service.photoUrl"></ion-img>
             </ion-avatar>
             <ion-label class="product-name">
-                Técnicos plomeros tecniplom <br>
-                <span class="product-price">COP $38.000</span>
+                {{service.name}} <br>
+                <span class="product-price">
+                    {{service.localCurrency ? service.localCurrency +' $'+service.localPrice : 'US $'+service.price}}
+                </span>
             </ion-label>
         </ion-item>
 

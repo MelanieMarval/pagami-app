@@ -24,7 +24,7 @@ export class ProductsPage implements OnInit {
                 private toast: ToastProvider,
                 private productsService: ProductsService,
                 private intentProvider: UserIntentProvider,
-                private alert: AlertProvider,) {
+                private alert: AlertProvider) {
     }
 
     ngOnInit(): void {
