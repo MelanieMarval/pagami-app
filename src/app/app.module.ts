@@ -16,6 +16,7 @@ import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 // Modules
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -74,7 +75,8 @@ registerLocaleData(localeEs, 'es');
         AppMinimize,
         Clipboard,
         OpenNativeSettings,
-        AndroidPermissions
+        AndroidPermissions,
+        LocationAccuracy
     ],
     exports: [],
     bootstrap: [AppComponent]

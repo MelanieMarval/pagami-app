@@ -201,6 +201,7 @@ export class ProfilePage extends InputFilePage implements OnInit {
                 await this.storageService.setBusinessVerifiedByUser(null);
                 await this.storageService.setLogged(false);
                 await this.router.navigateByUrl('/tutorial');
+                window.location.reload();
                 await SplashScreen.show();
             });
     }

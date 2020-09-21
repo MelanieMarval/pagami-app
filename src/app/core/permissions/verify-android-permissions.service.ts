@@ -23,29 +23,42 @@ export class VerifyAndroidPermissionsService {
         }
     }
 
-    private need(): Promise<any> {
+    need(): Promise<any> {
         return new Promise(async resolve => {
             const resLocation = await this.androidPermissionsService.accessLocation();
             if (resLocation) {
-                resolve(false);
+                const resActiveGPS = await this.androidPermissionsService.checkActiveGPS();
+                if (resActiveGPS) {
+                    resolve(false);
+                } else {
+                    resolve({
+                        header: 'Es necesario que mantegas activado tu GPS para el buen funcionamiento de la app',
+                        message: 'Si decides ir a la configuración busca y marca la opcion activar o acceso a la ubicacion',
+                        open: 'location'
+                    });
+                }
             } else {
-                resolve('Los datos de ubicación (GPS) son necesarios para el buen funcionamiento de la app');
+                resolve({
+                    header: 'Los permisos de ubicación (GPS) son necesarios para el buen funcionamiento de la app',
+                    message: 'Si decides ir a la configuración busca permisos > rechazados > ubicación y permitir',
+                    open: 'application_details'
+                });
             }
         });
     }
 
-    private async alertOpenSettings(subHeader: string, tryAgain?: any) {
+    async alertOpenSettings(data: any, tryAgain?: any) {
         const alert = await this.alertController.create({
             cssClass: 'my-custom-class',
-            header: 'Ningún dato personal será compartido',
-            subHeader,
-            message: 'Si decides ir a la configuración busca permisos > rechazados > ubicación y permitir',
+            header: data.header,
+            subHeader: 'Ningún dato personal será compartido',
+            message: data.message,
             backdropDismiss: false,
             buttons: [
                 {
                     text: 'Configuración',
                     handler: () => {
-                        this.openNativeSettings.open('application_details').then(() => {
+                        this.openNativeSettings.open(data.open).then(() => {
                             tryAgain();
                         }, (error) => {
                             console.error('The following error occurred: ', error);

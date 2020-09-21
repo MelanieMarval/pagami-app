@@ -38,7 +38,7 @@ export class AppComponent {
     }
 
     initializeApp() {
-        this.platform.ready().then(async () => this.start());
+        this.platform.ready().then(async () => this.checkPermissions());
         App.addListener('backButton', () => {
             if (this.router.url === '/app/tabs/map/search'
                 && (this.mapProvider.currentNearbyStatus === DrawerState.Top || this.mapProvider.currentNearbyStatus === DrawerState.Docked)) {
@@ -53,12 +53,21 @@ export class AppComponent {
         });
     }
 
+    async checkPermissions() {
+        const response = await this.verifyAndroidPermissions.need();
+        console.log('-> response', response);
+        if (response) {
+            await this.verifyAndroidPermissions.alertOpenSettings(response, () => {
+                this.checkPermissions();
+            });
+        } else {
+            this.start();
+        }
+    }
+
     private async start() {
         const isLogged = await this.storageService.isLogged();
         const user = await this.storageService.getPagamiUser();
-
-        // this.router.navigateByUrl('/user-register', {replaceUrl: true});
-        // return
 
         const lastUserVerification = await this.storageService.getLastUserVerification();
         if (isLogged && user) {
@@ -70,7 +79,6 @@ export class AppComponent {
             setTimeout(() => {
                 this.verifyUser(user);
             }, 2000);
-            await this.verifyAndroidPermissions.checkPermissions();
         } else {
             await this.openTutorial();
         }
