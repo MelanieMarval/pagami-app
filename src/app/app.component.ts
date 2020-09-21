@@ -13,6 +13,7 @@ import { GoogleAuthService } from './core/google-auth/google-auth.service';
 import { DrawerState } from './shared/ion-bottom-drawer/drawer-state';
 import { MapProvider } from './providers/map.provider';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { VerifyAndroidPermissionsService } from './core/permissions/verify-android-permissions.service';
 
 
 const {SplashScreen} = Plugins;
@@ -24,16 +25,15 @@ const {App} = Plugins;
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-    constructor(
-        private router: Router,
-        private platform: Platform,
-        private authService: AuthService,
-        private googleAuthService: GoogleAuthService,
-        private storageService: StorageProvider,
-        private mapProvider: MapProvider,
-        private alert: AlertProvider,
-        private appMinimize: AppMinimize
-    ) {
+    constructor(private router: Router,
+                private platform: Platform,
+                private authService: AuthService,
+                private googleAuthService: GoogleAuthService,
+                private storageService: StorageProvider,
+                private mapProvider: MapProvider,
+                private alert: AlertProvider,
+                private appMinimize: AppMinimize,
+                private verifyAndroidPermissions: VerifyAndroidPermissionsService) {
         this.initializeApp();
     }
 
@@ -70,6 +70,7 @@ export class AppComponent {
             setTimeout(() => {
                 this.verifyUser(user);
             }, 2000);
+            await this.verifyAndroidPermissions.checkPermissions();
         } else {
             await this.openTutorial();
         }

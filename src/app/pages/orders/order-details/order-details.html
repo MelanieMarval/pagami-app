@@ -5,7 +5,7 @@
         </ion-buttons>
         <ion-title class="without-right">Armando Guitierrez</ion-title>
         <ion-buttons slot="end" class="right-button">
-            <ion-button (click)="confirmDeleteProduct()">
+            <ion-button (click)="confirmCancelOrder()">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -15,14 +15,23 @@
 
 
 <ion-content>
+
     <ion-header class="top-searchbar">
-        <ion-item>
-            <ion-label>Estado de la orden</ion-label>
-            <ion-select interface="popover">
-                <ion-select-option value="nes">Recibido</ion-select-option>
-                <ion-select-option value="n64">Llenando orden</ion-select-option>
-                <ion-select-option value="ps">Despachado</ion-select-option>
-                <ion-select-option value="snes">Entregado</ion-select-option>
+        <ion-item class="select-100" *ngIf="type === 'products'">
+            <!--            <ion-label>{{mapStatusOrder(status)}}</ion-label>-->
+            <ion-select interface="popover" placeholder="Estado de la orden" [(ngModel)]="status">
+                <ion-select-option [value]="STATUS_PRODUCTS.RECEIVED">Recibido</ion-select-option>
+                <ion-select-option [value]="STATUS_PRODUCTS.FILLING_ORDER">Llenando orden</ion-select-option>
+                <ion-select-option [value]="STATUS_PRODUCTS.DISPATCHED">Despachado</ion-select-option>
+                <ion-select-option [value]="STATUS_PRODUCTS.DELIVERED">Entregado</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item class="select-100" *ngIf="type === 'services'">
+            <!--            <ion-label>{{mapStatusOrder(status)}}</ion-label>-->
+            <ion-select interface="popover" placeholder="Estado de la orden" [(ngModel)]="status">
+                <ion-select-option [value]="STATUS_SERVICES.QUOTING">Cotizando</ion-select-option>
+                <ion-select-option [value]="STATUS_SERVICES.ON_WAY">En camino</ion-select-option>
             </ion-select>
         </ion-item>
     </ion-header>
@@ -41,7 +50,7 @@
         </ion-item>
     </ion-list>
 
-    <ion-list inset="false" lines="none" class="products">
+    <ion-list inset="false" lines="none" class="products" *ngIf="type === 'products'">
         <div class="ion-padding-bottom">Productos</div>
         <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding">
             <ion-avatar class="avatar-square product-image">
@@ -90,6 +99,14 @@
             </ion-label>
         </ion-item>
 
+    </ion-list>
+
+    <ion-list class="inputs-container" *ngIf="type === 'services'">
+        <div class="ion-padding-bottom">Mensaje</div>
+        <ion-item color="pagami-surface">
+            <ion-textarea readonly rows="4"
+                          value="Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deleniti dolor eveniet fugiat mollitia sapiente sunt! Alias blanditiis cum est ipsum iusto maxime minima, molestiae nemo nostrum odio ratione velit!"></ion-textarea>
+        </ion-item>
     </ion-list>
 
 </ion-content>

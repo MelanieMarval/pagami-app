@@ -377,3 +377,49 @@ ion-item[button] {
     color: white !important;
     --color: white;
 }
+.select-100 {
+    border-radius: 4px;
+    --border-width: 0;
+    --background: var(--ion-color-pagami-surface);
+    ion-select {
+        max-width: 100%;
+        width: 100%;
+        --placeholder-opacity: 1;
+        --padding-start: 0;
+    }
+}
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.alertProduct {
+    color: red;
+    ion-item {
+        position: absolute;
+        bottom: 60px;
+        width: 100%;
+        --inner-border-width: 0;
+    }
+    .alert-input-group {
+        position: relative;
+        bottom: 40px;
+    }
+}

@@ -7,11 +7,15 @@
 .cart {
     color: #FFF;
     font-size: 16px;
+    display: flex;
     ion-icon {
         position: relative;
-        top: 5px;
+        top: 1px;
         padding-right: .5rem;
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
     }
+}
+.ellipsis {
+    width: 65vw;
 }

@@ -73,6 +73,19 @@ export const PAYMENTS = {
     }
 };
 
+export const ORDERS = {
+    STATUS_PRODUCTS: {
+        RECEIVED: 'RECEIVED',
+        FILLING_ORDER: 'FILLING_ORDER',
+        DISPATCHED: 'DISPATCHED',
+        DELIVERED: 'DELIVERED'
+    },
+    STATUS_SERVICES: {
+        QUOTING: 'QUOTING',
+        ON_WAY: 'ON_WAY',
+    }
+};
+
 
 
 export const MAP_MODE = {

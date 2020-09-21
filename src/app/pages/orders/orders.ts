@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class OrdersPage {
 
+    segmentSelected = 'products';
+
     constructor(private alertController: AlertController,
                 private router: Router) {
     }

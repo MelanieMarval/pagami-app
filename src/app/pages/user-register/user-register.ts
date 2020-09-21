@@ -14,6 +14,7 @@ import { StorageProvider } from '../../providers/storage.provider';
 import { PlacesService } from '../../core/api/places/places.service';
 import { Country } from '../../core/api/places/country';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { VerifyAndroidPermissionsService } from '../../core/permissions/verify-android-permissions.service';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class UserRegisterPage implements OnInit {
                 private route: Router,
                 private fireStorage: FireStorage,
                 private placesService: PlacesService,
-                private sim: Sim) {
+                private sim: Sim,
+                private verifyAndroidPermissions: VerifyAndroidPermissionsService) {
     }
 
     async ngOnInit() {
@@ -132,6 +134,7 @@ export class UserRegisterPage implements OnInit {
                     await this.storageService.setLogged(true);
                     await this.toast.messageSuccessWithoutTabs('BIENVENIDO A PAGAMI!', 2500);
                     await this.route.navigate(['/app/tabs/map/search']);
+                    await this.verifyAndroidPermissions.checkPermissions();
                 } else {
                     this.toast.messageErrorWithoutTabs('Hemos tenido problemas creando su usuario. Intente nuevamente!', 2500);
                 }

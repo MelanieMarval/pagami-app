@@ -8,6 +8,7 @@ import { GoogleAuthService } from '../../core/google-auth/google-auth.service';
 import { AuthService } from '../../core/api/auth/auth.service';
 import { ToastProvider } from '../../providers/toast.provider';
 import { ModalPage } from './modal/modal';
+import { VerifyAndroidPermissionsService } from '../../core/permissions/verify-android-permissions.service';
 
 @Component({
     selector: 'page-tutorial',
@@ -28,7 +29,8 @@ export class TutorialPage {
         private storageService: StorageProvider,
         private toast: ToastProvider,
         private route: Router,
-        private modalController: ModalController) {
+        private modalController: ModalController,
+        private verifyAndroidPermissions: VerifyAndroidPermissionsService) {
     }
 
     async presentModal() {
@@ -63,6 +65,7 @@ export class TutorialPage {
                 (success: any) => {
                     if (success.passed) {
                         this.onLoginSuccess(success.response);
+                        this.verifyAndroidPermissions.checkPermissions();
                     } else {
                         if (success.code === RESPONSE.CODE.NOT_REGISTERED) {
                             this.onUserNotRegistered();

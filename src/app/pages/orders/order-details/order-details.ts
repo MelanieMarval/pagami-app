@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ORDERS } from '../../../utils/Const';
 
 @Component({
     selector: 'app-order-details',
@@ -9,6 +10,11 @@ import { Router } from '@angular/router';
 })
 export class OrderDetailsPage {
 
+    status: string;
+    STATUS_PRODUCTS = ORDERS.STATUS_PRODUCTS;
+    STATUS_SERVICES = ORDERS.STATUS_SERVICES;
+    type = 'services';
+
     constructor(private alertController: AlertController,
                 private route: Router) {
     }
@@ -16,27 +22,26 @@ export class OrderDetailsPage {
     async selectProduct() {
         const alert = await this.alertController.create({
             header: 'Leche south 1 L!',
+            cssClass: 'alertProduct',
             inputs: [
                 {
                     name: 'productQuantity',
                     type: 'number',
                     value: 3,
+                    label: 'Disponibles',
                     // autofocus: true,
                     placeholder: 'Cantidad',
                     min: 1,
                     max: 10
-                }
+                },
             ],
+            message: '<ion-item>' + '' +
+                        '<ion-checkbox></ion-checkbox>' +
+                        '<ion-label style="vertical-align: top;margin-left: 5px;">Agotado</ion-label>' +
+                    '</ion-item>',
             buttons: [
                 {
-                    text: 'Remover',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        console.log('Confirm Cancel');
-                    }
-                }, {
-                    text: 'Actualizar',
+                    text: 'Actualizar Pedido',
                     cssClass: 'pagami',
                     handler: () => {
                         console.log('Confirm Ok');
@@ -64,7 +69,7 @@ export class OrderDetailsPage {
         await alert.present();
     }
 
-    async confirmDeleteProduct() {
+    async confirmCancelOrder() {
         const alert = await this.alertController.create({
             header: 'Cancelación de pedido',
             message: 'Estas seguro que quieres cancelar el pedido actual?',
@@ -85,4 +90,17 @@ export class OrderDetailsPage {
         await alert.present();
     }
 
+    mapStatusOrder(status: string) {
+        if (!status) { return 'Estado de la orden'; }
+        switch (status) {
+            case this.STATUS_PRODUCTS.RECEIVED:
+                return 'Recibido';
+            case this.STATUS_PRODUCTS.FILLING_ORDER:
+                return 'Llenando orden';
+            case this.STATUS_PRODUCTS.DISPATCHED:
+                return 'Despachado';
+            case this.STATUS_PRODUCTS.DELIVERED:
+                return 'Entregado';
+        }
+    }
 }

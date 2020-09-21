@@ -12,11 +12,16 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 // Modules
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { PipesModule } from './pipes/pipes.module';
 import { firebaseConfig } from '../environments/environment';
+import { IonicSelectableModule } from 'ionic-selectable';
 // Components
 import { AppComponent } from './app.component';
 // Providers
@@ -32,9 +37,6 @@ import { NotificationsProvider } from './providers/notifications.provider';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { IonicSelectableModule } from 'ionic-selectable';
-import { AppMinimize } from '@ionic-native/app-minimize/ngx';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 registerLocaleData(localeEs, 'es');
 
@@ -70,7 +72,9 @@ registerLocaleData(localeEs, 'es');
         {provide: LOCALE_ID, useValue: 'es'},
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         AppMinimize,
-        Clipboard
+        Clipboard,
+        OpenNativeSettings,
+        AndroidPermissions
     ],
     exports: [],
     bootstrap: [AppComponent]
