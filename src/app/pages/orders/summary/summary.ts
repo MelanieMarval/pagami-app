@@ -3,11 +3,11 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-order-summary',
-    templateUrl: 'orders.html',
-    styleUrls: ['orders.scss']
+    selector: 'app-orders-summary',
+    templateUrl: 'summary.html',
+    styleUrls: ['summary.scss']
 })
-export class OrdersPage {
+export class SummaryPage {
 
     constructor(private alertController: AlertController,
                 private route: Router,) {

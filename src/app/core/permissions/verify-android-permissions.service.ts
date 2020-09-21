@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { RequestAndroidPermissionsService } from './request-android-permissions.service';
+import { Plugins } from '@capacitor/core';
+
+const {Device} = Plugins;
 
 @Injectable({
     providedIn: 'root'
@@ -14,12 +17,16 @@ export class VerifyAndroidPermissionsService {
     }
 
     async checkPermissions() {
-        const response = await this.need();
-        console.log('-> response', response);
-        if (response) {
-            await this.alertOpenSettings(response, () => {
-                this.checkPermissions();
-            });
+        const info = await Device.getInfo();
+
+        if (info.platform !== 'web') {
+            const response = await this.need();
+            console.log('-> response', response);
+            if (response) {
+                await this.alertOpenSettings(response, () => {
+                    this.checkPermissions();
+                });
+            }
         }
     }
 

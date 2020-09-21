@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { OrdersPage } from './pages/orders/orders';
+import { OrdersPage } from './pages/my-orders/orders';
 
 const routes: Routes = [
     // {
@@ -51,8 +51,8 @@ const routes: Routes = [
                 loadChildren: () => import('./pages/tabs/tabs-page.module').then(m => m.TabsModule)
             },
             {
-                path: 'orders',
-                loadChildren: () => import('./pages/orders/orders.module').then(m => m.OrdersModule)
+                path: 'my-orders',
+                loadChildren: () => import('./pages/my-orders/orders.module').then(m => m.OrdersModule)
             },
             {
                 path: 'my-products',
@@ -65,6 +65,10 @@ const routes: Routes = [
             {
                 path: 'shop',
                 loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopModule)
+            },
+            {
+                path: 'orders',
+                loadChildren: () => import('./pages/orders/orders.module').then(m => m.OrdersModule)
             },
             {
                 path: 'business-claim',

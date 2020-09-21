@@ -1,0 +1,21 @@
+.card {
+    padding: 10px 2px 10px 2px;
+    ion-card-content {
+        padding: 0;
+    }
+}
+.cart {
+    color: #FFF;
+    font-size: 16px;
+    display: flex;
+    ion-icon {
+        position: relative;
+        top: 1px;
+        padding-right: .5rem;
+        width: 20px;
+        height: 20px;
+    }
+}
+.ellipsis {
+    width: 65vw;
+}

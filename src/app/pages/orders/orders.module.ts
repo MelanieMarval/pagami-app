@@ -1,28 +1,29 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {IonicModule} from '@ionic/angular';
-import {HttpClientModule} from '@angular/common/http';
-import {ProductsPageRoutingModule} from './orders-routing.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
+import { FormsModule } from '@angular/forms';
+
+// Pages
 import { OrdersPage } from './orders';
-import { OrderDetailsPage } from './order-details/order-details';
+import { OrdersRoutingModule } from './orders-routing.module';
+import { SummaryPage } from './summary/summary';
 
 
 @NgModule({
     imports: [
         CommonModule,
         IonicModule,
+        OrdersRoutingModule,
         HttpClientModule,
-        ProductsPageRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        PipesModule
+        PipesModule,
+        FormsModule
     ],
     declarations: [
         OrdersPage,
-        OrderDetailsPage
+        SummaryPage
     ]
 })
 export class OrdersModule {

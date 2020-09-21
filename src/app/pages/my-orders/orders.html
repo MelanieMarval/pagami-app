@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar class="toolbar-simple">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/shop/products"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="without-right">Pedidos</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-toolbar>
+    <ion-segment [(ngModel)]="segmentSelected">
+        <ion-segment-button value="products">
+            <ion-label>Productos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="services">
+            <ion-label>Servicios</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
+
+
+<ion-content>
+
+    <ion-list inset="false" *ngIf="segmentSelected === 'products'">
+        <ion-card *ngFor="let register of [1,2,3,4]" class="card card-admin-3rows" button (click)="openDetails(register)">
+
+            <ion-card-content>
+                <ion-row>
+                    <ion-col size="2" class="d-flex ion-justify-content-center ion-align-items-center">
+                        <ion-avatar class="border-white-1px">
+                            <ion-img src="assets/img/avatar-profile.jpg"></ion-img>
+                        </ion-avatar>
+                    </ion-col>
+                    <ion-col size="10" class="ion-no-padding">
+                        <ion-row>
+                            <ion-col size="7">
+                                <ion-card-title>Armando Guitierrez</ion-card-title>
+                            </ion-col>
+                            <ion-col size="5" class="ion-text-right">
+                                <span>12/05/2019 · 3:40 pm</span>
+                            </ion-col>
+                            <ion-col size="12" class="pb-0 pt-0">
+                                <div class="cart">
+                                    <ion-icon name="cart"></ion-icon> <span>12</span>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+
+        </ion-card>
+    </ion-list>
+
+
+    <ion-list inset="false" *ngIf="segmentSelected === 'services'">
+        <ion-card *ngFor="let register of [1,2,3,4]" class="card card-admin-3rows" button (click)="openDetails(register)">
+
+            <ion-card-content>
+                <ion-row>
+                    <ion-col size="2" class="d-flex ion-justify-content-center ion-align-items-center">
+                        <ion-avatar class="border-white-1px">
+                            <ion-img src="assets/img/avatar-profile.jpg"></ion-img>
+                        </ion-avatar>
+                    </ion-col>
+                    <ion-col size="10" class="ion-no-padding">
+                        <ion-row>
+                            <ion-col size="7">
+                                <ion-card-title>Armando Guitierrez</ion-card-title>
+                            </ion-col>
+                            <ion-col size="5" class="ion-text-right">
+                                <span>12/05/2019 · 3:40 pm</span>
+                            </ion-col>
+                            <ion-col size="12" class="pb-0 pt-0">
+                                <div class="cart">
+                                    <ion-icon name="mail-open"></ion-icon> <span class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cumque laboriosam minus reprehenderit suscipit? Aperiam, delectus earum eligendi harum laborum mollitia nemo perspiciatis porro rem sed, sint tempore voluptas voluptates?</span>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+
+        </ion-card>
+    </ion-list>
+
+</ion-content>

@@ -5,8 +5,8 @@
         </ion-buttons>
         <ion-title>{{title}}</ion-title>
         <ion-buttons slot="end" class="right-button">
-<!--            <ion-button  routerLink="/app/shop/order-summary">-->
-            <ion-button (click)="alert.alertComingSoon()">
+            <ion-button  routerLink="/app/shop/order-summary">
+<!--            <ion-button (click)="alert.alertComingSoon()">-->
                 <ion-icon name="cart"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -25,8 +25,8 @@
         <ion-label *ngIf="!products.length">No tiene productos registrados</ion-label>
         <ion-item button color="pagami-surface" detail="false" class="product ion-no-padding"
                   *ngFor="let product of products | filterByName: textSearch; let x = index"
-                  (click)="alert.alertComingSoon()">
-<!--                  (click)="selectProduct(product)">-->
+                  (click)="selectProduct(product)">
+<!--                  (click)="alert.alertComingSoon()">-->
             <ion-avatar class="avatar-square product-image">
                 <ion-img [src]="product.photoUrl"></ion-img>
             </ion-avatar>
