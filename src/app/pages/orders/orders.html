@@ -3,12 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/shop/products"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Resumen de la Orden</ion-title>
-        <ion-buttons slot="end" class="right-button">
-            <ion-button (click)="confirmDeleteProduct()">
-                <ion-icon name="trash"></ion-icon>
-            </ion-button>
-        </ion-buttons>
+        <ion-title class="without-right">Ordenes</ion-title>
     </ion-toolbar>
 
 </ion-header>
@@ -20,49 +15,86 @@
     </ion-header>
 
     <ion-list inset="false" lines="none" class="products">
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <ion-item button routerLink="/app/orders/summary/duhuifh" color="pagami-surface" detail="false" class="product ion-no-padding"
+                  *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
             <ion-avatar class="avatar-square product-image">
-                <ion-img src="assets/img/avatar-product.jpg"></ion-img>
+                <ion-img src="assets/img/avatar-business.jpg"></ion-img>
             </ion-avatar>
             <ion-label class="product-name">
                 <ion-row class="ion-justify-content-between">
-                    <ion-col size="9">
-                        Leche south cost 1 Ltr
+                    <ion-col size="6" class="pt-0">
+                        <span class="product-stock">
+                            <ion-icon name="home" class="size-icon-mini"></ion-icon>
+                            Almacenes
+                        </span>
                     </ion-col>
-                    <ion-col size="1">
-                        <span class="product-quantity">x2</span>
+                    <ion-col size="5" class="ion-text-right pt-0">
+                        <span class="product-price">
+                            <ion-icon class="size-icon-mini" name="download"></ion-icon>
+                            Recibido
+                        </span>
                     </ion-col>
                 </ion-row>
                 <ion-row class="ion-justify-content-between">
-                    <ion-col size="6">
-                        <span class="product-stock">Agotado</span>
+                    <ion-col size="10" class="pt-0 business-name">
+                        <div class="ellipsis">
+                            Super Market 3000
+                        </div>
+                        <ion-icon name="shield-checkmark" class="size-icon-mini" color="success"></ion-icon>
                     </ion-col>
-                    <ion-col size="5" class="ion-text-right">
-                        <span class="product-price">COP $24.000</span>
+                </ion-row>
+                <ion-row class="ion-justify-content-between">
+                    <ion-col size="5" class="pt-0">
+                        <span class="product-price">
+                            <ion-icon name="cart" class="size-icon-default"></ion-icon>
+                            12
+                        </span>
+                    </ion-col>
+                    <ion-col size="7" class="ion-text-right pt-0">
+                        <span class="product-price">
+                            <ion-icon name="calculator" class="size-icon-default"></ion-icon>
+                            COP $24.000
+                        </span>
                     </ion-col>
                 </ion-row>
             </ion-label>
         </ion-item>
-        <ion-item button (click)="selectProduct()" color="pagami-surface" detail="false" class="product ion-no-padding" *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
+        <ion-item button routerLink="/app/orders/summary/duhuifh" color="pagami-surface" detail="false" class="product ion-no-padding"
+                  *ngFor="let dummy of ' '.repeat(5).split(''), let x = index">
             <ion-avatar class="avatar-square product-image">
-                <img src="assets/img/avatar-product-2.jpg">
+                <ion-img src="assets/img/avatar-business.jpg"></ion-img>
             </ion-avatar>
             <ion-label class="product-name">
                 <ion-row class="ion-justify-content-between">
-                    <ion-col size="9">
-                        Arroz Mary Esmeralda
+                    <ion-col size="6" class="pt-0">
+                        <span class="product-stock">
+                            <ion-icon name="home" class="size-icon-mini"></ion-icon>
+                            Plomeria
+                        </span>
                     </ion-col>
-                    <ion-col size="1">
-                        <span class="product-quantity">x3</span>
+                    <ion-col size="5" class="ion-text-right pt-0">
+                        <span class="product-price">
+                            <ion-icon class="size-icon-mini" name="checkmark"></ion-icon>
+                            Entregado
+                        </span>
                     </ion-col>
                 </ion-row>
                 <ion-row class="ion-justify-content-between">
-                    <ion-col size="6">
-                        <span class="product-stock">Solo 1 disponible</span>
+                    <ion-col size="10" class="business-name pt-0">
+                        <div class="ellipsis">
+                            Reparaciones Juanita la del barrio
+                        </div>
+                        <ion-icon name="shield-checkmark" class="size-icon-mini" color="success"></ion-icon>
                     </ion-col>
-                    <ion-col size="5" class="ion-text-right">
-                        <span class="product-price">COP $17.000</span>
+                </ion-row>
+                <ion-row class="ion-justify-content-between">
+                    <ion-col size="12" class="pt-0">
+                        <div class="product-price ellipsis">
+                            <ion-icon name="mail-open" class="size-icon-default"></ion-icon>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad aperiam beatae.
+                        </div>
                     </ion-col>
+
                 </ion-row>
             </ion-label>
         </ion-item>

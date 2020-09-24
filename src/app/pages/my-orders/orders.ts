@@ -16,7 +16,8 @@ export class OrdersPage {
     }
 
     openDetails(register: number) {
-        this.router.navigateByUrl(`/app/orders/details/${register}`);
+        this.router.navigateByUrl(`/app/my-orders/details/${register}`);
+        console.log('-> `/app/my-orders/details/${register}`');
     }
 
 
