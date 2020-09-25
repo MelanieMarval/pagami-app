@@ -30,10 +30,9 @@ export class SummaryPage {
             buttons: [
                 {
                     text: 'Remover',
-                    role: 'cancel',
                     cssClass: 'secondary',
                     handler: () => {
-                        console.log('Confirm Cancel');
+                        this.confirmDeleteProduct();
                     }
                 }, {
                     text: 'Actualizar',
@@ -57,6 +56,38 @@ export class SummaryPage {
                     handler: () => {
                         console.log('Confirm Okay');
                         this.route.navigate(['/app/profile']);
+                    }
+                }
+            ]
+        });
+        await alert.present();
+    }
+
+
+    cancelOrder() {
+        // pedido no realizado
+        if (true) {
+            this.confirmCancelOrder('Cancelación de pedido', 'Estas seguro que quieres cancelar el pedido actual?', true);
+        } else {
+            // ya la orden fue depachada
+            this.confirmCancelOrder('Orden despachada', 'Las ordenes despachadas no se pueden cancelar');
+        }
+    }
+
+    async confirmCancelOrder(header: string, message: string, buttons?: boolean) {
+        const alert = await this.alertController.create({
+            header,
+            message,
+            buttons: !buttons ? [] : [
+                {
+                    text: 'No, cerrar',
+                    role: 'cancel',
+                    cssClass: 'alert-cancel'
+                }, {
+                    text: 'Si, Cancelar pedido',
+                    cssClass: 'alert-confirm',
+                    handler: () => {
+                        console.log('Confirm Okay');
                     }
                 }
             ]

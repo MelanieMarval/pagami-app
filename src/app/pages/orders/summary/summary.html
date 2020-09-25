@@ -3,9 +3,9 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/app/shop/products"></ion-back-button>
         </ion-buttons>
-        <ion-title class="without-right">Resumen de la Orden</ion-title>
+        <ion-title class="without-right"><div class="business-title">Tienda 1</div><div>Resumen de la Orden</div></ion-title>
         <ion-buttons slot="end" class="right-button">
-            <ion-button (click)="confirmDeleteProduct()">
+            <ion-button (click)="cancelOrder()">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
         </ion-buttons>
