@@ -1,23 +1,23 @@
 {
-    "appId": "io.ionic.pagami",
-    "appName": "Pagami",
-    "bundledWebRuntime": false,
-    "npmClient": "npm",
-    "webDir": "www",
-    "cordova": {},
-    "plugins": {
-        "SplashScreen": {
-            "launchAutoHide": false,
-            "backgroundColor": "#1A202C"
-        },
-        "showSpinner": true,
-        "androidSplashResourceName": "splash",
-        "GoogleAuth": {
-            "scopes": [
-                "profile",
-                "email"
-            ],
-            "serverClientId": "901661269353-n7n4nor724ruta2enamnphmagsje79ru.apps.googleusercontent.com"
-        }
+  "appId": "io.ionic.pagami",
+  "appName": "Pagami",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {},
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#1A202C"
+    },
+    "showSpinner": true,
+    "androidSplashResourceName": "splash",
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "901661269353-n7n4nor724ruta2enamnphmagsje79ru.apps.googleusercontent.com"
     }
+  }
 }

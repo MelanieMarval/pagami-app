@@ -4,3 +4,6 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 
 include ':codetrix-studio-capacitor-google-auth'
 project(':codetrix-studio-capacitor-google-auth').projectDir = new File('../node_modules/@codetrix-studio/capacitor-google-auth/android')
+
+include ':capacitor-googlemaps-native'
+project(':capacitor-googlemaps-native').projectDir = new File('../node_modules/capacitor-googlemaps-native/android')

@@ -10,6 +10,7 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':codetrix-studio-capacitor-google-auth')
+    implementation project(':capacitor-googlemaps-native')
     implementation "com.google.android.gms:play-services-location:16.+"
 }
 
