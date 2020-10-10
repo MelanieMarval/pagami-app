@@ -40,7 +40,7 @@ const BASIC_UPDATE_METERS = 10;
     templateUrl: 'map-page.html',
     styleUrls: ['map-page.scss']
 })
-export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
+export class MapPage extends GoogleMapPage implements OnInit {
 
     @ViewChild('fab', {static: false, read: ElementRef}) private ionFab: ElementRef;
 
@@ -258,11 +258,12 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         }
     }
 
-    async ngAfterViewInit() {
+    // async ngAfterViewInit() {
+    async ionViewDidEnter() {
         /**
          * moving floating button to initial position
          */
-        this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
+        // this.renderer.setStyle(this.ionFab.nativeElement, 'transform', 'translateY(' + '-56px' + ')');
         /**
          * load map and wait
          */
@@ -270,20 +271,24 @@ export class MapPage extends GoogleMapPage implements OnInit, AfterViewInit {
         /**
          * subscribing to current location changes
          */
-        this.geolocationService.locationChanged.subscribe(
-            (coors: PagamiGeo) => {
-                this.onCurrentPositionChanged(coors);
-            });
+        // this.geolocationService.locationChanged.subscribe(
+        //     (coors: PagamiGeo) => {
+        //         this.onCurrentPositionChanged(coors);
+        //     });
         /**
          * Enable watch location if status is disabled
          */
-        this.geolocationService.enableLocation();
+        // this.geolocationService.enableLocation();
         /**
          * set center and marker position
          */
-        const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
-        this.onCurrentPositionChanged(geo);
-        this.getNearPlaces();
+        // const geo: PagamiGeo = await this.geolocationService.getCurrentLocation();
+        // this.onCurrentPositionChanged(geo);
+        // this.getNearPlaces();
+    }
+
+    async ionViewWillLeave() {
+        this.stopMap();
     }
 
     async getNearPlaces() {

@@ -40,10 +40,10 @@
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/file_paths"/>
-            <meta-data
-                    android:name="com.google.android.geo.API_KEY"
-                    android:value="AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s"/>
         </provider>
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyD3t5VAdEBMdICcY9FyVcgBHlkeu72OI4s"/>
     </application>
 
     <!-- Permissions -->

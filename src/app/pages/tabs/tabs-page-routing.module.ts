@@ -21,6 +21,10 @@ const routes: Routes = [
                 loadChildren: () => import('./map/map.module').then(m => m.MapModule)
             },
             {
+                path: 'map-native',
+                loadChildren: () => import('./map-native/map-native.module').then(m => m.MapNativePageModule)
+            },
+            {
                 path: 'my-business',
                 loadChildren: () => import('./my-business/my-business.module').then(m => m.MyBusinessModule)
             },

@@ -90,6 +90,11 @@ const routes: Routes = [
         redirectTo: 'tabs',
         pathMatch: 'full'
     },
+  {
+    path: 'map-native',
+    loadChildren: () => import('./pages/tabs/map-native/map-native.module').then(m => m.MapNativePageModule)
+  },
+
 ];
 
 @NgModule({

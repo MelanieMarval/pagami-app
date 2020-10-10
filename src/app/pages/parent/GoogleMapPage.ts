@@ -3,12 +3,12 @@ import { DOCUMENT } from '@angular/common';
 import { GeolocationService } from '../../core/geolocation/geolocation.service';
 import { PagamiGeo } from '../../core/geolocation/pagami.geo';
 import { Place } from '../../core/api/places/place';
-// @ts-ignore
-import GoogleMaps = google.maps;
-// @ts-ignore
-import LatLng = google.maps.LatLng;
 import { MAP_MODE } from '../../utils/Const';
 import { PlaceUtils } from '../../utils/place.utils';
+import { Plugins } from '@capacitor/core';
+import { CapacitorGoogleMapsPlugin } from 'capacitor-googlemaps-native';
+// @ts-ignore
+import GoogleMaps = google.maps;
 // // @ts-ignore
 // import LatLngLiteral = google.maps.LatLngLiteral;
 // // @ts-ignore
@@ -24,14 +24,16 @@ import { PlaceUtils } from '../../utils/place.utils';
 
 declare var MarkerClusterer: any;
 
+const {CapacitorGoogleMaps} = Plugins;
+
 const removeDefaultMarkers = [
     {
         featureType: 'poi',
         elementType: 'labels',
         stylers: [
-            {visibility: 'off'}
-        ]
-    }
+            {visibility: 'off'},
+        ],
+    },
 ];
 
 function degreesToRadians(degrees) {
@@ -41,6 +43,8 @@ function degreesToRadians(degrees) {
 export class GoogleMapPage {
 
     @ViewChild('mapCanvas', {static: true}) mapElement: ElementRef;
+    // @ts-ignore
+    capacitorGoogleMaps: CapacitorGoogleMapsPlugin = CapacitorGoogleMaps;
 
     map: any;
     currentPositionMarker: any;
@@ -60,24 +64,53 @@ export class GoogleMapPage {
     isFindMyBusiness = false;
     isEditingBusiness = false;
 
-    constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService) { }
+    constructor(@Inject(DOCUMENT) private doc: Document, protected geolocationService: GeolocationService) {
+    }
 
     async loadMap() {
         this.mapReady = false;
         try {
-            this.googleMaps = await this.geolocationService.getGoogleMaps();
-            const mapEle = this.mapElement.nativeElement;
-            this.map = new this.googleMaps.Map(mapEle, this.getDefaultOptions());
+            const options = this.getDefaultOptions();
+            await this.capacitorGoogleMaps.create(options);
 
-            this.googleMaps.event.addListenerOnce(this.map, 'idle', () => {
-                mapEle.classList.add('show-map');
-                this.onMapReady();
-                this.mapMoveSubscribe();
+            this.capacitorGoogleMaps.addListener('onMapReady', async () => {
+
+                /*
+                  We can do all the magic here when map is ready
+                */
+
+                await this.capacitorGoogleMaps.addMarker({
+                    latitude: -33.86,
+                    longitude: 151.20,
+                    title: 'Custom Title',
+                    snippet: 'Custom Snippet',
+                });
+
+                await this.capacitorGoogleMaps.setMapType({
+                    type: 'normal',
+                });
+
+                await this.capacitorGoogleMaps.enableCurrentLocation({
+                    enabled: true,
+                });
             });
+            // this.googleMaps = await this.geolocationService.getGoogleMaps();
+            // const mapEle = this.mapElement.nativeElement;
+            // this.map = new this.googleMaps.Map(mapEle, this.getDefaultOptions());
+
+            // this.googleMaps.event.addListenerOnce(this.map, 'idle', () => {
+            //     mapEle.classList.add('show-map');
+            //     this.onMapReady();
+            //     this.mapMoveSubscribe();
+            // });
             this.mapReady = true;
         } catch (err) {
             this.mapReady = false;
         }
+    }
+
+    async stopMap() {
+        await this.capacitorGoogleMaps.close();
     }
 
     private mapMoveSubscribe() {
@@ -95,7 +128,7 @@ export class GoogleMapPage {
     changeMapCenter(coords: PagamiGeo) {
         const position: any = {
             lat: coords.latitude,
-            lng: coords.longitude
+            lng: coords.longitude,
         };
         this.map.panTo(position);
     }
@@ -107,7 +140,7 @@ export class GoogleMapPage {
     setupMarkerCurrentPosition(coords: PagamiGeo) {
         const position: any = {
             lat: coords.latitude,
-            lng: coords.longitude
+            lng: coords.longitude,
         };
         const map = this.map;
         if (this.currentPositionMarker === undefined) {
@@ -117,13 +150,13 @@ export class GoogleMapPage {
                 fillColor: '#F6AD55',
                 fillOpacity: 1,
                 scale: 6,
-                path: 0
+                path: 0,
             };
             this.currentPositionMarker = new this.googleMaps.Marker({
                 position,
                 map,
                 crossOnDrag: false,
-                icon
+                icon,
             });
             this.currentPositionCircle = new this.googleMaps.Circle({
                 center: position,
@@ -132,7 +165,7 @@ export class GoogleMapPage {
                 strokeWeight: 0.5,
                 fillColor: '#FBD38D',
                 fillOpacity: 0.2,
-                map
+                map,
             });
         } else {
             if (this.currentPositionMarker) {
@@ -151,7 +184,7 @@ export class GoogleMapPage {
             const latLng = this.currentPositionMarker.getPosition();
             const icon = {
                 url: 'assets/marker-icons/point_marker.svg',
-                scaledSize: new this.googleMaps.Size(64, 64)
+                scaledSize: new this.googleMaps.Size(64, 64),
             };
             if (this.newPlaceMarker) {
                 this.newPlaceMarker.setMap(null);
@@ -160,7 +193,7 @@ export class GoogleMapPage {
                 latLng,
                 draggable: true,
                 icon,
-                map
+                map,
             });
             this.newPlaceMarker.setPosition(latLng);
             this.lastPosition = latLng;
@@ -179,7 +212,7 @@ export class GoogleMapPage {
             const latLng = this.toLatLng(place.latitude, place.longitude);
             const icon = {
                 url: 'assets/marker-icons/point_marker.svg',
-                scaledSize: new this.googleMaps.Size(64, 64)
+                scaledSize: new this.googleMaps.Size(64, 64),
             };
             if (this.editPlaceMarker) {
                 this.editPlaceMarker.setMap(null);
@@ -189,7 +222,7 @@ export class GoogleMapPage {
                 draggable: true,
                 icon,
                 map,
-                zIndex: 50
+                zIndex: 50,
             });
             this.editPlaceMarker.setPosition(latLng);
         }
@@ -211,16 +244,16 @@ export class GoogleMapPage {
         for (const place of places) {
             const position: any = {
                 lat: place.latitude,
-                lng: place.longitude
+                lng: place.longitude,
             };
             const icon = {
                 url: PlaceUtils.getMarker(place),
-                scaledSize: new this.googleMaps.Size(30, 32)
+                scaledSize: new this.googleMaps.Size(30, 32),
             };
 
             const marker = new this.googleMaps.Marker({
                 position,
-                icon
+                icon,
             });
             marker.addListener('click', event => {
                 const latlng = new GoogleMaps.LatLng(position.lat, position.lng);
@@ -258,26 +291,36 @@ export class GoogleMapPage {
 
         const worldCoordinateNewCenter = new GoogleMaps.Point(
             worldCoordinateCenter.x - pixelOffset.x,
-            worldCoordinateCenter.y + pixelOffset.y
+            worldCoordinateCenter.y + pixelOffset.y,
         );
         const newCenter = this.map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
         this.map.setCenter(newCenter);
     }
 
     getDefaultOptions(): any {
+        const boundingRect = this.mapElement.nativeElement.getBoundingClientRect() as DOMRect;
         return {
-            center: {
-                lat: 6.286155564435256,
-                lng: -75.6074854019129
-            },
+            width: Math.round(boundingRect.width),
+            height: Math.round(boundingRect.height),
+            x: Math.round(boundingRect.x),
+            y: Math.round(boundingRect.y),
+            latitude: 6.286155564435256,
+            longitude: -75.6074854019129,
             zoom: 18,
-            minZoom: 2,
-            mapTypeControl: false,
-            zoomControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            styles: removeDefaultMarkers
         };
+        // return {
+        //     center: {
+        //         lat: 6.286155564435256,
+        //         lng: -75.6074854019129
+        //     },
+        //     zoom: 18,
+        //     minZoom: 2,
+        //     mapTypeControl: false,
+        //     zoomControl: false,
+        //     streetViewControl: false,
+        //     fullscreenControl: false,
+        //     styles: removeDefaultMarkers
+        // };
     }
 
     /**
@@ -305,9 +348,7 @@ export class GoogleMapPage {
             Math.sin(dLong / 2);
 
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c;
-
-        return distance;
+        return R * c;
     }
 
     toLatLng(lat: number, lng: number): GoogleMaps.LatLng {
@@ -328,26 +369,25 @@ export class GoogleMapPage {
                 textColor: 'white',
                 url: 'assets/map_cluster.svg',
                 height: 36,
-                width: 36
+                width: 36,
             },
             {
                 textColor: 'white',
                 url: 'assets/map_cluster.svg',
                 height: 36,
-                width: 36
+                width: 36,
             },
             {
                 textColor: 'white',
                 url: 'assets/map_cluster.svg',
                 height: 36,
-                width: 36
-            }
+                width: 36,
+            },
         ];
-        const mcOptions = {
+        return {
             gridSize: 50,
             styles: clusterStyles,
             maxZoom: 16,
         };
-        return mcOptions;
     }
 }

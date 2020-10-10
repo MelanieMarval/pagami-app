@@ -10,6 +10,7 @@ import { NearbyPage } from './nearby/nearby';
 import { AvatarHeaderModule } from '../../../shared/avatar-header/avatar-header.module';
 import { MapPage } from './map-page';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { MapNativeModule } from '../../../components/map/map-native.module';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { PipesModule } from '../../../pipes/pipes.module';
         MapRoutingModule,
         IonBottomDrawerModule,
         AvatarHeaderModule,
-        PipesModule
+        PipesModule,
+        MapNativeModule,
     ],
     declarations: [MapPage, NearbyPage],
     providers: []

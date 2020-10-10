@@ -300,6 +300,7 @@ ion-bottom-drawer {
 
     height: 100%;
     width: 100%;
+    z-index: 1;
 
     background-color: whitesmoke;
     transition: opacity 150ms ease-in;
